@@ -42,24 +42,26 @@ public class LoginPortlet extends MVCPortlet {
 			throws IOException, PortletException {
 		super.render(renderRequest, renderResponse);
 	}
-	@Override
-	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-			throws IOException, PortletException {
-		System.out.println(" xin chao ");
-		if(resourceRequest.getResourceID().equals("saveCookieSecure")) {
-			String user = ParamUtil.getString(resourceRequest, "user");
-			String pass = ParamUtil.getString(resourceRequest, "pass");
-			
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-			
-			try {
-				jsonObject = JSONFactoryUtil.createJSONObject(jsonObject.toJSONString());
-				resourceResponse.getWriter().write(jsonObject.toJSONString());
-			} catch (JSONException | IOException e) {
-				e.printStackTrace();
-			}
-		}
-		super.serveResource(resourceRequest, resourceResponse);
-	}
-	
+//	@Override
+//	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+//			throws IOException, PortletException {
+//		    System.out.println(" xin chao  1111111111111");
+//		if(resourceRequest.getResourceID().equals("saveCookieSecure")) 
+//		{
+//			String user = ParamUtil.getString(resourceRequest, "user");
+//			String pass = ParamUtil.getString(resourceRequest, "pass");
+//			
+//			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+//			
+//			try {
+//				jsonObject = JSONFactoryUtil.createJSONObject(jsonObject.toJSONString());
+//				resourceResponse.getWriter().write(jsonObject.toJSONString());
+//			} catch (JSONException | IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		super.serveResource(resourceRequest, resourceResponse);
+//	}
+//	
+//		    }
 }
