@@ -1,0 +1,4 @@
+Bundle-Name: HomePage
+Bundle-SymbolicName: com.liferay.docs.com.homepage.portlet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.docs.com.homepage.portlet.constants
