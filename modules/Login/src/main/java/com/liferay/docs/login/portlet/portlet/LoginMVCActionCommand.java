@@ -21,8 +21,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
-@Component(property = { "javax.portlet.name=" + LoginPortletKeys.LOGIN,
-		"mvc.command.name=/login/login" }, service = MVCActionCommand.class)
+@Component(
+		property = { 
+		"javax.portlet.name=" + LoginPortletKeys.LOGIN,
+		"mvc.command.name=/login/login" }, 
+		service = MVCActionCommand.class
+		)
 public class LoginMVCActionCommand extends BaseMVCActionCommand {
 	@Override
 	protected void doProcessAction(ActionRequest actionRequest, ActionResponse actionResponse) throws Exception {

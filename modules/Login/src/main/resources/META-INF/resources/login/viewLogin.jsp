@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 
 
-<portlet:actionURL name="/login/login2" var="loginURL">
-	<portlet:param name="mvcRenderCommandName" value="/login/login2" />
+<portlet:actionURL name="/login/login" var="loginURL">
+	<portlet:param name="mvcRenderCommandName" value="/login/login" />
 </portlet:actionURL>
 <style>
 .container {
