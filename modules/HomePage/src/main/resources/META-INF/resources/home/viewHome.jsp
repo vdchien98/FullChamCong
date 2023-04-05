@@ -11,19 +11,18 @@
 	<portlet:param name="mvcPath" value="/home/viewForm.jsp"></portlet:param>
 </portlet:renderURL>
 
-<script type="text/javascript">
-function redirecttoViewForm() {
-    window.location.href = "/home/viewForm.jsp";
+<style>
+.card-header.py-3.headerDSNhanVien {
+    display: flex;
+    justify-content: space-between;
 }
-</script>
-
-
+</style>
 
 <div class="container-fluid">
 	<h1 class="h3 mb-2 text-gray-800 font-weight-bold text-uppercase">Quản trị nhân viên</h1>
 	<div class="card shadow mb-4">
-		<div class="card-header py-3">
-			<h4 class="m-0 font-weight-bold text-primary">
+		<div class="card-header py-3 headerDSNhanVien">
+			<h4 class="m-0 font-weight-bold text-primary ">
 				Danh sách nhân viên	
 				<%-- 
 				<aui:button-row >				
@@ -32,17 +31,14 @@ function redirecttoViewForm() {
 				<button href="/home/viewForm" class="btn btn-success float-right">
 					<i class="fa fa-plus" aria-hidden="true"></i> Thêm mới
 				</button>
+								 <button onclick="redirecttoViewForm()" class="btn btn-success float-right" ><i class="fa fa-plus" aria-hidden="true"></i>Thêm mới</button>
 				
 				 --%>
-				
-				 <button onclick="redirecttoViewForm()" class="btn btn-success float-right" ><i class="fa fa-plus" aria-hidden="true"></i>Thêm mới</button>
-				  <% 
-               // Xử lý sự kiện của button
-               if (request.getParameter("redirectButton") != null) {
-                          response.sendRedirect("/home/viewForm.jsp");
-                                 }
-                  %>
+		
 			</h4>
+			<aui:button-row >				
+					<aui:button iconCssClass="icon-plus" onClick="<%=addEntryURL.toString()%>" value="Thêm mới"></aui:button>
+				</aui:button-row>
 		</div>
 		<div class="card-body">
 			<div class="row">
