@@ -1,0 +1,11 @@
+dependencies {
+	compile project(":modules:ChamCong-backend:ChamCong-backend-api")
+
+	compileOnly group: "com.liferay.portal", name: "release.portal.api"
+}
+
+buildService {
+	apiDir = "../ChamCong-backend-api/src/main/java"
+}
+
+group = "com.liferay.docs.chamcong"

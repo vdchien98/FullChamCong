@@ -1,0 +1,10 @@
+Bundle-Name: ChamCong-backend-api
+Bundle-SymbolicName: com.liferay.docs.chamcong.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.docs.chamcong.exception,\
+	com.liferay.docs.chamcong.model,\
+	com.liferay.docs.chamcong.service,\
+	com.liferay.docs.chamcong.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../ChamCong-backend-service/service.xml

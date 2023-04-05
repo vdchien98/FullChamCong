@@ -1,0 +1,6 @@
+Bundle-Name: ChamCong-backend-service
+Bundle-SymbolicName: com.liferay.docs.chamcong.service
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true
+-dsannotations-options: inherit
