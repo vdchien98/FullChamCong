@@ -1,19 +1,23 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.docs.chamcong.model.Foo">
+	<model name="com.liferay.docs.chamcong.model.Users">
 		<field name="uuid" type="String" />
-		<field name="fooId" type="long" />
+		<field name="id" type="int" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="field1" type="String" />
-		<field name="field2" type="boolean" />
-		<field name="field3" type="int" />
-		<field name="field4" type="Date" />
-		<field name="field5" type="String" />
+		<field name="hovaten" type="String" />
+		<field name="email" type="String" />
+		<field name="chucvu_id" type="long" />
+		<field name="trangthai" type="long" />
+		<field name="phongban_id" type="long" />
+		<field name="ca_lam_id" type="long" />
+		<field name="ca_lam_toi" type="long" />
+		<field name="ma_xac_nhan" type="String" />
+		<field name="zalo_id" type="String" />
+		<field name="cham_cong_ngoai" type="long" />
+		<field name="so_ngay_nghi_phep" type="long" />
+		<field name="phu_trach_phong" type="int" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
 	</model>
 </model-hints>

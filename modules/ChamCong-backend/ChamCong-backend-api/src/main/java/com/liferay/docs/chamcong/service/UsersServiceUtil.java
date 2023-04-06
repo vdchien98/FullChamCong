@@ -15,23 +15,23 @@
 package com.liferay.docs.chamcong.service;
 
 /**
- * Provides the remote service utility for Foo. This utility wraps
- * <code>com.liferay.docs.chamcong.service.impl.FooServiceImpl</code> and is an
+ * Provides the remote service utility for Users. This utility wraps
+ * <code>com.liferay.docs.chamcong.service.impl.UsersServiceImpl</code> and is an
  * access point for service operations in application layer code running on a
  * remote server. Methods of this service are expected to have security checks
  * based on the propagated JAAS credentials because this service can be
  * accessed remotely.
  *
  * @author Brian Wing Shun Chan
- * @see FooService
+ * @see UsersService
  * @generated
  */
-public class FooServiceUtil {
+public class UsersServiceUtil {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to <code>com.liferay.docs.chamcong.service.impl.FooServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to <code>com.liferay.docs.chamcong.service.impl.UsersServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -43,10 +43,10 @@ public class FooServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static FooService getService() {
+	public static UsersService getService() {
 		return _service;
 	}
 
-	private static volatile FooService _service;
+	private static volatile UsersService _service;
 
 }

@@ -17,21 +17,21 @@ package com.liferay.docs.chamcong.service;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
- * Provides a wrapper for {@link FooService}.
+ * Provides a wrapper for {@link UsersService}.
  *
  * @author Brian Wing Shun Chan
- * @see FooService
+ * @see UsersService
  * @generated
  */
-public class FooServiceWrapper
-	implements FooService, ServiceWrapper<FooService> {
+public class UsersServiceWrapper
+	implements ServiceWrapper<UsersService>, UsersService {
 
-	public FooServiceWrapper() {
+	public UsersServiceWrapper() {
 		this(null);
 	}
 
-	public FooServiceWrapper(FooService fooService) {
-		_fooService = fooService;
+	public UsersServiceWrapper(UsersService usersService) {
+		_usersService = usersService;
 	}
 
 	/**
@@ -41,19 +41,19 @@ public class FooServiceWrapper
 	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
-		return _fooService.getOSGiServiceIdentifier();
+		return _usersService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public FooService getWrappedService() {
-		return _fooService;
+	public UsersService getWrappedService() {
+		return _usersService;
 	}
 
 	@Override
-	public void setWrappedService(FooService fooService) {
-		_fooService = fooService;
+	public void setWrappedService(UsersService usersService) {
+		_usersService = usersService;
 	}
 
-	private FooService _fooService;
+	private UsersService _usersService;
 
 }

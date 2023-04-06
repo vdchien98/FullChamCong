@@ -14,7 +14,7 @@
 
 package com.liferay.docs.chamcong.service.impl;
 
-import com.liferay.docs.chamcong.service.base.FooLocalServiceBaseImpl;
+import com.liferay.docs.chamcong.service.base.UsersLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,8 +23,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	property = "model.class.name=com.liferay.docs.chamcong.model.Foo",
+	property = "model.class.name=com.liferay.docs.chamcong.model.Users",
 	service = AopService.class
 )
-public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
+public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
+	
+	
 }

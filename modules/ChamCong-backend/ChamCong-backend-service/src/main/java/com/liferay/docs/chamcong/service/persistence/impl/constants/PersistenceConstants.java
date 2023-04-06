@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @generated
  */
 @Component(immediate = true, service = {})
-public class FOOPersistenceConstants {
+public class PersistenceConstants {
 
 	public static final String BUNDLE_SYMBOLIC_NAME =
 		"com.liferay.docs.chamcong.service";

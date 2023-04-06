@@ -11,28 +11,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.docs.chamcong.exception;
 
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+package com.liferay.docs.chamcong.service.impl;
+
+import com.liferay.docs.chamcong.service.base.UsersServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSuchFooException extends NoSuchModelException {
-
-	public NoSuchFooException() {
-	}
-
-	public NoSuchFooException(String msg) {
-		super(msg);
-	}
-
-	public NoSuchFooException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public NoSuchFooException(Throwable throwable) {
-		super(throwable);
-	}
-
+@Component(
+	property = {
+		"json.web.service.context.name=", "json.web.service.context.path=Users"
+	},
+	service = AopService.class
+)
+public class UsersServiceImpl extends UsersServiceBaseImpl {
 }

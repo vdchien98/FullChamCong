@@ -17,5 +17,5 @@ package com.liferay.docs.chamcong.model.impl;
 /**
  * @author Brian Wing Shun Chan
  */
-public class FooImpl extends FooBaseImpl {
+public class UsersImpl extends UsersBaseImpl {
 }
