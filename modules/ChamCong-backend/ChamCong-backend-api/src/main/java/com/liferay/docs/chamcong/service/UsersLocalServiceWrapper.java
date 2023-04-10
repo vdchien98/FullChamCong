@@ -34,6 +34,22 @@ public class UsersLocalServiceWrapper
 		_usersLocalService = usersLocalService;
 	}
 
+	@Override
+	public com.liferay.docs.chamcong.model.Users addNhanVien(
+			String hovaten, String email, long chucvu_id, long trangthai,
+			long phongban_id, long ca_lam_id, long ca_lam_toi,
+			String ma_xac_nhan, String zalo_id, long cham_cong_ngoai,
+			long so_ngay_nghi_phep, int phu_trach_phong,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _usersLocalService.addNhanVien(
+			hovaten, email, chucvu_id, trangthai, phongban_id, ca_lam_id,
+			ca_lam_toi, ma_xac_nhan, zalo_id, cham_cong_ngoai,
+			so_ngay_nghi_phep, phu_trach_phong, serviceContext);
+	}
+
 	/**
 	 * Adds the users to the database. Also notifies the appropriate model listeners.
 	 *
@@ -330,6 +346,22 @@ public class UsersLocalServiceWrapper
 	@Override
 	public int getUsersesCount() {
 		return _usersLocalService.getUsersesCount();
+	}
+
+	@Override
+	public com.liferay.docs.chamcong.model.Users updateNhanVien(
+			int id, String hovaten, String email, long chucvu_id,
+			long trangthai, long phongban_id, long ca_lam_id, long ca_lam_toi,
+			String ma_xac_nhan, String zalo_id, long cham_cong_ngoai,
+			long so_ngay_nghi_phep, int phu_trach_phong,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _usersLocalService.updateNhanVien(
+			id, hovaten, email, chucvu_id, trangthai, phongban_id, ca_lam_id,
+			ca_lam_toi, ma_xac_nhan, zalo_id, cham_cong_ngoai,
+			so_ngay_nghi_phep, phu_trach_phong, serviceContext);
 	}
 
 	/**

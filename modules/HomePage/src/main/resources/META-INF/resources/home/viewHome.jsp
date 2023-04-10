@@ -24,17 +24,6 @@
 		<div class="card-header py-3 headerDSNhanVien">
 			<h4 class="m-0 font-weight-bold text-primary ">
 				Danh sách nhân viên	
-				<%-- 
-				<aui:button-row >				
-					<aui:button iconCssClass="icon-plus" onClick="<%=addEntryURL.toString()%>" value="Thêm mới"></aui:button>
-				</aui:button-row>
-				<button href="/home/viewForm" class="btn btn-success float-right">
-					<i class="fa fa-plus" aria-hidden="true"></i> Thêm mới
-				</button>
-								 <button onclick="redirecttoViewForm()" class="btn btn-success float-right" ><i class="fa fa-plus" aria-hidden="true"></i>Thêm mới</button>
-				
-				 --%>
-		
 			</h4>
 			<aui:button-row >				
 					<aui:button iconCssClass="icon-plus" onClick="<%=addEntryURL.toString()%>" value="Thêm mới"></aui:button>
@@ -76,12 +65,14 @@
 									</div>
 
 								</th>
-								<th><span class="btn btn-success btn-sm">Hoạt động</span> <span
-									class="btn btn-light btn-sm">Không hoạt động</span></th>
-								<th><a class="btn btn-success btn-circle mr-1 btn-sm"
-									href="{{ route('admin.nhan-vien.edit', $data->id) }}"> <i
+								<th>
+								    <span class="btn btn-success btn-sm">Hoạt động</span> 
+								    <span class="btn btn-light btn-sm">Không hoạt động</span>
+								</th>
+								<th>
+								   <a class="btn btn-success btn-circle mr-1 btn-sm" href="{{ route('admin.nhan-vien.edit', $data->id) }}"> <i
 										class="fa fa-pencil" aria-hidden="true"></i>
-								</a>
+								  </a>
 									<button class="btn btn-danger btn-circle btn-sm" type="button"
 										onclick="confirmDelete({{ $data->id }});">
 										<i class="fa fa-trash" aria-hidden="true"></i>
@@ -94,7 +85,8 @@
                                             @csrf
                                             @method('DELETE')  
                                           --%>
-									</form></th>
+									</form>
+								</th>
 							</tr>
 						</tbody>
 					</table>

@@ -18,6 +18,7 @@ import com.liferay.docs.chamcong.model.Users;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -44,6 +45,19 @@ public class UsersLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.docs.chamcong.service.impl.UsersLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static Users addNhanVien(
+			String hovaten, String email, long chucvu_id, long trangthai,
+			long phongban_id, long ca_lam_id, long ca_lam_toi,
+			String ma_xac_nhan, String zalo_id, long cham_cong_ngoai,
+			long so_ngay_nghi_phep, int phu_trach_phong,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().addNhanVien(
+			hovaten, email, chucvu_id, trangthai, phongban_id, ca_lam_id,
+			ca_lam_toi, ma_xac_nhan, zalo_id, cham_cong_ngoai,
+			so_ngay_nghi_phep, phu_trach_phong, serviceContext);
+	}
 
 	/**
 	 * Adds the users to the database. Also notifies the appropriate model listeners.
@@ -296,6 +310,20 @@ public class UsersLocalServiceUtil {
 	 */
 	public static int getUsersesCount() {
 		return getService().getUsersesCount();
+	}
+
+	public static Users updateNhanVien(
+			int id, String hovaten, String email, long chucvu_id,
+			long trangthai, long phongban_id, long ca_lam_id, long ca_lam_toi,
+			String ma_xac_nhan, String zalo_id, long cham_cong_ngoai,
+			long so_ngay_nghi_phep, int phu_trach_phong,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().updateNhanVien(
+			id, hovaten, email, chucvu_id, trangthai, phongban_id, ca_lam_id,
+			ca_lam_toi, ma_xac_nhan, zalo_id, cham_cong_ngoai,
+			so_ngay_nghi_phep, phu_trach_phong, serviceContext);
 	}
 
 	/**

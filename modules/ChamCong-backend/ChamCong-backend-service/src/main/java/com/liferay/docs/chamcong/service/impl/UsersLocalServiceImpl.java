@@ -14,19 +14,73 @@
 
 package com.liferay.docs.chamcong.service.impl;
 
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.docs.chamcong.model.Users;
 import com.liferay.docs.chamcong.service.base.UsersLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	property = "model.class.name=com.liferay.docs.chamcong.model.Users",
-	service = AopService.class
-)
+@Component(property = "model.class.name=com.liferay.docs.chamcong.model.Users", service = AopService.class)
 public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
-	
-	
+	public Users addNhanVien(String hovaten, String email, long chucvu_id, long trangthai, long phongban_id,
+			long ca_lam_id, long ca_lam_toi,String ma_xac_nhan ,String zalo_id, long cham_cong_ngoai, long so_ngay_nghi_phep,
+			int phu_trach_phong, ServiceContext serviceContext) throws PortalException, SystemException {
+		int id = (int) CounterLocalServiceUtil.increment("user_seq");
+		Users user = usersPersistence.create(id);
+
+		Date now = new Date();
+
+		user.setHovaten(hovaten);
+		user.setEmail(email);
+		user.setChucvu_id(chucvu_id);
+		user.setTrangthai(trangthai);
+		user.setPhongban_id(phongban_id);
+		user.setCa_lam_id(ca_lam_id);
+		user.setCa_lam_toi(ca_lam_toi);
+		user.setMa_xac_nhan(ma_xac_nhan);
+		user.setZalo_id(zalo_id);
+		user.setCham_cong_ngoai(cham_cong_ngoai);
+		user.setSo_ngay_nghi_phep(so_ngay_nghi_phep);
+		user.setPhu_trach_phong(phu_trach_phong);
+		user.setCreated_at(now);
+		user.setUpdated_at(now);
+
+		usersPersistence.update(user);
+
+		return user;
+	}
+
+	public Users updateNhanVien(int id,String hovaten, String email, long chucvu_id, long trangthai, long phongban_id,
+			long ca_lam_id, long ca_lam_toi,String ma_xac_nhan ,String zalo_id, long cham_cong_ngoai, long so_ngay_nghi_phep,
+			int phu_trach_phong, ServiceContext serviceContext)
+			throws PortalException, SystemException {
+		Date now = new Date();
+		Users user = getUsers(id);
+		user.setHovaten(hovaten);
+		user.setEmail(email);
+		user.setChucvu_id(chucvu_id);
+		user.setTrangthai(trangthai);
+		user.setPhongban_id(phongban_id);
+		user.setCa_lam_id(ca_lam_id);
+		user.setCa_lam_toi(ca_lam_toi);
+		user.setMa_xac_nhan(ma_xac_nhan);
+		user.setZalo_id(zalo_id);
+		user.setCham_cong_ngoai(cham_cong_ngoai);
+		user.setSo_ngay_nghi_phep(so_ngay_nghi_phep);
+		user.setPhu_trach_phong(phu_trach_phong);
+		user.setCreated_at(now);
+		user.setUpdated_at(now);
+		user.setExpandoBridgeAttributes(serviceContext);
+		usersPersistence.update(user);
+		return user;
+	}
 }

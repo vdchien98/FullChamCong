@@ -1,0 +1,4 @@
+Bundle-Name: PhongBan
+Bundle-SymbolicName: com.liferay.docs.phongban.portlet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.docs.phongban.portlet.constants
