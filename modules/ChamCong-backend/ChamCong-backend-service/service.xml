@@ -3,20 +3,19 @@
 
 <service-builder auto-namespace-tables="true" package-path="com.liferay.docs.chamcong">
 	<namespace></namespace>
-	<entity local-service="true" name="Users" remote-service="true" uuid="true">
+	<entity local-service="true" name="Users" remote-service="true" uuid="false">
 
 		<!-- PK fields -->
 		<column name="id" primary="true" type="int" />
 		<!-- Group instance -->
-        <column name="groupId" type="long" />
+     
 		<column name="hovaten" type="String" />
 
 		<!-- Audit fields -->
 
 		<column name="email" type="String" />
 		<column name="chucvu_id" type="long" />
-		<column name="trangthai" type="long" />
-	    
+		<column name="trangthai" type="long" />	   
 	    <column name="phongban_id" type="long" />
 	    <column name="ca_lam_id" type="long" />
 	    <column name="ca_lam_toi" type="long" />
@@ -26,7 +25,8 @@
 	    <column name="so_ngay_nghi_phep" type="long" />	   
 	    <column name="phu_trach_phong" type="int" />	   
 	    <column name="created_at" type="Date" />	  
-	    <column name="updated_at" type="Date" />	  
+	    <column name="updated_at" type="Date" />
+	    <column name="groupId" type="long" />	  
 		<!-- Order -->
 
 

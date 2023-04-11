@@ -241,18 +241,6 @@ public abstract class UsersLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the users matching the UUID and group.
-	 *
-	 * @param uuid the users's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching users, or <code>null</code> if a matching users could not be found
-	 */
-	@Override
-	public Users fetchUsersByUuidAndGroupId(String uuid, long groupId) {
-		return usersPersistence.fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the users with the primary key.
 	 *
 	 * @param id the primary key of the users
@@ -337,21 +325,6 @@ public abstract class UsersLocalServiceBaseImpl
 		throws PortalException {
 
 		return usersPersistence.findByPrimaryKey(primaryKeyObj);
-	}
-
-	/**
-	 * Returns the users matching the UUID and group.
-	 *
-	 * @param uuid the users's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching users
-	 * @throws PortalException if a matching users could not be found
-	 */
-	@Override
-	public Users getUsersByUuidAndGroupId(String uuid, long groupId)
-		throws PortalException {
-
-		return usersPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**

@@ -60,14 +60,10 @@ public class UsersCacheModel implements CacheModel<Users>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(33);
 
-		sb.append("{uuid=");
-		sb.append(uuid);
-		sb.append(", id=");
+		sb.append("{id=");
 		sb.append(id);
-		sb.append(", groupId=");
-		sb.append(groupId);
 		sb.append(", hovaten=");
 		sb.append(hovaten);
 		sb.append(", email=");
@@ -96,6 +92,8 @@ public class UsersCacheModel implements CacheModel<Users>, Externalizable {
 		sb.append(created_at);
 		sb.append(", updated_at=");
 		sb.append(updated_at);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append("}");
 
 		return sb.toString();
@@ -105,15 +103,7 @@ public class UsersCacheModel implements CacheModel<Users>, Externalizable {
 	public Users toEntityModel() {
 		UsersImpl usersImpl = new UsersImpl();
 
-		if (uuid == null) {
-			usersImpl.setUuid("");
-		}
-		else {
-			usersImpl.setUuid(uuid);
-		}
-
 		usersImpl.setId(id);
-		usersImpl.setGroupId(groupId);
 
 		if (hovaten == null) {
 			usersImpl.setHovaten("");
@@ -167,6 +157,8 @@ public class UsersCacheModel implements CacheModel<Users>, Externalizable {
 			usersImpl.setUpdated_at(new Date(updated_at));
 		}
 
+		usersImpl.setGroupId(groupId);
+
 		usersImpl.resetOriginalValues();
 
 		return usersImpl;
@@ -174,11 +166,7 @@ public class UsersCacheModel implements CacheModel<Users>, Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		uuid = objectInput.readUTF();
-
 		id = objectInput.readInt();
-
-		groupId = objectInput.readLong();
 		hovaten = objectInput.readUTF();
 		email = objectInput.readUTF();
 
@@ -201,20 +189,13 @@ public class UsersCacheModel implements CacheModel<Users>, Externalizable {
 		phu_trach_phong = objectInput.readInt();
 		created_at = objectInput.readLong();
 		updated_at = objectInput.readLong();
+
+		groupId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		if (uuid == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(uuid);
-		}
-
 		objectOutput.writeInt(id);
-
-		objectOutput.writeLong(groupId);
 
 		if (hovaten == null) {
 			objectOutput.writeUTF("");
@@ -261,11 +242,11 @@ public class UsersCacheModel implements CacheModel<Users>, Externalizable {
 		objectOutput.writeInt(phu_trach_phong);
 		objectOutput.writeLong(created_at);
 		objectOutput.writeLong(updated_at);
+
+		objectOutput.writeLong(groupId);
 	}
 
-	public String uuid;
 	public int id;
-	public long groupId;
 	public String hovaten;
 	public String email;
 	public long chucvu_id;
@@ -280,5 +261,6 @@ public class UsersCacheModel implements CacheModel<Users>, Externalizable {
 	public int phu_trach_phong;
 	public long created_at;
 	public long updated_at;
+	public long groupId;
 
 }

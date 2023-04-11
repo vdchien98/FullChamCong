@@ -2,9 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.docs.chamcong.model.Users">
-		<field name="uuid" type="String" />
 		<field name="id" type="int" />
-		<field name="groupId" type="long" />
 		<field name="hovaten" type="String" />
 		<field name="email" type="String" />
 		<field name="chucvu_id" type="long" />
@@ -19,5 +17,6 @@
 		<field name="phu_trach_phong" type="int" />
 		<field name="created_at" type="Date" />
 		<field name="updated_at" type="Date" />
+		<field name="groupId" type="long" />
 	</model>
 </model-hints>

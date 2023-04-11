@@ -64,24 +64,21 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 	public static final String TABLE_NAME = "_Users";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"id_", Types.INTEGER},
-		{"groupId", Types.BIGINT}, {"hovaten", Types.VARCHAR},
+		{"id_", Types.INTEGER}, {"hovaten", Types.VARCHAR},
 		{"email", Types.VARCHAR}, {"chucvu_id", Types.BIGINT},
 		{"trangthai", Types.BIGINT}, {"phongban_id", Types.BIGINT},
 		{"ca_lam_id", Types.BIGINT}, {"ca_lam_toi", Types.BIGINT},
 		{"ma_xac_nhan", Types.VARCHAR}, {"zalo_id", Types.VARCHAR},
 		{"cham_cong_ngoai", Types.BIGINT}, {"so_ngay_nghi_phep", Types.BIGINT},
 		{"phu_trach_phong", Types.INTEGER}, {"created_at", Types.TIMESTAMP},
-		{"updated_at", Types.TIMESTAMP}
+		{"updated_at", Types.TIMESTAMP}, {"groupId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("id_", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("hovaten", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("email", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("chucvu_id", Types.BIGINT);
@@ -96,10 +93,11 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		TABLE_COLUMNS_MAP.put("phu_trach_phong", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("created_at", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("updated_at", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table _Users (uuid_ VARCHAR(75) null,id_ INTEGER not null primary key,groupId LONG,hovaten VARCHAR(75) null,email VARCHAR(75) null,chucvu_id LONG,trangthai LONG,phongban_id LONG,ca_lam_id LONG,ca_lam_toi LONG,ma_xac_nhan VARCHAR(75) null,zalo_id VARCHAR(75) null,cham_cong_ngoai LONG,so_ngay_nghi_phep LONG,phu_trach_phong INTEGER,created_at DATE null,updated_at DATE null)";
+		"create table _Users (id_ INTEGER not null primary key,hovaten VARCHAR(75) null,email VARCHAR(75) null,chucvu_id LONG,trangthai LONG,phongban_id LONG,ca_lam_id LONG,ca_lam_toi LONG,ma_xac_nhan VARCHAR(75) null,zalo_id VARCHAR(75) null,cham_cong_ngoai LONG,so_ngay_nghi_phep LONG,phu_trach_phong INTEGER,created_at DATE null,updated_at DATE null,groupId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table _Users";
 
@@ -120,17 +118,11 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 2L;
-
-	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long ID_COLUMN_BITMASK = 4L;
+	public static final long ID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -237,15 +229,9 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		Map<String, BiConsumer<Users, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<Users, ?>>();
 
-		attributeGetterFunctions.put("uuid", Users::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<Users, String>)Users::setUuid);
 		attributeGetterFunctions.put("id", Users::getId);
 		attributeSetterBiConsumers.put(
 			"id", (BiConsumer<Users, Integer>)Users::setId);
-		attributeGetterFunctions.put("groupId", Users::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<Users, Long>)Users::setGroupId);
 		attributeGetterFunctions.put("hovaten", Users::getHovaten);
 		attributeSetterBiConsumers.put(
 			"hovaten", (BiConsumer<Users, String>)Users::setHovaten);
@@ -294,40 +280,14 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		attributeGetterFunctions.put("updated_at", Users::getUpdated_at);
 		attributeSetterBiConsumers.put(
 			"updated_at", (BiConsumer<Users, Date>)Users::setUpdated_at);
+		attributeGetterFunctions.put("groupId", Users::getGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId", (BiConsumer<Users, Long>)Users::setGroupId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public String getUuid() {
-		if (_uuid == null) {
-			return "";
-		}
-		else {
-			return _uuid;
-		}
-	}
-
-	@Override
-	public void setUuid(String uuid) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_uuid = uuid;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalUuid() {
-		return getColumnOriginalValue("uuid_");
 	}
 
 	@JSON
@@ -343,30 +303,6 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		}
 
 		_id = id;
-	}
-
-	@JSON
-	@Override
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	@Override
-	public void setGroupId(long groupId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_groupId = groupId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalGroupId() {
-		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -599,6 +535,30 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		_updated_at = updated_at;
 	}
 
+	@JSON
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_groupId = groupId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalGroupId() {
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -642,9 +602,7 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 	public Object clone() {
 		UsersImpl usersImpl = new UsersImpl();
 
-		usersImpl.setUuid(getUuid());
 		usersImpl.setId(getId());
-		usersImpl.setGroupId(getGroupId());
 		usersImpl.setHovaten(getHovaten());
 		usersImpl.setEmail(getEmail());
 		usersImpl.setChucvu_id(getChucvu_id());
@@ -659,6 +617,7 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		usersImpl.setPhu_trach_phong(getPhu_trach_phong());
 		usersImpl.setCreated_at(getCreated_at());
 		usersImpl.setUpdated_at(getUpdated_at());
+		usersImpl.setGroupId(getGroupId());
 
 		usersImpl.resetOriginalValues();
 
@@ -669,9 +628,7 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 	public Users cloneWithOriginalValues() {
 		UsersImpl usersImpl = new UsersImpl();
 
-		usersImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		usersImpl.setId(this.<Integer>getColumnOriginalValue("id_"));
-		usersImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
 		usersImpl.setHovaten(this.<String>getColumnOriginalValue("hovaten"));
 		usersImpl.setEmail(this.<String>getColumnOriginalValue("email"));
 		usersImpl.setChucvu_id(this.<Long>getColumnOriginalValue("chucvu_id"));
@@ -694,6 +651,7 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 			this.<Date>getColumnOriginalValue("created_at"));
 		usersImpl.setUpdated_at(
 			this.<Date>getColumnOriginalValue("updated_at"));
+		usersImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
 
 		return usersImpl;
 	}
@@ -769,17 +727,7 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 	public CacheModel<Users> toCacheModel() {
 		UsersCacheModel usersCacheModel = new UsersCacheModel();
 
-		usersCacheModel.uuid = getUuid();
-
-		String uuid = usersCacheModel.uuid;
-
-		if ((uuid != null) && (uuid.length() == 0)) {
-			usersCacheModel.uuid = null;
-		}
-
 		usersCacheModel.id = getId();
-
-		usersCacheModel.groupId = getGroupId();
 
 		usersCacheModel.hovaten = getHovaten();
 
@@ -846,6 +794,8 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		else {
 			usersCacheModel.updated_at = Long.MIN_VALUE;
 		}
+
+		usersCacheModel.groupId = getGroupId();
 
 		return usersCacheModel;
 	}
@@ -937,9 +887,7 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 
 	}
 
-	private String _uuid;
 	private int _id;
-	private long _groupId;
 	private String _hovaten;
 	private String _email;
 	private long _chucvu_id;
@@ -954,6 +902,7 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 	private int _phu_trach_phong;
 	private Date _created_at;
 	private Date _updated_at;
+	private long _groupId;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -984,9 +933,7 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
-		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("id_", _id);
-		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("hovaten", _hovaten);
 		_columnOriginalValues.put("email", _email);
 		_columnOriginalValues.put("chucvu_id", _chucvu_id);
@@ -1001,6 +948,7 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		_columnOriginalValues.put("phu_trach_phong", _phu_trach_phong);
 		_columnOriginalValues.put("created_at", _created_at);
 		_columnOriginalValues.put("updated_at", _updated_at);
+		_columnOriginalValues.put("groupId", _groupId);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1008,7 +956,6 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 	static {
 		Map<String, String> attributeNames = new HashMap<>();
 
-		attributeNames.put("uuid_", "uuid");
 		attributeNames.put("id_", "id");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
@@ -1025,39 +972,37 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("uuid_", 1L);
+		columnBitmasks.put("id_", 1L);
 
-		columnBitmasks.put("id_", 2L);
+		columnBitmasks.put("hovaten", 2L);
 
-		columnBitmasks.put("groupId", 4L);
+		columnBitmasks.put("email", 4L);
 
-		columnBitmasks.put("hovaten", 8L);
+		columnBitmasks.put("chucvu_id", 8L);
 
-		columnBitmasks.put("email", 16L);
+		columnBitmasks.put("trangthai", 16L);
 
-		columnBitmasks.put("chucvu_id", 32L);
+		columnBitmasks.put("phongban_id", 32L);
 
-		columnBitmasks.put("trangthai", 64L);
+		columnBitmasks.put("ca_lam_id", 64L);
 
-		columnBitmasks.put("phongban_id", 128L);
+		columnBitmasks.put("ca_lam_toi", 128L);
 
-		columnBitmasks.put("ca_lam_id", 256L);
+		columnBitmasks.put("ma_xac_nhan", 256L);
 
-		columnBitmasks.put("ca_lam_toi", 512L);
+		columnBitmasks.put("zalo_id", 512L);
 
-		columnBitmasks.put("ma_xac_nhan", 1024L);
+		columnBitmasks.put("cham_cong_ngoai", 1024L);
 
-		columnBitmasks.put("zalo_id", 2048L);
+		columnBitmasks.put("so_ngay_nghi_phep", 2048L);
 
-		columnBitmasks.put("cham_cong_ngoai", 4096L);
+		columnBitmasks.put("phu_trach_phong", 4096L);
 
-		columnBitmasks.put("so_ngay_nghi_phep", 8192L);
+		columnBitmasks.put("created_at", 8192L);
 
-		columnBitmasks.put("phu_trach_phong", 16384L);
+		columnBitmasks.put("updated_at", 16384L);
 
-		columnBitmasks.put("created_at", 32768L);
-
-		columnBitmasks.put("updated_at", 65536L);
+		columnBitmasks.put("groupId", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

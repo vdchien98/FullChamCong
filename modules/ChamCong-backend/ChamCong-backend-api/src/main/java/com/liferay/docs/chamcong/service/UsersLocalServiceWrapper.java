@@ -241,20 +241,6 @@ public class UsersLocalServiceWrapper
 		return _usersLocalService.fetchUsers(id);
 	}
 
-	/**
-	 * Returns the users matching the UUID and group.
-	 *
-	 * @param uuid the users's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching users, or <code>null</code> if a matching users could not be found
-	 */
-	@Override
-	public com.liferay.docs.chamcong.model.Users fetchUsersByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return _usersLocalService.fetchUsersByUuidAndGroupId(uuid, groupId);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
@@ -302,22 +288,6 @@ public class UsersLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _usersLocalService.getUsers(id);
-	}
-
-	/**
-	 * Returns the users matching the UUID and group.
-	 *
-	 * @param uuid the users's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching users
-	 * @throws PortalException if a matching users could not be found
-	 */
-	@Override
-	public com.liferay.docs.chamcong.model.Users getUsersByUuidAndGroupId(
-			String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _usersLocalService.getUsersByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**

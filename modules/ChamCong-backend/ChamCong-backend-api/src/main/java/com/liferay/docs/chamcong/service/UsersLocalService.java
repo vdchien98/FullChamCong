@@ -207,16 +207,6 @@ public interface UsersLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Users fetchUsers(int id);
 
-	/**
-	 * Returns the users matching the UUID and group.
-	 *
-	 * @param uuid the users's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching users, or <code>null</code> if a matching users could not be found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Users fetchUsersByUuidAndGroupId(String uuid, long groupId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -247,18 +237,6 @@ public interface UsersLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Users getUsers(int id) throws PortalException;
-
-	/**
-	 * Returns the users matching the UUID and group.
-	 *
-	 * @param uuid the users's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching users
-	 * @throws PortalException if a matching users could not be found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Users getUsersByUuidAndGroupId(String uuid, long groupId)
-		throws PortalException;
 
 	/**
 	 * Returns a range of all the userses.

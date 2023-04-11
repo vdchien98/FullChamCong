@@ -32,12 +32,8 @@ public class UsersTable extends BaseTable<UsersTable> {
 
 	public static final UsersTable INSTANCE = new UsersTable();
 
-	public final Column<UsersTable, String> uuid = createColumn(
-		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<UsersTable, Integer> id = createColumn(
 		"id_", Integer.class, Types.INTEGER, Column.FLAG_PRIMARY);
-	public final Column<UsersTable, Long> groupId = createColumn(
-		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<UsersTable, String> hovaten = createColumn(
 		"hovaten", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<UsersTable, String> email = createColumn(
@@ -66,6 +62,8 @@ public class UsersTable extends BaseTable<UsersTable> {
 		"created_at", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<UsersTable, Date> updated_at = createColumn(
 		"updated_at", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<UsersTable, Long> groupId = createColumn(
+		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 
 	private UsersTable() {
 		super("_Users", UsersTable::new);

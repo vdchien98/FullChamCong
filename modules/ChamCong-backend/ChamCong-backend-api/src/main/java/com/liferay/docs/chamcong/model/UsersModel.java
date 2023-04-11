@@ -56,21 +56,6 @@ public interface UsersModel extends BaseModel<Users> {
 	public void setPrimaryKey(int primaryKey);
 
 	/**
-	 * Returns the uuid of this users.
-	 *
-	 * @return the uuid of this users
-	 */
-	@AutoEscape
-	public String getUuid();
-
-	/**
-	 * Sets the uuid of this users.
-	 *
-	 * @param uuid the uuid of this users
-	 */
-	public void setUuid(String uuid);
-
-	/**
 	 * Returns the ID of this users.
 	 *
 	 * @return the ID of this users
@@ -83,20 +68,6 @@ public interface UsersModel extends BaseModel<Users> {
 	 * @param id the ID of this users
 	 */
 	public void setId(int id);
-
-	/**
-	 * Returns the group ID of this users.
-	 *
-	 * @return the group ID of this users
-	 */
-	public long getGroupId();
-
-	/**
-	 * Sets the group ID of this users.
-	 *
-	 * @param groupId the group ID of this users
-	 */
-	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the hovaten of this users.
@@ -297,6 +268,20 @@ public interface UsersModel extends BaseModel<Users> {
 	 * @param updated_at the updated_at of this users
 	 */
 	public void setUpdated_at(Date updated_at);
+
+	/**
+	 * Returns the group ID of this users.
+	 *
+	 * @return the group ID of this users
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this users.
+	 *
+	 * @param groupId the group ID of this users
+	 */
+	public void setGroupId(long groupId);
 
 	@Override
 	public Users cloneWithOriginalValues();

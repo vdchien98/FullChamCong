@@ -41,9 +41,7 @@ public class UsersWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("id", getId());
-		attributes.put("groupId", getGroupId());
 		attributes.put("hovaten", getHovaten());
 		attributes.put("email", getEmail());
 		attributes.put("chucvu_id", getChucvu_id());
@@ -58,28 +56,17 @@ public class UsersWrapper
 		attributes.put("phu_trach_phong", getPhu_trach_phong());
 		attributes.put("created_at", getCreated_at());
 		attributes.put("updated_at", getUpdated_at());
+		attributes.put("groupId", getGroupId());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Integer id = (Integer)attributes.get("id");
 
 		if (id != null) {
 			setId(id);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
 		}
 
 		String hovaten = (String)attributes.get("hovaten");
@@ -164,6 +151,12 @@ public class UsersWrapper
 
 		if (updated_at != null) {
 			setUpdated_at(updated_at);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 	}
 
@@ -330,16 +323,6 @@ public class UsersWrapper
 	@Override
 	public Date getUpdated_at() {
 		return model.getUpdated_at();
-	}
-
-	/**
-	 * Returns the uuid of this users.
-	 *
-	 * @return the uuid of this users
-	 */
-	@Override
-	public String getUuid() {
-		return model.getUuid();
 	}
 
 	/**
@@ -515,16 +498,6 @@ public class UsersWrapper
 	@Override
 	public void setUpdated_at(Date updated_at) {
 		model.setUpdated_at(updated_at);
-	}
-
-	/**
-	 * Sets the uuid of this users.
-	 *
-	 * @param uuid the uuid of this users
-	 */
-	@Override
-	public void setUuid(String uuid) {
-		model.setUuid(uuid);
 	}
 
 	/**

@@ -49,7 +49,7 @@
 						<label for="email" class="col-form-label text-md-left col-md-2">Email
 							đăng nhập <span class="text-danger">(*)</span>
 						</label> <input id="email" type="text" class="form-control col-md-9"
-							name="email" required autofocus
+							name="<portlet:namespace />email" required autofocus
 							placeholder="Nhập email đăng nhập"
 							value="">
 					</div>
@@ -57,7 +57,7 @@
 						<label for="zalo_id" class="col-form-label text-md-left col-md-2">Zalo
 							id <span class="text-danger">(*)</span>
 						</label> <input id="zalo_id" type="text" class="form-control col-md-9"
-							name="zalo_id" autofocus placeholder="Nhập zalo id"
+							name="<portlet:namespace />zalo_id" autofocus placeholder="Nhập zalo id"
 							value="">
 					</div>
 					
@@ -66,7 +66,7 @@
 						<label for="chucvu_id"
 							class="col-form-label text-md-left col-md-2">Chúc vụ <span
 							class="text-danger">(*)</span></label> <select
-							class="custom-select col-md-6" id="chucvu_id" name="chucvu_id"
+							class="custom-select col-md-6" id="chucvu_id" name="<portlet:namespace />chucvu_id"
 							required>
 							<option value="">[-- Chọn chức vụ --]</option>			
 						</select>
@@ -76,7 +76,7 @@
 							class="col-form-label text-md-left col-md-2">Phòng/ban <span
 							class="text-danger">(*)</span></label> <select
 							class="custom-select col-md-6" id="phongban_id"
-							name="phongban_id" required>
+							name="<portlet:namespace />phongban_id" required>
 							<option value="">[-- Chọn phòng/ban --]</option> 
 						</select>
 					</div>
@@ -85,7 +85,7 @@
 							class="col-form-label text-md-left col-md-2">Ca làm việc
 							<span class="text-danger">(*)</span>
 						</label> <select class="custom-select col-md-6" id="ca_lam_id"
-							name="ca_lam_id" required>
+							name="<portlet:namespace />ca_lam_id" required>
 							<option></option>
 						</select>
 					</div>
@@ -95,7 +95,7 @@
 							class="col-form-label text-md-left col-md-2">Số ngày nghỉ
 							phép trong năm <span class="text-danger">(*)</span>
 						</label> <input id="so_ngay_nghi_phep" type="number"
-							class="form-control col-md-2" name="so_ngay_nghi_phep"
+							class="form-control col-md-2" name="<portlet:namespace />so_ngay_nghi_phep"
 							placeholder="Nhập số ngày nghỉ phép trong năm"
 							value="">
 					</div>
@@ -107,18 +107,18 @@
 								class="custom-control-label" for="trangthai">Hoạt động</label>
 						</div>
 						<div class="custom-control custom-checkbox ml-5">
-							<input type="checkbox" name="ca_lam_toi" value="1"
+							<input type="checkbox" name="<portlet:namespace />ca_lam_toi" value="1"
 								class="custom-control-input" id="ca_lam_toi"  > <label
 								class="custom-control-label" for="ca_lam_toi">Làm ca tối</label>
 						</div>
 						<div class="custom-control custom-checkbox ml-5">
-							<input type="checkbox" name="cham_cong_ngoai" value="1"
+							<input type="checkbox" name="<portlet:namespace />cham_cong_ngoai" value="1"
 								class="custom-control-input" id="cham_cong_ngoai" > <label
 								class="custom-control-label" for="cham_cong_ngoai">Chấm
 								công ngoài</label>
 						</div>
 						<div class="custom-control custom-checkbox ml-5">
-							<input type="checkbox" name="phu_trach_phong" value="1"
+							<input type="checkbox" name="<portlet:namespace />phu_trach_phong" value="1"
 								class="custom-control-input" id="phu_trach_phong"> 
 							<label class="custom-control-label" for="phu_trach_phong">Phụ trách phòng</label>
 						</div>
