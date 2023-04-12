@@ -13,26 +13,28 @@
 
 <style>
 .card-header.py-3.headerDSNhanVien {
-    display: flex;
-    justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 }
 </style>
 
 <div class="container-fluid">
-	<h1 class="h3 mb-2 text-gray-800 font-weight-bold text-uppercase">Quản trị nhân viên</h1>
+	<h1 class="h3 mb-2 text-gray-800 font-weight-bold text-uppercase">Quản
+		trị nhân viên</h1>
 	<div class="card shadow mb-4">
 		<div class="card-header py-3 headerDSNhanVien">
-			<h4 class="m-0 font-weight-bold text-primary ">
-				Danh sách nhân viên	
-			</h4>
-			<aui:button-row >				
-					<aui:button iconCssClass="icon-plus" onClick="<%=addEntryURL.toString()%>" value="Thêm mới"></aui:button>
-				</aui:button-row>
+			<h4 class="m-0 font-weight-bold text-primary ">Danh sách nhân
+				viên</h4>
+			<aui:button-row>
+				<aui:button iconCssClass="icon-plus"
+					onClick="<%=addEntryURL.toString()%>" value="Thêm mới"></aui:button>
+			</aui:button-row>
 		</div>
 		<div class="card-body">
 			<div class="row">
 				<div class="col-md-12">
-					<table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+					<table class="table table-hover" id="dataTable" width="100%"
+						cellspacing="0">
 						<thead>
 							<tr>
 								<th style="width: 5%;">STT</th>
@@ -42,52 +44,52 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<th>1</th>
-								<th>
-									<div class="row">
-										<i class="fa fa-user-circle-o" aria-hidden="true"></i> <span
-											class="text-info mr-3"> Viên chức </span> <span>Vũ
-											Đăng Chiến</span>
-									</div>
-									<div class="row">
-										<span class="text-warning mr-3">Phòng/ban: </span> Nghiên cứu
-										và phát triển phần mềm
-									</div>
-									<div class="row">
-										<span class="mr-3">Tên đăng nhập: </span>vudangchien98@gmail.com
-										<span class="ml-5 text-info">Có làm ca tối</span> <span
-											class="ml-5 text-primary">Có chấm công ngoài</span>
-									</div>
-									<div class="row">
-										<span class="mr-3">Số ngày nghỉ phép trong năm: </span><span
-											class="text-danger">94</span>
-									</div>
+							<c:forEach var="user" items="${usersList}">
 
-								</th>
-								<th>
-								    <span class="btn btn-success btn-sm">Hoạt động</span> 
-								    <span class="btn btn-light btn-sm">Không hoạt động</span>
-								</th>
-								<th>
-								   <a class="btn btn-success btn-circle mr-1 btn-sm" href="{{ route('admin.nhan-vien.edit', $data->id) }}"> <i
-										class="fa fa-pencil" aria-hidden="true"></i>
-								  </a>
-									<button class="btn btn-danger btn-circle btn-sm" type="button"
-										onclick="confirmDelete({{ $data->id }});">
-										<i class="fa fa-trash" aria-hidden="true"></i>
-									</button>
+								<tr>
+									<th>${user.id}</th>
+									<th>
+										<div class="row">
+											<i class="fa fa-user-circle-o" aria-hidden="true"></i> <span
+												class="text-info mr-3"> Viên chức </span> <span>${user.hovaten}</span>
+										</div>
+										<div class="row">
+											<span class="text-warning mr-3">Phòng/ban: </span> Nghiên cứu
+											và phát triển phần mềm
+										</div>
+										<div class="row">
+											<span class="mr-3">Tên đăng nhập: </span>${user.email}
+											<span class="ml-5 text-info">Có làm ca tối</span> <span
+												class="ml-5 text-primary">Có chấm công ngoài</span>
+										</div>
+										<div class="row">
+											<span class="mr-3">Số ngày nghỉ phép trong năm: </span><span
+												class="text-danger">94</span>
+										</div>
 
-									<form id="delete-{{ $data->id }}" class="float-right"
-										action="{{ route('admin.nhan-vien.destroy', $data->id) }}"
-										method="POST">
-										<%-- 
+									</th>
+									<th><span class="btn btn-success btn-sm">Hoạt động</span>
+										<span class="btn btn-light btn-sm">Không hoạt động</span></th>
+									<th><a class="btn btn-success btn-circle mr-1 btn-sm"
+										href="{{ route('admin.nhan-vien.edit', $data->id) }}"> <i
+											class="fa fa-pencil" aria-hidden="true"></i>
+									</a>
+										<button class="btn btn-danger btn-circle btn-sm" type="button"
+											onclick="confirmDelete({{ $data->id }});">
+											<i class="fa fa-trash" aria-hidden="true"></i>
+										</button>
+
+										<form id="delete-{{ $data->id }}" class="float-right"
+											action="{{ route('admin.nhan-vien.destroy', $data->id) }}"
+											method="POST">
+											<%-- 
                                             @csrf
                                             @method('DELETE')  
                                           --%>
-									</form>
-								</th>
-							</tr>
+										</form></th>
+								</tr>
+							</c:forEach>
+
 						</tbody>
 					</table>
 				</div>
