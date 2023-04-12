@@ -1,9 +1,11 @@
 package com.liferay.docs.com.homepage.portlet.portlet;
 
-import com.liferay.docs.chamcong.service.UsersLocalServiceUtil;
-import com.liferay.docs.chamcong.model.Users;
 import com.liferay.docs.chamcong.service.UsersLocalService;
 import com.liferay.docs.chamcong.service.UsersLocalServiceUtil;
+//import com.liferay.docs.chamcong.service.UsersLocalServiceUtil;
+//import com.liferay.docs.chamcong.model.Users;
+//import com.liferay.docs.chamcong.service.UsersLocalService;
+//import com.liferay.docs.chamcong.service.UsersLocalServiceUtil;
 import com.liferay.docs.com.homepage.portlet.constants.HomePagePortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -67,7 +69,7 @@ public class HomePagePortlet extends MVCPortlet {
 			}
 		   
 	   //  Chuyển hướng đến trang quản lý nhân viên
-		//  response.sendRedirect("/home");
+		  response.sendRedirect("/home");
 		}
 
 		@Override
@@ -76,12 +78,12 @@ public class HomePagePortlet extends MVCPortlet {
 			super.render(renderRequest, renderResponse);
 		}
 
-//		@Reference(unbind = "-")
-//		protected void setEntryService(UsersLocalService entryLocalService) {
-//			_entryLocalService = entryLocalService;
-//		}
-//	
-//		private UsersLocalService _entryLocalService;
+		@Reference(unbind = "-")
+		protected void setEntryService(UsersLocalService entryLocalService) {
+			_entryLocalService = entryLocalService;
+		}
+	
+		private UsersLocalService _entryLocalService;
 
 		
 		

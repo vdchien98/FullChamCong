@@ -16,9 +16,6 @@ package com.liferay.docs.chamcong.service.impl;
 
 import com.liferay.docs.chamcong.service.base.UsersLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
-
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.docs.chamcong.model.Users;
 import com.liferay.docs.chamcong.service.base.UsersLocalServiceBaseImpl;
@@ -49,7 +46,7 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
     		System.out.println("xin chào moi nguoi da den day roi hihihiihihi");
     		Date now = new Date();
             System.out.println("hovaten la " + hovaten);
-            user.setId(id);
+        	   user.setId(id);
        		user.setHovaten(hovaten);
        		user.setEmail(email);
        		System.out.println("email la " + email);
