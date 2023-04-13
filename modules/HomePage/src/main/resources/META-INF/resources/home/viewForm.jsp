@@ -43,7 +43,7 @@
 						name="<portlet:namespace />hovaten" 
 						required autofocus 
 						placeholder="Nhập họ và tên"
-						 value=""/>
+						 value="${useredit.hovaten} "/>
 					</div>
 					<div class="form-group row mt-4">
 						<label for="email" class="col-form-label text-md-left col-md-2">Email

@@ -46,10 +46,10 @@ import org.osgi.service.component.annotations.Reference;
 service = Portlet.class
 )
 public class HomePagePortlet extends MVCPortlet {
-	public void addNhanVien(ActionRequest request, ActionResponse response) throws IOException, PortletException {	
+	  public void addNhanVien(ActionRequest request, ActionResponse response) throws IOException, PortletException {	
 		    // Lấy các tham số từ request
 		    ServiceContext serviceContext = new ServiceContext();
-       		  // ServiceContextFactory.getInstance(Users.class.getName(), request); 
+		    int id = ParamUtil.getInteger(request, "id");
 		    String hoTen = ParamUtil.getString(request, "hovaten");
 		    System.out.println("trangThai la ...... "+ hoTen);
 		    String email = ParamUtil.getString(request, "email");
@@ -63,13 +63,10 @@ public class HomePagePortlet extends MVCPortlet {
 		    long chamCongNgoai = ParamUtil.getLong(request, "cham_cong_ngoai");
 		    long soNgayNghiPhep = ParamUtil.getLong(request, "so_ngay_nghi_phep");
 		    int  phuTrachPhong = ParamUtil.getInteger(request, "phu_trach_phong");
-//		   / System.out.println("phuTrachPhong la ... "+phuTrachPhong);
-		   
+		   System.out.println(" **********+++++++ "+ id);
 		    try {
-		    
 		    	UsersLocalServiceUtil.addNhanVien(hoTen, email, chucvu, trangThai, phongban_id, ca_lam_id, caLamToi, ma_xac_nhan, zaloId, 
 				    		chamCongNgoai, soNgayNghiPhep, phuTrachPhong, serviceContext);
-		    	//System.out.println("xin chào moi nguoi hhihi");
 			} catch (Exception e) {
 				System.out.println("chien");
 			}
@@ -81,31 +78,20 @@ public class HomePagePortlet extends MVCPortlet {
 		@Override
 		public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 				throws IOException, PortletException {		
-			  
 			    List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
 			    HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 			    httpServletRequest.setAttribute("usersList", usersList);
-			    for (Users user : usersList) {
-			        System.out.println("User ID: " + user.getId());
-			        System.out.println("Ho va ten: " + user.getHovaten());
-			        System.out.println("Email: " + user.getEmail());
-			        System.out.println("Chuc vu ID: " + user.getChucvu_id());
-			        System.out.println("Trang thai: " + user.getTrangthai());
-			        System.out.println("Phong ban ID: " + user.getPhongban_id());
-			        System.out.println("Ca lam ID: " + user.getCa_lam_id());
-			        System.out.println("Ca lam toi: " + user.getCa_lam_toi());
-			        System.out.println("Ma xac nhan: " + user.getMa_xac_nhan());
-			        System.out.println("Zalo ID: " + user.getZalo_id());
-			        System.out.println("Cham cong ngoai: " + user.getCham_cong_ngoai());
-			        System.out.println("So ngay nghi phep: " + user.getSo_ngay_nghi_phep());
-			        System.out.println("Phu trach phong: " + user.getPhu_trach_phong());
-			        System.out.println("Created at: " + user.getCreated_at());
-			        System.out.println("Updated at: " + user.getUpdated_at());
-			        System.out.println("=============");
-			    }
-					
-
-	
+              int entryId = ParamUtil.getInteger(renderRequest, "entryId");
+              System.out.println("***"+ entryId); 
+             if(entryId > 0)
+             {    
+            	 try {
+            		 Users useredit = UsersLocalServiceUtil.getUsers(entryId);
+            		 httpServletRequest.setAttribute("useredit", useredit);
+				} catch (Exception e) {
+					e.printStackTrace();
+				} 	 
+             }	
 			super.render(renderRequest, renderResponse);
 		}
 
@@ -113,7 +99,6 @@ public class HomePagePortlet extends MVCPortlet {
 		protected void setEntryService(UsersLocalService entryLocalService) {
 			_entryLocalService = entryLocalService;
 		}
-	
 		private UsersLocalService _entryLocalService;
 
 		

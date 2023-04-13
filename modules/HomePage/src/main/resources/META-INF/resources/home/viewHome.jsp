@@ -1,3 +1,4 @@
+<%@page import="com.liferay.docs.chamcong.model.Users"%>
 <%@ include file="../init.jsp"%>
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui"%>
 
@@ -17,6 +18,7 @@
 	justify-content: space-between;
 }
 </style>
+
 
 <div class="container-fluid">
 	<h1 class="h3 mb-2 text-gray-800 font-weight-bold text-uppercase">Quản
@@ -45,6 +47,10 @@
 						</thead>
 						<tbody>
 							<c:forEach var="user" items="${usersList}">
+							 <portlet:renderURL var="editURL">
+												<portlet:param name="entryId" value="${user.id }" />
+												<portlet:param name="mvcPath" value="/home/viewForm.jsp" />
+										  </portlet:renderURL>
 
 								<tr>
 									<th>${user.id}</th>
@@ -54,12 +60,13 @@
 												class="text-info mr-3"> Viên chức </span> <span>${user.hovaten}</span>
 										</div>
 										<div class="row">
+										
 											<span class="text-warning mr-3">Phòng/ban: </span> Nghiên cứu
 											và phát triển phần mềm
 										</div>
 										<div class="row">
-											<span class="mr-3">Tên đăng nhập: </span>${user.email}
-											<span class="ml-5 text-info">Có làm ca tối</span> <span
+											<span class="mr-3">Tên đăng nhập: </span>${user.email} <span
+												class="ml-5 text-info">Có làm ca tối</span> <span
 												class="ml-5 text-primary">Có chấm công ngoài</span>
 										</div>
 										<div class="row">
@@ -70,14 +77,16 @@
 									</th>
 									<th><span class="btn btn-success btn-sm">Hoạt động</span>
 										<span class="btn btn-light btn-sm">Không hoạt động</span></th>
-									<th><a class="btn btn-success btn-circle mr-1 btn-sm"
-										href="{{ route('admin.nhan-vien.edit', $data->id) }}"> <i
-											class="fa fa-pencil" aria-hidden="true"></i>
+									<th>
+									<a class="btn btn-success btn-circle mr-1 btn-sm" href="${editURL }"> 
+										<i class="fa fa-pencil" aria-hidden="true"> 
+										</i>
 									</a>
-										<button class="btn btn-danger btn-circle btn-sm" type="button"
+									<button class="btn btn-danger btn-circle btn-sm" 
+									        type="button"
 											onclick="confirmDelete({{ $data->id }});">
 											<i class="fa fa-trash" aria-hidden="true"></i>
-										</button>
+									</button>
 
 										<form id="delete-{{ $data->id }}" class="float-right"
 											action="{{ route('admin.nhan-vien.destroy', $data->id) }}"
