@@ -47,10 +47,10 @@
 						</thead>
 						<tbody>
 							<c:forEach var="user" items="${usersList}">
-							 <portlet:renderURL var="editURL">
-												<portlet:param name="entryId" value="${user.id }" />
+							     <portlet:renderURL var="editURL">
+												<portlet:param name="id" value="${user.id }" />
 												<portlet:param name="mvcPath" value="/home/viewForm.jsp" />
-										  </portlet:renderURL>
+								 </portlet:renderURL>
 
 								<tr>
 									<th>${user.id}</th>

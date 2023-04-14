@@ -42,23 +42,15 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 			int phu_trach_phong, ServiceContext serviceContext) throws PortalException, SystemException {
         	long groupId = serviceContext.getScopeGroupId();
     		int id = (int) CounterLocalServiceUtil.increment();
-    	
-    		System.out.println("id la " + id);
     		Users user = usersPersistence.create(id);
-    		// System.out.println("xin chào moi nguoi da den day roi hihihiihihi");
     		Date now = new Date();
-            // System.out.println("hovaten la " + hovaten);
-        	   user.setId(id);
+        	user.setId(id);
        		user.setHovaten(hovaten);
        		user.setEmail(email);
-       		user.setChucvu_id(chucvu_id);
-       		
-       		user.setTrangthai(trangthai);
-       		
-       		user.setPhongban_id(phongban_id);
-       		
-       		user.setCa_lam_id(ca_lam_id);
-       		
+       		user.setChucvu_id(chucvu_id);	
+       		user.setTrangthai(trangthai);	
+       		user.setPhongban_id(phongban_id);	
+       		user.setCa_lam_id(ca_lam_id);	
        		user.setCa_lam_toi(ca_lam_toi);
        		user.setMa_xac_nhan(ma_xac_nhan);
        		user.setZalo_id(zalo_id);
@@ -77,25 +69,27 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 			int phu_trach_phong, ServiceContext serviceContext)
 			throws PortalException, SystemException {
 		Date now = new Date();
+		long groupId = serviceContext.getScopeGroupId();
 		Users user = getUsers(id);
 		user.setHovaten(hovaten);
-		user.setEmail(email);
-		user.setChucvu_id(chucvu_id);
-		user.setTrangthai(trangthai);
-		user.setPhongban_id(phongban_id);
-		user.setCa_lam_id(ca_lam_id);
-		user.setCa_lam_toi(ca_lam_toi);
-		user.setMa_xac_nhan(ma_xac_nhan);
-		user.setZalo_id(zalo_id);
-		user.setCham_cong_ngoai(cham_cong_ngoai);
-		user.setSo_ngay_nghi_phep(so_ngay_nghi_phep);
-		user.setPhu_trach_phong(phu_trach_phong);
-		user.setCreated_at(now);
-		user.setUpdated_at(now);
-		user.setExpandoBridgeAttributes(serviceContext);
-		usersPersistence.update(user);
+   		user.setEmail(email);
+   		user.setChucvu_id(chucvu_id);	
+   		user.setTrangthai(trangthai);	
+   		user.setPhongban_id(phongban_id);	
+   		user.setCa_lam_id(ca_lam_id);	
+   		user.setCa_lam_toi(ca_lam_toi);
+   		user.setMa_xac_nhan(ma_xac_nhan);
+   		user.setZalo_id(zalo_id);
+   		user.setCham_cong_ngoai(cham_cong_ngoai);
+   		user.setSo_ngay_nghi_phep(so_ngay_nghi_phep);
+   		user.setPhu_trach_phong(phu_trach_phong);
+   		user.setCreated_at(now);
+   		user.setUpdated_at(now);
+   		user.setGroupId(groupId);
+   		usersLocalService.updateUsers(user);
 		return user;
 	}
+
 
 
 

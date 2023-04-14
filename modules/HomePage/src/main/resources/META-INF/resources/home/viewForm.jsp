@@ -18,6 +18,8 @@
 	<portlet:param name="mvcPath" value="/home/viewHome.jsp"></portlet:param>
 </portlet:renderURL>
 
+
+
 <div class="container-fluid">
 	<h1 class="h3 mb-2 text-gray-800 font-weight-bold text-uppercase">Quản
 		trị nhân viên</h1>
@@ -28,7 +30,7 @@
 			</h4>
 		</div>
 		<div class="card-body">
-		<portlet:actionURL name="addNhanVien" var="formActionURL" />
+		<portlet:actionURL name="saveNhanVien" var="formActionURL" />
 			<form id="form" method="POST"
 				action="<%=formActionURL.toString()%>" name="<portlet:namespace />fm">
 				<div class="modal-body">
@@ -124,9 +126,11 @@
 						</div>
 					</div>
 				</div>
+				<input type="hidden" value="${useredit.id}" class="custom-control-input" name="<portlet:namespace />id"/>
 				<div class="modal-footer justify-content-center">
 					<aui:button-row>
-						<aui:button type="submit" name="submit" value='Lưu'></aui:button>
+						<aui:button type="submit" name="submit" value="Lưu">
+						</aui:button>
 						<aui:button type="cancel" value='Quay Lại' onClick="<%=viewURL.toString()%>"></aui:button>
 					</aui:button-row>
 					
