@@ -103,6 +103,14 @@ public class UsersLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static Users deleteUser(
+			int id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().deleteUser(id, serviceContext);
+	}
+
 	/**
 	 * Deletes the users with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

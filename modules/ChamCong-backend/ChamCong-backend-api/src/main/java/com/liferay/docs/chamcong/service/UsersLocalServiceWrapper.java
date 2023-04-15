@@ -100,6 +100,15 @@ public class UsersLocalServiceWrapper
 		return _usersLocalService.deletePersistedModel(persistedModel);
 	}
 
+	@Override
+	public com.liferay.docs.chamcong.model.Users deleteUser(
+			int id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _usersLocalService.deleteUser(id, serviceContext);
+	}
+
 	/**
 	 * Deletes the users with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

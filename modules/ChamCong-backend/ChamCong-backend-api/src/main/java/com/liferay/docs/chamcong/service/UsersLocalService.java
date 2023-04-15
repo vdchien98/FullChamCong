@@ -105,6 +105,9 @@ public interface UsersLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public Users deleteUser(int id, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Deletes the users with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

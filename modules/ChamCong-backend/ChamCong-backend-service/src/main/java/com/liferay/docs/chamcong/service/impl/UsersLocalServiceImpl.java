@@ -90,7 +90,11 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 		return user;
 	}
 
-
+	public Users deleteUser (int id, ServiceContext serviceContext) throws PortalException {
+	    Users user = getUsers(id);
+	    user = deleteUsers(id);
+	    return user;
+	}
 
 
 }

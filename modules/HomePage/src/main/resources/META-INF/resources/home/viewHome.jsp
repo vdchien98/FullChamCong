@@ -82,19 +82,17 @@
 										<i class="fa fa-pencil" aria-hidden="true"> 
 										</i>
 									</a>
-									<button class="btn btn-danger btn-circle btn-sm" 
-									        type="button"
-											onclick="confirmDelete({{ $data->id }});">
-											<i class="fa fa-trash" aria-hidden="true"></i>
-									</button>
+									 <portlet:actionURL var="deleteNhanVienURL" name="deleteNhanVien"/>
+										<form name="deleteNhanVienForm" id="deleteNhanVienForm" method="POST" action="<%=deleteNhanVienURL%>">
+											 <input type="hidden" name="<portlet:namespace />deleteUserId" value="${user.id}" />
+											<button 
+											    class="btn btn-danger btn-circle btn-sm"
+												type="submit" 
+												>
+												<i class="fa fa-trash" aria-hidden="true"></i>
+											</button>
+											
 
-										<form id="delete-{{ $data->id }}" class="float-right"
-											action="{{ route('admin.nhan-vien.destroy', $data->id) }}"
-											method="POST">
-											<%-- 
-                                            @csrf
-                                            @method('DELETE')  
-                                          --%>
 										</form></th>
 								</tr>
 							</c:forEach>
