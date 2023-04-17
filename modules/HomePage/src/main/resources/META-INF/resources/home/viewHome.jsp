@@ -46,14 +46,14 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="user" items="${usersList}">
+							<c:forEach var="user" items="${usersList}" varStatus="loop">
 							     <portlet:renderURL var="editURL">
 												<portlet:param name="id" value="${user.id }" />
 												<portlet:param name="mvcPath" value="/home/viewForm.jsp" />
 								 </portlet:renderURL>
 
 								<tr>
-									<th>${user.id}</th>
+									<th>${loop.index + 1}</th>
 									<th>
 										<div class="row">
 											<i class="fa fa-user-circle-o" aria-hidden="true"></i> <span
@@ -71,7 +71,7 @@
 										</div>
 										<div class="row">
 											<span class="mr-3">Số ngày nghỉ phép trong năm: </span><span
-												class="text-danger">94</span>
+												class="text-danger">${user.so_ngay_nghi_phep}</span>
 										</div>
 
 									</th>

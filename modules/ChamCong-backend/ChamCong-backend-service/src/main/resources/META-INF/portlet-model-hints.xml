@@ -1,6 +1,15 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.liferay.docs.chamcong.model.Phongban">
+		<field name="id" type="int" />
+		<field name="tenphong" type="String" />
+		<field name="trangthai" type="int" />
+		<field name="nguoi_phu_trach" type="int" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
+		<field name="groupId" type="long" />
+	</model>
 	<model name="com.liferay.docs.chamcong.model.Users">
 		<field name="id" type="int" />
 		<field name="hovaten" type="String" />

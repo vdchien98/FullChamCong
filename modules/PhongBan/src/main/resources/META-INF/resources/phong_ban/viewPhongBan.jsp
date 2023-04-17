@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="../init.jsp"%>
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
 
 <div class="container-fluid">
 	<h1 class="h3 mb-2 text-gray-800 font-weight-bold text-uppercase">Quản
@@ -24,83 +29,85 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="data" items="${listPhongban}" varStatus="status">
-								<c:set var="usersCount" value="${data.users.size()}" />
-
+							<c:forEach var="phongban" items="${phongBanList}" varStatus="loop">
 								<tr>
-									<td>${status.index + 1}</td>
-									<td><span>${data.tenphong}</span> <br> <span
-										class="font-weight-bold text-primary">Số nhân viên:
-											${usersCount}</span> <br> <span
-										class="font-weight-bold text-warning">Người phụ trách:
-											${not empty data.nguoi_phu_trach ? data.nguoiPhuTrach.hovaten : ''}</span>
+									<td>${loop.index +1}</td>
+									<td>
+									    <span>${phongban.tenphong}</span> 
+									    <br> 
+									    <span
+										class="font-weight-bold text-primary">Số nhân viên: 9</span>
+										 <br>
+										<span class="font-weight-bold text-warning">Người phụ
+											trách: ${phongban.nguoi_phu_trach} </span>
 									</td>
-									<td><c:if test="${data.trangthai}">
+									<td>
+									    <c:if test="${condition}">
 											<span class="btn btn-success btn-sm">Hoạt động</span>
-										</c:if> <c:if test="${!data.trangthai}">
+										</c:if> 
+										<c:if test="${!condition}">
 											<span class="btn btn-light btn-sm">Không hoạt động</span>
 										</c:if></td>
 									<td>
 										<button class="btn btn-success btn-circle mr-1 btn-sm"
-											type="button" data-toggle="tooltip" title="Sửa"
-											onclick="editPhongban(${data});">
-											<i class="fas fa-edit"></i>
-										</button> <c:if test="${usersCount == 0}">
-											<button class="btn btn-danger btn-circle btn-sm"
-												type="button" data-toggle="tooltip" title="Xóa"
-												onclick="confirmDelete(${data.id});">
-												<i class="fas fa-trash"></i>
-											</button>
-
-											<form id="delete-${data.id}" class="float-right"
-												method="POST">
-												<input type="hidden" name="_csrf" value="${_csrf.token}" />
-												<input type="hidden" name="_method" value="DELETE" />
-											</form>
-										</c:if>
+											type="button" data-toggle="tooltip" title="Sửa">
+											<i class="fa fa-pencil" aria-hidden="true"></i>
+										</button>
+										<button class="btn btn-danger btn-circle btn-sm" type="button"
+											data-toggle="tooltip" title="Xóa">
+											<i class="fa fa-trash" aria-hidden="true"></i>
+										</button>
 									</td>
 								</tr>
 							</c:forEach>
-
 						</tbody>
+
 					</table>
 				</div>
+
 
 				<div class="col-md-5">
 					<div class="modal-header">
 						<h5 class="modal-title text-uppercase font-weight-bold">Thêm
 							mới phòng ban</h5>
 					</div>
-					<form id="form" method="POST">
+					<portlet:actionURL name="savePhongBan" var="formPhongBanActionURL" />
+					<form id="form1" method="POST"
+						action="<%=formPhongBanActionURL.toString()%>"
+						name="<portlet:namespace />fm">
 						<div class="modal-body">
 							<div class="form-group row mt-4">
 								<label for="tenphong" class="col-form-label text-md-right">Tên
 									phòng ban <span class="text-danger">(*)</span>
 								</label> <input id="tenphong" type="text" class="form-control"
-									name="tenphong" required autofocus placeholder="Nhập tên phòng">
+									name="<portlet:namespace />tenphong" required autofocus
+									placeholder="Nhập tên phòng">
 							</div>
 							<div class="form-group row mt-4">
 								<label for="nguoi_phu_trach"
-									class="col-form-label text-md-right">Người phụ trách</label> <select
+									class="col-form-label text-md-right">Người phụ trách</label> 
+									<select
 									class="form-control selectpicker" id="nguoi_phu_trach"
-									name="nguoi_phu_trach" data-live-search="true" required>
+									name="<portlet:namespace />nguoi_phu_trach"
+									data-live-search="true" required>
 									<option value="">[-- Chọn người phụ trách --]</option>
-									<c:forEach items="${nguoiPhuTrach}" var="data">
-										<option value="${data.id}">${data.hovaten}</option>
-									</c:forEach>
+									<option value="<portlet:namespace />1">Nguyễn Ngọc Nam</option>
+									<option value="<portlet:namespace />2">Lại Hữu Dương</option>
+									<option value="<portlet:namespace />3">Khổng Minh Phương</option>
 								</select>
 							</div>
 							<div class="form-group row mt-4">
 								<div class="custom-control custom-checkbox">
-									<input type="checkbox" name="trangthai" value="1"
-										class="custom-control-input" id="trangthai" checked> <label
-										class="custom-control-label" for="trangthai">Hoạt động</label>
+									<input type="checkbox" name="<portlet:namespace />trangthai"
+										value="1" class="custom-control-input" id="trangthai" checked>
+									<label class="custom-control-label" for="trangthai">Hoạt
+										động</label>
 								</div>
 							</div>
 						</div>
 						<div class="modal-footer justify-content-center">
 							<button type="submit" class="btn btn-primary">
-								<i class="far fa-save"></i> Lưu
+								<i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu
 							</button>
 						</div>
 					</form>
@@ -113,7 +120,11 @@
 							phòng ban đó sang phòng ban khác hoặc xóa những nhân viên đó.</span>
 					</div>
 				</div>
+
+
 			</div>
 		</div>
+
+
 	</div>
 </div>

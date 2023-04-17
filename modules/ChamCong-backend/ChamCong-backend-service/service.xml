@@ -42,5 +42,32 @@
 		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 	</entity>
 	
+	<entity local-service="true" name="Phongban" remote-service="true" uuid="false">
+
+		<!-- PK fields -->
+		<column name="id" primary="true" type="int" />
+		<!-- Group instance -->
+		<column name="tenphong" type="String" />
+		<!-- Audit fields -->
+		<column name="trangthai" type="int" />
+		<column name="nguoi_phu_trach" type="int" /> 
+	    <column name="created_at" type="Date" />	  
+	    <column name="updated_at" type="Date" />
+	    <column name="groupId" type="long" />	  
+		<!-- Order -->
+
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
+	</entity>
+	
 	
 </service-builder>

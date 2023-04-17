@@ -1,3 +1,13 @@
+create table _Phongban (
+	id_ INTEGER not null primary key,
+	tenphong VARCHAR(75) null,
+	trangthai INTEGER,
+	nguoi_phu_trach INTEGER,
+	created_at DATE null,
+	updated_at DATE null,
+	groupId LONG
+);
+
 create table _Users (
 	id_ INTEGER not null primary key,
 	hovaten VARCHAR(75) null,

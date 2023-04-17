@@ -40,22 +40,6 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
         String authType = CompanyConstants.AUTH_TYPE_EA;
 		AuthenticatedSessionManagerUtil.login( request, response, login, password, rememberMe, authType);
 		actionResponse.sendRedirect("/home");
-		
-//		actionResponse.sendRedirect("/home");
-//	        ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-//	            WebKeys.THEME_DISPLAY);   
-//	        HttpServletRequest request = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(actionRequest));
-//	        HttpServletResponse response = PortalUtil.getHttpServletResponse( actionResponse);
-//	        String login = ParamUtil.getString(actionRequest, "login");
-//	
-//	        String password = actionRequest.getParameter("password");
-//	        boolean rememberMe = ParamUtil.getBoolean(actionRequest, "rememberMe");
-//	        String authType = CompanyConstants.AUTH_TYPE_EA;
-//	        
-//	        AuthenticatedSessionManagerUtil.login(
-//	            request, response, login, password, rememberMe, authType);
-//	        
-//	        actionResponse.sendRedirect(themeDisplay.getPathMain());
 	}
 
 }
