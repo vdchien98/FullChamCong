@@ -23,6 +23,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -95,6 +96,13 @@ public class HomePagePortlet extends MVCPortlet {
 		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		httpServletRequest.setAttribute("usersList", usersList);
+		
+//	
+//		for (Users user : usersList) {
+//		    System.out.println(user);
+//		}
+
+//		
 		int id = ParamUtil.getInteger(renderRequest, "id");
 		if (id > 0) {
 			try {

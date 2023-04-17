@@ -1,3 +1,5 @@
+<%@page import="com.liferay.docs.chamcong.model.Users"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../init.jsp"%>
@@ -29,23 +31,17 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="phongban" items="${phongBanList}" varStatus="loop">
+							<c:forEach var="phongban" items="${phongBanList}"
+								varStatus="loop">
 								<tr>
 									<td>${loop.index +1}</td>
-									<td>
-									    <span>${phongban.tenphong}</span> 
-									    <br> 
-									    <span
-										class="font-weight-bold text-primary">Số nhân viên: 9</span>
-										 <br>
+									<td><span>${phongban.tenphong}</span> <br> <span
+										class="font-weight-bold text-primary">Số nhân viên: 9</span> <br>
 										<span class="font-weight-bold text-warning">Người phụ
-											trách: ${phongban.nguoi_phu_trach} </span>
-									</td>
-									<td>
-									    <c:if test="${condition}">
+											trách: ${phongban.nguoi_phu_trach} </span></td>
+									<td><c:if test="${condition}">
 											<span class="btn btn-success btn-sm">Hoạt động</span>
-										</c:if> 
-										<c:if test="${!condition}">
+										</c:if> <c:if test="${!condition}">
 											<span class="btn btn-light btn-sm">Không hoạt động</span>
 										</c:if></td>
 									<td>
@@ -84,16 +80,23 @@
 									placeholder="Nhập tên phòng">
 							</div>
 							<div class="form-group row mt-4">
+								<%
+								  // đang fix  
+									List<Users> entities = (List<Users>) request.getAttribute("myEntities");
+								 // for (Users user : entities) {
+									//    System.out.println("******* do view : " + user);
+								//	}
+								%>
 								<label for="nguoi_phu_trach"
-									class="col-form-label text-md-right">Người phụ trách</label> 
-									<select
+									class="col-form-label text-md-right">Người phụ trách</label> <select
 									class="form-control selectpicker" id="nguoi_phu_trach"
 									name="<portlet:namespace />nguoi_phu_trach"
 									data-live-search="true" required>
-									<option value="">[-- Chọn người phụ trách --]</option>
-									<option value="<portlet:namespace />1">Nguyễn Ngọc Nam</option>
-									<option value="<portlet:namespace />2">Lại Hữu Dương</option>
-									<option value="<portlet:namespace />3">Khổng Minh Phương</option>
+									<c:forEach items="${entities}" var="item">
+										<option value="${entities.id}">${entities.hovaten}</option>
+									</c:forEach>
+
+
 								</select>
 							</div>
 							<div class="form-group row mt-4">

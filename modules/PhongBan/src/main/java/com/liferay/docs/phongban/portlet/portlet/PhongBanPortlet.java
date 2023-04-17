@@ -1,9 +1,11 @@
 package com.liferay.docs.phongban.portlet.portlet;
 
 import com.liferay.docs.chamcong.model.Phongban;
+import com.liferay.docs.chamcong.model.Users;
 import com.liferay.docs.chamcong.service.PhongbanLocalServiceUtil;
+import com.liferay.docs.chamcong.service.UsersLocalServiceUtil;
 import com.liferay.docs.phongban.portlet.constants.PhongBanPortletKeys;
-
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -59,15 +61,43 @@ public class PhongBanPortlet extends MVCPortlet {
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
-		List<Phongban> phongBanList = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
-		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-		httpServletRequest.setAttribute("phongBanList", phongBanList);
 		
-		for (Phongban phongban : phongBanList) {
-		    System.out.println(phongban);
-		}
+//		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
+//  	    HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+//		httpServletRequest.setAttribute("usersList", usersList);
+//		for (Users user : usersList) {
+//		    System.out.println("*******" + user);
+//		}
+
+//		
+//		List<Phongban> phongBanList = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
+//		//HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+//		httpServletRequest.setAttribute("phongBanList", phongBanList);
+		
+//		for (Phongban phongban : phongBanList) {
+//		    System.out.println(phongban);
+//		}
 
 		super.render(renderRequest, renderResponse);
 	}
+	
+	
+    @Override
+    public void doView(RenderRequest renderRequest, RenderResponse renderResponse)
+            throws IOException, PortletException {
+
+        List<Users> entities = null;
+        try {
+            entities = UsersLocalServiceUtil.getUserses(-1, -1);
+        } catch (SystemException e) {
+            e.printStackTrace();
+        }
+        renderRequest.setAttribute("myEntities", entities);
+        for (Users user : entities) {
+		    System.out.println("******* do view : " + user);
+		}
+
+        super.doView(renderRequest, renderResponse);
+    }
 	
 }
