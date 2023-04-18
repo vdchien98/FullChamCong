@@ -283,6 +283,15 @@ public class PhongbanLocalServiceUtil {
 		return getService().getPhongbansCount();
 	}
 
+	public static Phongban updatePhongBan(
+			int id, String tenphong, int trangthai, int nguoi_phu_trach,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().updatePhongBan(
+			id, tenphong, trangthai, nguoi_phu_trach, serviceContext);
+	}
+
 	/**
 	 * Updates the phongban in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

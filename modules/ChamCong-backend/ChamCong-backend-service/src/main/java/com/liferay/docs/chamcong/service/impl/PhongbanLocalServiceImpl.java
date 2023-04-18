@@ -16,6 +16,7 @@ package com.liferay.docs.chamcong.service.impl;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.docs.chamcong.model.Phongban;
+import com.liferay.docs.chamcong.model.Users;
 import com.liferay.docs.chamcong.service.base.PhongbanLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,9 +41,7 @@ public class PhongbanLocalServiceImpl extends PhongbanLocalServiceBaseImpl {
     		int idPhongBan = (int) CounterLocalServiceUtil.increment();
     		System.out.println("id la " + idPhongBan);
     		Phongban phongban = phongbanPersistence.create(idPhongBan);
-    		// System.out.println("xin chào moi nguoi da den day roi hihihiihihi");
     		Date now = new Date();
-            // System.out.println("hovaten la " + hovaten);
     		phongban.setId(idPhongBan);
     		phongban.setTenphong(tenphong);
     		phongban.setTrangthai(trangthai);
@@ -53,4 +52,24 @@ public class PhongbanLocalServiceImpl extends PhongbanLocalServiceBaseImpl {
        		phongbanLocalService.updatePhongban(phongban);
     		return phongban;
 	}
+	
+	
+	public Phongban updatePhongBan(int id,String tenphong, int trangthai, int nguoi_phu_trach,ServiceContext serviceContext)
+			throws PortalException, SystemException {
+		Date now = new Date();
+		long groupId = serviceContext.getScopeGroupId();
+		Phongban phongban = getPhongban(id);
+		phongban.setTenphong(tenphong);
+		phongban.setTrangthai(trangthai);
+		phongban.setNguoi_phu_trach(nguoi_phu_trach);
+		phongban.setCreated_at(now);
+		phongban.setUpdated_at(now);
+		phongban.setGroupId(groupId);
+   		phongbanLocalService.updatePhongban(phongban);
+   		
+   		return phongban;
+	}
+	
+	
+	
 }

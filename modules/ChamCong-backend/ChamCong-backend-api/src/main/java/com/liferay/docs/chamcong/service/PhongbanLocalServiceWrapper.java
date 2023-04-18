@@ -316,6 +316,17 @@ public class PhongbanLocalServiceWrapper
 		return _phongbanLocalService.getPhongbansCount();
 	}
 
+	@Override
+	public com.liferay.docs.chamcong.model.Phongban updatePhongBan(
+			int id, String tenphong, int trangthai, int nguoi_phu_trach,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _phongbanLocalService.updatePhongBan(
+			id, tenphong, trangthai, nguoi_phu_trach, serviceContext);
+	}
+
 	/**
 	 * Updates the phongban in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

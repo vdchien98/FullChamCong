@@ -67,7 +67,7 @@ public class HomePagePortlet extends MVCPortlet {
 							caLamToi, ma_xac_nhan, zaloId, chamCongNgoai, soNgayNghiPhep, phuTrachPhong,
 							serviceContext);
 				} else {
-					System.out.println("Not Find");
+					System.out.println("Not  Find");
 				}
 			}
 		} catch (Exception e) {
@@ -96,13 +96,7 @@ public class HomePagePortlet extends MVCPortlet {
 		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		httpServletRequest.setAttribute("usersList", usersList);
-		
-//	
-//		for (Users user : usersList) {
-//		    System.out.println(user);
-//		}
-
-//		
+   
 		int id = ParamUtil.getInteger(renderRequest, "id");
 		if (id > 0) {
 			try {

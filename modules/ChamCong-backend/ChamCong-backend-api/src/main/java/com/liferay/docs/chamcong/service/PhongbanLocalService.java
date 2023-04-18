@@ -258,6 +258,11 @@ public interface PhongbanLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPhongbansCount();
 
+	public Phongban updatePhongBan(
+			int id, String tenphong, int trangthai, int nguoi_phu_trach,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 	/**
 	 * Updates the phongban in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

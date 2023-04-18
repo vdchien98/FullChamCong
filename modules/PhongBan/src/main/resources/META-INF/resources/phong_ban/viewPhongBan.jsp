@@ -1,5 +1,10 @@
 <%@page import="com.liferay.docs.chamcong.model.Users"%>
+<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+
+
 <%@page import="java.util.List"%>
+<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../init.jsp"%>
@@ -7,6 +12,22 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+<script>
+function postData(url, data) {
+  // Tạo một đối tượng XMLHttpRequest
+  var xhr = new XMLHttpRequest();
+
+  // Khởi tạo một yêu cầu POST đến URL được cung cấp
+  xhr.open("POST", url, true);
+
+  // Thiết lập tiêu đề yêu cầu
+  xhr.setRequestHeader("Content-Type", "application/json");
+
+  // Gửi yêu cầu và dữ liệu của bạn dưới dạng JSON
+  xhr.send(JSON.stringify(data));
+}
+</script>
+
 <div class="container-fluid">
 	<h1 class="h3 mb-2 text-gray-800 font-weight-bold text-uppercase">Quản
 		trị phòng ban</h1>
@@ -32,6 +53,12 @@
 						<tbody>
 							<c:forEach var="phongban" items="${phongBanList}"
 								varStatus="loop">
+							     <portlet:renderURL var="editPhongBan">
+												<portlet:param name="idPhongBan" value="${phongban.id }" />
+												<portlet:param name="mvcPath" value="/phong_ban/viewPhongBan.jsp" />
+								 </portlet:renderURL>
+								 
+								 
 								<tr>
 									<td>${loop.index +1}</td>
 									<td><span>${phongban.tenphong}</span> <br> <span
@@ -49,7 +76,8 @@
 										</c:if></td>
 									<td>
 										<button class="btn btn-success btn-circle mr-1 btn-sm"
-											type="button" data-toggle="tooltip" title="Sửa">
+											type="button" data-toggle="tooltip" title="Sửa" 
+											onclick="postData('${editPhongBan}', {idPhongBan: 'your_id'})">
 											<i class="fa fa-pencil" aria-hidden="true"></i>
 										</button>
 										<button class="btn btn-danger btn-circle btn-sm" type="button"
@@ -78,9 +106,13 @@
 							<div class="form-group row mt-4">
 								<label for="tenphong" class="col-form-label text-md-right">Tên
 									phòng ban <span class="text-danger">(*)</span>
-								</label> <input id="tenphong" type="text" class="form-control"
+								</label>
+								
+								 <input id="tenphong" type="text" class="form-control"
 									name="<portlet:namespace />tenphong" required autofocus
-									placeholder="Nhập tên phòng">
+									placeholder="Nhập tên phòng" 
+									
+									>
 							</div>
 							<div class="form-group row mt-4">
 								<label for="nguoi_phu_trach"
@@ -128,3 +160,6 @@
 
 	</div>
 </div>
+
+
+
