@@ -7,7 +7,6 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-
 <div class="container-fluid">
 	<h1 class="h3 mb-2 text-gray-800 font-weight-bold text-uppercase">Quản
 		trị phòng ban</h1>
@@ -37,8 +36,12 @@
 									<td>${loop.index +1}</td>
 									<td><span>${phongban.tenphong}</span> <br> <span
 										class="font-weight-bold text-primary">Số nhân viên: 9</span> <br>
-										<span class="font-weight-bold text-warning">Người phụ
-											trách: ${phongban.nguoi_phu_trach} </span></td>
+										<c:forEach var="user" items="${usersLanhDao}">
+											<c:if test="${user.id == phongban.nguoi_phu_trach}">
+												<span class="font-weight-bold text-warning">Người phụ
+												trách: ${user.hovaten}</span>
+											</c:if>
+										</c:forEach></td>
 									<td><c:if test="${condition}">
 											<span class="btn btn-success btn-sm">Hoạt động</span>
 										</c:if> <c:if test="${!condition}">
@@ -80,20 +83,14 @@
 									placeholder="Nhập tên phòng">
 							</div>
 							<div class="form-group row mt-4">
-								<%
-								  // đang fix  
-									List<Users> entities = (List<Users>) request.getAttribute("myEntities");
-								 // for (Users user : entities) {
-									//    System.out.println("******* do view : " + user);
-								//	}
-								%>
 								<label for="nguoi_phu_trach"
 									class="col-form-label text-md-right">Người phụ trách</label> <select
 									class="form-control selectpicker" id="nguoi_phu_trach"
 									name="<portlet:namespace />nguoi_phu_trach"
 									data-live-search="true" required>
-									<c:forEach items="${entities}" var="item">
-										<option value="${entities.id}">${entities.hovaten}</option>
+									<option value="">[-- Chọn người phụ trách --]</option>
+									<c:forEach items="${usersLanhDao}" var="item">
+										<option value="${item.id}">${item.hovaten}</option>
 									</c:forEach>
 
 

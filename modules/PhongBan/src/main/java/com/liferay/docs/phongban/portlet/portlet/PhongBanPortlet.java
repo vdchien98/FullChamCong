@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -58,46 +59,57 @@ public class PhongBanPortlet extends MVCPortlet {
 		}
 	}
 	
-	@Override
-	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
-			throws IOException, PortletException {
-		
-//		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
-//  	    HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-//		httpServletRequest.setAttribute("usersList", usersList);
-//		for (Users user : usersList) {
-//		    System.out.println("*******" + user);
-//		}
-
+//	@Override
+//	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
+//			throws IOException, PortletException {
 //		
-//		List<Phongban> phongBanList = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
-//		//HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-//		httpServletRequest.setAttribute("phongBanList", phongBanList);
-		
-//		for (Phongban phongban : phongBanList) {
-//		    System.out.println(phongban);
-//		}
-
-		super.render(renderRequest, renderResponse);
-	}
+////		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
+////  	    HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+////		httpServletRequest.setAttribute("usersList", usersList);
+////		for (Users user : usersList) {
+////		    System.out.println("*******" + user);
+////		}
+//
+////		
+////		List<Phongban> phongBanList = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
+////		//HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+////		httpServletRequest.setAttribute("phongBanList", phongBanList);
+//		
+////		for (Phongban phongban : phongBanList) {
+////		    System.out.println(phongban);
+////		}
+//
+//		super.render(renderRequest, renderResponse);
+//	}
+//	
 	
-	
-    @Override
-    public void doView(RenderRequest renderRequest, RenderResponse renderResponse)
-            throws IOException, PortletException {
-
-        List<Users> entities = null;
-        try {
-            entities = UsersLocalServiceUtil.getUserses(-1, -1);
-        } catch (SystemException e) {
-            e.printStackTrace();
-        }
-        renderRequest.setAttribute("myEntities", entities);
-        for (Users user : entities) {
-		    System.out.println("******* do view : " + user);
+	@Override
+	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)
+			throws IOException, PortletException {
+//		super.render(renderRequest, renderResponse);
+		List<Users> entities = null;
+		try {
+			entities = UsersLocalServiceUtil.getUserses(-1, -1);
+		} catch (SystemException e) {
+			e.printStackTrace();
 		}
+		renderRequest.setAttribute("usersAll", entities);
+		List<Users> filteredUsers = new ArrayList<>();
+		for (Users user : entities) {
+			if (user.getChucvu_id() == 6) {
+				filteredUsers.add(user);
+			}
+		}
+		renderRequest.setAttribute("usersLanhDao", filteredUsers);
+		List<Phongban> phongBanList = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
+		for (Phongban phongban : phongBanList) {
 
-        super.doView(renderRequest, renderResponse);
-    }
-	
+			System.out.println("da vao phongban " + phongban);
+
+		}
+		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+		httpServletRequest.setAttribute("phongBanList", phongBanList);
+
+		super.doView(renderRequest, renderResponse);
+	}
 }
