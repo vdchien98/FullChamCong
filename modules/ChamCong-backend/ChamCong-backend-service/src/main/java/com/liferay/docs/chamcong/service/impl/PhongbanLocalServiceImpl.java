@@ -71,5 +71,11 @@ public class PhongbanLocalServiceImpl extends PhongbanLocalServiceBaseImpl {
 	}
 	
 	
-	
+	public Phongban deletePhonBan (int id, ServiceContext serviceContext) throws PortalException {
+		Phongban phongban = getPhongban(id);
+		phongban = deletePhongban(id);
+	    return phongban;
+	}
+
+
 }

@@ -99,6 +99,14 @@ public class PhongbanLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static Phongban deletePhonBan(
+			int id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().deletePhonBan(id, serviceContext);
+	}
+
 	/**
 	 * Deletes the phongban with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

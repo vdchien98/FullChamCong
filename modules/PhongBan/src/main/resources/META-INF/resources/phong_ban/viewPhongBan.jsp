@@ -64,10 +64,19 @@
 											
 											<i class="fa fa-pencil" aria-hidden="true"></i>
 										</button>
-										<button class="btn btn-danger btn-circle btn-sm" type="button"
-											data-toggle="tooltip" title="Xóa">
-											<i class="fa fa-trash" aria-hidden="true"></i>
-										</button>
+										
+										
+										
+										 <portlet:actionURL var="deletePhongBanURL" name="deletePhongBan"/>
+										<form name="deleteNhanVienForm" id="deleteNhanVienForm" method="POST" action="<%=deletePhongBanURL%>">
+											 <input type="hidden" name="<portlet:namespace />deletePhongBanId" value="${phongban.id}" />
+											<button 
+											    class="btn btn-danger btn-circle btn-sm"
+												type="submit" 
+												>
+												<i class="fa fa-trash" aria-hidden="true"></i>
+											</button>
+										</form>
 									</td>
 								</tr>
 							</c:forEach>
@@ -75,8 +84,6 @@
 
 					</table>
 				</div>
-
-
 				<div class="col-md-5">
 					<div class="modal-header">
 						<h5 class="modal-title text-uppercase font-weight-bold">Thêm

@@ -97,6 +97,15 @@ public class PhongbanLocalServiceWrapper
 		return _phongbanLocalService.deletePersistedModel(persistedModel);
 	}
 
+	@Override
+	public com.liferay.docs.chamcong.model.Phongban deletePhonBan(
+			int id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _phongbanLocalService.deletePhonBan(id, serviceContext);
+	}
+
 	/**
 	 * Deletes the phongban with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

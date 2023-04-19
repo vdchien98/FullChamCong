@@ -5,6 +5,7 @@ import com.liferay.docs.chamcong.model.Users;
 import com.liferay.docs.chamcong.service.PhongbanLocalServiceUtil;
 import com.liferay.docs.chamcong.service.UsersLocalServiceUtil;
 import com.liferay.docs.phongban.portlet.constants.PhongBanPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -70,6 +71,19 @@ public class PhongBanPortlet extends MVCPortlet {
 		  response.sendRedirect("/phong-ban");
 	}
 	
+	public void deletePhongBan(ActionRequest request, ActionResponse response) throws PortalException {
+        int deletePhongBanId = ParamUtil.getInteger(request, "deletePhongBanId");
+          System.out.println("da vao dc day");
+        try {
+        	 PhongbanLocalServiceUtil.deletePhongban(deletePhongBanId);
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+	
+	}
+	
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
@@ -80,7 +94,6 @@ public class PhongBanPortlet extends MVCPortlet {
 			System.out.println("phong ban la day"+phongban);
 			
 		}
-		
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		httpServletRequest.setAttribute("phongBanList", phongBanList);
 		int idPhongBan = ParamUtil.getInteger(renderRequest, "idPhongBan");
@@ -107,11 +120,6 @@ public class PhongBanPortlet extends MVCPortlet {
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
-		
-		
-
-		
-
 		super.render(renderRequest, renderResponse);
 	}
 	

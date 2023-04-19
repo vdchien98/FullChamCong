@@ -103,6 +103,9 @@ public interface PhongbanLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public Phongban deletePhonBan(int id, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Deletes the phongban with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
