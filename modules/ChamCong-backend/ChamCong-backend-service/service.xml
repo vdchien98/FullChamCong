@@ -69,5 +69,19 @@
 		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 	</entity>
 	
+	<entity local-service="true" name="Chucvu" remote-service="true" uuid="false"> 
+	    <column type="int" name="id" primary="true"></column>
+	    <column type="String" name="name"></column>
+	    <column type="Date" name="created_at"></column>
+	    <column type="Date" name="updated_at"></column>
+	    <column type="int" name="role"></column>
+	    <column name="groupId" type="long" />
+	    <finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
+	</entity>
+	
 	
 </service-builder>

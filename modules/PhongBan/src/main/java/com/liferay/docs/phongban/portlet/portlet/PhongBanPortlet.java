@@ -89,11 +89,7 @@ public class PhongBanPortlet extends MVCPortlet {
 			throws IOException, PortletException {
 		
 		List<Phongban> phongBanList = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
-		
-		for (Phongban phongban : phongBanList) {
-			System.out.println("phong ban la day"+phongban);
-			
-		}
+
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		httpServletRequest.setAttribute("phongBanList", phongBanList);
 		int idPhongBan = ParamUtil.getInteger(renderRequest, "idPhongBan");

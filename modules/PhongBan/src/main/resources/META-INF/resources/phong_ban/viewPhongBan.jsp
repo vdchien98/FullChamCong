@@ -21,8 +21,7 @@
 		<div class="card-body">
 			<div class="row">
 				<div class="col-md-7">
-					<table class="table table-bordered table-hover" id="dataTable"
-						width="100%" cellspacing="0">
+					<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
 						<thead>
 							<tr>
 								<th>STT</th>

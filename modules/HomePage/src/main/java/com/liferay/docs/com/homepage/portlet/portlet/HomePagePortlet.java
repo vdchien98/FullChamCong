@@ -79,7 +79,7 @@ public class HomePagePortlet extends MVCPortlet {
 	
 	public void deleteNhanVien(ActionRequest request, ActionResponse response) throws PortalException {
         int deleteUserId = ParamUtil.getInteger(request, "deleteUserId");
-          System.out.println("da vao dc day");
+         // System.out.println("da vao dc day");
         try {
         	UsersLocalServiceUtil.deleteUsers(deleteUserId);
         }

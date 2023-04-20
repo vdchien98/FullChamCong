@@ -17,6 +17,7 @@ package com.liferay.docs.chamcong.service.base;
 import com.liferay.docs.chamcong.model.Users;
 import com.liferay.docs.chamcong.service.UsersLocalService;
 import com.liferay.docs.chamcong.service.UsersLocalServiceUtil;
+import com.liferay.docs.chamcong.service.persistence.ChucvuPersistence;
 import com.liferay.docs.chamcong.service.persistence.PhongbanPersistence;
 import com.liferay.docs.chamcong.service.persistence.UsersPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -447,6 +448,9 @@ public abstract class UsersLocalServiceBaseImpl
 			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
+
+	@Reference
+	protected ChucvuPersistence chucvuPersistence;
 
 	@Reference
 	protected PhongbanPersistence phongbanPersistence;

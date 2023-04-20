@@ -1,0 +1,4 @@
+Bundle-Name: ChucVu
+Bundle-SymbolicName: com.liferay.docs.chucvu.portlet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.docs.chucvu.portlet.constants
