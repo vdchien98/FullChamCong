@@ -1,6 +1,24 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.liferay.docs.chamcong.model.Calamviec">
+		<field name="id" type="int" />
+		<field name="tencalamviec" type="String" />
+		<field name="gio_vao_chieu" type="String" />
+		<field name="gio_ra_chieu" type="String" />
+		<field name="vao_truoc_chieu" type="int" />
+		<field name="ra_sau_chieu" type="int" />
+		<field name="gio_vao_toi" type="String" />
+		<field name="gio_ra_toi" type="String" />
+		<field name="vao_truoc_toi" type="int" />
+		<field name="ra_sau_toi" type="int" />
+		<field name="gio_vao_sang" type="String" />
+		<field name="gio_ra_sang" type="String" />
+		<field name="vao_truoc_sang" type="int" />
+		<field name="ra_sau_sang" type="int" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
+	</model>
 	<model name="com.liferay.docs.chamcong.model.Chucvu">
 		<field name="id" type="int" />
 		<field name="name" type="String" />

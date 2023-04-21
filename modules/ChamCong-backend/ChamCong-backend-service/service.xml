@@ -84,4 +84,34 @@
 	</entity>
 	
 	
+	<entity local-service="true" name="Calamviec"
+		remote-service="true" uuid="false">
+		<column type="int" name="id" primary="true"></column>
+		<column type="String" name="tencalamviec"></column>
+		<column type="String" name="gio_vao_chieu"></column>
+		<column type="String" name="gio_ra_chieu"></column>
+		<column type="int" name="vao_truoc_chieu"></column>
+		<column type="int" name="ra_sau_chieu"></column>
+		<column type="String" name="gio_vao_toi"></column>
+		<column type="String" name="gio_ra_toi"></column>
+		<column type="int" name="vao_truoc_toi"></column>
+		<column type="int" name="ra_sau_toi"></column>
+		<column type="String" name="gio_vao_sang"></column>
+		<column type="String" name="gio_ra_sang"></column>
+		<column type="int" name="vao_truoc_sang"></column>
+		<column type="int" name="ra_sau_sang"></column>
+		<column type="Date" name="created_at"></column>
+		<column type="Date" name="updated_at"></column>
+		<finder name="id" return-type="Collection">
+			<finder-column name="id" />
+		</finder>
+		
+		<reference entity="AssetEntry"
+			package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetTag"
+			package-path="com.liferay.portlet.asset" />
+	</entity>
+	
+	
+	
 </service-builder>

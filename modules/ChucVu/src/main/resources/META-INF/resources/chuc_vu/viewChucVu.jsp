@@ -143,7 +143,6 @@
   document.getElementById("chucvuId").value=id;
   document.getElementById("name").value=name;
   document.getElementById("roleChucVu").value=role;
- // document.getElementById("roleChucVu").value=roleChucVu;
 }
 </script>
 

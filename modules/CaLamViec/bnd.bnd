@@ -1,0 +1,4 @@
+Bundle-Name: CaLamViec
+Bundle-SymbolicName: com.liferay.docs.calamviec.portlet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.docs.calamviec.portlet.constants

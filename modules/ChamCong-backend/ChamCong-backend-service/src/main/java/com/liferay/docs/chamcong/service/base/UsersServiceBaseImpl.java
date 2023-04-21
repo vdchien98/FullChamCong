@@ -17,6 +17,7 @@ package com.liferay.docs.chamcong.service.base;
 import com.liferay.docs.chamcong.model.Users;
 import com.liferay.docs.chamcong.service.UsersService;
 import com.liferay.docs.chamcong.service.UsersServiceUtil;
+import com.liferay.docs.chamcong.service.persistence.CalamviecPersistence;
 import com.liferay.docs.chamcong.service.persistence.ChucvuPersistence;
 import com.liferay.docs.chamcong.service.persistence.PhongbanPersistence;
 import com.liferay.docs.chamcong.service.persistence.UsersPersistence;
@@ -130,6 +131,9 @@ public abstract class UsersServiceBaseImpl
 			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
+
+	@Reference
+	protected CalamviecPersistence calamviecPersistence;
 
 	@Reference
 	protected ChucvuPersistence chucvuPersistence;

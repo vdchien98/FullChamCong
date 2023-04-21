@@ -17,6 +17,7 @@ package com.liferay.docs.chamcong.service.base;
 import com.liferay.docs.chamcong.model.Phongban;
 import com.liferay.docs.chamcong.service.PhongbanLocalService;
 import com.liferay.docs.chamcong.service.PhongbanLocalServiceUtil;
+import com.liferay.docs.chamcong.service.persistence.CalamviecPersistence;
 import com.liferay.docs.chamcong.service.persistence.ChucvuPersistence;
 import com.liferay.docs.chamcong.service.persistence.PhongbanPersistence;
 import com.liferay.docs.chamcong.service.persistence.UsersPersistence;
@@ -451,6 +452,9 @@ public abstract class PhongbanLocalServiceBaseImpl
 			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
+
+	@Reference
+	protected CalamviecPersistence calamviecPersistence;
 
 	@Reference
 	protected ChucvuPersistence chucvuPersistence;

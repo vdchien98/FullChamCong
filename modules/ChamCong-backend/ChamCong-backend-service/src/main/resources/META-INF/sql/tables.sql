@@ -1,3 +1,22 @@
+create table _Calamviec (
+	id_ INTEGER not null primary key,
+	tencalamviec VARCHAR(75) null,
+	gio_vao_chieu VARCHAR(75) null,
+	gio_ra_chieu VARCHAR(75) null,
+	vao_truoc_chieu INTEGER,
+	ra_sau_chieu INTEGER,
+	gio_vao_toi VARCHAR(75) null,
+	gio_ra_toi VARCHAR(75) null,
+	vao_truoc_toi INTEGER,
+	ra_sau_toi INTEGER,
+	gio_vao_sang VARCHAR(75) null,
+	gio_ra_sang VARCHAR(75) null,
+	vao_truoc_sang INTEGER,
+	ra_sau_sang INTEGER,
+	created_at DATE null,
+	updated_at DATE null
+);
+
 create table _Chucvu (
 	id_ INTEGER not null primary key,
 	name VARCHAR(75) null,
