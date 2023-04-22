@@ -27,6 +27,14 @@
 		<field name="role" type="int" />
 		<field name="groupId" type="long" />
 	</model>
+	<model name="com.liferay.docs.chamcong.model.Ngaynghile">
+		<field name="id" type="int" />
+		<field name="ten" type="String" />
+		<field name="ngay_nghi" type="Date" />
+		<field name="trangthai" type="int" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
+	</model>
 	<model name="com.liferay.docs.chamcong.model.Phongban">
 		<field name="id" type="int" />
 		<field name="tenphong" type="String" />

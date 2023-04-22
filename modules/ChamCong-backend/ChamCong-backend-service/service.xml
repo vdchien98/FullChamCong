@@ -112,6 +112,23 @@
 			package-path="com.liferay.portlet.asset" />
 	</entity>
 	
+		
+	<entity local-service="true" name="Ngaynghile" remote-service="true" uuid="false"> 
+	    <column type="int" name="id" primary="true"></column>
+	    <column type="String" name="ten"></column>
+	    <column type="Date" name="ngay_nghi"></column>
+	    <column type="int" name="trangthai"></column>
+	    
+	    <column type="Date" name="created_at"></column>
+	    <column type="Date" name="updated_at"></column>
+	 
+	    <finder name="id" return-type="Collection">
+			<finder-column name="id" />
+		</finder>
+		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
+	</entity>
+	
 	
 	
 </service-builder>

@@ -1,0 +1,4 @@
+Bundle-Name: NgayNghiLe
+Bundle-SymbolicName: com.liferay.docs.ngaynghile.portlet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.docs.ngaynghile.portlet.constants

@@ -26,6 +26,15 @@ create table _Chucvu (
 	groupId LONG
 );
 
+create table _Ngaynghile (
+	id_ INTEGER not null primary key,
+	ten VARCHAR(75) null,
+	ngay_nghi DATE null,
+	trangthai INTEGER,
+	created_at DATE null,
+	updated_at DATE null
+);
+
 create table _Phongban (
 	id_ INTEGER not null primary key,
 	tenphong VARCHAR(75) null,

@@ -19,6 +19,7 @@ import com.liferay.docs.chamcong.service.PhongbanLocalService;
 import com.liferay.docs.chamcong.service.PhongbanLocalServiceUtil;
 import com.liferay.docs.chamcong.service.persistence.CalamviecPersistence;
 import com.liferay.docs.chamcong.service.persistence.ChucvuPersistence;
+import com.liferay.docs.chamcong.service.persistence.NgaynghilePersistence;
 import com.liferay.docs.chamcong.service.persistence.PhongbanPersistence;
 import com.liferay.docs.chamcong.service.persistence.UsersPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -458,6 +459,9 @@ public abstract class PhongbanLocalServiceBaseImpl
 
 	@Reference
 	protected ChucvuPersistence chucvuPersistence;
+
+	@Reference
+	protected NgaynghilePersistence ngaynghilePersistence;
 
 	protected PhongbanLocalService phongbanLocalService;
 

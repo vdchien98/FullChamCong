@@ -19,6 +19,7 @@ import com.liferay.docs.chamcong.service.PhongbanService;
 import com.liferay.docs.chamcong.service.PhongbanServiceUtil;
 import com.liferay.docs.chamcong.service.persistence.CalamviecPersistence;
 import com.liferay.docs.chamcong.service.persistence.ChucvuPersistence;
+import com.liferay.docs.chamcong.service.persistence.NgaynghilePersistence;
 import com.liferay.docs.chamcong.service.persistence.PhongbanPersistence;
 import com.liferay.docs.chamcong.service.persistence.UsersPersistence;
 import com.liferay.portal.aop.AopService;
@@ -138,6 +139,9 @@ public abstract class PhongbanServiceBaseImpl
 
 	@Reference
 	protected ChucvuPersistence chucvuPersistence;
+
+	@Reference
+	protected NgaynghilePersistence ngaynghilePersistence;
 
 	@Reference
 	protected com.liferay.docs.chamcong.service.PhongbanLocalService
