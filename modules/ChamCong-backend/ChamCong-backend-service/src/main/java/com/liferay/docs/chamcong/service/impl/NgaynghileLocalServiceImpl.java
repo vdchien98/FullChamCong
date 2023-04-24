@@ -34,20 +34,22 @@ import org.osgi.service.component.annotations.Component;
 )
 public class NgaynghileLocalServiceImpl extends NgaynghileLocalServiceBaseImpl {
 	
-	public Ngaynghile addNgayNghiLe(
-			String ten, Date ngay_nghi, int trangthai,ServiceContext serviceContext) throws PortalException, SystemException {
-        	
-        	int idNgayNghiLe = ngaynghilePersistence.countAll();
-        	idNgayNghiLe++; 
-        	Ngaynghile ngaynghile = ngaynghilePersistence.create(idNgayNghiLe);
-    		Date now = new Date();
-    		ngaynghile.setId(idNgayNghiLe);
-    		ngaynghile.setTen(ten);
-    		ngaynghile.setNgay_nghi(ngay_nghi);
-    		ngaynghile.setCreated_at(now);
-    		ngaynghile.setUpdated_at(now);
-    	
-       		ngaynghileLocalService.updateNgaynghile(ngaynghile);
-    		return ngaynghile;
+	public Ngaynghile addNgayNghiLe(String ten, Date ngay_nghi, int trangthai, ServiceContext serviceContext)
+			throws PortalException, SystemException {
+       // System.out.println("da vao den day **********+++++++++++");
+		int idNgayNghile = ngaynghilePersistence.countAll();
+		idNgayNghile++;
+		Ngaynghile ngaynghile = ngaynghilePersistence.create(idNgayNghile);
+		Date now = new Date();
+		ngaynghile.setId(idNgayNghile);
+		ngaynghile.setTen(ten);
+		ngaynghile.setNgay_nghi(ngay_nghi);
+		ngaynghile.setTrangthai(trangthai);
+		ngaynghile.setCreated_at(now);
+		ngaynghile.setUpdated_at(now);
+
+		ngaynghileLocalService.updateNgaynghile(ngaynghile);
+		return ngaynghile;
 	}
+
 }

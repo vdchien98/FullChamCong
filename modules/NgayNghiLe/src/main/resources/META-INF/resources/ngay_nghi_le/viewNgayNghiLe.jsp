@@ -1,9 +1,14 @@
+<%@page import="java.util.Date"%>
 <%@ include file="../init.jsp"%>
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<script src='https://kit.fontawesome.com/a076d05399.js'
+	crossorigin='anonymous'></script>
 
 <!-- jQuery library -->
 <script
@@ -36,7 +41,8 @@
 								<label
 									class="col-form-label font-weight-bold text-info mr-3 datepicker">Năm</label>
 								<input type="text" class="form-control datepicker col-md-6 ml-6"
-									name="<portlet:namespace />year" id="year" placeholder="Năm" value="">
+									name="<portlet:namespace />year" id="year" placeholder="Năm"
+									value="">
 							</div>
 						</form>
 					</div>
@@ -52,27 +58,34 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>Sinh nhật Đăng Chiến</td>
-								<td></td>
-								<td><span class="btn btn-success btn-sm">Hoạt động</span> <span
-									class="btn btn-light btn-sm">Không hoạt động</span></td>
-								<td>
-									<button class="btn btn-success btn-circle mr-1 btn-sm"
-										type="button" data-toggle="tooltip" title="Sửa" onclick="">
-										<i class="fas fa-edit"></i>
-									</button>
-									<button class="btn btn-danger btn-circle btn-sm" type="button"
-										data-toggle="tooltip" title="Xóa" onclick="">
-										<i class="fas fa-trash"></i>
-									</button>
+							<c:forEach var="ngaynghile" items="${ngayNghiLeList}"
+								varStatus="loop">
+								
 
-									<form id="delete-{{ $data->id }}" class="float-right" action=""
-										method="POST"></form>
-								</td>
-							</tr>
+								<tr>
+									<td>${loop.index +1}</td>
+									<td>${ngaynghile.ten}</td>
+									<td>
+									      <fmt:formatDate value="${ngaynghile.ngay_nghi}"
+											pattern="dd-MM-yyyy" />
+									</td>
+									<td><span class="btn btn-success btn-sm">Hoạt động</span>
+										<span class="btn btn-light btn-sm">Không hoạt động</span></td>
+									<td>
+										<button class="btn btn-success btn-circle mr-1 btn-sm"
+											type="button" data-toggle="tooltip" title="Sửa" onclick="">
+											<i class="fas fa-edit"></i>
+										</button>
+										<button class="btn btn-danger btn-circle btn-sm" type="button"
+											data-toggle="tooltip" title="Xóa" onclick="">
+											<i class="fas fa-trash"></i>
+										</button>
 
+										<form id="delete-{{ $data->id }}" class="float-right"
+											action="" method="POST"></form>
+									</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -82,23 +95,26 @@
 						<h5 class="modal-title text-uppercase font-weight-bold">Thêm
 							mới ngày nghỉ lễ</h5>
 					</div>
-					 <portlet:actionURL name="saveNgayNghiLe" var="formNgayNghiLeActionURL" />
-					<form id="form" method="POST" action="<%=formNgayNghiLeActionURL.toString()%>">
-
+					<portlet:actionURL name="saveNgayNghiLe"
+						var="formNgayNghiLeActionURL" />
+					<form id="form" method="POST"
+						action="<%=formNgayNghiLeActionURL.toString()%>">
 						<div class="modal-body">
 							<div class="form-group row mt-4">
 								<label for="ten" class="col-form-label text-md-right">Tên
 									ngày nghỉ <span class="text-danger">(*)</span>
-								</label> <input id="ten" type="text" class="form-control" name="<portlet:namespace />ten"
-									required autofocus placeholder="Nhập tên chức vụ">
+								</label> <input id="ten" type="text" class="form-control"
+									name="<portlet:namespace />ten" required autofocus
+									placeholder="Nhập tên chức vụ">
 							</div>
 							<div class="form-group row mt-4">
 								<label for="ngay_nghi" class="col-form-label text-md-right">Thời
 									gian <span class="text-danger">(*)</span>
 								</label>
 								<div class="input-group">
-									<input type="text" class="form-control" name="<portlet:namespace />ngay_nghi"
-										id="ngay_nghi" placeholder="ngày nghỉ lễ" value="" required>
+									<input type="text" class="form-control"
+										name="<portlet:namespace />ngay_nghi" id="ngay_nghi"
+										placeholder="ngày nghỉ lễ" value="" required>
 									<div class="input-group-append">
 										<span class="input-group-text" id="basic-addon2"><i
 											class="fas fa-calendar-alt"></i></span>
@@ -106,9 +122,10 @@
 								</div>
 							</div>
 							<div class="custom-control custom-checkbox">
-								<input type="checkbox" name="<portlet:namespace />trangthai" value="1"
-									class="custom-control-input" id="trangthai" checked> <label
-									class="custom-control-label" for="trangthai">Hoạt động</label>
+								<input type="checkbox" name="<portlet:namespace />trangthai"
+									value="1" class="custom-control-input" id="trangthai" checked>
+								<label class="custom-control-label" for="trangthai">Hoạt
+									động</label>
 							</div>
 						</div>
 						<div class="modal-footer justify-content-center">
@@ -124,19 +141,18 @@
 </div>
 
 <script>
-  $(function() {
-    $("#ngay_nghi").datepicker({
-    	// minDate: 0,
-        // changeMonth: true,
-        dateFormat: "dd/mm/yy",
-       // firstDay: 1,
-       // hideIfNoPrevNext: true,
-       // showAnim: 'slideDown',
-       // showOn: "both",  
-        showOtherMonths: true,
-       // showStatus: true,
-       // maxDate: '-1d'
-    	
-    });
-  });
+	$(function() {
+		$("#ngay_nghi").datepicker({
+			// minDate: 0,
+			// changeMonth: true,
+			dateFormat : "dd/mm/yy",
+			// firstDay: 1,
+			// hideIfNoPrevNext: true,
+			// showAnim: 'slideDown',
+			// showOn: "both",  
+			showOtherMonths : true,
+		// showStatus: true,
+		// maxDate: '-1d'
+		});
+	});
 </script>

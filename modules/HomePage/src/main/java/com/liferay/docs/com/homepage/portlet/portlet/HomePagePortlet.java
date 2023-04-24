@@ -1,6 +1,12 @@
 package com.liferay.docs.com.homepage.portlet.portlet;
 
+import com.liferay.docs.chamcong.model.Calamviec;
+import com.liferay.docs.chamcong.model.Chucvu;
+import com.liferay.docs.chamcong.model.Phongban;
 import com.liferay.docs.chamcong.model.Users;
+import com.liferay.docs.chamcong.service.CalamviecLocalServiceUtil;
+import com.liferay.docs.chamcong.service.ChucvuLocalServiceUtil;
+import com.liferay.docs.chamcong.service.PhongbanLocalServiceUtil;
 import com.liferay.docs.chamcong.service.UsersLocalService;
 import com.liferay.docs.chamcong.service.UsersLocalServiceUtil;
 //import com.liferay.docs.chamcong.service.UsersLocalServiceUtil;
@@ -46,10 +52,10 @@ public class HomePagePortlet extends MVCPortlet {
 		int id = ParamUtil.getInteger(request, "id");
 		String hoTen = ParamUtil.getString(request, "hovaten");
 		String email = ParamUtil.getString(request, "email");
-		long chucvu = 1;
+		long chucvu = ParamUtil.getLong(request, "chucvu_id");
 		long trangThai = ParamUtil.getLong(request, "trangthai");
-		long phongban_id = 1;
-		long ca_lam_id = 1;
+		long phongban_id = ParamUtil.getLong(request, "phongban_id");
+		long ca_lam_id = ParamUtil.getLong(request, "ca_lam_id");
 		long caLamToi = ParamUtil.getLong(request, "ca_lam_toi");
 		String ma_xac_nhan = "chien";
 		String zaloId = ParamUtil.getString(request, "zalo_id");
@@ -67,7 +73,7 @@ public class HomePagePortlet extends MVCPortlet {
 							caLamToi, ma_xac_nhan, zaloId, chamCongNgoai, soNgayNghiPhep, phuTrachPhong,
 							serviceContext);
 				} else {
-					System.out.println("Not  Find");
+					System.out.println("Not Find");
 				}
 			}
 		} catch (Exception e) {
@@ -76,10 +82,10 @@ public class HomePagePortlet extends MVCPortlet {
 		}
 		response.sendRedirect("/home");
 	}
-	
+
 	public void deleteNhanVien(ActionRequest request, ActionResponse response) throws PortalException {
         int deleteUserId = ParamUtil.getInteger(request, "deleteUserId");
-         // System.out.println("da vao dc day");
+          System.out.println("da vao dc day");
         try {
         	UsersLocalServiceUtil.deleteUsers(deleteUserId);
         }
@@ -89,23 +95,76 @@ public class HomePagePortlet extends MVCPortlet {
         }
 	
 	}
-
+	
+	
+	
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
 		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		httpServletRequest.setAttribute("usersList", usersList);
-   
+		for (Users user : usersList) {
+			System.out.println("user ****"+usersList);
+		}
 		int id = ParamUtil.getInteger(renderRequest, "id");
 		if (id > 0) {
 			try {
 				Users useredit = UsersLocalServiceUtil.getUsers(id);
+				System.out.println("userdit ****"+useredit);
 				httpServletRequest.setAttribute("useredit", useredit);
 			} catch (Exception e) {
+				System.out.println("chạy vào đây******");
 				e.printStackTrace();
 			}
 		}
+		
+		
+		try {
+			List<Phongban> entitiesPhongBan = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
+			
+			renderRequest.setAttribute("selectPhongBan", entitiesPhongBan);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		
+		
+		try {
+			List<Chucvu> entitiesChucvus = ChucvuLocalServiceUtil.getChucvus(-1, -1);
+			for (Chucvu chucvu : entitiesChucvus) {
+				System.out.println("chucvu ****"+chucvu);
+			}
+			renderRequest.setAttribute("selectChucVu", entitiesChucvus);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		try {
+			List<Chucvu> entitiesChucvus = ChucvuLocalServiceUtil.getChucvus(-1, -1);
+			renderRequest.setAttribute("selectChucVu", entitiesChucvus);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+		
+		try {
+			List<Calamviec> entitiesCalamviec = CalamviecLocalServiceUtil.getCalamviecs(-1, -1);
+//	
+//			for (Calamviec calamviec : entitiesCalamviec) {
+//				System.out.println("calamviec ****"+entitiesCalamviec);
+//			}
+			renderRequest.setAttribute("selectCalamviec", entitiesCalamviec);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
 		super.render(renderRequest, renderResponse);
 	}
 

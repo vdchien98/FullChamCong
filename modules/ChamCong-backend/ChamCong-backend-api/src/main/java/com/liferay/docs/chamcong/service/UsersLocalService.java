@@ -231,6 +231,10 @@ public interface UsersLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Users> getUserGiamDocActive(ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Returns the users with the primary key.
 	 *

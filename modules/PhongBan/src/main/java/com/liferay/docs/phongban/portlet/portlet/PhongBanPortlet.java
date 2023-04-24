@@ -89,7 +89,11 @@ public class PhongBanPortlet extends MVCPortlet {
 			throws IOException, PortletException {
 		
 		List<Phongban> phongBanList = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
-
+		
+		for (Phongban phongban : phongBanList) {
+			System.out.println("phong ban la day"+phongban);
+			
+		}
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		httpServletRequest.setAttribute("phongBanList", phongBanList);
 		int idPhongBan = ParamUtil.getInteger(renderRequest, "idPhongBan");
@@ -102,28 +106,20 @@ public class PhongBanPortlet extends MVCPortlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}		 
+		}
+		
+		ServiceContext serviceContext = new ServiceContext();
 		try {
-			List<Users> entities = UsersLocalServiceUtil.getUserses(-1, -1);
-		//	renderRequest.setAttribute("usersAll", entities);
-			List<Users> filteredUsers = new ArrayList<>();
-			for (Users user : entities) {
-				if (user.getChucvu_id() == 6) {
-					filteredUsers.add(user);
-				}
-			}
-			renderRequest.setAttribute("usersLanhDao", filteredUsers);
+			
+			List<Users> entities = UsersLocalServiceUtil.getUserGiamDocActive(serviceContext);
+		
+			renderRequest.setAttribute("usersLanhDao", entities);
 		} catch (SystemException e) {
+			e.printStackTrace();
+		} catch (PortalException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		super.render(renderRequest, renderResponse);
 	}
-	
-	
-//	@Override
-//	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)
-//			throws IOException, PortletException {
-//		
-//		super.doView(renderRequest, renderResponse);
-//	}
 }

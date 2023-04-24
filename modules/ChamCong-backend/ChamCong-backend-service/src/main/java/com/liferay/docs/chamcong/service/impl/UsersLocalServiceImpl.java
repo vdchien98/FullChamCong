@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -94,6 +95,14 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 	    Users user = getUsers(id);
 	    user = deleteUsers(id);
 	    return user;
+	}
+	
+	public List<Users> getUserGiamDocActive (ServiceContext serviceContext) throws PortalException {
+		List<Users> users = usersLocalService.getUserses(-1, -1);
+		users = users.stream()
+                .filter(n -> n.getPhongban_id()==14 &&n.getTrangthai()==1)
+                .collect(Collectors.toList());
+	    return users;
 	}
 
 

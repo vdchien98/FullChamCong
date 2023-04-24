@@ -1,9 +1,10 @@
-<%@page import="com.liferay.docs.chamcong.model.Users"%>
-<%@page import="java.util.List"%>
-<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
-
+<%@page import="com.liferay.docs.chamcong.model.Phongban"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="com.liferay.docs.chamcong.model.Users"%>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
+<%@ page import="com.liferay.portal.kernel.util.HtmlUtil"%>
+<%@page import="java.util.List"%>
 <%@ include file="../init.jsp"%>
 
 <link rel="stylesheet"
@@ -21,7 +22,8 @@
 		<div class="card-body">
 			<div class="row">
 				<div class="col-md-7">
-					<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+					<table class="table table-bordered table-hover" id="dataTable"
+						width="100%" cellspacing="0">
 						<thead>
 							<tr>
 								<th>STT</th>
@@ -50,7 +52,8 @@
 												<span class="font-weight-bold text-warning">Người phụ
 												trách: ${user.hovaten}</span>
 											</c:if>
-										</c:forEach></td>
+										</c:forEach>
+										</td>
 									<td><c:if test="${condition}">
 											<span class="btn btn-success btn-sm">Hoạt động</span>
 										</c:if> <c:if test="${!condition}">
@@ -111,7 +114,8 @@
 							</div>
 							<div class="form-group row mt-4">
 								<label for="nguoi_phu_trach"
-									class="col-form-label text-md-right">Người phụ trách</label> <select
+									class="col-form-label text-md-right">Người phụ trách</label>
+									 <select
 									class="form-control selectpicker inpputreset" id="nguoi_phu_trach"
 									name="<portlet:namespace />nguoi_phu_trach"
 									data-live-search="true" required>
@@ -162,5 +166,3 @@
     document.getElementById("trangthai").checked = trangthai;
 }
 </script>
-
-

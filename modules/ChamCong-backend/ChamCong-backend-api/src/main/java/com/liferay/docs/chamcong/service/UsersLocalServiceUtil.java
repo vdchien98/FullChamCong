@@ -260,6 +260,13 @@ public class UsersLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static List<Users> getUserGiamDocActive(
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().getUserGiamDocActive(serviceContext);
+	}
+
 	/**
 	 * Returns the users with the primary key.
 	 *

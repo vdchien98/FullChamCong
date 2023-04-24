@@ -285,6 +285,15 @@ public class UsersLocalServiceWrapper
 		return _usersLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public java.util.List<com.liferay.docs.chamcong.model.Users>
+			getUserGiamDocActive(
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _usersLocalService.getUserGiamDocActive(serviceContext);
+	}
+
 	/**
 	 * Returns the users with the primary key.
 	 *
