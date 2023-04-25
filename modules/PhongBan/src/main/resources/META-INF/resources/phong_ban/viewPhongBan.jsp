@@ -35,14 +35,14 @@
 						<tbody>
 							<c:forEach var="phongban" items="${phongBanList}"
 								varStatus="loop">
-								
+
 								<%--  
 							     <portlet:renderURL var="editPhongBan">
 												<portlet:param name="idPhongBan" value="${phongban.id }" />
 												<portlet:param name="mvcPath" value="/phong_ban/viewPhongBan.jsp" />
 								 </portlet:renderURL>
-								 --%> 
-								 
+								 --%>
+
 								<tr>
 									<td>${loop.index +1}</td>
 									<td><span>${phongban.tenphong}</span> <br> <span
@@ -50,10 +50,9 @@
 										<c:forEach var="user" items="${usersLanhDao}">
 											<c:if test="${user.id == phongban.nguoi_phu_trach}">
 												<span class="font-weight-bold text-warning">Người phụ
-												trách: ${user.hovaten}</span>
+													trách: ${user.hovaten}</span>
 											</c:if>
-										</c:forEach>
-										</td>
+										</c:forEach></td>
 									<td><c:if test="${condition}">
 											<span class="btn btn-success btn-sm">Hoạt động</span>
 										</c:if> <c:if test="${!condition}">
@@ -62,20 +61,18 @@
 									<td>
 										<button class="btn btn-success btn-circle mr-1 btn-sm"
 											type="button" data-toggle="tooltip" title="Sửa"
-	                                         onclick="editPhongBan('${phongban.id}', '${phongban.tenphong}', '${phongban.nguoi_phu_trach}', '${phongban.trangthai}');">
-											
+											onclick="editPhongBan('${phongban.id}', '${phongban.tenphong}', '${phongban.nguoi_phu_trach}', '${phongban.trangthai}');">
+
 											<i class="fa fa-pencil" aria-hidden="true"></i>
-										</button>
-										
-										
-										
-										 <portlet:actionURL var="deletePhongBanURL" name="deletePhongBan"/>
-										<form name="deleteNhanVienForm" id="deleteNhanVienForm" method="POST" action="<%=deletePhongBanURL%>">
-											 <input type="hidden" name="<portlet:namespace />deletePhongBanId" value="${phongban.id}" />
-											<button 
-											    class="btn btn-danger btn-circle btn-sm"
-												type="submit" 
-												>
+										</button> <portlet:actionURL var="deletePhongBanURL"
+											name="deletePhongBan" />
+										<form name="deleteNhanVienForm" id="deleteNhanVienForm"
+											method="POST" action="<%=deletePhongBanURL%>">
+											<input type="hidden"
+												name="<portlet:namespace />deletePhongBanId"
+												value="${phongban.id}" />
+											<button class="btn btn-danger btn-circle btn-sm"
+												type="submit">
 												<i class="fa fa-trash" aria-hidden="true"></i>
 											</button>
 										</form>
@@ -89,7 +86,7 @@
 				<div class="col-md-5">
 					<div class="modal-header">
 						<h5 class="modal-title text-uppercase font-weight-bold">Thêm
-							mới phòng ban</h5>
+							phòng ban</h5>
 					</div>
 					<portlet:actionURL name="savePhongBan" var="formPhongBanActionURL" />
 					<form id="form1" method="POST"
@@ -99,24 +96,18 @@
 							<div class="form-group row mt-4">
 								<label for="tenphong" class="col-form-label text-md-right">Tên
 									phòng ban <span class="text-danger">(*)</span>
-								</label>
-							
-								<input id="phongbanId" type="hidden" class="form-control"
+								</label> <input id="phongbanId" type="hidden" class="form-control"
 									name="<portlet:namespace />idPhongBan" required autofocus
-									placeholder="ID" 
-									value="${phongbanedit.id}"
-									>
-								 <input id="tenphong" type="text" class="form-control inpputreset"
+									placeholder="ID" value="${phongbanedit.id}"> <input
+									id="tenphong" type="text" class="form-control inpputreset"
 									name="<portlet:namespace />tenphong" required autofocus
-									placeholder="Nhập tên phòng" 
-									value="${phongbanedit.tenphong}"
-									>
+									placeholder="Nhập tên phòng" value="${phongbanedit.tenphong}">
 							</div>
 							<div class="form-group row mt-4">
 								<label for="nguoi_phu_trach"
-									class="col-form-label text-md-right">Người phụ trách</label>
-									 <select
-									class="form-control selectpicker inpputreset" id="nguoi_phu_trach"
+									class="col-form-label text-md-right">Người phụ trách</label> <select
+									class="form-control selectpicker inpputreset"
+									id="nguoi_phu_trach"
 									name="<portlet:namespace />nguoi_phu_trach"
 									data-live-search="true" required>
 									<option value="">[-- Chọn người phụ trách --]</option>
@@ -131,12 +122,14 @@
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" name="<portlet:namespace />trangthai"
 										value="1" class="custom-control-input" id="trangthai" checked>
-									<label class="custom-control-label" for="trangthai">Hoạt động</label>
+									<label class="custom-control-label" for="trangthai">Hoạt
+										động</label>
 								</div>
 							</div>
 						</div>
 						<div class="modal-footer justify-content-center">
-							<button type="submit" class="btn btn-primary"  onclick="clearForm(event)">
+							<button type="submit" class="btn btn-primary"
+								onclick="clearForm(event)">
 								<i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu
 							</button>
 						</div>
@@ -158,11 +151,17 @@
 
 	</div>
 </div>
-<script>	
+<script>
 	function editPhongBan(id, tenphong, nguoi_phu_trach, trangthai) {
-    document.getElementById("phongbanId").value = id;
-    document.getElementById("tenphong").value = tenphong;
-    document.getElementById("nguoi_phu_trach").value = nguoi_phu_trach;
-    document.getElementById("trangthai").checked = trangthai;
-}
+		var modalTitle = document.querySelector(".modal-title");
+		if (id > 0) {
+			modalTitle.textContent = 'Chỉnh sửa phòng ban';
+		} else {
+			modalTitle.textContent = 'Thêm phòng ban';
+		}
+		document.getElementById("phongbanId").value = id;
+		document.getElementById("tenphong").value = tenphong;
+		document.getElementById("nguoi_phu_trach").value = nguoi_phu_trach;
+		document.getElementById("trangthai").checked = trangthai;
+	}
 </script>

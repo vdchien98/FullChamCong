@@ -97,8 +97,6 @@ i.fa.fa-user-circle-o {
 													<!-- không làm gì cả -->
 												</c:otherwise>
 											</c:choose>
-
-
 											<span class="ml-5 text-primary">Có chấm công ngoài</span>
 										</div>
 										<div class="row">
@@ -107,7 +105,8 @@ i.fa.fa-user-circle-o {
 										</div>
 
 									</th>
-									<th><c:choose>
+									<th>
+									<c:choose>
 											<c:when test="${user.trangthai == 1}">
 												<span class="btn btn-success btn-sm">Hoạt động</span>
 											</c:when>

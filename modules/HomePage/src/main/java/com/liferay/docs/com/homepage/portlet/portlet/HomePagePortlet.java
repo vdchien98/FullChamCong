@@ -88,38 +88,30 @@ public class HomePagePortlet extends MVCPortlet {
           System.out.println("da vao dc day");
         try {
         	UsersLocalServiceUtil.deleteUsers(deleteUserId);
+        	response.sendRedirect("/home");
         }
 
         catch (Exception e) {
             e.printStackTrace();
         }
 	
-	}
-	
-	
-	
+	}	
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
 		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		httpServletRequest.setAttribute("usersList", usersList);
-		for (Users user : usersList) {
-			System.out.println("user ****"+usersList);
-		}
 		int id = ParamUtil.getInteger(renderRequest, "id");
 		if (id > 0) {
 			try {
 				Users useredit = UsersLocalServiceUtil.getUsers(id);
-				System.out.println("userdit ****"+useredit);
 				httpServletRequest.setAttribute("useredit", useredit);
 			} catch (Exception e) {
 				System.out.println("chạy vào đây******");
 				e.printStackTrace();
 			}
 		}
-		
-		
 		try {
 			List<Phongban> entitiesPhongBan = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
 			
@@ -131,9 +123,6 @@ public class HomePagePortlet extends MVCPortlet {
 		
 		try {
 			List<Chucvu> entitiesChucvus = ChucvuLocalServiceUtil.getChucvus(-1, -1);
-			for (Chucvu chucvu : entitiesChucvus) {
-				System.out.println("chucvu ****"+chucvu);
-			}
 			renderRequest.setAttribute("selectChucVu", entitiesChucvus);
 		} catch (SystemException e) {
 			e.printStackTrace();
@@ -144,27 +133,12 @@ public class HomePagePortlet extends MVCPortlet {
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-		
-		
-		
 		try {
 			List<Calamviec> entitiesCalamviec = CalamviecLocalServiceUtil.getCalamviecs(-1, -1);
-//	
-//			for (Calamviec calamviec : entitiesCalamviec) {
-//				System.out.println("calamviec ****"+entitiesCalamviec);
-//			}
 			renderRequest.setAttribute("selectCalamviec", entitiesCalamviec);
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
 		super.render(renderRequest, renderResponse);
 	}
 

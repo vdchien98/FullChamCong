@@ -111,6 +111,9 @@ public interface NgaynghileLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public Ngaynghile deleteNgaynghile(int id) throws PortalException;
 
+	public Ngaynghile deleteNgayNghiLe(int id, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Deletes the ngaynghile from the database. Also notifies the appropriate model listeners.
 	 *
@@ -258,6 +261,11 @@ public interface NgaynghileLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public Ngaynghile updateNgayNghiLe(
+			int id, String ten, Date ngay_nghi, int trangthai,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	/**
 	 * Updates the ngaynghile in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

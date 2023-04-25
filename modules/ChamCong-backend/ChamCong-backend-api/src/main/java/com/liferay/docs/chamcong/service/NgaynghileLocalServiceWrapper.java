@@ -104,6 +104,15 @@ public class NgaynghileLocalServiceWrapper
 		return _ngaynghileLocalService.deleteNgaynghile(id);
 	}
 
+	@Override
+	public com.liferay.docs.chamcong.model.Ngaynghile deleteNgayNghiLe(
+			int id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ngaynghileLocalService.deleteNgayNghiLe(id, serviceContext);
+	}
+
 	/**
 	 * Deletes the ngaynghile from the database. Also notifies the appropriate model listeners.
 	 *
@@ -314,6 +323,17 @@ public class NgaynghileLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ngaynghileLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.docs.chamcong.model.Ngaynghile updateNgayNghiLe(
+			int id, String ten, java.util.Date ngay_nghi, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _ngaynghileLocalService.updateNgayNghiLe(
+			id, ten, ngay_nghi, trangthai, serviceContext);
 	}
 
 	/**

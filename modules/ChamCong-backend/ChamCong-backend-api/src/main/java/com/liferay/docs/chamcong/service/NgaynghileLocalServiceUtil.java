@@ -104,6 +104,14 @@ public class NgaynghileLocalServiceUtil {
 		return getService().deleteNgaynghile(id);
 	}
 
+	public static Ngaynghile deleteNgayNghiLe(
+			int id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().deleteNgayNghiLe(id, serviceContext);
+	}
+
 	/**
 	 * Deletes the ngaynghile from the database. Also notifies the appropriate model listeners.
 	 *
@@ -281,6 +289,15 @@ public class NgaynghileLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static Ngaynghile updateNgayNghiLe(
+			int id, String ten, java.util.Date ngay_nghi, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().updateNgayNghiLe(
+			id, ten, ngay_nghi, trangthai, serviceContext);
 	}
 
 	/**

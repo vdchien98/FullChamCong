@@ -78,11 +78,9 @@ public class ChucVuPortlet extends MVCPortlet {
         try {
         	 ChucvuLocalServiceUtil.deleteChucvu(deleteChucVuId);
         }
-
         catch (Exception e) {
             e.printStackTrace();
         }
-	
 	}
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
@@ -95,7 +93,7 @@ public class ChucVuPortlet extends MVCPortlet {
 		if (idChucVu > 0) {
 			try {
 				Chucvu chucvuedit = ChucvuLocalServiceUtil.getChucvu(idChucVu);
-				httpServletRequest.setAttribute("chucvuedit", chucvuedit);
+				httpServletRequest.setAttribute("chucvuedit", chucvuedit);				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

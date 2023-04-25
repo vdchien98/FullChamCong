@@ -52,7 +52,6 @@ public class PhongBanPortlet extends MVCPortlet {
 		String tenphong = ParamUtil.getString(request, "tenphong");
 		int trangthai = ParamUtil.getInteger(request, "trangthai");
 		int nguoiPhuTrach = ParamUtil.getInteger(request, "nguoi_phu_trach");		
-		System.out.println("Nguoi phu trach đuoc chon: " + nguoiPhuTrach);
 		try {
 			if (idPhongBan == 0) {
 				PhongbanLocalServiceUtil.addPhongBan(tenphong, trangthai, nguoiPhuTrach, serviceContext);
@@ -76,6 +75,7 @@ public class PhongBanPortlet extends MVCPortlet {
           System.out.println("da vao dc day");
         try {
         	 PhongbanLocalServiceUtil.deletePhongban(deletePhongBanId);
+        	 response.sendRedirect("/phong-ban");
         }
 
         catch (Exception e) {
@@ -89,15 +89,9 @@ public class PhongBanPortlet extends MVCPortlet {
 			throws IOException, PortletException {
 		
 		List<Phongban> phongBanList = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
-		
-		for (Phongban phongban : phongBanList) {
-			System.out.println("phong ban la day"+phongban);
-			
-		}
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		httpServletRequest.setAttribute("phongBanList", phongBanList);
 		int idPhongBan = ParamUtil.getInteger(renderRequest, "idPhongBan");
-		System.out.println("Phong Ban da vao day *******"+ idPhongBan);
 		if (idPhongBan > 0) {
 			try {
 				Phongban phongbanedit = PhongbanLocalServiceUtil.getPhongban(idPhongBan);
@@ -110,9 +104,7 @@ public class PhongBanPortlet extends MVCPortlet {
 		
 		ServiceContext serviceContext = new ServiceContext();
 		try {
-			
 			List<Users> entities = UsersLocalServiceUtil.getUserGiamDocActive(serviceContext);
-		
 			renderRequest.setAttribute("usersLanhDao", entities);
 		} catch (SystemException e) {
 			e.printStackTrace();

@@ -87,7 +87,6 @@ public class CaLamViecPortlet extends MVCPortlet {
 		List<Calamviec> calamviecList = CalamviecLocalServiceUtil.getCalamviecs(-1, 1);
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);	
 		for (Calamviec calamviec : calamviecList) {
-			System.out.println("ca lam viec"+ calamviec);
 			httpServletRequest.setAttribute("calamviec", calamviec);
 			
 		}
