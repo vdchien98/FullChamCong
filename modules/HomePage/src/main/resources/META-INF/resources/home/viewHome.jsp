@@ -4,33 +4,109 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui"%>
+
+
+
 <head>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
+
+
+
 <portlet:renderURL var="addEntryURL">
 	<portlet:param name="mvcPath" value="/home/viewForm.jsp"></portlet:param>
 </portlet:renderURL>
 
 <style>
-
 i.fa.fa-user-circle-o {
-    margin-top: 3px;
+	margin-top: 3px;
 }
+
 .styleChucVu {
-    margin: 0px 10px;
+	margin: 0px 10px;
 }
+
 .card-header.py-3.headerDSNhanVien {
 	display: flex;
 	justify-content: space-between;
 }
+
+
+
+/* thông báo xóa nhân viên*/
+
+.dialog-ovelay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.50);
+    z-index: 999999
+}
+.dialog-ovelay .dialog {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    margin: 300px auto 0;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,.2);
+    border-radius: 3px;
+    overflow: hidden
+}
+.dialog-ovelay .dialog header {
+    padding: 10px 8px;
+    background-color: #4e73df;
+    border-bottom: 1px solid #e5e5e5
+}
+.dialog-ovelay .dialog header h3 {
+    font-size: 14px;
+    margin: 0;
+    color: #555;
+    display: inline-block
+}
+.dialog-ovelay .dialog header .fa-close {
+    float: right;
+    color: #c4c5c7;
+    cursor: pointer;
+    transition: all .5s ease;
+    padding: 0 2px;
+    border-radius: 1px    
+}
+.dialog-ovelay .dialog header .fa-close:hover {
+    color: #b9b9b9
+}
+.dialog-ovelay .dialog header .fa-close:active {
+    box-shadow: 0 0 5px #673AB7;
+    color: #a2a2a2
+}
+.dialog-ovelay .dialog .dialog-msg {
+    padding: 12px 10px
+}
+.dialog-ovelay .dialog .dialog-msg p{
+    margin: 0;
+    font-size: 15px;
+    color: #333
+}
+.dialog-ovelay .dialog footer {
+    border-top: 1px solid #e5e5e5;
+    padding: 8px 10px
+}
+.dialog-ovelay .dialog footer .controls {
+    direction: rtl
+}
+.dialog-ovelay .dialog footer .controls .button {
+    padding: 5px 15px;
+    border-radius: 3px
+}
+
+
 </style>
-<script type="text/javascript">
-         function deleteUser() {
-         Confirm('THÔNG BÁO', 'Bạn có chắc chắn muốn xóa nhân viên này?', 'OK', 'Hủy', '#delete-'+id);
-          //  alert("Bạn vừa click vào nút");
-         }
-</script>
 
 <div class="container-fluid">
 	<h1 class="h3 mb-2 text-gray-800 font-weight-bold text-uppercase">Quản
@@ -68,24 +144,23 @@ i.fa.fa-user-circle-o {
 									<th>${user.id}</th>
 									<th>
 										<div class="row">
-											<i class="fa fa-user-circle-o iconUserChucVu" aria-hidden="true"></i>
+											<i class="fa fa-user-circle-o iconUserChucVu"
+												aria-hidden="true"></i>
 											<c:forEach var="itemChucVu" items="${selectChucVu}">
 												<c:if test="${itemChucVu.id == user.chucvu_id}">
 													<span class="font-weight-bold text-warning styleChucVu">
 														${itemChucVu.name}</span>
 												</c:if>
 											</c:forEach>
-										  <span>${user.hovaten}</span>
+											<span>${user.hovaten}</span>
 										</div>
 										<div class="row">
-
 											<c:forEach var="itemPhongBan" items="${selectPhongBan}">
 												<c:if test="${itemPhongBan.id == user.phongban_id}">
-													<span class="font-weight-bold text-warning">
+													<span class="text-warning mr-3"> Phòng/ban:
 														${itemPhongBan.tenphong}</span>
 												</c:if>
 											</c:forEach>
-
 										</div>
 										<div class="row">
 											<span class="mr-3">Tên đăng nhập: </span>${user.email}
@@ -105,8 +180,7 @@ i.fa.fa-user-circle-o {
 										</div>
 
 									</th>
-									<th>
-									<c:choose>
+									<th><c:choose>
 											<c:when test="${user.trangthai == 1}">
 												<span class="btn btn-success btn-sm">Hoạt động</span>
 											</c:when>
@@ -118,17 +192,19 @@ i.fa.fa-user-circle-o {
 									<th><a class="btn btn-success btn-circle mr-1 btn-sm"
 										href="${editURL }"> <i class="fa fa-pencil"
 											aria-hidden="true"> </i>
-									</a> <portlet:actionURL var="deleteNhanVienURL"
-											name="deleteNhanVien" />
-										<form name="deleteNhanVienForm" id="deleteNhanVienForm"
-											method="POST" action="<%=deleteNhanVienURL%>">
-											<input type="hidden" name="<portlet:namespace />deleteUserId"
-												value="${user.id}" />
-											<button class="btn btn-danger btn-circle btn-sm"
-												type="submit">
-												<i class="fa fa-trash" aria-hidden="true"></i>
-											</button>
-										</form></th>
+									</a>
+
+										   <portlet:actionURL var="deleteNhanVienURL" name="deleteNhanVien" />
+											<form name="deleteNhanVienForm" id="deleteNhanVienForm"
+												method="POST" action="<%=deleteNhanVienURL%>">
+												<input type="hidden" name="<portlet:namespace />deleteUserId" />
+											
+										           <button class="btn btn-danger btn-circle btn-sm" type="button"
+														onclick="deleteNhanVien('${user.id}');">
+														<i class="fa fa-trash" aria-hidden="true"></i>
+												</button>
+											</form>
+									</th>
 								</tr>
 							</c:forEach>
 
@@ -140,3 +216,57 @@ i.fa.fa-user-circle-o {
 
 	</div>
 </div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+function Confirm(title, msg, okButton, cancelButton, id) { /*change*/
+    var $content =  "<div class='dialog-ovelay'>" +
+                    "<div class='dialog'><header class='text-center'>" +
+                     " <h3 class='text-white font-weight-bold'> " + title + " </h3> " +
+                     "<i class='fa fa-close'></i>" +
+                 "</header>" +
+                 "<div class='dialog-msg'>" +
+                     " <h4> " + msg + " </h4> " +
+                 "</div>" +
+                 "<footer>" +
+                     "<div class='controls text-center'>" +
+                         " <button class='button button-danger doAction'>" + okButton + "</button> " +
+                         " <button class='button button-default cancelAction'>" + cancelButton + "</button> " +
+                     "</div>" +
+                 "</footer>" +
+              "</div>" +
+            "</div>";
+    $('body').prepend($content);
+    $('.doAction').click(function (event){ 
+        var deleteForm = $('#deleteNhanVienForm');
+        deleteForm.find('[name="<portlet:namespace />deleteUserId"]').val(id);
+        deleteForm.submit();     
+        $(this).parents('.dialog-ovelay').fadeOut(500, function () {
+            $(this).remove();
+        });
+    });
+    $('.cancelAction, .fa-close').click(function () {
+        $(this).parents('.dialog-ovelay').fadeOut(500, function () {
+            $(this).remove();
+      });
+    });
+}
+function deleteNhanVien(id) {
+	if(id != 0) {
+		var title = 'THÔNG BÁO';
+		var msg = 'Bạn có chắc chắn muốn xóa nhân viên này?';
+		var okButton = 'OK';
+		var cancelButton = 'Hủy';
+		console.log("id là "+ id)
+		Confirm(title, msg, okButton, cancelButton, id);
+	}
+}
+</script>
+
+
+
+
+
+
