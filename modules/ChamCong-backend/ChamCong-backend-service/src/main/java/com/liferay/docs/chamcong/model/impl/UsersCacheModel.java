@@ -60,7 +60,7 @@ public class UsersCacheModel implements CacheModel<Users>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -94,6 +94,8 @@ public class UsersCacheModel implements CacheModel<Users>, Externalizable {
 		sb.append(updated_at);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", userId=");
+		sb.append(userId);
 		sb.append("}");
 
 		return sb.toString();
@@ -158,6 +160,7 @@ public class UsersCacheModel implements CacheModel<Users>, Externalizable {
 		}
 
 		usersImpl.setGroupId(groupId);
+		usersImpl.setUserId(userId);
 
 		usersImpl.resetOriginalValues();
 
@@ -191,6 +194,8 @@ public class UsersCacheModel implements CacheModel<Users>, Externalizable {
 		updated_at = objectInput.readLong();
 
 		groupId = objectInput.readLong();
+
+		userId = objectInput.readInt();
 	}
 
 	@Override
@@ -244,6 +249,8 @@ public class UsersCacheModel implements CacheModel<Users>, Externalizable {
 		objectOutput.writeLong(updated_at);
 
 		objectOutput.writeLong(groupId);
+
+		objectOutput.writeInt(userId);
 	}
 
 	public int id;
@@ -262,5 +269,6 @@ public class UsersCacheModel implements CacheModel<Users>, Externalizable {
 	public long created_at;
 	public long updated_at;
 	public long groupId;
+	public int userId;
 
 }

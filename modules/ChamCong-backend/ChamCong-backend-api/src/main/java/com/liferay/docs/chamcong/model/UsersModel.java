@@ -283,6 +283,20 @@ public interface UsersModel extends BaseModel<Users> {
 	 */
 	public void setGroupId(long groupId);
 
+	/**
+	 * Returns the user ID of this users.
+	 *
+	 * @return the user ID of this users
+	 */
+	public int getUserId();
+
+	/**
+	 * Sets the user ID of this users.
+	 *
+	 * @param userId the user ID of this users
+	 */
+	public void setUserId(int userId);
+
 	@Override
 	public Users cloneWithOriginalValues();
 

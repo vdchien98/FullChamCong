@@ -71,7 +71,8 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		{"ma_xac_nhan", Types.VARCHAR}, {"zalo_id", Types.VARCHAR},
 		{"cham_cong_ngoai", Types.BIGINT}, {"so_ngay_nghi_phep", Types.BIGINT},
 		{"phu_trach_phong", Types.INTEGER}, {"created_at", Types.TIMESTAMP},
-		{"updated_at", Types.TIMESTAMP}, {"groupId", Types.BIGINT}
+		{"updated_at", Types.TIMESTAMP}, {"groupId", Types.BIGINT},
+		{"userId", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -94,10 +95,11 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		TABLE_COLUMNS_MAP.put("created_at", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("updated_at", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table _Users (id_ INTEGER not null primary key,hovaten VARCHAR(75) null,email VARCHAR(75) null,chucvu_id LONG,trangthai LONG,phongban_id LONG,ca_lam_id LONG,ca_lam_toi LONG,ma_xac_nhan VARCHAR(75) null,zalo_id VARCHAR(75) null,cham_cong_ngoai LONG,so_ngay_nghi_phep LONG,phu_trach_phong INTEGER,created_at DATE null,updated_at DATE null,groupId LONG)";
+		"create table _Users (id_ INTEGER not null primary key,hovaten VARCHAR(75) null,email VARCHAR(75) null,chucvu_id LONG,trangthai LONG,phongban_id LONG,ca_lam_id LONG,ca_lam_toi LONG,ma_xac_nhan VARCHAR(75) null,zalo_id VARCHAR(75) null,cham_cong_ngoai LONG,so_ngay_nghi_phep LONG,phu_trach_phong INTEGER,created_at DATE null,updated_at DATE null,groupId LONG,userId INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table _Users";
 
@@ -283,6 +285,9 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		attributeGetterFunctions.put("groupId", Users::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId", (BiConsumer<Users, Long>)Users::setGroupId);
+		attributeGetterFunctions.put("userId", Users::getUserId);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<Users, Integer>)Users::setUserId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -559,6 +564,21 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
+	@JSON
+	@Override
+	public int getUserId() {
+		return _userId;
+	}
+
+	@Override
+	public void setUserId(int userId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_userId = userId;
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -618,6 +638,7 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		usersImpl.setCreated_at(getCreated_at());
 		usersImpl.setUpdated_at(getUpdated_at());
 		usersImpl.setGroupId(getGroupId());
+		usersImpl.setUserId(getUserId());
 
 		usersImpl.resetOriginalValues();
 
@@ -652,6 +673,7 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		usersImpl.setUpdated_at(
 			this.<Date>getColumnOriginalValue("updated_at"));
 		usersImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		usersImpl.setUserId(this.<Integer>getColumnOriginalValue("userId"));
 
 		return usersImpl;
 	}
@@ -797,6 +819,8 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 
 		usersCacheModel.groupId = getGroupId();
 
+		usersCacheModel.userId = getUserId();
+
 		return usersCacheModel;
 	}
 
@@ -903,6 +927,7 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 	private Date _created_at;
 	private Date _updated_at;
 	private long _groupId;
+	private int _userId;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -949,6 +974,7 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		_columnOriginalValues.put("created_at", _created_at);
 		_columnOriginalValues.put("updated_at", _updated_at);
 		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("userId", _userId);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1003,6 +1029,8 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		columnBitmasks.put("updated_at", 16384L);
 
 		columnBitmasks.put("groupId", 32768L);
+
+		columnBitmasks.put("userId", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

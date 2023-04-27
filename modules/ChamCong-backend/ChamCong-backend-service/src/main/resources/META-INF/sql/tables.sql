@@ -61,5 +61,6 @@ create table _Users (
 	phu_trach_phong INTEGER,
 	created_at DATE null,
 	updated_at DATE null,
-	groupId LONG
+	groupId LONG,
+	userId INTEGER
 );

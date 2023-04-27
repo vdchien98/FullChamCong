@@ -57,6 +57,7 @@ public class UsersWrapper
 		attributes.put("created_at", getCreated_at());
 		attributes.put("updated_at", getUpdated_at());
 		attributes.put("groupId", getGroupId());
+		attributes.put("userId", getUserId());
 
 		return attributes;
 	}
@@ -157,6 +158,12 @@ public class UsersWrapper
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Integer userId = (Integer)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
 		}
 	}
 
@@ -323,6 +330,16 @@ public class UsersWrapper
 	@Override
 	public Date getUpdated_at() {
 		return model.getUpdated_at();
+	}
+
+	/**
+	 * Returns the user ID of this users.
+	 *
+	 * @return the user ID of this users
+	 */
+	@Override
+	public int getUserId() {
+		return model.getUserId();
 	}
 
 	/**
@@ -498,6 +515,16 @@ public class UsersWrapper
 	@Override
 	public void setUpdated_at(Date updated_at) {
 		model.setUpdated_at(updated_at);
+	}
+
+	/**
+	 * Sets the user ID of this users.
+	 *
+	 * @param userId the user ID of this users
+	 */
+	@Override
+	public void setUserId(int userId) {
+		model.setUserId(userId);
 	}
 
 	/**

@@ -18,12 +18,20 @@ import com.liferay.docs.chamcong.service.UsersLocalServiceUtil;
 import com.liferay.docs.chamcong.service.base.UsersLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.docs.chamcong.model.Ngaynghile;
 import com.liferay.docs.chamcong.model.Users;
 import com.liferay.docs.chamcong.service.base.UsersLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ContactLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.persistence.UserUtil;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -42,27 +50,70 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 			long cham_cong_ngoai, long so_ngay_nghi_phep,
 			int phu_trach_phong, ServiceContext serviceContext) throws PortalException, SystemException {
         	long groupId = serviceContext.getScopeGroupId();
-    		int id = (int) CounterLocalServiceUtil.increment();
-    		Users user = usersPersistence.create(id);
+
+        	
+        	//tao user vao bang user_ cua liferay
+        	UserPersistence userPersistence = UserUtil.getPersistence();
+        	int idUser = userPersistence.countAll();
+    		User user = UserLocalServiceUtil.createUser(idUser);
+    		String externalReferenceCode = PortalUUIDUtil.generate();
+    		Contact contact = ContactLocalServiceUtil.createContact(CounterLocalServiceUtil.increment(Contact.class.getName()));
+    		contact = ContactLocalServiceUtil.addContact(contact);
+    		long contactId = contact.getContactId();
+    		String uuid = PortalUUIDUtil.generate();
+    		user.setUserUuid(uuid);
+    		user.setEmailAddress(email);
+            user.setExternalReferenceCode(externalReferenceCode);
+    		user.setScreenName(hovaten);
+    		user.setCreateDate(new Date());
+    		user.setModifiedDate(new Date());
+    		user.setDefaultUser(true);
+    		user.setContactId(contactId);
+    		user.setPassword(ma_xac_nhan);
+    		user.setPasswordModifiedDate(new Date());
+    	    user.setReminderQueryQuestion("what-is-your-father's-middle-name");
+    	    user.setReminderQueryAnswer("09041998");
+    	    user.setLanguageId("en_US");
+    	    user.setTimeZoneId("Asia/Saigon");
+    	    user.setGreeting("welcome " + hovaten +"!");	
+    		user.setFirstName(hovaten);
+    		user.setLastName(hovaten);
+    		user.setLoginDate(new Date());
+    		user.setLoginIP("127.0.0.1");
+         	user.setLastLoginDate(new Date());
+         	user.setLastLoginIP("127.0.0.1");
+         	user.setLastFailedLoginDate(new Date());
+        
+         	UserLocalServiceUtil.updateUser(user);
+         	
+         //	ContactLocalServiceUtil.addContact(userId, className, classPK, emailAddress, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn, twitterSn, jobTitle)
+         	
+         //	UserLocalServiceUtil.addUser(creatorUserId, companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext)
+    		
+    		//tao user vao bang User tao mơi
+    		int idUsers = usersPersistence.countAll();
+    		idUsers++;
+    		Users users = usersPersistence.create(idUsers);
     		Date now = new Date();
-        	user.setId(id);
-       		user.setHovaten(hovaten);
-       		user.setEmail(email);
-       		user.setChucvu_id(chucvu_id);	
-       		user.setTrangthai(trangthai);	
-       		user.setPhongban_id(phongban_id);	
-       		user.setCa_lam_id(ca_lam_id);	
-       		user.setCa_lam_toi(ca_lam_toi);
-       		user.setMa_xac_nhan(ma_xac_nhan);
-       		user.setZalo_id(zalo_id);
-       		user.setCham_cong_ngoai(cham_cong_ngoai);
-       		user.setSo_ngay_nghi_phep(so_ngay_nghi_phep);
-       		user.setPhu_trach_phong(phu_trach_phong);
-       		user.setCreated_at(now);
-       		user.setUpdated_at(now);
-       		user.setGroupId(groupId);
-       		usersLocalService.updateUsers(user);
-    		return user;
+    		users.setId(idUser);
+    		users.setHovaten(hovaten);
+    		users.setEmail(email);
+    		users.setChucvu_id(chucvu_id);	
+    		users.setTrangthai(trangthai);	
+    		users.setPhongban_id(phongban_id);	
+    		users.setCa_lam_id(ca_lam_id);	
+    		users.setCa_lam_toi(ca_lam_toi);
+    		users.setMa_xac_nhan(ma_xac_nhan);
+    		users.setZalo_id(zalo_id);
+    		users.setCham_cong_ngoai(cham_cong_ngoai);
+    		users.setSo_ngay_nghi_phep(so_ngay_nghi_phep);
+    		users.setPhu_trach_phong(phu_trach_phong);
+    		users.setCreated_at(now);
+    		users.setUpdated_at(now);
+    		users.setGroupId(groupId);
+    		users.setUserId((int) user.getUserId());
+       		usersLocalService.updateUsers(users);
+    		return users;
 	}
 
 	public Users updateNhanVien(int id,String hovaten, String email, long chucvu_id, long trangthai, long phongban_id,
