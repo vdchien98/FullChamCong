@@ -49,8 +49,6 @@ import org.osgi.service.component.annotations.Reference;
 public class HomePagePortlet extends MVCPortlet {
 	public void saveNhanVien(ActionRequest request, ActionResponse response) throws IOException, PortletException {
 		ServiceContext serviceContext = new ServiceContext();
-		
-		
 		int id = ParamUtil.getInteger(request, "id");
 		String hoTen = ParamUtil.getString(request, "hovaten");
 		String email = ParamUtil.getString(request, "email");

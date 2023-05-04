@@ -64,8 +64,8 @@ public class UsersTable extends BaseTable<UsersTable> {
 		"updated_at", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<UsersTable, Long> groupId = createColumn(
 		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<UsersTable, Integer> userId = createColumn(
-		"userId", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<UsersTable, Long> userId = createColumn(
+		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 
 	private UsersTable() {
 		super("_Users", UsersTable::new);

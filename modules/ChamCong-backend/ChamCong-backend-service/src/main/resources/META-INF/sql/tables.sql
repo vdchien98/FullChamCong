@@ -62,5 +62,5 @@ create table _Users (
 	created_at DATE null,
 	updated_at DATE null,
 	groupId LONG,
-	userId INTEGER
+	userId LONG
 );

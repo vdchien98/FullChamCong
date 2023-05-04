@@ -18,10 +18,13 @@ import com.liferay.docs.chamcong.model.Users;
 import com.liferay.docs.chamcong.model.UsersModel;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -72,7 +75,7 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		{"cham_cong_ngoai", Types.BIGINT}, {"so_ngay_nghi_phep", Types.BIGINT},
 		{"phu_trach_phong", Types.INTEGER}, {"created_at", Types.TIMESTAMP},
 		{"updated_at", Types.TIMESTAMP}, {"groupId", Types.BIGINT},
-		{"userId", Types.INTEGER}
+		{"userId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -95,11 +98,11 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		TABLE_COLUMNS_MAP.put("created_at", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("updated_at", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("userId", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table _Users (id_ INTEGER not null primary key,hovaten VARCHAR(75) null,email VARCHAR(75) null,chucvu_id LONG,trangthai LONG,phongban_id LONG,ca_lam_id LONG,ca_lam_toi LONG,ma_xac_nhan VARCHAR(75) null,zalo_id VARCHAR(75) null,cham_cong_ngoai LONG,so_ngay_nghi_phep LONG,phu_trach_phong INTEGER,created_at DATE null,updated_at DATE null,groupId LONG,userId INTEGER)";
+		"create table _Users (id_ INTEGER not null primary key,hovaten VARCHAR(75) null,email VARCHAR(75) null,chucvu_id LONG,trangthai LONG,phongban_id LONG,ca_lam_id LONG,ca_lam_toi LONG,ma_xac_nhan VARCHAR(75) null,zalo_id VARCHAR(75) null,cham_cong_ngoai LONG,so_ngay_nghi_phep LONG,phu_trach_phong INTEGER,created_at DATE null,updated_at DATE null,groupId LONG,userId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table _Users";
 
@@ -287,7 +290,7 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 			"groupId", (BiConsumer<Users, Long>)Users::setGroupId);
 		attributeGetterFunctions.put("userId", Users::getUserId);
 		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<Users, Integer>)Users::setUserId);
+			"userId", (BiConsumer<Users, Long>)Users::setUserId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -566,17 +569,33 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 
 	@JSON
 	@Override
-	public int getUserId() {
+	public long getUserId() {
 		return _userId;
 	}
 
 	@Override
-	public void setUserId(int userId) {
+	public void setUserId(long userId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
 		_userId = userId;
+	}
+
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setUserUuid(String userUuid) {
 	}
 
 	public long getColumnBitmask() {
@@ -673,7 +692,7 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 		usersImpl.setUpdated_at(
 			this.<Date>getColumnOriginalValue("updated_at"));
 		usersImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
-		usersImpl.setUserId(this.<Integer>getColumnOriginalValue("userId"));
+		usersImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
 
 		return usersImpl;
 	}
@@ -927,7 +946,7 @@ public class UsersModelImpl extends BaseModelImpl<Users> implements UsersModel {
 	private Date _created_at;
 	private Date _updated_at;
 	private long _groupId;
-	private int _userId;
+	private long _userId;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);

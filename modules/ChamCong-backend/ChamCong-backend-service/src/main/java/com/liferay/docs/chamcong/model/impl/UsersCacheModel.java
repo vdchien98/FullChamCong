@@ -195,7 +195,7 @@ public class UsersCacheModel implements CacheModel<Users>, Externalizable {
 
 		groupId = objectInput.readLong();
 
-		userId = objectInput.readInt();
+		userId = objectInput.readLong();
 	}
 
 	@Override
@@ -250,7 +250,7 @@ public class UsersCacheModel implements CacheModel<Users>, Externalizable {
 
 		objectOutput.writeLong(groupId);
 
-		objectOutput.writeInt(userId);
+		objectOutput.writeLong(userId);
 	}
 
 	public int id;
@@ -269,6 +269,6 @@ public class UsersCacheModel implements CacheModel<Users>, Externalizable {
 	public long created_at;
 	public long updated_at;
 	public long groupId;
-	public int userId;
+	public long userId;
 
 }

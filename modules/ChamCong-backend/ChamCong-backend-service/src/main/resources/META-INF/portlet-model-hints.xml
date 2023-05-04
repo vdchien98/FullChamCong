@@ -61,6 +61,6 @@
 		<field name="created_at" type="Date" />
 		<field name="updated_at" type="Date" />
 		<field name="groupId" type="long" />
-		<field name="userId" type="int" />
+		<field name="userId" type="long" />
 	</model>
 </model-hints>

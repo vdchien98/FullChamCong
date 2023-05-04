@@ -160,7 +160,7 @@ public class UsersWrapper
 			setGroupId(groupId);
 		}
 
-		Integer userId = (Integer)attributes.get("userId");
+		Long userId = (Long)attributes.get("userId");
 
 		if (userId != null) {
 			setUserId(userId);
@@ -338,8 +338,18 @@ public class UsersWrapper
 	 * @return the user ID of this users
 	 */
 	@Override
-	public int getUserId() {
+	public long getUserId() {
 		return model.getUserId();
+	}
+
+	/**
+	 * Returns the user uuid of this users.
+	 *
+	 * @return the user uuid of this users
+	 */
+	@Override
+	public String getUserUuid() {
+		return model.getUserUuid();
 	}
 
 	/**
@@ -523,8 +533,18 @@ public class UsersWrapper
 	 * @param userId the user ID of this users
 	 */
 	@Override
-	public void setUserId(int userId) {
+	public void setUserId(long userId) {
 		model.setUserId(userId);
+	}
+
+	/**
+	 * Sets the user uuid of this users.
+	 *
+	 * @param userUuid the user uuid of this users
+	 */
+	@Override
+	public void setUserUuid(String userUuid) {
+		model.setUserUuid(userUuid);
 	}
 
 	/**

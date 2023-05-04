@@ -27,7 +27,7 @@
 	    <column name="created_at" type="Date" />	  
 	    <column name="updated_at" type="Date" />
 	    <column name="groupId" type="long" />	  
-	    <column name="userId" type="int" />	
+	    <column name="userId" type="long" />	
 		<!-- Order -->
 
 

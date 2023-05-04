@@ -288,14 +288,28 @@ public interface UsersModel extends BaseModel<Users> {
 	 *
 	 * @return the user ID of this users
 	 */
-	public int getUserId();
+	public long getUserId();
 
 	/**
 	 * Sets the user ID of this users.
 	 *
 	 * @param userId the user ID of this users
 	 */
-	public void setUserId(int userId);
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this users.
+	 *
+	 * @return the user uuid of this users
+	 */
+	public String getUserUuid();
+
+	/**
+	 * Sets the user uuid of this users.
+	 *
+	 * @param userUuid the user uuid of this users
+	 */
+	public void setUserUuid(String userUuid);
 
 	@Override
 	public Users cloneWithOriginalValues();
