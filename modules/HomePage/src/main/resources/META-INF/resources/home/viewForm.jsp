@@ -28,10 +28,12 @@
 
 			<c:choose>
 				<c:when test="${useredit.id >0}">
-				<h4 class="m-0 font-weight-bold text-primary">Chỉnh sửa nhân viên </h4>
+					<h4 class="m-0 font-weight-bold text-primary">Chỉnh sửa nhân
+						viên</h4>
 				</c:when>
 				<c:otherwise>
-					<h4 class="m-0 font-weight-bold text-primary">Thêm mới nhân viên</h4>
+					<h4 class="m-0 font-weight-bold text-primary">Thêm mới nhân
+						viên</h4>
 				</c:otherwise>
 			</c:choose>
 
@@ -167,6 +169,18 @@
 					</aui:button-row>
 				</div>
 			</form>
+             
+             
+             <%-- 
+
+			<portlet:actionURL name="addAllNhanVien"
+				var="formaddNhanVienActionURL" />
+			<form id="form" method="POST" action="<%=formaddNhanVienActionURL.toString()%>">
+				<aui:button type="submit" name="submit" value="Lưu All Nhan vien">
+				</aui:button>
+			</form>
+ --%>
+
 		</div>
 	</div>
 </div>

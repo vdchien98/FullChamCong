@@ -63,64 +63,11 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 			long ca_lam_id, long ca_lam_toi, String ma_xac_nhan, String zalo_id, long cham_cong_ngoai,
 			long so_ngay_nghi_phep, int phu_trach_phong, ServiceContext serviceContext)
 			throws PortalException, SystemException {
-		
-		
-    	//tao user vao bang user_ cua liferay
-//    	UserPersistence userPersistence = UserUtil.getPersistence();
-//     	int idUser = (int) CounterLocalServiceUtil.increment();
-//		User user = UserLocalServiceUtil.createUser(idUser);
-//		String externalReferenceCode = PortalUUIDUtil.generate();
-//		Contact contact = ContactLocalServiceUtil.createContact(CounterLocalServiceUtil.increment());
-//	 	long prefixId = 1;
-//			long suffixId = 1;
-//		//contact = ContactLocalServiceUtil.addContact(contact);
-//	
-//		String uuid = PortalUUIDUtil.generate();
-//		user.setUserUuid(uuid);
-//		user.setEmailAddress(email);
-//        user.setExternalReferenceCode(externalReferenceCode);
-//		user.setScreenName(hovaten);
-//		user.setCreateDate(new Date());
-//		user.setModifiedDate(new Date());
-//		user.setDefaultUser(true);
-//		user.setContactId(contact.getContactId());
-//		user.setPassword(ma_xac_nhan);
-//		user.setPasswordModifiedDate(new Date());
-//	    user.setReminderQueryQuestion("what-is-your-father's-middle-name");
-//	    user.setReminderQueryAnswer("09041998");
-//	    user.setLanguageId("en_US");
-//	    user.setTimeZoneId("Asia/Saigon");
-//	    user.setGreeting("welcome " + hovaten +"!");	
-//		user.setFirstName(hovaten);
-//		user.setLastName(hovaten);
-//		user.setLoginDate(new Date());
-//		user.setLoginIP("127.0.0.1");
-//     	user.setLastLoginDate(new Date());
-//     	user.setLastLoginIP("127.0.0.1");
-//     	user.setLastFailedLoginDate(new Date());
-//    
-//     	UserLocalServiceUtil.updateUser(user);
-     		
-     	// Tạo contact_
-////	    contact.setContactId(user.getContactId());
-//		ContactLocalServiceUtil.addContact(20125, user.getScreenName(), user.getUserId(), email,
-//				 hovaten, "", hovaten, prefixId, suffixId, true, 4,
-//				 9, 1998, "", "", "", "", "","");
-     	
-		
-//		int idUser = (int) CounterLocalServiceUtil.increment();
-//		String externalReferenceCode = PortalUUIDUtil.generate();
-//		Contact contact = ContactLocalServiceUtil.createContact(CounterLocalServiceUtil.increment());
-//
-		long IdUserLiferay = CounterLocalServiceUtil.increment();
-		System.out.println(" IdUserLiferay"+ IdUserLiferay);
-		
+		// tạo tài khoản và người dùng  vào hệ thống Liferay
+		long IdUserLiferay = CounterLocalServiceUtil.increment();	
 		int idUser = (int)IdUserLiferay;
-		//User user = UserLocalServiceUtil.createUser(idUser);
 		long companyId = PortalUtil.getDefaultCompanyId();
-
 		Locale locale = new Locale("", "");
-
 		long prefixId = 0;
 		long suffixId = 0;
 		boolean male = true;
@@ -132,15 +79,14 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 		long[] organizationIds = null;
 		long[] roleIds = null;
 		long[] userGroupIds = null;
-		boolean sendEmail = true;
-		
+		boolean sendEmail = true;	
 		User user = UserLocalServiceUtil.addUser(20125, companyId, true, ma_xac_nhan, ma_xac_nhan, 
 				true, hovaten, email, locale, hovaten, "", "", 
 				prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, 
 				organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 		UserLocalServiceUtil.updateUser(user);
 		
-		
+        // Tạo bảng user cho cham cong
 		Users users = usersPersistence.create(idUser);
 		Date now = new Date();
 		users.setId(idUser);
@@ -196,11 +142,47 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 		return user;
 	}
 
+
+//	public void addAllNhanVien(ServiceContext serviceContext) throws PortalException {
+//		System.out.println("da vao serrvice ");
+//		   List<Users> listUser = usersLocalService.getUserses(-1,-1);
+//		   listUser = listUser.stream().filter(n -> n.getId()<62)
+//	                .collect(Collectors.toList());
+//		  
+//		   for (Users users : listUser) {
+//			   long companyId = PortalUtil.getDefaultCompanyId();
+//				Locale locale = new Locale("", "");
+//				long prefixId = 0;
+//				long suffixId = 0;
+//				boolean male = true;
+//				int birthdayMonth = 4;
+//				int birthdayDay = 1;
+//				int birthdayYear = 2000;
+//				String jobTitle = "";
+//				long[] groupIds = null;
+//				long[] organizationIds = null;
+//				long[] roleIds = null;
+//				long[] userGroupIds = null;
+//				boolean sendEmail = true;
+//				
+//				User user = UserLocalServiceUtil.addUser(20125, companyId, true, users.getMa_xac_nhan(), users.getMa_xac_nhan(), 
+//						true, users.getHovaten(), users.getEmail()+"@bacninh.gov.vn", locale,  users.getHovaten(), "", "", 
+//						prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, 
+//						organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+//				UserLocalServiceUtil.updateUser(user);
+//			 }
+//
+//	}
+
+	
+	
 	public List<Users> getUserGiamDocActive(ServiceContext serviceContext) throws PortalException {
 		List<Users> users = usersLocalService.getUserses(-1, -1);
 		users = users.stream().filter(n -> n.getPhongban_id() == 14 && n.getTrangthai() == 1)
 				.collect(Collectors.toList());
 		return users;
 	}
+
+	
 
 }

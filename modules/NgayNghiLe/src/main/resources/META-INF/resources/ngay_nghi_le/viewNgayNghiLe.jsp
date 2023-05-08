@@ -23,15 +23,12 @@
 <!-- jQuery UI CSS -->
 <link rel="stylesheet"
 	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-	
-	
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-
-	
-	
-	
 
 <div class="container-fluid">
 	<h1 class="h3 mb-2 text-gray-800 font-weight-bold text-uppercase">Quản
@@ -47,13 +44,13 @@
 				<div class="col-md-7">
 					<div class="form-group row">
 						<form class="pl-5" id="search-year"
-							action="{{ route('admin.ngay-nghi-le.index') }}">
+							action="">
 							<div class="form-group row">
-								<label
-									class="col-form-label font-weight-bold text-info mr-3 datepicker">Năm</label>
-								<input type="text" class="form-control datepicker col-md-6 ml-6"
-									name="<portlet:namespace />year" id="year" placeholder="Năm"
-									value="">
+								<label class="col-form-label font-weight-bold text-info mr-3 datepicker">Năm</label>
+								<input type="text" 
+								       class="form-control datepicker col-md-6 ml-6"
+									   name="<portlet:namespace />year" id="year" placeholder="Năm"
+									   value="">
 							</div>
 						</form>
 					</div>
@@ -77,14 +74,12 @@
 									<td>${loop.index +1}</td>
 									<td>${ngaynghile.ten}</td>
 									<td><fmt:formatDate value="${ngaynghile.ngay_nghi}" pattern="dd-MM-yyyy" /></td>
-									<td>
-									<c:choose>
+									<td><c:choose>
 											<c:when test="${ngaynghile.trangthai == 1}">
 												<span class="btn btn-success btn-sm">Hoạt động</span>
 											</c:when>
 											<c:otherwise>
-												<span class="btn btn-light btn-sm">Không hoạt động</span>
-							                          </td>
+												<span class="btn btn-light btn-sm">Không hoạt động</span></td>
 									</th>
 									</c:otherwise>
 									</c:choose>
@@ -150,7 +145,8 @@
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" name="<portlet:namespace />trangthai"
 									value="1" class="custom-control-input" id="trangthai" checked>
-								<label class="custom-control-label" for="trangthai">Hoạt động</label>
+								<label class="custom-control-label" for="trangthai">Hoạt
+									động</label>
 							</div>
 						</div>
 						<div class="modal-footer justify-content-center">
@@ -180,18 +176,19 @@
 		// maxDate: '-1d'
 		});
 	});
+
 	$(document).ready(function() {
-		  // Khởi tạo datepicker với option chỉ hiển thị năm
-		  $("#year").datepicker({
-			  startView: 'decade',
-			  //  minViewMode: 'years',
-			   // format: 'yyyy'
-		      changeYear: true,
-		    // changeMonth: false,
-		    dateFormat: "yy", // chỉ lấy năm
-		    yearRange: "1000:3030" // giới hạn năm từ 1900 đến 2030
-		  });
+		// Khởi tạo datepicker với option chỉ hiển thị năm
+		$("#year").datepicker({
+			startView : 'decade',
+			//  minViewMode: 'years',
+			// format: 'yyyy'
+			changeYear : true,
+			// changeMonth: false,
+			dateFormat : "yy", // chỉ lấy năm
+			yearRange : "1000:3030" // giới hạn năm từ 1900 đến 2030
 		});
+	});
 
 	function editNgayNghiLe(id, ten, ngay_nghi, trangthai) {
 		var modalTitle = document.querySelector(".modal-title");
@@ -207,6 +204,9 @@
 		document.getElementById("ngay_nghi").value = ngayNghiFormatted;
 		document.getElementById("trangthai").checked = trangthai;
 	}
+	
+	
+	
 </script>
 
 

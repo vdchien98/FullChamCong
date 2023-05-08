@@ -134,14 +134,14 @@ i.fa.fa-user-circle-o {
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="user" items="${usersList}">
+							<c:forEach var="user" items="${usersList}" varStatus="loop">
 								<portlet:renderURL var="editURL">
 									<portlet:param name="id" value="${user.id }" />
 									<portlet:param name="mvcPath" value="/home/viewForm.jsp" />
 								</portlet:renderURL>
 
 								<tr>
-									<th>${user.id}</th>
+									<th>${loop.index +1}</th>
 									<th>
 										<div class="row">
 											<i class="fa fa-user-circle-o iconUserChucVu"
