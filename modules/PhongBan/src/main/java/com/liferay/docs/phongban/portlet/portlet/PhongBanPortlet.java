@@ -95,13 +95,11 @@ public class PhongBanPortlet extends MVCPortlet {
 		if (idPhongBan > 0) {
 			try {
 				Phongban phongbanedit = PhongbanLocalServiceUtil.getPhongban(idPhongBan);
-				System.out.println("chien oki oki "+ phongbanedit );
 				httpServletRequest.setAttribute("phongbanedit", phongbanedit);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
 		ServiceContext serviceContext = new ServiceContext();
 		try {
 			List<Users> entities = UsersLocalServiceUtil.getUserGiamDocActive(serviceContext);

@@ -1,13 +1,18 @@
 
+<%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
+<%@page import="com.liferay.portal.kernel.util.HtmlUtil"%>
 <%@ include file="../init.jsp"%>
 <%@ page language="Java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+<%-- 
 
 <portlet:actionURL name="/login/login" var="loginURL">
 	<portlet:param name="mvcRenderCommandName" value="/login/login" />
 </portlet:actionURL>
+
+ --%>
 <style>
 .container {
 	height: 100%;
@@ -87,6 +92,10 @@ input:focus {
 }
 </style>
 
+
+<%-- 
+
+
 <div class="container ">
 	<div class="d-flex justify-content-center h-100">
 		<div class="card">
@@ -132,14 +141,7 @@ input:focus {
 				<div class="d-flex justify-content-center links">
 					Don't have an account?<a href="#">Sign Up</a>
 				</div>
-				<%-- 
-   <div class="d-flex justify-content-center">
-					<liferay-ui:error key="error_user"
-						message="Tài khoản chưa được khởi tạo trên hệ thống dùng chung của tỉnh. <br/>Vui lòng liên hệ cán bộ CNTT để được hỗ trợ." />
-					<liferay-ui:error key="error_pass"
-						message="Tên đăng nhập hoặc mật khẩu không chính xác." />
-				</div>
---%>
+
 
 			</div>
 		</div>
@@ -149,9 +151,72 @@ input:focus {
 
 
 
+ --%>
+<%-- 
+   <div class="d-flex justify-content-center">
+					<liferay-ui:error key="error_user"
+						message="Tài khoản chưa được khởi tạo trên hệ thống dùng chung của tỉnh. <br/>Vui lòng liên hệ cán bộ CNTT để được hỗ trợ." />
+					<liferay-ui:error key="error_pass"
+						message="Tên đăng nhập hoặc mật khẩu không chính xác." />
+				</div>
+				
+				<p>
+    <b><liferay-ui:message key="myloginportlet_MyLogin.caption"/></b>
+</p>
+--%>
 
 
+<c:choose>
+	<c:when test="<%=themeDisplay.isSignedIn()%>">
 
+		<%
+			String signedInAs = HtmlUtil.escape(user.getFullName());
+
+					if (themeDisplay.isShowMyAccountIcon() && (themeDisplay.getURLMyAccount() != null)) {
+						String myAccountURL = String.valueOf(themeDisplay.getURLMyAccount());
+
+						signedInAs = "<a class=\"signed-in\" href=\"" + HtmlUtil.escape(myAccountURL) + "\">"
+								+ signedInAs + "</a>";
+					}
+		%>
+
+		<liferay-ui:message arguments="<%=signedInAs%>"
+			key="you-are-signed-in-as-x" translateArguments="<%=false%>" />
+	</c:when>
+	<c:otherwise>
+
+		<%
+			String redirect = ParamUtil.getString(request, "redirect");
+		%>
+
+		<portlet:actionURL name="/login/login" var="loginURL">
+			<portlet:param name="mvcRenderCommandName" value="/login/login" />
+		</portlet:actionURL>
+
+		<aui:form action="<%=loginURL%>" autocomplete='on'
+			cssClass="sign-in-form" method="post" name="loginForm">
+
+			<aui:input name="saveLastPath" type="hidden" value="<%=false%>" />
+			<aui:input name="redirect" type="hidden" value="<%=redirect%>" />
+
+			<aui:input autoFocus="true" cssClass="clearable"
+				label="email-address" name="login" showRequiredLabel="<%=false%>"
+				type="text" value="">
+				<aui:validator name="required" />
+			</aui:input>
+
+			<aui:input name="password" showRequiredLabel="<%=false%>"
+				type="password">
+				<aui:validator name="required" />
+			</aui:input>
+
+			<aui:button-row>
+				<aui:button cssClass="btn-lg" type="submit" value="sign-in" />
+			</aui:button-row>
+
+		</aui:form>
+	</c:otherwise>
+</c:choose>
 
 
 

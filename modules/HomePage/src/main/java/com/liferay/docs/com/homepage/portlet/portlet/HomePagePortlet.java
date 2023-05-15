@@ -33,10 +33,14 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Request;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 /**
  * @author User
  */
@@ -47,7 +51,12 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + HomePagePortletKeys.HOMEPAGE, "javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user" }, service = Portlet.class)
 public class HomePagePortlet extends MVCPortlet {
+
 	public void saveNhanVien(ActionRequest request, ActionResponse response) throws IOException, PortletException {
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		long userId = themeDisplay.getUserId();
+		System.out.println("userId****** "+userId);
 		ServiceContext serviceContext = new ServiceContext();
 		int id = ParamUtil.getInteger(request, "id");
 		String hoTen = ParamUtil.getString(request, "hovaten");
@@ -84,17 +93,18 @@ public class HomePagePortlet extends MVCPortlet {
 	}
 
 	public void deleteNhanVien(ActionRequest request, ActionResponse response) throws PortalException {
-        int deleteUserId = ParamUtil.getInteger(request, "deleteUserId");
-        try {
-        	UsersLocalServiceUtil.deleteUsers(deleteUserId);
-        	response.sendRedirect("/home");
-        }
+		int deleteUserId = ParamUtil.getInteger(request, "deleteUserId");
+		try {
+			UsersLocalServiceUtil.deleteUsers(deleteUserId);
+			response.sendRedirect("/home");
+		}
 
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-	
-	}	
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
 //	
 //	public void addAllNhanVien(ActionRequest request, ActionResponse response) throws PortalException {
 //		ServiceContext serviceContext = new ServiceContext();
@@ -127,13 +137,12 @@ public class HomePagePortlet extends MVCPortlet {
 		}
 		try {
 			List<Phongban> entitiesPhongBan = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
-			
+
 			renderRequest.setAttribute("selectPhongBan", entitiesPhongBan);
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		try {
 			List<Chucvu> entitiesChucvus = ChucvuLocalServiceUtil.getChucvus(-1, -1);
 			renderRequest.setAttribute("selectChucVu", entitiesChucvus);
@@ -152,6 +161,11 @@ public class HomePagePortlet extends MVCPortlet {
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
+		
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		long userId = themeDisplay.getUserId();
+		System.out.println("userId "+userId);
 		super.render(renderRequest, renderResponse);
 	}
 
