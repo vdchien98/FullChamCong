@@ -165,6 +165,7 @@ public class HomePagePortlet extends MVCPortlet {
 		
 		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		long userId = themeDisplay.getUserId();
+		
 		System.out.println("userId "+userId);
 		super.render(renderRequest, renderResponse);
 	}

@@ -26,6 +26,31 @@ create table _Chucvu (
 	groupId LONG
 );
 
+create table _GioLam (
+	id_ INTEGER not null primary key,
+	user_id LONG,
+	ngay_lam DATE null,
+	ip VARCHAR(75) null,
+	check_in_sang DATE null,
+	check_out_sang DATE null,
+	di_muon_sang INTEGER,
+	ve_som_sang INTEGER,
+	gio_cham_cong_sang INTEGER,
+	check_in_chieu DATE null,
+	check_out_chieu DATE null,
+	di_muon_chieu INTEGER,
+	ve_som_chieu INTEGER,
+	gio_cham_cong_chieu INTEGER,
+	check_in_toi DATE null,
+	check_out_toi DATE null,
+	di_muon_toi INTEGER,
+	ve_som_toi INTEGER,
+	diem DOUBLE,
+	trangthai INTEGER,
+	created_at DATE null,
+	updated_at DATE null
+);
+
 create table _Ngaynghile (
 	id_ INTEGER not null primary key,
 	ten VARCHAR(75) null,

@@ -1,33 +1,35 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
 
-<service-builder auto-namespace-tables="true" package-path="com.liferay.docs.chamcong">
+<service-builder auto-namespace-tables="true"
+	package-path="com.liferay.docs.chamcong">
 	<namespace></namespace>
-	<entity local-service="true" name="Users" remote-service="true" uuid="false">
+	<entity local-service="true" name="Users" remote-service="true"
+		uuid="false">
 
 		<!-- PK fields -->
 		<column name="id" primary="true" type="int" />
 		<!-- Group instance -->
-     
+
 		<column name="hovaten" type="String" />
 
 		<!-- Audit fields -->
 
 		<column name="email" type="String" />
 		<column name="chucvu_id" type="long" />
-		<column name="trangthai" type="long" />	   
-	    <column name="phongban_id" type="long" />
-	    <column name="ca_lam_id" type="long" />
-	    <column name="ca_lam_toi" type="long" />
-	    <column name="ma_xac_nhan" type="String" />
-	    <column name="zalo_id" type="String" />	    
-	    <column name="cham_cong_ngoai" type="long" />	    
-	    <column name="so_ngay_nghi_phep" type="long" />	   
-	    <column name="phu_trach_phong" type="int" />	   
-	    <column name="created_at" type="Date" />	  
-	    <column name="updated_at" type="Date" />
-	    <column name="groupId" type="long" />	  
-	    <column name="userId" type="long" />	
+		<column name="trangthai" type="long" />
+		<column name="phongban_id" type="long" />
+		<column name="ca_lam_id" type="long" />
+		<column name="ca_lam_toi" type="long" />
+		<column name="ma_xac_nhan" type="String" />
+		<column name="zalo_id" type="String" />
+		<column name="cham_cong_ngoai" type="long" />
+		<column name="so_ngay_nghi_phep" type="long" />
+		<column name="phu_trach_phong" type="int" />
+		<column name="created_at" type="Date" />
+		<column name="updated_at" type="Date" />
+		<column name="groupId" type="long" />
+		<column name="userId" type="long" />
 		<!-- Order -->
 
 
@@ -39,11 +41,14 @@
 
 		<!-- References -->
 
-		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetEntry"
+			package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetTag"
+			package-path="com.liferay.portlet.asset" />
 	</entity>
-	
-	<entity local-service="true" name="Phongban" remote-service="true" uuid="false">
+
+	<entity local-service="true" name="Phongban"
+		remote-service="true" uuid="false">
 
 		<!-- PK fields -->
 		<column name="id" primary="true" type="int" />
@@ -51,13 +56,11 @@
 		<column name="tenphong" type="String" />
 		<!-- Audit fields -->
 		<column name="trangthai" type="int" />
-		<column name="nguoi_phu_trach" type="int" /> 
-	    <column name="created_at" type="Date" />	  
-	    <column name="updated_at" type="Date" />
-	    <column name="groupId" type="long" />	  
+		<column name="nguoi_phu_trach" type="int" />
+		<column name="created_at" type="Date" />
+		<column name="updated_at" type="Date" />
+		<column name="groupId" type="long" />
 		<!-- Order -->
-
-
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
@@ -66,25 +69,30 @@
 
 		<!-- References -->
 
-		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetEntry"
+			package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetTag"
+			package-path="com.liferay.portlet.asset" />
 	</entity>
-	
-	<entity local-service="true" name="Chucvu" remote-service="true" uuid="false"> 
-	    <column type="int" name="id" primary="true"></column>
-	    <column type="String" name="name"></column>
-	    <column type="Date" name="created_at"></column>
-	    <column type="Date" name="updated_at"></column>
-	    <column type="int" name="role"></column>
-	    <column name="groupId" type="long" />
-	    <finder name="GroupId" return-type="Collection">
+
+	<entity local-service="true" name="Chucvu" remote-service="true"
+		uuid="false">
+		<column type="int" name="id" primary="true"></column>
+		<column type="String" name="name"></column>
+		<column type="Date" name="created_at"></column>
+		<column type="Date" name="updated_at"></column>
+		<column type="int" name="role"></column>
+		<column name="groupId" type="long" />
+		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetEntry"
+			package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetTag"
+			package-path="com.liferay.portlet.asset" />
 	</entity>
-	
-	
+
+
 	<entity local-service="true" name="Calamviec"
 		remote-service="true" uuid="false">
 		<column type="int" name="id" primary="true"></column>
@@ -106,30 +114,64 @@
 		<finder name="id" return-type="Collection">
 			<finder-column name="id" />
 		</finder>
-		
+
 		<reference entity="AssetEntry"
 			package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetTag"
 			package-path="com.liferay.portlet.asset" />
 	</entity>
-	
-		
-	<entity local-service="true" name="Ngaynghile" remote-service="true" uuid="false"> 
-	    <column type="int" name="id" primary="true"></column>
-	    <column type="String" name="ten"></column>
-	    <column type="Date" name="ngay_nghi"></column>
-	    <column type="int" name="trangthai"></column>
-	    
-	    <column type="Date" name="created_at"></column>
-	    <column type="Date" name="updated_at"></column>
-	 
-	    <finder name="id" return-type="Collection">
+
+
+	<entity local-service="true" name="Ngaynghile"
+		remote-service="true" uuid="false">
+		<column type="int" name="id" primary="true"></column>
+		<column type="String" name="ten"></column>
+		<column type="Date" name="ngay_nghi"></column>
+		<column type="int" name="trangthai"></column>
+
+		<column type="Date" name="created_at"></column>
+		<column type="Date" name="updated_at"></column>
+
+		<finder name="id" return-type="Collection">
 			<finder-column name="id" />
 		</finder>
-		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetEntry"
+			package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetTag"
+			package-path="com.liferay.portlet.asset" />
 	</entity>
-	
-	
-	
+
+	<entity local-service="true" name="GioLam" remote-service="true"
+		uuid="false">
+		<column type="int" name="id" primary="true"></column>
+		<column type="long" name="user_id"></column>
+		<column type="Date" name="ngay_lam"></column>
+		<column type="String" name="ip"></column>
+		<column type="Date" name="check_in_sang"></column>
+		<column type="Date" name="check_out_sang"></column>
+		<column type="int" name="di_muon_sang"></column>
+		<column type="int" name="ve_som_sang"></column>
+		<column type="int" name="gio_cham_cong_sang"></column>
+		<column type="Date" name="check_in_chieu"></column>
+		<column type="Date" name="check_out_chieu"></column>
+		<column type="int" name="di_muon_chieu"></column>
+		<column type="int" name="ve_som_chieu"></column>
+		<column type="int" name="gio_cham_cong_chieu"></column>
+		<column type="Date" name="check_in_toi"></column>
+		<column type="Date" name="check_out_toi"></column>
+		<column type="int" name="di_muon_toi"></column>
+		<column type="int" name="ve_som_toi"></column>
+		<column type="double" name="diem"></column>
+		<column type="int" name="trangthai"></column>
+		<column type="Date" name="created_at"></column>
+		<column type="Date" name="updated_at"></column>
+		<finder name="id" return-type="Collection">
+			<finder-column name="id" />
+		</finder>
+		<reference entity="AssetEntry"
+			package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetTag"
+			package-path="com.liferay.portlet.asset" />
+	</entity>
+
 </service-builder>
