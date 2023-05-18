@@ -99,19 +99,43 @@ i.fa.fa-user-circle-o {
 		<div class="card-header py-3">
 			<h4 class="m-0 font-weight-bold text-primary">
 				Bảng giờ làm tháng 5
-				<portlet:actionURL var="deleteNhanVienURL" name="deleteNhanVien" />
+
+
+
+
+				<%--
+				<portlet:actionURL var="sendMaZaloURL" name="sendMaZalo" />
 				<button type="button" class="btn btn-success"
 					onclick="confirmCheckin(${userId});">
 					<i class="fas fa-check-square"></i> Chấm công vào
 				</button>
-				<form id="check-in" class="float-right" action="" method="POST">
+				<form id="check-in" class="float-right" action="<%=sendMaZaloURL%>"
+					method="POST"></form>
 
+                    --%>
+
+				<portlet:actionURL var="sendMaZaloURL" name="sendMaZalo" />
+
+				<button type="button" class="btn btn-success"
+					onclick="sendMaZaloAndConfirmCheckin(${userId});">
+					<i class="fas fa-check-square"></i> Chấm công vào
+				</button>
+
+				<form id="check-in" class="float-right" action="<%=sendMaZaloURL%>"
+					method="POST">
+					<!-- Các trường dữ liệu của form -->
 				</form>
+
+
+
+
+
 				<button type="button" class="btn btn-success"
 					onclick="confirmCheckout();">
 					<i class="fas fa-check-square"></i> Chấm công ra
 				</button>
 				<form id="check-out" class="float-right" action="" method="POST">
+
 				</form>
 
 			</h4>
@@ -120,53 +144,105 @@ i.fa.fa-user-circle-o {
 </div>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
 <script>
-function Confirm(title, msg, okButton, cancelButton, userId) { /*change*/
-    var $content =  "<div class='dialog-ovelay'>" +
-                    "<div class='dialog'><header class='text-center'>" +
-                     " <h3 class='text-white font-weight-bold'> " + title + " </h3> " +
-                     "<i class='fa fa-close'></i>" +
-                 "</header>" +
-                 "<div class='dialog-msg'>" +
-                 " <h4> " + msg + " </h4> " +
-                 "<strong>Thời gian nhập mã xác nhận <span id='lblCount' class='text-danger'></span>&nbsp;giây.</strong> <br>" +
-                 "<strong class='text-danger' id='ms-capcha'></strong>" +
-                 "<label class='col-form-label font-weight-bold'>Nhập mã xác nhận <span class='text-danger'>(*)</span></label>" +
-                 "<input type='number' name='popup-capcha' id='popup-capcha' class='form-control'  placeholder='Nhập mã xác nhận'>" +
-             "</div>" +
-                 
-                 "<footer>" +
-                     "<div class='controls text-center'>" +
-                         " <button class='button button-danger doAction'>" + okButton + "</button> " +
-                         " <button class='button button-default cancelAction'>" + cancelButton + "</button> " +
-                     "</div>" +
-                 "</footer>" +
-              "</div>" +
-            "</div>";
-    $('body').prepend($content);
-    $('.doAction').click(function (event){ 
-        var deleteForm = $('#deleteNhanVienForm');
-        deleteForm.find('[name="<portlet:namespace />deleteUserId"]').val(userId);
-        deleteForm.submit();     
-        $(this).parents('.dialog-ovelay').fadeOut(500, function () {
-            $(this).remove();
-        });
-    });
-    $('.cancelAction, .fa-close').click(function () {
-        $(this).parents('.dialog-ovelay').fadeOut(500, function () {
-            $(this).remove();
-      });
-    });
-}
-function confirmCheckin(userId) {
-	
-	if(userId != 0) {
-		var title = 'THÔNG BÁO';
-		var msg = 'Bạn có chắc chắn muốn chấm công ?';
-		var okButton = 'OK';
-		var cancelButton = 'Hủy';
-		console.log("userId là "+ userId)
-		Confirm(title, msg, okButton, cancelButton, userId);
+	function Confirm(title, msg, okButton, cancelButton, userId) { /*change*/
+		var $content = "<div class='dialog-ovelay'>"
+				+ "<div class='dialog'><header class='text-center'>"
+				+ " <h3 class='text-white font-weight-bold'> "
+				+ title
+				+ " </h3> "
+				+ "<i class='fa fa-close'></i>"
+				+ "</header>"
+				+ "<div class='dialog-msg'>"
+				+ " <h4> "
+				+ msg
+				+ " </h4> "
+				+ "<strong>Thời gian nhập mã xác nhận <span id='lblCount' class='text-danger'></span>&nbsp;giây.</strong> <br>"
+				+ "<strong class='text-danger' id='ms-capcha'></strong>"
+				+ "<label class='col-form-label font-weight-bold'>Nhập mã xác nhận <span class='text-danger'>(*)</span></label>"
+				+ "<input type='number' name='popup-capcha' id='popup-capcha' class='form-control'  placeholder='Nhập mã xác nhận'>"
+				+ "</div>"
+				+
+
+				"<footer>"
+				+ "<div class='controls text-center'>"
+				+ " <button class='button button-danger doAction'>"
+				+ okButton
+				+ "</button> "
+				+ " <button class='button button-default cancelAction'>"
+				+ cancelButton
+				+ "</button> "
+				+ "</div>"
+				+ "</footer>"
+				+ "</div>" + "</div>";
+		$('body').prepend($content);
+		$('.doAction').click(
+				function(event) {
+					var deleteForm = $('#deleteNhanVienForm');
+					deleteForm.find(
+							'[name="<portlet:namespace />deleteUserId"]').val(
+							userId);
+					deleteForm.submit();
+					$(this).parents('.dialog-ovelay').fadeOut(500, function() {
+						$(this).remove();
+					});
+				});
+		$('.cancelAction, .fa-close').click(function() {
+			$(this).parents('.dialog-ovelay').fadeOut(500, function() {
+				$(this).remove();
+			});
+		});
 	}
-}
+
+	
+	function sendMaZaloAndConfirmCheckin(userId) {
+	    sendMaZalo()
+	      .then(function(response) {
+	        // Xử lý phản hồi từ hàm sendMaZalo nếu cần
+	        
+	        // Gọi hàm confirmCheckin
+	      //  confirmCheckin(userId);
+	        
+	        
+	        setTimeout(function() {
+	            confirmCheckin(userId);
+	          }, 100); // 30000 milliseconds = 30 seconds
+	      })
+	      .catch(function(error) {
+	        console.log(error);
+	      });
+	  }
+
+	  function sendMaZalo() {
+	    return fetch('<%=sendMaZaloURL%>', {
+	      method: 'POST',
+	      body: JSON.stringify({}),
+	      headers: {
+	        'Content-Type': 'application/json'
+	      }
+	    })
+	      .then(function(response) {
+	        if (response.ok) {
+	          return response.text();
+	        }
+	        throw new Error('Lỗi khi gửi yêu cầu đến hàm sendMaZalo');
+	      });
+	  }
+	  
+		function confirmCheckin(userId) {
+			if (userId != 0) {
+				var title = 'THÔNG BÁO';
+				var msg = 'Bạn có chắc chắn muốn chấm công ?';
+				var okButton = 'OK';
+				var cancelButton = 'Hủy';
+				console.log("userId là " + userId)
+				Confirm(title, msg, okButton, cancelButton, userId);
+			}
+		}
+		
+	
 </script>
+

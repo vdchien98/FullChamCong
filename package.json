@@ -1,0 +1,9 @@
+{
+    "private": true,
+    "workspaces": {
+        "packages": [
+            "modules\\public\\vendor\\fontawesome-free",
+            "themes"
+        ]
+    }
+}
