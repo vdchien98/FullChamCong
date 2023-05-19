@@ -141,6 +141,14 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 		user = deleteUsers(id);
 		return user;
 	}
+	
+	public Users updateUser(int id, String ma_xac_nhan, ServiceContext serviceContext) throws PortalException {
+		Users user = getUsers(id);
+		System.out.println("uer *****"+user);
+		user.setMa_xac_nhan(ma_xac_nhan);
+		usersLocalService.updateUsers(user);
+		return user;
+	}
 
 
 //	public void addAllNhanVien(ServiceContext serviceContext) throws PortalException {

@@ -275,6 +275,10 @@ public interface UsersLocalService
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
+	public Users updateUser(
+			int id, String ma_xac_nhan, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Updates the users in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
