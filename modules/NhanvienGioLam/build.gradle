@@ -5,5 +5,5 @@ dependencies {
 		compileOnly project(":modules:ChamCong-backend:ChamCong-backend-api")
     compileOnly project(":modules:ChamCong-backend:ChamCong-backend-service")
     compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
-
+   implementation 'com.google.code.gson:gson:2.8.9'
 }

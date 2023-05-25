@@ -5,11 +5,14 @@ import com.liferay.docs.chamcong.model.Phongban;
 import com.liferay.docs.chamcong.service.NgaynghileLocalServiceUtil;
 import com.liferay.docs.chamcong.service.PhongbanLocalServiceUtil;
 import com.liferay.docs.ngaynghile.portlet.constants.NgayNghiLePortletKeys;
+//import com.liferay.docs.portletutil.portlet.portlet.CustomWebCacheItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.webcache.WebCacheItem;
+import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -25,6 +28,8 @@ import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+
+import PortletUtils.portlet.CustomWebCacheItem;
 
 /**
  * @author User
@@ -89,6 +94,11 @@ public class NgayNghiLePortlet extends MVCPortlet {
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
 
+	     WebCacheItem wca = new CustomWebCacheItem("access_token_key");
+//				//WebCachePoolUtil.get("access_token_key", wca); 
+				System.out.println("WebCachePoolUtil.get(keys, wci)***"+ WebCachePoolUtil.get("access_token", wca));
+		
+		
 		List<Ngaynghile> ngayNghiLeList = NgaynghileLocalServiceUtil.getNgaynghiles(-1, -1);
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		httpServletRequest.setAttribute("ngayNghiLeList", ngayNghiLeList);

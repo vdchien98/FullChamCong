@@ -1,17 +1,25 @@
 package com.liferay.docs.nhanviengiolam.portlet.portlet;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.liferay.docs.chamcong.model.Users;
 import com.liferay.docs.chamcong.service.UsersLocalServiceUtil;
 import com.liferay.docs.nhanviengiolam.portlet.constants.NhanVienGioLamPortletKeys;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 //import com.twilio.Twilio;
+import com.liferay.portal.kernel.webcache.WebCacheItem;
+import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -30,6 +38,10 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import com.liferay.portal.kernel.cache.PortalCache;
+
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -101,6 +113,11 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 	public void getInfoZalo(String zalo_id) throws IOException, PortletException {
 
 		System.out.println("da vao dc getInfoZalo ");
+		getAccessTokenZaloNew();
+//		MultiVMPool multiVMPool = MultiVMPoolUtil.getMultiVMPool();
+//        PortalCache<String, String> cache = multiVMPool.getPortalCache("exampleCache");
+
+		
 
 	}
 
@@ -108,59 +125,68 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 
 	public void getAccessTokenZaloNew() throws IOException, PortletException {
 		try {
-			// Tạo URL và kết nối HTTP
-			URL url = new URL("https://oauth.zaloapp.com/v4/oa/access_token");
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-			// Cấu hình phương thức POST và tiêu đề
-			connection.setRequestMethod("POST");
-			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
-
-			// Chuẩn bị dữ liệu gửi đi
-			String data = "refresh_token=K4vly-CeTsriRLAVYnah3rD4Q9sqC5ueDKTxhxi8KnKyKbc-WHDyVtDK1lwMCq5hSKPvslm5ArXPS3FbtYKyI65Z6hIARrqDQ0yVd85z9Iq6CXU_gK4Z5XunOAdaCH0KNn8Lrz0q4oXc4JwGuo9CDaLOLOV525GeTtvXn-KVKHus9SxOZKJFMZWa9KnfPmN5sYLi60TqFFU77HWP3cy_avW6VpXz6ItWy1yfEsOeJ_yc-Xp2Hle6Jte"
-					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
-
-			// Gửi dữ liệu
-			connection.setDoOutput(true);
-			OutputStream outputStream = connection.getOutputStream();
-			outputStream.write(data.getBytes());
-			outputStream.flush();
-			outputStream.close();
-
-			// Đọc kết quả trả về
-			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			String line;
-			StringBuilder response = new StringBuilder();
-			while ((line = reader.readLine()) != null) {
-				response.append(line);
-			}
-			reader.close();
-
-			// Xử lý kết quả
-			System.out.println(response.toString());
-
-			// Đóng kết nối
-			connection.disconnect();
-
+//			System.out.println("da tao dk cho get    ************* ");
+//			// Tạo URL và kết nối HTTP
+//			URL url = new URL("https://oauth.zaloapp.com/v4/oa/access_token");
+//			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 //
-//			  JSONObject data = new JSONObject(response);
-//	            String accessToken = data.getString("access_token");
-//	            String refreshToken = data.getString("refresh_token");
-//	            
-//	            // Lấy cache registry
-//	            CacheRegistry cacheRegistry = CacheRegistryUtil.getCacheRegistry();
-//	            
-//	            // Lưu access token và refresh token vào bộ nhớ cache
-//	            cacheRegistry.getCache("accessTokenCache").put("access_token", accessToken);
-//	            cacheRegistry.getCache("accessTokenCache").put("refresh_token", refreshToken);
-//	            
-//	            // Lấy giá trị từ cache
-//	            String cachedAccessToken = (String) cacheRegistry.getCache("accessTokenCache").get("access_token");
-//	            String cachedRefreshToken = (String) cacheRegistry.getCache("accessTokenCache").get("refresh_token");
-//	            
-//	            System.out.println("Access token: " + cachedAccessToken);
-//	            System.out.println("Refresh token: " + cachedRefreshToken);
+//			// Cấu hình phương thức POST và tiêu đề
+//			connection.setRequestMethod("POST");
+//			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+//			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
+//
+//			// Chuẩn bị dữ liệu gửi đi
+//			String data = "refresh_token=4rBMsL10Xm0lSUkrE77ROX1OqRS7MAv5Tbl2XGXWetX-G-EGDt665ZL2jT0bMhe2E5h9yabjqZSSR8FCRql38onxgPmz0wTYBnUij3OHtq91AgIN7YtMULaht85JN-Lx60Yf_sTQvaSX2uAu17_QGcj-pimOO8mcKbNYc4XPucj8Kfcu9nVS0NT2u-adTOeDokAsrx3awdh3d8IkffZjRDtpye_Du-1ltFtPyD-zYs-1wVAtNbac2cYB0KbklnS"
+//					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
+//
+//			// Gửi dữ liệu
+//			connection.setDoOutput(true);
+//			OutputStream outputStream = connection.getOutputStream();
+//			outputStream.write(data.getBytes());
+//			outputStream.flush();
+//			outputStream.close();
+//
+//			// Đọc kết quả trả về
+//			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+//			String line;
+//			StringBuilder response = new StringBuilder();
+//			while ((line = reader.readLine()) != null) {
+//				response.append(line);
+//			}
+//			reader.close();  
+//			// Xử lý kết quả
+//			System.out.println("response.toString() " +response.toString());
+//			JsonObject jsonObject = new Gson().fromJson(response.toString(), JsonObject.class);
+//
+//			// Lấy giá trị của trường "key_access_token"
+//			String accessToken = jsonObject.get("access_token").getAsString();
+//
+//			// Lấy giá trị của trường "key_refresh_token"
+//			String refreshToken = jsonObject.get("refresh_token").getAsString();
+
+			// In ra giá trị access_token và refresh_token
+			//System.out.println("Access Token: " + 1);
+		//	System.out.println("Refresh Token: " + refreshToken);
+			//String keys="access_token";
+			
+			
+//	        System.out.println("cacheItemRefreshToken.get(keys, wci)***"+ cacheItemRefreshToken);
+//			PortalCache<String, Object> cache = SingleVMPoolUtil.getPortalCache("exampleCache");
+//			cache.put("access_token", cacheItemAccessToken);
+//			cache.put("refresh_token", cacheItemRefreshToken);		
+//			System.out.println("Lay access_token tu cache + "cache.getPortalCacheName(refresh_token));
+			
+//            WebCacheItem wca = new CustomWebCacheItem("access_token_key");
+//			//WebCachePoolUtil.get("access_token_key", wca); 
+//			System.out.println("WebCachePoolUtil.get(keys, wci)***"+ WebCachePoolUtil.get("access_token", wca));
+		
+
+			
+	//		PortalCache<String, String> cache = (PortalCache<String, String>) SingleVMPoolUtil.getPortalCache("exampleCache");
+//			CustomWebCacheItem cacheItem = new CustomWebCacheItem();
+			// Đóng kết nối
+//			connection.disconnect();
+		
 
 		} catch (Exception e) {
 			e.printStackTrace();
