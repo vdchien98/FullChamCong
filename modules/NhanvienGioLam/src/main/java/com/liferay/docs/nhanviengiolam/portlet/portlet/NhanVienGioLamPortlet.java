@@ -28,7 +28,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.portlet.ActionRequest;
@@ -125,67 +128,84 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 
 	public void getAccessTokenZaloNew() throws IOException, PortletException {
 		try {
-//			System.out.println("da tao dk cho get    ************* ");
-//			// Tạo URL và kết nối HTTP
-//			URL url = new URL("https://oauth.zaloapp.com/v4/oa/access_token");
-//			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//
-//			// Cấu hình phương thức POST và tiêu đề
-//			connection.setRequestMethod("POST");
-//			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-//			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
-//
-//			// Chuẩn bị dữ liệu gửi đi
-//			String data = "refresh_token=4rBMsL10Xm0lSUkrE77ROX1OqRS7MAv5Tbl2XGXWetX-G-EGDt665ZL2jT0bMhe2E5h9yabjqZSSR8FCRql38onxgPmz0wTYBnUij3OHtq91AgIN7YtMULaht85JN-Lx60Yf_sTQvaSX2uAu17_QGcj-pimOO8mcKbNYc4XPucj8Kfcu9nVS0NT2u-adTOeDokAsrx3awdh3d8IkffZjRDtpye_Du-1ltFtPyD-zYs-1wVAtNbac2cYB0KbklnS"
-//					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
-//
-//			// Gửi dữ liệu
-//			connection.setDoOutput(true);
-//			OutputStream outputStream = connection.getOutputStream();
-//			outputStream.write(data.getBytes());
-//			outputStream.flush();
-//			outputStream.close();
-//
-//			// Đọc kết quả trả về
-//			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-//			String line;
-//			StringBuilder response = new StringBuilder();
-//			while ((line = reader.readLine()) != null) {
-//				response.append(line);
-//			}
-//			reader.close();  
-//			// Xử lý kết quả
-//			System.out.println("response.toString() " +response.toString());
-//			JsonObject jsonObject = new Gson().fromJson(response.toString(), JsonObject.class);
-//
-//			// Lấy giá trị của trường "key_access_token"
-//			String accessToken = jsonObject.get("access_token").getAsString();
-//
-//			// Lấy giá trị của trường "key_refresh_token"
-//			String refreshToken = jsonObject.get("refresh_token").getAsString();
+			System.out.println("da tao dk cho get    ************* ");
+			// Tạo URL và kết nối HTTP
+			URL url = new URL("https://oauth.zaloapp.com/v4/oa/access_token");
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-			// In ra giá trị access_token và refresh_token
-			//System.out.println("Access Token: " + 1);
-		//	System.out.println("Refresh Token: " + refreshToken);
-			//String keys="access_token";
+			// Cấu hình phương thức POST và tiêu đề
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
+
+			// Chuẩn bị dữ liệu gửi đi
+			String data = "refresh_token=xqMGodx5PppJPgsc5lGxNknFbwGftKvvYao4bYRbJ4I2LAg37VXcOFLRoeuqss5q-4kuaq_xIKNrPhEKLD5HKyrsaiTzmGGjkqEeqtNHUmlZMPljN-Tq2DyPWOq5w0r7cZVXm1hn8s63TFdhMTytEEm7kEbqiLyixnUMl2wE3KJtVAJCPTXTFvqKWDOHiMwbKVkvKFblOg99aju_dt9cepoCe1o1RNMq99Zh5U8-USGOZzSvMIRO-YqkP-jVAm"
+					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
+
+			// Gửi dữ liệu
+			connection.setDoOutput(true);
+			OutputStream outputStream = connection.getOutputStream();
+			outputStream.write(data.getBytes());
+			outputStream.flush();
+			outputStream.close();
+
+			// Đọc kết quả trả về
+			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			String line;
+			StringBuilder response = new StringBuilder();
+			while ((line = reader.readLine()) != null) {
+				response.append(line);
+			}
+			reader.close();  
+			// Xử lý kết quả
+			System.out.println("response.toString() " +response.toString());
+			JsonObject jsonObject = new Gson().fromJson(response.toString(), JsonObject.class);
+
+			// Lấy giá trị của trường "key_access_token"
+			String accessToken = jsonObject.get("access_token").getAsString();
+
+			// Lấy giá trị của trường "key_refresh_token"
+			String refreshToken = jsonObject.get("refresh_token").getAsString();
 			
 			
-//	        System.out.println("cacheItemRefreshToken.get(keys, wci)***"+ cacheItemRefreshToken);
-//			PortalCache<String, Object> cache = SingleVMPoolUtil.getPortalCache("exampleCache");
-//			cache.put("access_token", cacheItemAccessToken);
-//			cache.put("refresh_token", cacheItemRefreshToken);		
-//			System.out.println("Lay access_token tu cache + "cache.getPortalCacheName(refresh_token));
+			System.out.println("accessToken  *******"+ accessToken);
+			System.out.println("refreshToken *******"+ refreshToken);
+			// Khởi tạo danh sách để lưu trữ các cặp khóa-giá trị
+			List<Map<String, String>> tokenPairs = new ArrayList<>();
+
+			// Tạo đối tượng Map cho cặp access token
+			Map<String, String> accessTokenPair = new HashMap<>();
+			accessTokenPair.put("access_token_key", accessToken);
+
+			// Thêm cặp access token vào danh sách
+			tokenPairs.add(accessTokenPair);
+
+			// Tạo đối tượng Map cho cặp refresh token
+			Map<String, String> refreshTokenPair = new HashMap<>();
+			refreshTokenPair.put("refresh_token_key", refreshToken);
+			// Thêm cặp refresh token vào danh sách
+			tokenPairs.add(refreshTokenPair);
+			// In danh sách các cặp khóa-giá trị
+			for (Map<String, String> tokenPair : tokenPairs) {
+			    for (Map.Entry<String, String> entry : tokenPair.entrySet()) {
+			        String key = entry.getKey();
+			        String value = entry.getValue();
+			        System.out.println(key + ": " + value);
+			    }
+			}
 			
-//            WebCacheItem wca = new CustomWebCacheItem("access_token_key");
-//			//WebCachePoolUtil.get("access_token_key", wca); 
-//			System.out.println("WebCachePoolUtil.get(keys, wci)***"+ WebCachePoolUtil.get("access_token", wca));
+			
+			
+
+			
+			
+//		     WebCacheItem wca = new CustomWebCacheItem("access_token_key");
+//////			//WebCachePoolUtil.get("access_token_key", wca); 
+////			System.out.println("WebCachePoolUtil.get(keys, wci)***"+ WebCachePoolUtil.get("access_token", wca));
+			
 		
-
-			
-	//		PortalCache<String, String> cache = (PortalCache<String, String>) SingleVMPoolUtil.getPortalCache("exampleCache");
-//			CustomWebCacheItem cacheItem = new CustomWebCacheItem();
 			// Đóng kết nối
-//			connection.disconnect();
+			connection.disconnect();
 		
 
 		} catch (Exception e) {
