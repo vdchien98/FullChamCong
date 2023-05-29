@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -37,8 +38,11 @@ import java.util.Random;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletSession;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -47,6 +51,8 @@ import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import org.osgi.service.component.annotations.Component;
+
+import PortletUtils.portlet.CustomWebCacheItem;
 
 /**
  * @author User
@@ -101,10 +107,8 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		recipient.put("user_id", zalo_id);
 		JSONObject messageOne = JSONFactoryUtil.createJSONObject();
 		messageOne.put("text", message);
-
 		data.put("recipient", recipient);
 		data.put("message", message);
-
 		// Chuyển đổi thành chuỗi JSON
 		String data_string = data.toString();
 //		System.out.println("data_string" + data_string);
@@ -116,13 +120,22 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 	public void getInfoZalo(String zalo_id) throws IOException, PortletException {
 
 		System.out.println("da vao dc getInfoZalo ");
-		getAccessTokenZaloNew();
-//		MultiVMPool multiVMPool = MultiVMPoolUtil.getMultiVMPool();
-//        PortalCache<String, String> cache = multiVMPool.getPortalCache("exampleCache");
-
 		
+		//getAccessTokenZaloNew();
+		
+		WebCacheItem wca = new CustomWebCacheItem("access_token_key");
+		WebCachePoolUtil.get("access_token_key", wca);
+		System.out.println("WebCachePoolUtil.get(keys, wci)***111111111111111  " + WebCachePoolUtil.get("access_token_key", wca));
+		
+		WebCacheItem wca1 = new CustomWebCacheItem("refresh_token_key");
+		WebCachePoolUtil.get("refresh_token_key", wca1);
+		System.out.println("WebCachePoolUtil.get(keys, wci)***111111111111111 refresh " + WebCachePoolUtil.get("refresh_token_key", wca1));
 
 	}
+	
+	
+	
+	
 
 	/* get access_token zalo khi bắt đầu khởi tạo, ghi vào cache */
 
@@ -139,7 +152,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
 
 			// Chuẩn bị dữ liệu gửi đi
-			String data = "refresh_token=xqMGodx5PppJPgsc5lGxNknFbwGftKvvYao4bYRbJ4I2LAg37VXcOFLRoeuqss5q-4kuaq_xIKNrPhEKLD5HKyrsaiTzmGGjkqEeqtNHUmlZMPljN-Tq2DyPWOq5w0r7cZVXm1hn8s63TFdhMTytEEm7kEbqiLyixnUMl2wE3KJtVAJCPTXTFvqKWDOHiMwbKVkvKFblOg99aju_dt9cepoCe1o1RNMq99Zh5U8-USGOZzSvMIRO-YqkP-jVAm"
+			String data = "refresh_token=jjwxW3oOINwA_ORiLAaL7BNKlEvhW60xqzUlt6IuOWRRpedFMQn69Ah9vC5rZaeteTgUs0siQWQizvNS4uLt693Xi88xa2DWvjIAbZE0N4Q-phce6RPJHOAEeyX3kIeAnw33XLoW12pUuzkE7uaGLhpQf_y6a4OoXVU9hrwj97kNyloFCVmQtzVcXX1EXKmzwUZom5gw3KhWbi2vJCOANFxvjfWdlGTV__UTvpNZR5-YuxQWNbacmpme9YMsSMa"
 					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
 
 			// Gửi dữ liệu
@@ -156,9 +169,9 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			while ((line = reader.readLine()) != null) {
 				response.append(line);
 			}
-			reader.close();  
+			reader.close();
 			// Xử lý kết quả
-			System.out.println("response.toString() " +response.toString());
+			System.out.println("response.toString() " + response.toString());
 			JsonObject jsonObject = new Gson().fromJson(response.toString(), JsonObject.class);
 
 			// Lấy giá trị của trường "key_access_token"
@@ -166,10 +179,9 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 
 			// Lấy giá trị của trường "key_refresh_token"
 			String refreshToken = jsonObject.get("refresh_token").getAsString();
-			
-			
-			System.out.println("accessToken  *******"+ accessToken);
-			System.out.println("refreshToken *******"+ refreshToken);
+
+			System.out.println("accessToken  *******" + accessToken);
+			System.out.println("refreshToken *******" + refreshToken);
 			// Khởi tạo danh sách để lưu trữ các cặp khóa-giá trị
 			List<Map<String, String>> tokenPairs = new ArrayList<>();
 
@@ -186,27 +198,29 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			// Thêm cặp refresh token vào danh sách
 			tokenPairs.add(refreshTokenPair);
 			// In danh sách các cặp khóa-giá trị
+			// In danh sách các cặp khóa-giá trị
 			for (Map<String, String> tokenPair : tokenPairs) {
-			    for (Map.Entry<String, String> entry : tokenPair.entrySet()) {
-			        String key = entry.getKey();
-			        String value = entry.getValue();
-			        System.out.println(key + ": " + value);
-			    }
+				for (Map.Entry<String, String> entry : tokenPair.entrySet()) {
+					String key = entry.getKey();
+					String value = entry.getValue();
+					System.out.println(key + ": " + value);
+				}
 			}
 			
-			
-			
+			WebCacheItem wca = new CustomWebCacheItem("access_token_key_new", tokenPairs);
 
+			// Lưu trữ CustomWebCacheItem vào WebCachePool
+			WebCachePoolUtil.get("access_token_key", wca);
+			System.out.println("WebCachePoolUtil.get(keys, wci)***" + WebCachePoolUtil.get("access_token_key", wca));
 			
 			
-//		     WebCacheItem wca = new CustomWebCacheItem("access_token_key");
-//////			//WebCachePoolUtil.get("access_token_key", wca); 
-////			System.out.println("WebCachePoolUtil.get(keys, wci)***"+ WebCachePoolUtil.get("access_token", wca));
-			
-		
+			WebCacheItem wca1 = new CustomWebCacheItem("refresh_token_key_new", tokenPairs);
+
+			// Lưu trữ CustomWebCacheItem vào WebCachePool
+			WebCachePoolUtil.get("refresh_token_key", wca1);
+			System.out.println("WebCachePoolUtil.get(keys, wci)*** refresh_token_key  " + WebCachePoolUtil.get("refresh_token_key", wca1));
 			// Đóng kết nối
 			connection.disconnect();
-		
 
 		} catch (Exception e) {
 			e.printStackTrace();
