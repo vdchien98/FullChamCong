@@ -22,7 +22,7 @@ public class CustomWebCacheItem implements WebCacheItem {
     public CustomWebCacheItem(String methodName, List<Map<String, String>> tokenPairs) {
         this.methodName = methodName;
         this.tokenPairs = tokenPairs;
-        System.out.println("this.tokenPairs*********111111111111111"+ tokenPairs);
+       // System.out.println("this.tokenPairs*********111111111111111"+ tokenPairs);
     }
     public CustomWebCacheItem(String methodName) {
         this.methodName = methodName;
@@ -45,7 +45,7 @@ public class CustomWebCacheItem implements WebCacheItem {
             }
         }
         if (methodName.equals("access_token_key")) {
-        	System.out.println("tokenPairs 1123344456677778  "+tokenPairs);
+      //  	System.out.println("tokenPairs 1123344456677778  "+tokenPairs);
             for (Map<String, String> pair : tokenPairs) {
                 if (pair.containsKey("access_token_key")) {
                     return pair.get("access_token_key");
@@ -54,7 +54,7 @@ public class CustomWebCacheItem implements WebCacheItem {
         }
         
         if (methodName.equals("refresh_token_key")) {
-        	System.out.println("tokenPairs 1123344456677778999999999   "+tokenPairs);
+        //	System.out.println("tokenPairs 1123344456677778999999999   "+tokenPairs);
             for (Map<String, String> pair : tokenPairs) {
                 if (pair.containsKey("refresh_token_key")) {
                     return pair.get("refresh_token_key");
