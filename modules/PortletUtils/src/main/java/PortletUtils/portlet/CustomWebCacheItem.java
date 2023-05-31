@@ -13,7 +13,7 @@ import javax.portlet.PortletContext;
 
 public class CustomWebCacheItem implements WebCacheItem {
 
-	private static final long ACCESS_TOKEN_EXPIRATION_TIME = Time.SECOND * 86400; // 1 day
+	private static final long ACCESS_TOKEN_EXPIRATION_TIME = Time.SECOND * 10; // 1 day
     private static final long REFRESH_TOKEN_EXPIRATION_TIME = Time.SECOND * 2592000; // 30 days
 
     private String methodName;

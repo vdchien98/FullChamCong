@@ -55,6 +55,7 @@ import org.osgi.service.component.annotations.Component;
 
 import PortletUtils.portlet.CustomWebCacheItem;
 
+
 /**
  * @author User
  */
@@ -91,7 +92,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			String ma_xac_nhan_string = "" + ma_xac_nhan;
 			System.out.println("randomNumber " + ma_xac_nhan);
 			UsersLocalServiceUtil.updateUser(id, ma_xac_nhan_string, serviceContext);
-			String message = ma_xac_nhan_string + " : Mã xác nhận chấm công từ Hệ thống chấm công, giao việc.";
+			String message = ma_xac_nhan_string + " : M\u00E3 x\u00E1c nh\u1EADn ch\u1EA5m c\u00F4ng t\u1EEB H\u1EC7 th\u1ED1ng ch\u1EA5m c\u00F4ng, giao vi\u1EC7c.";
 			// gui ma xac nhan cho zalo
 			sendMaXacThucToZalo(message, user.getZalo_id());
 
@@ -103,23 +104,92 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 
 	public void sendMaXacThucToZalo(String message, String zalo_id) throws IOException, PortletException {
 		// System.out.println("da vao dc sendMaXacThucToZalo"+ message);
-		JSONObject data = JSONFactoryUtil.createJSONObject();
-		JSONObject recipient = JSONFactoryUtil.createJSONObject();
-		recipient.put("user_id", zalo_id);
-		JSONObject messageOne = JSONFactoryUtil.createJSONObject();
-		messageOne.put("text", message);
-		data.put("recipient", recipient);
-		data.put("message", message);
-		// Chuyển đổi thành chuỗi JSON
-		String data_string = data.toString();
-		System.out.println("data_string" + data_string);
+		
 		//getAccessTokenZaloNew();
-		JsonObject user_id = getInfoZalo(zalo_id);
-		System.out.println(" user_id " +  user_id );
+		
+		JsonObject user_id_info = getInfoZalo(zalo_id);
+		 
+		 if (user_id_info.has("data")) {
+		        JsonObject dataObject = user_id_info.getAsJsonObject("data");
+		        if (dataObject.has("user_id")) {
+		            String userId_Info = dataObject.get("user_id").getAsString();
+
+		        	JSONObject data = JSONFactoryUtil.createJSONObject();
+		    		JSONObject recipient = JSONFactoryUtil.createJSONObject();
+		    		recipient.put("user_id", userId_Info);
+		    		JSONObject messageOne = JSONFactoryUtil.createJSONObject();
+		    		messageOne.put("text", message);
+		    		data.put("recipient", recipient);
+		    		data.put("message", message);
+		    		// Chuyển đổi thành chuỗi JSON
+		    		String data_string = data.toString();
+		    		
+		    		JsonObject jsonObject = new Gson().fromJson(data_string, JsonObject.class);
+		    		String datastringnew = (String) jsonObject.get("message").getAsString();
+
+		    		System.out.println("datastringnew ************** " + datastringnew);
+		   
+		    		System.out.println(" user_id " +  user_id_info );
+		            
+		            
+		            WebCacheItem access_token_value = new CustomWebCacheItem("access_token_key");
+					// Lưu trữ CustomWebCacheItem vào WebCachePool
+		        	String access_token = (String) WebCachePoolUtil.get("access_token_key", access_token_value);
+		        	System.out.println("access_token sendMaXacThucToZalo "+access_token);
+		        
+		        	URL url = new URL("https://openapi.zalo.me/v2.0/oa/message");
+
+		              // Mở kết nối HTTP
+				    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+		              // Cấu hình kết nối
+		              connection.setRequestMethod("POST");
+		              connection.setRequestProperty("Content-Type", "application/json");
+		              connection.setRequestProperty("access_token", access_token);
+		              connection.setDoOutput(true);
+
+		              // Chuẩn bị dữ liệu gửi đi
+		              String datatozalo = "{\n" +
+		                      "  \"recipient\": {\n" +
+		                      "    \"user_id\": \"" + userId_Info + "\"\n" +
+		                      "  },\n" +
+		                      "  \"message\": {\n" +
+		                      "    \"text\":  \"" + datastringnew + "\"\n" +
+		                      "  }\n" +
+		                      "}";
+		              byte[] postData = datatozalo.getBytes("UTF-8");
+
+		              // Gửi dữ liệu
+		              OutputStream outputStream = connection.getOutputStream();
+		              outputStream.write(postData);
+		              outputStream.flush();
+		              outputStream.close();
+
+		              // Nhận phản hồi
+		              BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		              StringBuilder response = new StringBuilder();
+		              String line;
+		              while ((line = reader.readLine()) != null) {
+		                  response.append(line);
+		              }
+		              reader.close();
+
+		              // Xử lý phản hồi
+		              int responseCode = connection.getResponseCode();
+		              if (responseCode == HttpURLConnection.HTTP_OK) {
+		                  // Xử lý phản hồi thành công
+		                  System.out.println("Yêu cầu đã được gửi thành công.");
+		              } else {
+		                  // Xử lý phản hồi lỗi
+		                  System.out.println("Yêu cầu gửi không thành công. Mã phản hồi: " + responseCode);
+		              }
+		        
+		        	
+	        	
+		        }
+		    }
+	
 	}
-	
-	
-	
     /*get Info của zalo đầu vào có thể là zalo_id hoặc sđt 0815269889*/
 	public JsonObject getInfoZalo(String zalo_id) throws IOException, PortletException {
 
@@ -285,7 +355,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
 
 			// Chuẩn bị dữ liệu gửi đi
-			String data = "refresh_token=xcjygVw4SG7II475bhKjO-rXUyUfd5X4Ys9ezQQaMdc3U4FgcRPsL_1w9EUqddf1-MvG-C-nMt3qGrlxrv14PynSVQtzX14Pkcb7kVMKRZ_YStI7tw9XFDupRkU5hHXpcnqEgfgqDbM2NXQ1sPeZ3k0jLe7vz4iQvJbwrw3C6t7uKKYdwvfwq8WvNMU5ynMgazCu0Ree6QsBkbzkt3KThFwa8Kt2AWwxvh1gHA5v0ilQfrPeMIPPbTTmvwf95W"
+			String data = "refresh_token=hfyg-RUvQZgIl1ULtuWsMAsLBPVWeKD_ovO-fU-PGKB3Z1IqseffOhg5Sxdmf7bdXv8UjRY4NrQAlnAsfwn3GxwdFBNmgoPuXhewjiQ8NsZvcnIAvhXeJuIvUFt1_Lm4p88hcyB9Q0ALyX-GZyXjSRx-QENftpiL-SqiWBVrDsdjobsWsAG9u07V9n8Bt5y3YlchmwhBvdI3XvcwlBVXOftexvlNpEnXdER4vCMIXs71yk-ZNbacK5oQ6wwNKYq"
 					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
 
 			// Gửi dữ liệu
