@@ -209,7 +209,7 @@ i.fa.fa-user-circle-o {
 	function sendMaZaloAndConfirmCheckin(userId) {
 	    sendMaZalo()
 	      .then(function(response) {
-	        // Xử lý phản hồi từ hàm sendMaZalo nếu cần
+	        // Xử lý phản hồi    từ hàm sendMaZalo nếu cần
 	        
 	        // Gọi hàm confirmCheckin
 	      //  confirmCheckin(userId);
