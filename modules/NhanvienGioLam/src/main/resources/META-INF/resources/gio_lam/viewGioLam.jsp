@@ -139,6 +139,11 @@ i.fa.fa-user-circle-o {
 				</form>
 
 			</h4>
+
+			<portlet:actionURL var="xacthumazaloActionURL" name="xacthumazaloAction" />
+	        <form id="check_mazalo" class="float-right" action="<%=xacthumazaloActionURL%>" method="POST">
+                 <input type="hidden" name="<portlet:namespace />popupCapchaValue" id="popupCapchaValue" value="">
+            </form>
 		</div>
 	</div>
 </div>
@@ -166,7 +171,6 @@ i.fa.fa-user-circle-o {
 				+ "<input type='number' name='popup-capcha' id='popup-capcha' class='form-control'  placeholder='Nhập mã xác nhận'>"
 				+ "</div>"
 				+
-
 				"<footer>"
 				+ "<div class='controls text-center'>"
 				+ " <button class='button button-danger doAction'>"
@@ -181,11 +185,9 @@ i.fa.fa-user-circle-o {
 		$('body').prepend($content);
 		$('.doAction').click(
 				function(event) {
-					var deleteForm = $('#deleteNhanVienForm');
-					deleteForm.find(
-							'[name="<portlet:namespace />deleteUserId"]').val(
-							userId);
-					deleteForm.submit();
+					 var popupCapchaValueOne = $('#popup-capcha').val();
+					 console.log("xin chao dang chien *****111222222"+ popupCapchaValueOne);
+					 sosanhmazalo(popupCapchaValueOne);
 					$(this).parents('.dialog-ovelay').fadeOut(500, function() {
 						$(this).remove();
 					});
@@ -196,7 +198,13 @@ i.fa.fa-user-circle-o {
 			});
 		});
 	}
-
+	function sosanhmazalo(popupCapchaValueOne) {
+		console.log("xin chao dang chien ***** "+ popupCapchaValueOne);
+		 $('#popupCapchaValue').val(popupCapchaValueOne); 
+		 $('#check_mazalo').submit(); // Submit form có id là "check_mazalo"
+		
+	}
+	
 	
 	function sendMaZaloAndConfirmCheckin(userId) {
 	    sendMaZalo()
@@ -232,7 +240,7 @@ i.fa.fa-user-circle-o {
 	      });
 	  }
 	  
-		function confirmCheckin(userId) {
+		function confirmCheckin(userId) { 
 			if (userId != 0) {
 				var title = 'THÔNG BÁO';
 				var msg = 'Bạn có chắc chắn muốn chấm công ?';
@@ -242,7 +250,6 @@ i.fa.fa-user-circle-o {
 				Confirm(title, msg, okButton, cancelButton, userId);
 			}
 		}
-		
+	
 	
 </script>
-
