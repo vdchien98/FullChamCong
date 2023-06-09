@@ -122,6 +122,7 @@
 	</entity>
 
 
+
 	<entity local-service="true" name="Ngaynghile"
 		remote-service="true" uuid="false">
 		<column type="int" name="id" primary="true"></column>

@@ -51,6 +51,27 @@ public class GioLamLocalServiceWrapper
 		return _gioLamLocalService.addGioLam(gioLam);
 	}
 
+	@Override
+	public com.liferay.docs.chamcong.model.GioLam addGioLam(
+			long user_id, java.util.Date ngaylam, String ip,
+			java.util.Date check_in_sang, java.util.Date check_out_sang,
+			int di_muon_sang, int ve_som_sang, int gio_cham_cong_sang,
+			java.util.Date check_in_chieu, java.util.Date check_out_chieu,
+			int di_muon_chieu, int ve_som_chieu, int gio_cham_cong_chieu,
+			java.util.Date check_in_toi, java.util.Date check_out_toi,
+			int di_muon_toi, int ve_som_toi, float diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _gioLamLocalService.addGioLam(
+			user_id, ngaylam, ip, check_in_sang, check_out_sang, di_muon_sang,
+			ve_som_sang, gio_cham_cong_sang, check_in_chieu, check_out_chieu,
+			di_muon_chieu, ve_som_chieu, gio_cham_cong_chieu, check_in_toi,
+			check_out_toi, di_muon_toi, ve_som_toi, diem, trangthai,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new gio lam with the primary key. Does not add the gio lam to the database.
 	 *

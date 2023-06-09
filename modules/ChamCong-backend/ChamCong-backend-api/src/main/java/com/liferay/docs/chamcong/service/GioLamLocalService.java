@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -74,6 +76,16 @@ public interface GioLamLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public GioLam addGioLam(GioLam gioLam);
+
+	public GioLam addGioLam(
+			long user_id, Date ngaylam, String ip, Date check_in_sang,
+			Date check_out_sang, int di_muon_sang, int ve_som_sang,
+			int gio_cham_cong_sang, Date check_in_chieu, Date check_out_chieu,
+			int di_muon_chieu, int ve_som_chieu, int gio_cham_cong_chieu,
+			Date check_in_toi, Date check_out_toi, int di_muon_toi,
+			int ve_som_toi, float diem, int trangthai,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	/**
 	 * Creates a new gio lam with the primary key. Does not add the gio lam to the database.

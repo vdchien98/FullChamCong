@@ -18,6 +18,7 @@ import com.liferay.docs.chamcong.model.GioLam;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -57,6 +58,25 @@ public class GioLamLocalServiceUtil {
 	 */
 	public static GioLam addGioLam(GioLam gioLam) {
 		return getService().addGioLam(gioLam);
+	}
+
+	public static GioLam addGioLam(
+			long user_id, java.util.Date ngaylam, String ip,
+			java.util.Date check_in_sang, java.util.Date check_out_sang,
+			int di_muon_sang, int ve_som_sang, int gio_cham_cong_sang,
+			java.util.Date check_in_chieu, java.util.Date check_out_chieu,
+			int di_muon_chieu, int ve_som_chieu, int gio_cham_cong_chieu,
+			java.util.Date check_in_toi, java.util.Date check_out_toi,
+			int di_muon_toi, int ve_som_toi, float diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().addGioLam(
+			user_id, ngaylam, ip, check_in_sang, check_out_sang, di_muon_sang,
+			ve_som_sang, gio_cham_cong_sang, check_in_chieu, check_out_chieu,
+			di_muon_chieu, ve_som_chieu, gio_cham_cong_chieu, check_in_toi,
+			check_out_toi, di_muon_toi, ve_som_toi, diem, trangthai,
+			serviceContext);
 	}
 
 	/**

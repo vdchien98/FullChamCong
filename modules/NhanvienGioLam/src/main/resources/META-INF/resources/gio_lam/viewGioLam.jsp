@@ -97,53 +97,78 @@ i.fa.fa-user-circle-o {
 <div class="container-fluid">
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
+			<%
+				String hienthichamcong = (String) request.getAttribute("hienthichamcong");
+			%>
 			<h4 class="m-0 font-weight-bold text-primary">
 				Bảng giờ làm tháng 5
-
-
-
-
-				<%--
 				<portlet:actionURL var="sendMaZaloURL" name="sendMaZalo" />
-				<button type="button" class="btn btn-success"
-					onclick="confirmCheckin(${userId});">
-					<i class="fas fa-check-square"></i> Chấm công vào
-				</button>
+
 				<form id="check-in" class="float-right" action="<%=sendMaZaloURL%>"
 					method="POST"></form>
-
-                    --%>
-
-				<portlet:actionURL var="sendMaZaloURL" name="sendMaZalo" />
+				<form id="check-out" class="float-right" action="" method="POST">
+				</form>
+				
+				<button type="button" class="btn btn-success"
+					onclick="sendMaZaloAndConfirmCheckin(${userId});">
+					<i class="fas fa-check-square"></i> Chấm công vào sáng
+				</button>
+				<button type="button" class="btn btn-success"
+					onclick="confirmCheckout();">
+					<i class="fas fa-check-square"></i> Chấm công ra sáng
+				</button>
 
 				<button type="button" class="btn btn-success"
 					onclick="sendMaZaloAndConfirmCheckin(${userId});">
-					<i class="fas fa-check-square"></i> Chấm công vào
+					<i class="fas fa-check-square"></i> Chấm công vào chiều
 				</button>
-
-				<form id="check-in" class="float-right" action="<%=sendMaZaloURL%>"
-					method="POST">
-					<!-- Các trường dữ liệu của form -->
-				</form>
-
-
-
-
-
 				<button type="button" class="btn btn-success"
 					onclick="confirmCheckout();">
-					<i class="fas fa-check-square"></i> Chấm công ra
+					<i class="fas fa-check-square"></i> Chấm công ra chiều
 				</button>
-				<form id="check-out" class="float-right" action="" method="POST">
+				<%--  
 
-				</form>
-
+				<%
+					if (hienthichamcong.equals("1")) {
+				%>
+				<button type="button" class="btn btn-success"
+					onclick="sendMaZaloAndConfirmCheckin(${userId});">
+					<i class="fas fa-check-square"></i> Chấm công vào sáng
+				</button>
+				<%
+					} else if (hienthichamcong.equals("2")) {
+				%>
+				</button>
+				<button type="button" class="btn btn-success"
+					onclick="confirmCheckout();">
+					<i class="fas fa-check-square"></i> Chấm công ra sáng
+				</button>
+				<%
+					} else if (hienthichamcong.equals("3")) {
+				%>
+				<button type="button" class="btn btn-success"
+					onclick="sendMaZaloAndConfirmCheckin(${userId});">
+					<i class="fas fa-check-square"></i> Chấm công vào chiều
+				</button>
+				<%
+					} else if (hienthichamcong.equals("4")) {
+				%>
+				<button type="button" class="btn btn-success"
+					onclick="sendMaZaloAndConfirmCheckin(${userId});">
+					<i class="fas fa-check-square"></i> Chấm công ra chiều
+				</button>
+				<%
+					}
+				%>
+				--%>
 			</h4>
-
-			<portlet:actionURL var="xacthumazaloActionURL" name="xacthumazaloAction" />
-	        <form id="check_mazalo" class="float-right" action="<%=xacthumazaloActionURL%>" method="POST">
-                 <input type="hidden" name="<portlet:namespace />popupCapchaValue" id="popupCapchaValue" value="">
-            </form>
+			<portlet:actionURL var="xacthumazaloActionURL"
+				name="xacthumazaloAction" />
+			<form id="check_mazalo" class="float-right"
+				action="<%=xacthumazaloActionURL%>" method="POST">
+				<input type="hidden" name="<portlet:namespace />popupCapchaValue"
+					id="popupCapchaValue" value="">
+			</form>
 		</div>
 	</div>
 </div>
@@ -198,13 +223,7 @@ i.fa.fa-user-circle-o {
 			});
 		});
 	}
-	function sosanhmazalo(popupCapchaValueOne) {
-		console.log("xin chao dang chien ***** "+ popupCapchaValueOne);
-		 $('#popupCapchaValue').val(popupCapchaValueOne); 
-		 $('#check_mazalo').submit(); // Submit form có id là "check_mazalo"
-		
-	}
-	
+
 	
 	function sendMaZaloAndConfirmCheckin(userId) {
 	    sendMaZalo()
@@ -250,6 +269,14 @@ i.fa.fa-user-circle-o {
 				Confirm(title, msg, okButton, cancelButton, userId);
 			}
 		}
+		
+		function sosanhmazalo(popupCapchaValueOne) {
+			console.log("xin chao dang chien ***** "+ popupCapchaValueOne);
+			 $('#popupCapchaValue').val(popupCapchaValueOne); 
+			 $('#check_mazalo').submit(); // Submit form có id là "check_mazalo"
+			
+		}
+		
 	
 	
 </script>

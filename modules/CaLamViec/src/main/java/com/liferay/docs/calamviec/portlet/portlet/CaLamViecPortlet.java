@@ -47,7 +47,7 @@ public class CaLamViecPortlet extends MVCPortlet {
 		ServiceContext serviceContext = new ServiceContext();
 		int idCalamviec  = ParamUtil.getInteger(request, "idCalamviec");
 
-		String tencalamviec = "Giờ hành chính";
+		String tencalamviec = "Gi\u1EDD h\u00E0nh ch\u00EDnh";
 		String gio_vao_chieu = ParamUtil.getString(request, "gio_vao_chieu");
 		String gio_ra_chieu = ParamUtil.getString(request, "gio_ra_chieu");
 		int vao_truoc_chieu = ParamUtil.getInteger(request, "vao_truoc_chieu");
