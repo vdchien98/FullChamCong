@@ -70,7 +70,6 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 		giolam.setVe_som_toi(ve_som_toi);
 		giolam.setDiem(diem);
 		giolam.setTrangthai(trangthai);
-		
 		giolam.setCreated_at(now);
 		giolam.setUpdated_at(now);
 		GioLamLocalServiceUtil.updateGioLam(giolam);

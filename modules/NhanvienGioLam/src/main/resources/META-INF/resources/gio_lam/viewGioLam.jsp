@@ -2,6 +2,10 @@
 <%@ page language="Java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <style>
+.row.mb-3.chien {
+	margin-left: 0;
+}
+
 i.fa.fa-user-circle-o {
 	margin-top: 3px;
 }
@@ -97,36 +101,37 @@ i.fa.fa-user-circle-o {
 <div class="container-fluid">
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<%
-				String hienthichamcong = (String) request.getAttribute("hienthichamcong");
-			%>
-			<h4 class="m-0 font-weight-bold text-primary">
-				Bảng giờ làm tháng 5
-				<portlet:actionURL var="sendMaZaloURL" name="sendMaZalo" />
 
-				<form id="check-in" class="float-right" action="<%=sendMaZaloURL%>"
-					method="POST"></form>
-				<form id="check-out" class="float-right" action="" method="POST">
-				</form>
-				
-				<button type="button" class="btn btn-success"
-					onclick="sendMaZaloAndConfirmCheckin(${userId});">
-					<i class="fas fa-check-square"></i> Chấm công vào sáng
-				</button>
-				<button type="button" class="btn btn-success"
-					onclick="confirmCheckout();">
-					<i class="fas fa-check-square"></i> Chấm công ra sáng
-				</button>
+			<h4 class="m-0 font-weight-bold text-primary">Bảng giờ làm tháng
+				5</h4>
+		</div>
+		<%
+			String hienthichamcong = (String) request.getAttribute("hienthichamcong");
+		%>
+		<portlet:actionURL var="sendMaZaloURL" name="sendMaZalo" />
+		<form id="check-in" class="float-right" action="<%=sendMaZaloURL%>"
+			method="POST"></form>
+		<form id="check-out" class="float-right" action="" method="POST">
+		</form>
 
-				<button type="button" class="btn btn-success"
-					onclick="sendMaZaloAndConfirmCheckin(${userId});">
-					<i class="fas fa-check-square"></i> Chấm công vào chiều
-				</button>
-				<button type="button" class="btn btn-success"
-					onclick="confirmCheckout();">
-					<i class="fas fa-check-square"></i> Chấm công ra chiều
-				</button>
-				<%--  
+		<button type="button" class="btn btn-success"
+			onclick="sendMaZaloAndConfirmCheckin(${userId});">
+			<i class="fas fa-check-square"></i> Chấm công vào sáng
+		</button>
+		<button type="button" class="btn btn-success"
+			onclick="confirmCheckout();">
+			<i class="fas fa-check-square"></i> Chấm công ra sáng
+		</button>
+
+		<button type="button" class="btn btn-success"
+			onclick="sendMaZaloAndConfirmCheckin(${userId});">
+			<i class="fas fa-check-square"></i> Chấm công vào chiều
+		</button>
+		<button type="button" class="btn btn-success"
+			onclick="confirmCheckout();">
+			<i class="fas fa-check-square"></i> Chấm công ra chiều
+		</button>
+		<%--  
 
 				<%
 					if (hienthichamcong.equals("1")) {
@@ -161,16 +166,168 @@ i.fa.fa-user-circle-o {
 					}
 				%>
 				--%>
-			</h4>
-			<portlet:actionURL var="xacthumazaloActionURL"
-				name="xacthumazaloAction" />
-			<form id="check_mazalo" class="float-right"
-				action="<%=xacthumazaloActionURL%>" method="POST">
-				<input type="hidden" name="<portlet:namespace />popupCapchaValue"
-					id="popupCapchaValue" value="">
-			</form>
-		</div>
+
+		<portlet:actionURL var="xacthumazaloActionURL"
+			name="xacthumazaloAction" />
+		<form id="check_mazalo" class="float-right"
+			action="<%=xacthumazaloActionURL%>" method="POST">
+			<input type="hidden" name="<portlet:namespace />popupCapchaValue"
+				id="popupCapchaValue" value="">
+		</form>
+
+
 	</div>
+
+	<div class="row mb-3 chien">
+		<span class="btn btn-success">Đúng giờ</span> 
+		<span class="btn btn-warning">Đi muộn/Về sớm</span> 
+		<span class="btn btn-secondary">Không chấm công vào/ra</span> 
+		<span class="btn btn-primary">Nghỉ phép/Nghỉ lễ</span> 
+		<span class="btn btn-info">Xin chấm công</span> 
+		<span class="btn btn-danger">Nghỉ không phép</span> 
+		<span class="btn btn-light">M: số lần đi muộn, S: số lần về sớm</span>
+	</div>
+
+
+    <ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link text-dark active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Chấm công của tôi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Chấm công của phòng/đơn vị</a>
+                </li>
+    </ul>
+
+
+
+	<div class="tab-content" id="myTabContent">
+		<div class="tab-pane fade show active" id="home" role="tabpanel"
+			aria-labelledby="home-tab">
+			<table class="table table-bordered">
+				<thead>
+					<tr class="text-center text-white">
+						<th style="padding: 0;" class="bg-info">T2</th>
+						<th style="padding: 0;" class="bg-info">T3</th>
+						<th style="padding: 0;" class="bg-info">T4</th>
+						<th style="padding: 0;" class="bg-info">T5</th>
+						<th style="padding: 0;" class="bg-info">T6</th>
+						<th style="padding: 0;" class="bg-warning">T7</th>
+						<th style="padding: 0;" class="bg-warning">CN</th>
+					</tr>
+				</thead>
+				<tr>
+					<td class="text-center" style="padding: 0;"></td>
+					<td class="text-center"
+						style="margin: 1px; padding-left: 4px; padding-right: 4px;"
+						data-toggle="tooltip" title="Nghỉ lễ">Day<br>
+						<div class="bg-primary border" style="height: 10px">&nbsp;</div>
+						<div class="bg-primary border" style="height: 10px">&nbsp;</div>
+					</td>
+					<td class="text-center"
+						style="margin: 1px; padding-left: 4px; padding-right: 4px;">Day
+						1<br>
+						<div class="bg-primary border" style="height: 10px">&nbsp;</div>
+						<div class="bg-primary border" style="height: 10px">&nbsp;</div>
+					</td>
+					<td class="text-center"
+						style="margin: 1px; padding-left: 4px; padding-right: 4px;"
+						data-toggle="tooltip" title="{{ $nghi_phep->chon_ly_do }}">
+						Day 2 <br>
+						<div class="bg-primary border" style="height: 10px">&nbsp;</div>
+						<div class="bg-primary border" style="height: 10px">&nbsp;</div>
+					</td>
+					<td class="text-center"
+						style="margin: 1px; padding-left: 4px; padding-right: 4px;"
+						data-toggle="tooltip" title="{{ $xin_cham_cong->chon_ly_do }}">
+						Day 3 <br>
+						<div class="bg-info border" style="height: 10px">&nbsp;</div>
+						<div class="bg-info border" style="height: 10px">&nbsp;</div>
+					</td>
+					<td class="text-center"
+						style="margin: 1px; padding-left: 4px; padding-right: 4px;">
+						Day 4<br>
+						<div class="bg-info border" style="height: 10px">&nbsp;</div>
+						<div class="bg-info border" style="height: 10px">&nbsp;</div>
+						<div class="border bg-warning" style="height: 10px"
+							data-toggle="tooltip" data-html="true"
+							title="Ca tối <br> Giờ vào: {{ $check_in_toi }} | Giờ ra: {{ $check_out_toi }}">&nbsp;</div>
+
+						<div class="border bg-success" style="height: 10px"
+							data-toggle="tooltip" data-html="true"
+							title="Ca tối <br> Giờ vào: {{ $check_in_toi }} | Giờ ra: {{ $check_out_toi }}">&nbsp;</div>
+
+					</td>
+					<td class="text-center"
+						style="margin: 1px; padding-left: 4px; padding-right: 4px;">
+						Day 5 <br>
+						<div class="bg-warning border" style="height: 10px"
+							data-toggle="tooltip" data-html="true"
+							title="Ca sáng <br> Giờ vào: {{ $check_in_sang }} | Giờ ra: {{ $check_out_sang }}">&nbsp;</div>
+						<div class="bg-success border" style="height: 10px"
+							data-toggle="tooltip" data-html="true"
+							title="Ca sáng <br> Giờ vào: {{ $check_in_sang }} | Giờ ra: {{ $check_out_sang }}">&nbsp;</div>
+
+						<div class="bg-secondary border" style="height: 10px"
+							data-toggle="tooltip" data-html="true"
+							title="Ca sáng <br> Giờ vào: {{ $check_in_sang }} | Giờ ra: {{ $check_out_sang }}">&nbsp;</div>
+
+						<div class="bg-success border" style="height: 10px"
+							data-toggle="tooltip" data-html="true"
+							title="Ca sáng <br> Giờ vào: {{ $check_in_sang }} | Giờ ra: {{ $check_out_sang }}">&nbsp;</div>
+
+						<div class="bg-primary border" style="height: 10px"
+							data-toggle="tooltip" data-html="true"
+							title="{{ $nghi_phep_nua_ngay->chon_ly_do }}">&nbsp;</div>
+						<div class="bg-info border" style="height: 10px"
+							data-toggle="tooltip" data-html="true"
+							title="{{ $xin_cham_cong_nua_ngay->chon_ly_do }}">&nbsp;</div>
+						<div class="bg-secondary border" style="height: 10px"
+							data-toggle="tooltip" data-html="true"
+							title="Ca sáng <br> Giờ vào: {{ $check_in_sang }} | Giờ ra: {{ $check_out_sang }}">&nbsp;</div>
+						<div class="bg-danger border" style="height: 10px"
+							data-toggle="tooltip" data-html="true" title="Nghỉ không phép">&nbsp;</div>
+						<div class="bg-warning border" style="height: 10px"
+							data-toggle="tooltip" data-html="true"
+							title="Ca chiều <br> Giờ vào: {{ $check_in_chieu }} | Giờ ra: {{ $check_out_chieu }}">&nbsp;</div>
+						<div class="bg-success border" style="height: 10px"
+							data-toggle="tooltip" data-html="true"
+							title="Ca chiều <br> Giờ vào: {{ $check_in_chieu }} | Giờ ra: {{ $check_out_chieu }}">&nbsp;</div>
+
+						<div class="bg-secondary border" style="height: 10px"
+							data-toggle="tooltip" data-html="true"
+							title="Ca chiều <br> Giờ vào: {{ $check_in_chieu }} | Giờ ra: {{ $check_out_chieu }}">&nbsp;</div>
+
+						<div class="bg-success border" style="height: 10px"
+							data-toggle="tooltip" data-html="true"
+							title="Ca chiều <br> Giờ vào: {{ $check_in_chieu }} | Giờ ra: {{ $check_out_chieu }}">&nbsp;</div>
+
+						<div class="bg-primary border" style="height: 10px"
+							data-toggle="tooltip" data-html="true"
+							title="{{ $nghi_phep_nua_ngay->chon_ly_do }}">&nbsp;</div>
+
+						<div class="bg-info border" style="height: 10px"
+							data-toggle="tooltip" data-html="true"
+							title="{{ $xin_cham_cong_nua_ngay->chon_ly_do }}">&nbsp;</div>
+
+						<div class="bg-secondary border" style="height: 10px"
+							data-toggle="tooltip" data-html="true"
+							title="Ca chiều <br> Giờ vào: {{ $check_in_chieu }} | Giờ ra: {{ $check_out_chieu }}">&nbsp;</div>
+
+						<div class="bg-danger border" style="height: 10px"
+							data-toggle="tooltip" data-html="true" title="Nghỉ không phép">&nbsp;</div>
+
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+
+
+	</div>
+
+
+
+
 </div>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

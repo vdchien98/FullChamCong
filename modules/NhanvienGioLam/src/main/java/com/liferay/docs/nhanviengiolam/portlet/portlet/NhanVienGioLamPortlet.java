@@ -527,10 +527,30 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 
 			Calamviec calamviec = CalamviecLocalServiceUtil.getCalamviec(1);
 			System.out.println("calamviec ****" + calamviec);
-			String gioVaoSang = calamviec.getGio_vao_sang();
-			String gioRaSang = calamviec.getGio_ra_sang();
-			String gioVaoChieu = calamviec.getGio_vao_chieu();
-			String gioRaChieu = calamviec.getGio_ra_chieu();
+//			String gioVaoSang = calamviec.getGio_vao_sang();
+//			String gioRaSang = calamviec.getGio_ra_sang();
+//			String gioVaoChieu = calamviec.getGio_vao_chieu();
+//			String gioRaChieu = calamviec.getGio_ra_chieu();
+			
+			String gioVaoSangFormatted = calamviec.getGio_vao_sang();
+			LocalTime gioVaoSangTime1 = LocalTime.parse(gioVaoSangFormatted);
+
+			String gioRaSangFormatted  = calamviec.getGio_ra_sang();
+			LocalTime gioRaSangTime1 = LocalTime.parse(gioRaSangFormatted);
+
+			String gioVaoChieuFormatted  = calamviec.getGio_vao_chieu();
+			LocalTime gioVaoChieuTime1 = LocalTime.parse(gioVaoChieuFormatted);
+
+			String gioRaChieuFormatted  = calamviec.getGio_ra_chieu();
+			LocalTime gioRaChieuTime1 = LocalTime.parse(gioRaChieuFormatted);
+			
+			
+			
+			String gioVaoSang = gioVaoSangTime1.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+			String gioRaSang = gioRaSangTime1.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+			String gioVaoChieu = gioVaoChieuTime1.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+			String gioRaChieu = gioRaChieuTime1.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+			
 
 			int vaoTruocSang = calamviec.getVao_truoc_sang();
 			int raSauSang = calamviec.getRa_sau_sang();
@@ -563,13 +583,13 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			LocalTime gioVaoChieuTruoc = gioVaoChieuTime.minusMinutes(vaoTruocChieu);
 			DateTimeFormatter timeFormatter3 = DateTimeFormatter.ofPattern("HH:mm:ss");
 			String gioVaoChieuTruocStr = gioVaoChieuTruoc.format(timeFormatter3);
-			System.out.println("gioVaoSangTruoc  " + gioVaoChieuTruocStr);
+			System.out.println("gioVaoChieuTruocStr  " + gioVaoChieuTruocStr);
 
 			LocalTime gioRaChieuTime = LocalTime.parse(gioRaChieu);
 			LocalTime gioRaChieuSau = gioRaChieuTime.plusMinutes(raSauChieu);
 			DateTimeFormatter timeFormatter4 = DateTimeFormatter.ofPattern("HH:mm:ss");
 			String gioRaChieuSaucStr = gioRaChieuSau.format(timeFormatter4);
-			System.out.println("gioRaSangSau  " + gioRaChieuSaucStr);
+			System.out.println("gioRaChieuSaucStr  " + gioRaChieuSaucStr);
 
 			LocalTime checkGioPhutGiaysangTime = LocalTime.parse(gioPhutGiay);
 			String hienthichamcong = checkGioPhutGiay(checkGioPhutGiaysangTime, gioVaoSangTruocStr, gioVaoSang,
@@ -588,6 +608,9 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			String gioRaSang, String gioRaSangSaucStr, String gioVaoChieuTruocStr, String gioVaoChieu,
 			String gioRaChieu, String gioRaChieuSaucStr) {
 		
+		System.out.println("gioVaoSangTruocStr render ##### "+ gioVaoSangTruocStr);
+		
+		
 		LocalTime gioVaoSangTruoc45Phut = LocalTime.parse(gioVaoSangTruocStr);
 		LocalTime gioVaoSangDungGio = LocalTime.parse(gioVaoSang);
 		LocalTime gioRaSangSau30Phut = LocalTime.parse(gioRaSangSaucStr);
@@ -595,9 +618,10 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 
 		LocalTime gioVaoChieuTruoc45Phut = LocalTime.parse(gioVaoChieuTruocStr);
 		LocalTime gioVaoChieuDungGio = LocalTime.parse(gioVaoChieu);
-		LocalTime gioRaChieuSau80Phut = LocalTime.parse(gioRaSangSaucStr);
+		LocalTime gioRaChieuSau80Phut = LocalTime.parse(gioRaChieuSaucStr);
 		LocalTime gioRaChieuDungGio = LocalTime.parse(gioRaChieu);
 
+		
 		// Kiểm tra xem gioPhutGiay có nằm trong khoảng từ gioVaoSangTruoc đến
 		// gioVaoSangSau không
 		if (gioPhutGiay.isAfter(gioVaoSangTruoc45Phut) && gioPhutGiay.isBefore(gioVaoSangDungGio)) {
