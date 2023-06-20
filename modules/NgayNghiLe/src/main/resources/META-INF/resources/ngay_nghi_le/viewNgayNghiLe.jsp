@@ -6,19 +6,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<script src='https://kit.fontawesome.com/a076d05399.js'
-	crossorigin='anonymous'></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
-<!-- jQuery library -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-<!-- jQuery UI library -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	pageEncoding="UTF-8"%><script
+	src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
 <!-- jQuery UI CSS -->
 <link rel="stylesheet"
@@ -27,8 +16,8 @@
 
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+
 
 <div class="container-fluid">
 	<h1 class="h3 mb-2 text-gray-800 font-weight-bold text-uppercase">Quản
@@ -43,14 +32,13 @@
 			<div class="row">
 				<div class="col-md-7">
 					<div class="form-group row">
-						<form class="pl-5" id="search-year"
-							action="">
+						<form class="pl-5" id="search-year" action="">
 							<div class="form-group row">
-								<label class="col-form-label font-weight-bold text-info mr-3 datepicker">Năm</label>
-								<input type="text" 
-								       class="form-control datepicker col-md-6 ml-6"
-									   name="<portlet:namespace />year" id="year" placeholder="Năm"
-									   value="">
+								<label
+									class="col-form-label font-weight-bold text-info mr-3 datepicker">Năm</label>
+								<input type="text" class="form-control datepicker col-md-6 ml-6"
+									name="<portlet:namespace />year" id="year" placeholder="Năm"
+									value="">
 							</div>
 						</form>
 					</div>
@@ -73,7 +61,8 @@
 								<tr>
 									<td>${loop.index +1}</td>
 									<td>${ngaynghile.ten}</td>
-									<td><fmt:formatDate value="${ngaynghile.ngay_nghi}" pattern="dd-MM-yyyy" /></td>
+									<td><fmt:formatDate value="${ngaynghile.ngay_nghi}"
+											pattern="dd-MM-yyyy" /></td>
 									<td><c:choose>
 											<c:when test="${ngaynghile.trangthai == 1}">
 												<span class="btn btn-success btn-sm">Hoạt động</span>
@@ -87,7 +76,7 @@
 										<button class="btn btn-success btn-circle mr-1 btn-sm"
 											type="button" data-toggle="tooltip" title="Sửa"
 											onclick="editNgayNghiLe('${ngaynghile.id}', '${ngaynghile.ten}', '${ngaynghile.ngay_nghi}', '${ngaynghile.trangthai}');">
-											<i class="fas fa-edit"></i>
+											<i class="fa fa-pencil" aria-hidden="true"></i>
 										</button> <portlet:actionURL var="deleteNgayNghileURL"
 											name="deleteNgayNghiLe" />
 										<form name="deleteNgayNghile" id="deleteNgayNghile"
@@ -132,7 +121,7 @@
 									gian <span class="text-danger">(*)</span>
 								</label>
 								<div class="input-group">
-									<input type="text" class="form-control"
+									<input type="text" class="form-control "
 										name="<portlet:namespace />ngay_nghi" id="ngay_nghi"
 										placeholder="ngày nghỉ lễ"
 										value="${ngaynghileedit.ngay_nghi }" required>
@@ -162,31 +151,49 @@
 </div>
 
 <script>
-	$(function() {
-		$("#ngay_nghi").datepicker({
-			// minDate: 0,
-			// changeMonth: true,
-			dateFormat : "dd/mm/yy",
-			// firstDay: 1,
-			// hideIfNoPrevNext: true,
-			// showAnim: 'slideDown',
-			// showOn: "both",  
-			showOtherMonths : true,
-		// showStatus: true,
-		// maxDate: '-1d'
-		});
-	});
+	!(function($) {
+
+		$.fn.datepicker.dates['vi'] = {
+
+			days : [ "Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm",
+					"Thứ sáu", "Thứ bảy", "Chủ nhật" ],
+
+			daysShort : [ "CN", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6",
+					"Thứ 7", "CN" ],
+
+			daysMin : [ "CN", "T2", "T3", "T4", "T5", "T6", "T7", "CN" ],
+
+			months : [ "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5",
+					"Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10",
+					"Tháng 11", "Tháng 12" ],
+
+			monthsShort : [ "Th1", "Th2", "Th3", "Th4", "Th5", "Th6", "Th7",
+					"Th8", "Th9", "Th10", "Th11", "Th12" ],
+
+			today : "Hôm nay",
+
+			clear : "Xóa",
+
+			format : "dd/mm/yyyy"
+
+		};
+
+	}(jQuery));
 
 	$(document).ready(function() {
-		// Khởi tạo datepicker với option chỉ hiển thị năm
-		$("#year").datepicker({
-			startView : 'decade',
-			//  minViewMode: 'years',
-			// format: 'yyyy'
-			changeYear : true,
-			// changeMonth: false,
-			dateFormat : "yy", // chỉ lấy năm
-			yearRange : "1000:3030" // giới hạn năm từ 1900 đến 2030
+		$('.datepicker').datepicker({
+			language : 'vi',
+			format : "yyyy",
+			startView : "years",
+			minViewMode : "years"
+		});
+	});
+	$(function() {
+		$("#ngay_nghi").datepicker({
+			language : 'vi',
+			showOtherMonths : true,
+			startView : "days",
+			minViewMode : "days"
 		});
 	});
 
@@ -204,9 +211,6 @@
 		document.getElementById("ngay_nghi").value = ngayNghiFormatted;
 		document.getElementById("trangthai").checked = trangthai;
 	}
-	
-	
-	
 </script>
 
 
