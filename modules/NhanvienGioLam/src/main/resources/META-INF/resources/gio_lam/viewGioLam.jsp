@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@ include file="../init.jsp"%>
 <%@ page language="Java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -98,6 +100,7 @@ i.fa.fa-user-circle-o {
 	border-radius: 3px
 }
 </style>
+
 <div class="container-fluid">
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
@@ -191,12 +194,6 @@ i.fa.fa-user-circle-o {
 			</div>
 		</form>
 	</div>
-
-
-
-
-
-
 	<div class="row mb-3 chien">
 		<span class="btn btn-success">Đúng giờ</span> <span
 			class="btn btn-warning">Đi muộn/Về sớm</span> <span
@@ -206,11 +203,37 @@ i.fa.fa-user-circle-o {
 			class="btn btn-danger">Nghỉ không phép</span> <span
 			class="btn btn-light">M: số lần đi muộn, S: số lần về sớm</span>
 	</div>
-
-
 	<div class="tab-content" id="myTabContent">
 		<div class="tab-pane fade show active" id="home" role="tabpanel"
 			aria-labelledby="home-tab">
+
+
+			<%
+				java.util.Date currentDate = new java.util.Date();
+			System.out.println("currentDate  " + currentDate);
+				java.util.Date firstDayOfMonth = new java.util.Date(currentDate.getYear(), currentDate.getMonth(), 1);
+
+				// Lấy ngày cuối cùng của tháng hiện tại
+				java.util.Date lastDayOfMonth = new java.util.Date(currentDate.getYear(), currentDate.getMonth() + 1, 0);
+
+				// Tạo danh sách các ngày trong tháng bao gồm cả thứ
+				java.util.List<String> daysInMonth = new java.util.ArrayList<>();
+				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy (EEEE)",
+						new java.util.Locale("vi", "VN"));
+				for (java.util.Date date = firstDayOfMonth; date.compareTo(lastDayOfMonth) <= 0; date
+						.setDate(date.getDate() + 1)) {
+					String formattedDate = sdf.format(date);
+					daysInMonth.add(formattedDate);
+				}
+
+				java.util.Calendar calendar = java.util.Calendar.getInstance();
+				calendar.setTime(firstDayOfMonth);
+				int startDayOfWeek = calendar.get(java.util.Calendar.DAY_OF_WEEK) - 2; // Số thứ tự của ngày trong tuần (0 - Chủ nhật, 1 - Thứ 2, ..., 6 - Thứ 7)
+
+				// Khởi tạo mảng chứa các thứ tương ứng với từng ô trong bảng
+				String[] weekdays = {"T2", "T3", "T4", "T5", "T6", "T7", "CN"};
+			%>
+
 			<table class="table table-bordered">
 				<thead>
 					<tr class="text-center text-white">
@@ -224,43 +247,31 @@ i.fa.fa-user-circle-o {
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<%
-							java.util.Calendar calendar = java.util.Calendar.getInstance();
-							calendar.set(java.util.Calendar.YEAR, 2023); // Năm 2023
-							calendar.set(java.util.Calendar.MONTH, 5); // Tháng 6 (0-11)
-							calendar.set(java.util.Calendar.DAY_OF_MONTH, 1);
+					<%
+						// In ra danh sách các ngày trong từng cột
+						int numDays = lastDayOfMonth.getDate(); // Số ngày trong tháng
+						System.out.println("numDays $$$$$$$$$ " + numDays);
+						int numWeeks = (int) Math.ceil((startDayOfWeek + numDays) / 7.0); // Số tuần cần để hiển thị hết các ngày
 
-							int lastDayOfMonth = calendar.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
-
-							while (calendar.get(java.util.Calendar.DAY_OF_MONTH) <= lastDayOfMonth) {
-								int dayOfMonth = calendar.get(java.util.Calendar.DAY_OF_MONTH);
-								int month = calendar.get(java.util.Calendar.MONTH) + 1; // Tháng (0-11)
-								int year = calendar.get(java.util.Calendar.YEAR);
-
-								String formattedDate = String.format("%02d/%02d/%04d", dayOfMonth, month, year);
-						%>
-						<td class="text-center" style="padding: 0;"><%=formattedDate%><br>
-							<div class="bg-primary border" style="height: 10px">&nbsp;</div>
-							<div class="bg-primary border" style="height: 10px">&nbsp;</div>
-						</td>
-						<%
-							calendar.add(java.util.Calendar.DAY_OF_MONTH, 1); // Tăng ngày lên 1
-								int dayOfWeek = calendar.get(java.util.Calendar.DAY_OF_WEEK);
-								if (dayOfWeek == java.util.Calendar.SUNDAY
-										&& calendar.get(java.util.Calendar.DAY_OF_MONTH) <= lastDayOfMonth) {
-						%>
-					</tr>
-					<tr>
-						<!-- Kết thúc hàng trước ngày Chủ nhật -->
-						<%
+						for (int i = 0; i < numWeeks; i++) {
+							out.println("<tr>");
+							for (int j = 0; j < 7; j++) {
+								int dayIndex = i * 7 + j + 2 - startDayOfWeek; // Chỉ số của ngày trong danh sách daysInMonth
+								String day = "";
+								if (dayIndex >= 0 && dayIndex < daysInMonth.size()) {
+									day = daysInMonth.get(dayIndex);
+								}
+								out.println("<td>");
+								out.println("<div>" + day + "</div>");
+								out.println("<div class=\"bg-primary border\" style=\"height: 10px\">&nbsp;</div>");
+								out.println("<div class=\"bg-primary border\" style=\"height: 10px\">" + "</div>");
+								out.println("</td>");
 							}
-						%>
-						<%
-							}
-						%>
-					</tr>
+							out.println("</tr>");
+						}
+					%>
 				</tbody>
+
 			</table>
 
 
@@ -303,32 +314,45 @@ $(document).ready(function() {
 
 // Lấy các ngày trong tháng theo máy 
 //Lấy ngày đầu tiên của tháng hiện tại
-var currentDate = new Date();
-var firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+//var currentDate = new Date();
+//var firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
 
 // Lấy ngày cuối cùng của tháng hiện tại
-var lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+//var lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
 
 // Tạo danh sách các ngày trong tháng bao gồm cả thứ
-var daysInMonth = [];
-for (var date = firstDayOfMonth; date <= lastDayOfMonth; date.setDate(date.getDate() + 1)) {
-  var day = ("0" + date.getDate()).slice(-2); // Định dạng số ngày thành "dd"
-  var month = ("0" + (date.getMonth() + 1)).slice(-2); // Định dạng số tháng thành "mm"
-  var year = date.getFullYear(); // Lấy năm hiện tại
-  var weekday = date.toLocaleDateString("vi-VN", { weekday: "long" }); // Lấy tên thứ tiếng Việt
-  var formattedDate = day + "/" + month + "/" + year + " (" + weekday + ")"; // Kết hợp thành "dd/mm/yyyy (Thứ)"
-  daysInMonth.push(formattedDate);
-}
+//var daysInMonth = [];
+//for (var date = firstDayOfMonth; date <= lastDayOfMonth; date.setDate(date.getDate() + 1)) {
+//  var day = ("0" + date.getDate()).slice(-2); // Định dạng số ngày thành "dd"
+//  var month = ("0" + (date.getMonth() + 1)).slice(-2); // Định dạng số tháng thành "mm"
+//  var year = date.getFullYear(); // Lấy năm hiện tại
+//  var weekday = date.toLocaleDateString("vi-VN", { weekday: "long" }); // Lấy tên thứ tiếng Việt
+//  var formattedDate = day + "/" + month + "/" + year + " (" + weekday + ")"; // Kết hợp thành "dd/mm/yyyy (Thứ)"
+//  daysInMonth.push(formattedDate);
+//}
 
 // In ra danh sách các ngày trong tháng bao gồm cả thứ
-console.log(daysInMonth);
-
-
-
-
-
+//console.log(daysInMonth);
 
 </script>
+
+
+<script>
+  // Lấy thẻ input theo id
+  var input = document.getElementById('year');
+
+  // Gắn sự kiện click vào thẻ input
+  input.addEventListener('click', function(event) {
+    // Lấy giá trị của input khi người dùng click vào nó
+    var value = event.target.value;
+
+    // In giá trị của input ra console
+    console.log(value);
+
+    // Hoặc làm bất kỳ thao tác nào khác với giá trị của input ở đây
+  });
+</script>
+
 
 <script>
 	function Confirm(title, msg, okButton, cancelButton, userId) { /*change*/

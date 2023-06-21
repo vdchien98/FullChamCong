@@ -39,32 +39,7 @@
 <@liferay.control_menu />
 
 <div class="container-fluid position-relative" id="wrapper">
-<#-- Đây là một comment trong FTL 
-	<header id="banner" role="banner">
-		<div id="heading">
-			<div aria-level="1" class="site-title" role="heading">
-				<a class="${logo_css_class}" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
-					<img alt="${logo_description}" height="${site_logo_height}" src="${site_logo}" width="${site_logo_width}" />
-				</a>
 
-				<#if show_site_name>
-					<span class="site-name" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
-						${site_name}
-					</span>
-				</#if>
-			</div>
-		</div>
-
-		<#if !is_signed_in>
-			<a data-redirect="${is_login_redirect_required?string}" href="${sign_in_url}" id="sign-in" rel="nofollow">${sign_in_text}</a>
-		</#if>
-
-		<#if has_navigation && is_setup_complete>
-			<#include "${full_templates_path}/navigation.ftl" />
-		</#if>
-	</header>
-	
--->
 <section id="sidebar">
 		<a href="#" class="brand">
 			<span class="text">Chấm Công</span>
@@ -141,28 +116,6 @@
 			</li>
 		</ul>
 	</section>
-	<#-- 
-	
-		<section id="content">
-		<main>
-			<div class="head-title">
-				<div class="left">
-					<h1>Dashboard</h1>
-					<ul class="breadcrumb">
-						<li><i class='bx bx-chevron-right' ></i></li>
-						<li>
-							<a class="active" href="#">Home</a>
-						</li>
-						<li>
-							<a class="active" href="#"></a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</main>
-		
-	</section>
-	 -->
 	<section id="content">
 		<h2 class="hide-accessible sr-only" role="heading" aria-level="1">${htmlUtil.escape(the_title)}</h2>
 
