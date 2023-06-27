@@ -78,12 +78,12 @@ public interface GioLamLocalService
 	public GioLam addGioLam(GioLam gioLam);
 
 	public GioLam addGioLam(
-			long user_id, Date ngaylam, String ip, Date check_in_sang,
-			Date check_out_sang, int di_muon_sang, int ve_som_sang,
-			int gio_cham_cong_sang, Date check_in_chieu, Date check_out_chieu,
-			int di_muon_chieu, int ve_som_chieu, int gio_cham_cong_chieu,
-			Date check_in_toi, Date check_out_toi, int di_muon_toi,
-			int ve_som_toi, float diem, int trangthai,
+			long user_id, Date ngaylam, String ip, String check_in_sang,
+			String check_out_sang, int di_muon_sang, int ve_som_sang,
+			int gio_cham_cong_sang, String check_in_chieu,
+			String check_out_chieu, int di_muon_chieu, int ve_som_chieu,
+			int gio_cham_cong_chieu, String check_in_toi, String check_out_toi,
+			int di_muon_toi, int ve_som_toi, float diem, int trangthai,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 

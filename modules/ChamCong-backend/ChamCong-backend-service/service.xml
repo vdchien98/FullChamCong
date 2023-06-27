@@ -148,18 +148,18 @@
 		<column type="long" name="user_id"></column>
 		<column type="Date" name="ngay_lam"></column>
 		<column type="String" name="ip"></column>
-		<column type="Date" name="check_in_sang"></column>
-		<column type="Date" name="check_out_sang"></column>
+		<column type="String" name="check_in_sang"></column>
+		<column type="String" name="check_out_sang"></column>
 		<column type="int" name="di_muon_sang"></column>
 		<column type="int" name="ve_som_sang"></column>
 		<column type="int" name="gio_cham_cong_sang"></column>
-		<column type="Date" name="check_in_chieu"></column>
-		<column type="Date" name="check_out_chieu"></column>
+		<column type="String" name="check_in_chieu"></column>
+		<column type="String" name="check_out_chieu"></column>
 		<column type="int" name="di_muon_chieu"></column>
 		<column type="int" name="ve_som_chieu"></column>
 		<column type="int" name="gio_cham_cong_chieu"></column>
-		<column type="Date" name="check_in_toi"></column>
-		<column type="Date" name="check_out_toi"></column>
+		<column type="String" name="check_in_toi"></column>
+		<column type="String" name="check_out_toi"></column>
 		<column type="int" name="di_muon_toi"></column>
 		<column type="int" name="ve_som_toi"></column>
 		<column type="double" name="diem"></column>

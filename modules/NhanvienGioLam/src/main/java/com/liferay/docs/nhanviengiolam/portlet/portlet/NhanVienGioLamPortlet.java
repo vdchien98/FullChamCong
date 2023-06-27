@@ -3,6 +3,7 @@ package com.liferay.docs.nhanviengiolam.portlet.portlet;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.liferay.docs.chamcong.model.Calamviec;
+import com.liferay.docs.chamcong.model.GioLam;
 import com.liferay.docs.chamcong.model.Users;
 import com.liferay.docs.chamcong.service.CalamviecLocalServiceUtil;
 import com.liferay.docs.chamcong.service.GioLamLocalServiceUtil;
@@ -120,7 +121,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 	public void sendMaXacThucToZalo(String message, String zalo_id) throws IOException, PortletException {
 		// System.out.println("da vao dc sendMaXacThucToZalo"+ message);
 
-		// getAccessTokenZaloNew();
+//		 getAccessTokenZaloNew();
 
 		JsonObject user_id_info = getInfoZalo(zalo_id);
 		System.out.println("user_id_info" + user_id_info);
@@ -363,7 +364,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
 
 			// Chuẩn bị dữ liệu gửi đi
-			String data = "refresh_token=xqdVqLa7Ud_JQkAzCJOc7Un3sByE7rCwYa3BZG4dKGU1Nk6TEJTy9lPJX8OgAdubmtNzcbCBL1JEMF-SI29QAyPFmR0d8Zu4mc_7foqrHnIzJkcR3GLmCy1iXUmgG4HuY5VMYYbqS7xH9-A1P71w3lihclS3OYnglHYwabrBGHQe7CwoCXf_vrm3j7ZvQ2bOYauEzGKKfY-3C3oC4sYXEPrVIgru4wmwd55XqcfDnph1HKgLNbac_pH_Ta0fGcW"
+			String data = "refresh_token=TN6Os7FvOmv9KgMq6yW_R7PxdxOauKfB47YCX2lPI74TOg6G4SPYKsvjoPCzuMbFPtcnY4V1J7vgLBY8MkrLR5r4aznw-maMAt6fo7BhTZ1pQvhsMDrvCqyhW9O2qW1y2WNWsntBBbeJHlZGNk8w8NHyXA12-6n5I56k_nR62GDJLzZVUPStdqUkedXI0s4ChjoIsP50P7kdeg2WXpnZRRdDre7iHsvkkCFz_luP1MxbrzQvNbacJ_8X3chNMna"
 					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
 
 			// Gửi dữ liệu
@@ -460,7 +461,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		try {
 			// tao ma_xac_nhan va luu vao data
 			Users user = UsersLocalServiceUtil.getUsers(IdUser);
-			System.out.println("*****************"+user);
+			System.out.println("*****************" + user);
 			int id = user.getId();
 			System.out.println("id " + id);
 			long user_id = user.getUserId();
@@ -468,7 +469,8 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			System.out.println("ma xac nhan " + user.getMa_xac_nhan());
 			if (user.getMa_xac_nhan().equals(popupCapchaValue)) {
 				LocalDate currentDate = LocalDate.now();
-				System.out.println("Ngay hien tai: " + currentDate);
+				Date dateNgayHienTai = Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+				System.out.println("Ngay hien tai: " + dateNgayHienTai);
 				// Lấy địa chỉ IP của thiết bị
 				HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(request);
 				String ipAddress = httpServletRequest.getRemoteAddr();
@@ -480,13 +482,34 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 				String formattedTime = localTime.format(formatter);
 				System.out.println("Gio, phut va giay hien tai theo mui gio +7: " + formattedTime);
+
+				// Giolam user = UsersLocalServiceUtil.getUsers(id);
+
+				List<GioLam> gioLamList = GioLamLocalServiceUtil.getGioLams(-1, -1);
+                
+				GioLamLocalServiceUtil.addGioLam(user_id, dateNgayHienTai, ipAddress, formattedTime, formattedTime, 0,
+						0, 0, formattedTime, formattedTime, 0, 0, 0, formattedTime, formattedTime, 0, 0, 1, 1,
+						serviceContext);
+
+				for (GioLam gioLam : gioLamList) {
+					Date checkNgayLam = gioLam.getNgay_lam();
+					System.out.println("check ngay lam "+ checkNgayLam);
+					int comparison = checkNgayLam.compareTo(dateNgayHienTai);
+				    if (gioLam.getUser_id() == user_id && comparison == 0) {
+				        System.out.println("1111111111111111111111 " + gioLam); 
+				    }else {
+				    	System.out.println("chua cham cong vao thoi gian mong muon ");
+				    	GioLamLocalServiceUtil.addGioLam(user_id, dateNgayHienTai, ipAddress, formattedTime, formattedTime, 0,
+								0, 0, formattedTime, formattedTime, 0, 0, 0, formattedTime, formattedTime, 0, 0, 1, 1,
+								serviceContext);
+				    	
+				    }
+				}
+
 				
-//				GioLamLocalServiceUtil.addGioLam(user_id, currentDate, ipAddress, check_in_sang, 
-//						 check_out_sang, di_muon_sang, ve_som_sang, gio_cham_cong_sang, 
-//						 formattedTime, check_out_chieu, di_muon_chieu, ve_som_chieu, 
-//						 gio_cham_cong_chieu, check_in_toi, check_out_toi, 
-//						 di_muon_toi, ve_som_toi, diem, trangthai, serviceContext); 
-			   		
+				
+				
+				
 			} else {
 				System.out.println("DANG NHAP KHONG THANH CONG");
 			}
@@ -519,83 +542,80 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 
 			String ngayThangNam = dateFormat.format(calendar.getTime());
 			String gioPhutGiay = timeFormat.format(calendar.getTime());
-			System.out.println("ngayThangNam " + ngayThangNam);
-			System.out.println("gioPhutGiay " + gioPhutGiay);
+//			System.out.println("ngayThangNam " + ngayThangNam);
+//			System.out.println("gioPhutGiay " + gioPhutGiay);
 			// System.out.println("userId viewGioLam "+userId);
 			renderRequest.setAttribute("ngayThangNam", ngayThangNam);
 			renderRequest.setAttribute("gioPhutGiay", gioPhutGiay);
 
 			Calamviec calamviec = CalamviecLocalServiceUtil.getCalamviec(1);
-			System.out.println("calamviec ****" + calamviec);
+//			System.out.println("calamviec ****" + calamviec);
 //			String gioVaoSang = calamviec.getGio_vao_sang();
 //			String gioRaSang = calamviec.getGio_ra_sang();
 //			String gioVaoChieu = calamviec.getGio_vao_chieu();
 //			String gioRaChieu = calamviec.getGio_ra_chieu();
-			
+
 			String gioVaoSangFormatted = calamviec.getGio_vao_sang();
 			LocalTime gioVaoSangTime1 = LocalTime.parse(gioVaoSangFormatted);
 
-			String gioRaSangFormatted  = calamviec.getGio_ra_sang();
+			String gioRaSangFormatted = calamviec.getGio_ra_sang();
 			LocalTime gioRaSangTime1 = LocalTime.parse(gioRaSangFormatted);
 
-			String gioVaoChieuFormatted  = calamviec.getGio_vao_chieu();
+			String gioVaoChieuFormatted = calamviec.getGio_vao_chieu();
 			LocalTime gioVaoChieuTime1 = LocalTime.parse(gioVaoChieuFormatted);
 
-			String gioRaChieuFormatted  = calamviec.getGio_ra_chieu();
+			String gioRaChieuFormatted = calamviec.getGio_ra_chieu();
 			LocalTime gioRaChieuTime1 = LocalTime.parse(gioRaChieuFormatted);
-			
-			
-			
+
 			String gioVaoSang = gioVaoSangTime1.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 			String gioRaSang = gioRaSangTime1.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 			String gioVaoChieu = gioVaoChieuTime1.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 			String gioRaChieu = gioRaChieuTime1.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-			
 
 			int vaoTruocSang = calamviec.getVao_truoc_sang();
 			int raSauSang = calamviec.getRa_sau_sang();
 			int vaoTruocChieu = calamviec.getVao_truoc_chieu();
 			int raSauChieu = calamviec.getRa_sau_chieu();
-
-			System.out.println("gioVaoSang  " + gioVaoSang);
-			System.out.println("gioRaSang  " + gioRaSang);
-			System.out.println("gioVaoChieu  " + gioVaoChieu);
-			System.out.println("gioRaChieu  " + gioRaChieu);
-
-			System.out.println("vaoTruocSang  " + vaoTruocSang);
-			System.out.println("raSauSang  " + raSauSang);
-			System.out.println("vaoTruocChieu  " + vaoTruocChieu);
-			System.out.println("raSauChieu  " + raSauChieu);
+//
+//			System.out.println("gioVaoSang  " + gioVaoSang);
+//			System.out.println("gioRaSang  " + gioRaSang);
+//			System.out.println("gioVaoChieu  " + gioVaoChieu);
+//			System.out.println("gioRaChieu  " + gioRaChieu);
+//
+//			System.out.println("vaoTruocSang  " + vaoTruocSang);
+//			System.out.println("raSauSang  " + raSauSang);
+//			System.out.println("vaoTruocChieu  " + vaoTruocChieu);
+//			System.out.println("raSauChieu  " + raSauChieu);
 
 			LocalTime gioVaoSangTime = LocalTime.parse(gioVaoSang);
 			LocalTime gioVaoSangTruoc = gioVaoSangTime.minusMinutes(vaoTruocSang);
 			DateTimeFormatter timeFormatter1 = DateTimeFormatter.ofPattern("HH:mm:ss");
 			String gioVaoSangTruocStr = gioVaoSangTruoc.format(timeFormatter1);
-			System.out.println("gioVaoSangTruoc  " + gioVaoSangTruocStr);
+			// System.out.println("gioVaoSangTruoc " + gioVaoSangTruocStr);
 
 			LocalTime gioRaSangTime = LocalTime.parse(gioRaSang);
 			LocalTime gioRaSangSau = gioRaSangTime.plusMinutes(raSauSang);
 			DateTimeFormatter timeFormatter2 = DateTimeFormatter.ofPattern("HH:mm:ss");
 			String gioRaSangSaucStr = gioRaSangSau.format(timeFormatter2);
-			System.out.println("gioRaSangSau  " + gioRaSangSaucStr);
+//			System.out.println("gioRaSangSau  " + gioRaSangSaucStr);
 
 			LocalTime gioVaoChieuTime = LocalTime.parse(gioVaoChieu);
 			LocalTime gioVaoChieuTruoc = gioVaoChieuTime.minusMinutes(vaoTruocChieu);
 			DateTimeFormatter timeFormatter3 = DateTimeFormatter.ofPattern("HH:mm:ss");
 			String gioVaoChieuTruocStr = gioVaoChieuTruoc.format(timeFormatter3);
-			System.out.println("gioVaoChieuTruocStr  " + gioVaoChieuTruocStr);
+//			System.out.println("gioVaoChieuTruocStr  " + gioVaoChieuTruocStr);
 
 			LocalTime gioRaChieuTime = LocalTime.parse(gioRaChieu);
 			LocalTime gioRaChieuSau = gioRaChieuTime.plusMinutes(raSauChieu);
 			DateTimeFormatter timeFormatter4 = DateTimeFormatter.ofPattern("HH:mm:ss");
 			String gioRaChieuSaucStr = gioRaChieuSau.format(timeFormatter4);
-			System.out.println("gioRaChieuSaucStr  " + gioRaChieuSaucStr);
+//			System.out.println("gioRaChieuSaucStr  " + gioRaChieuSaucStr);
 
 			LocalTime checkGioPhutGiaysangTime = LocalTime.parse(gioPhutGiay);
 			String hienthichamcong = checkGioPhutGiay(checkGioPhutGiaysangTime, gioVaoSangTruocStr, gioVaoSang,
 					gioRaSang, gioRaSangSaucStr, gioVaoChieuTruocStr, gioVaoChieu, gioRaChieu, gioRaChieuSaucStr);
 			renderRequest.setAttribute("hienthichamcong", hienthichamcong);
-			System.out.println(hienthichamcong + "  *************"); // In ra kết quả true hoặc false
+//			System.out.println(hienthichamcong + "  *************"); // In ra kết quả true hoặc false
 
 		} catch (PortalException e) {
 			e.printStackTrace();
@@ -607,10 +627,9 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 	public String checkGioPhutGiay(LocalTime gioPhutGiay, String gioVaoSangTruocStr, String gioVaoSang,
 			String gioRaSang, String gioRaSangSaucStr, String gioVaoChieuTruocStr, String gioVaoChieu,
 			String gioRaChieu, String gioRaChieuSaucStr) {
-		
-		System.out.println("gioVaoSangTruocStr render ##### "+ gioVaoSangTruocStr);
-		
-		
+
+///		System.out.println("gioVaoSangTruocStr render ##### " + gioVaoSangTruocStr);
+
 		LocalTime gioVaoSangTruoc45Phut = LocalTime.parse(gioVaoSangTruocStr);
 		LocalTime gioVaoSangDungGio = LocalTime.parse(gioVaoSang);
 		LocalTime gioRaSangSau30Phut = LocalTime.parse(gioRaSangSaucStr);
@@ -621,7 +640,6 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		LocalTime gioRaChieuSau80Phut = LocalTime.parse(gioRaChieuSaucStr);
 		LocalTime gioRaChieuDungGio = LocalTime.parse(gioRaChieu);
 
-		
 		// Kiểm tra xem gioPhutGiay có nằm trong khoảng từ gioVaoSangTruoc đến
 		// gioVaoSangSau không
 		if (gioPhutGiay.isAfter(gioVaoSangTruoc45Phut) && gioPhutGiay.isBefore(gioVaoSangDungGio)) {

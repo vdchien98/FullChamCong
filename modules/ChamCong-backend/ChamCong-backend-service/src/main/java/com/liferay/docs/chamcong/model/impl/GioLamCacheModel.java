@@ -132,54 +132,54 @@ public class GioLamCacheModel implements CacheModel<GioLam>, Externalizable {
 			gioLamImpl.setIp(ip);
 		}
 
-		if (check_in_sang == Long.MIN_VALUE) {
-			gioLamImpl.setCheck_in_sang(null);
+		if (check_in_sang == null) {
+			gioLamImpl.setCheck_in_sang("");
 		}
 		else {
-			gioLamImpl.setCheck_in_sang(new Date(check_in_sang));
+			gioLamImpl.setCheck_in_sang(check_in_sang);
 		}
 
-		if (check_out_sang == Long.MIN_VALUE) {
-			gioLamImpl.setCheck_out_sang(null);
+		if (check_out_sang == null) {
+			gioLamImpl.setCheck_out_sang("");
 		}
 		else {
-			gioLamImpl.setCheck_out_sang(new Date(check_out_sang));
+			gioLamImpl.setCheck_out_sang(check_out_sang);
 		}
 
 		gioLamImpl.setDi_muon_sang(di_muon_sang);
 		gioLamImpl.setVe_som_sang(ve_som_sang);
 		gioLamImpl.setGio_cham_cong_sang(gio_cham_cong_sang);
 
-		if (check_in_chieu == Long.MIN_VALUE) {
-			gioLamImpl.setCheck_in_chieu(null);
+		if (check_in_chieu == null) {
+			gioLamImpl.setCheck_in_chieu("");
 		}
 		else {
-			gioLamImpl.setCheck_in_chieu(new Date(check_in_chieu));
+			gioLamImpl.setCheck_in_chieu(check_in_chieu);
 		}
 
-		if (check_out_chieu == Long.MIN_VALUE) {
-			gioLamImpl.setCheck_out_chieu(null);
+		if (check_out_chieu == null) {
+			gioLamImpl.setCheck_out_chieu("");
 		}
 		else {
-			gioLamImpl.setCheck_out_chieu(new Date(check_out_chieu));
+			gioLamImpl.setCheck_out_chieu(check_out_chieu);
 		}
 
 		gioLamImpl.setDi_muon_chieu(di_muon_chieu);
 		gioLamImpl.setVe_som_chieu(ve_som_chieu);
 		gioLamImpl.setGio_cham_cong_chieu(gio_cham_cong_chieu);
 
-		if (check_in_toi == Long.MIN_VALUE) {
-			gioLamImpl.setCheck_in_toi(null);
+		if (check_in_toi == null) {
+			gioLamImpl.setCheck_in_toi("");
 		}
 		else {
-			gioLamImpl.setCheck_in_toi(new Date(check_in_toi));
+			gioLamImpl.setCheck_in_toi(check_in_toi);
 		}
 
-		if (check_out_toi == Long.MIN_VALUE) {
-			gioLamImpl.setCheck_out_toi(null);
+		if (check_out_toi == null) {
+			gioLamImpl.setCheck_out_toi("");
 		}
 		else {
-			gioLamImpl.setCheck_out_toi(new Date(check_out_toi));
+			gioLamImpl.setCheck_out_toi(check_out_toi);
 		}
 
 		gioLamImpl.setDi_muon_toi(di_muon_toi);
@@ -213,24 +213,24 @@ public class GioLamCacheModel implements CacheModel<GioLam>, Externalizable {
 		user_id = objectInput.readLong();
 		ngay_lam = objectInput.readLong();
 		ip = objectInput.readUTF();
-		check_in_sang = objectInput.readLong();
-		check_out_sang = objectInput.readLong();
+		check_in_sang = objectInput.readUTF();
+		check_out_sang = objectInput.readUTF();
 
 		di_muon_sang = objectInput.readInt();
 
 		ve_som_sang = objectInput.readInt();
 
 		gio_cham_cong_sang = objectInput.readInt();
-		check_in_chieu = objectInput.readLong();
-		check_out_chieu = objectInput.readLong();
+		check_in_chieu = objectInput.readUTF();
+		check_out_chieu = objectInput.readUTF();
 
 		di_muon_chieu = objectInput.readInt();
 
 		ve_som_chieu = objectInput.readInt();
 
 		gio_cham_cong_chieu = objectInput.readInt();
-		check_in_toi = objectInput.readLong();
-		check_out_toi = objectInput.readLong();
+		check_in_toi = objectInput.readUTF();
+		check_out_toi = objectInput.readUTF();
 
 		di_muon_toi = objectInput.readInt();
 
@@ -257,24 +257,59 @@ public class GioLamCacheModel implements CacheModel<GioLam>, Externalizable {
 			objectOutput.writeUTF(ip);
 		}
 
-		objectOutput.writeLong(check_in_sang);
-		objectOutput.writeLong(check_out_sang);
+		if (check_in_sang == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(check_in_sang);
+		}
+
+		if (check_out_sang == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(check_out_sang);
+		}
 
 		objectOutput.writeInt(di_muon_sang);
 
 		objectOutput.writeInt(ve_som_sang);
 
 		objectOutput.writeInt(gio_cham_cong_sang);
-		objectOutput.writeLong(check_in_chieu);
-		objectOutput.writeLong(check_out_chieu);
+
+		if (check_in_chieu == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(check_in_chieu);
+		}
+
+		if (check_out_chieu == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(check_out_chieu);
+		}
 
 		objectOutput.writeInt(di_muon_chieu);
 
 		objectOutput.writeInt(ve_som_chieu);
 
 		objectOutput.writeInt(gio_cham_cong_chieu);
-		objectOutput.writeLong(check_in_toi);
-		objectOutput.writeLong(check_out_toi);
+
+		if (check_in_toi == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(check_in_toi);
+		}
+
+		if (check_out_toi == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(check_out_toi);
+		}
 
 		objectOutput.writeInt(di_muon_toi);
 
@@ -291,18 +326,18 @@ public class GioLamCacheModel implements CacheModel<GioLam>, Externalizable {
 	public long user_id;
 	public long ngay_lam;
 	public String ip;
-	public long check_in_sang;
-	public long check_out_sang;
+	public String check_in_sang;
+	public String check_out_sang;
 	public int di_muon_sang;
 	public int ve_som_sang;
 	public int gio_cham_cong_sang;
-	public long check_in_chieu;
-	public long check_out_chieu;
+	public String check_in_chieu;
+	public String check_out_chieu;
 	public int di_muon_chieu;
 	public int ve_som_chieu;
 	public int gio_cham_cong_chieu;
-	public long check_in_toi;
-	public long check_out_toi;
+	public String check_in_toi;
+	public String check_out_toi;
 	public int di_muon_toi;
 	public int ve_som_toi;
 	public double diem;

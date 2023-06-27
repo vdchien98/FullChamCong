@@ -32,18 +32,18 @@
 		<field name="user_id" type="long" />
 		<field name="ngay_lam" type="Date" />
 		<field name="ip" type="String" />
-		<field name="check_in_sang" type="Date" />
-		<field name="check_out_sang" type="Date" />
+		<field name="check_in_sang" type="String" />
+		<field name="check_out_sang" type="String" />
 		<field name="di_muon_sang" type="int" />
 		<field name="ve_som_sang" type="int" />
 		<field name="gio_cham_cong_sang" type="int" />
-		<field name="check_in_chieu" type="Date" />
-		<field name="check_out_chieu" type="Date" />
+		<field name="check_in_chieu" type="String" />
+		<field name="check_out_chieu" type="String" />
 		<field name="di_muon_chieu" type="int" />
 		<field name="ve_som_chieu" type="int" />
 		<field name="gio_cham_cong_chieu" type="int" />
-		<field name="check_in_toi" type="Date" />
-		<field name="check_out_toi" type="Date" />
+		<field name="check_in_toi" type="String" />
+		<field name="check_out_toi" type="String" />
 		<field name="di_muon_toi" type="int" />
 		<field name="ve_som_toi" type="int" />
 		<field name="diem" type="double" />

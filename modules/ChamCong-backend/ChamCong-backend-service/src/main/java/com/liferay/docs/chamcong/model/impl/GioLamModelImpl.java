@@ -67,16 +67,16 @@ public class GioLamModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"id_", Types.INTEGER}, {"user_id", Types.BIGINT},
 		{"ngay_lam", Types.TIMESTAMP}, {"ip", Types.VARCHAR},
-		{"check_in_sang", Types.TIMESTAMP}, {"check_out_sang", Types.TIMESTAMP},
+		{"check_in_sang", Types.VARCHAR}, {"check_out_sang", Types.VARCHAR},
 		{"di_muon_sang", Types.INTEGER}, {"ve_som_sang", Types.INTEGER},
 		{"gio_cham_cong_sang", Types.INTEGER},
-		{"check_in_chieu", Types.TIMESTAMP},
-		{"check_out_chieu", Types.TIMESTAMP}, {"di_muon_chieu", Types.INTEGER},
-		{"ve_som_chieu", Types.INTEGER}, {"gio_cham_cong_chieu", Types.INTEGER},
-		{"check_in_toi", Types.TIMESTAMP}, {"check_out_toi", Types.TIMESTAMP},
-		{"di_muon_toi", Types.INTEGER}, {"ve_som_toi", Types.INTEGER},
-		{"diem", Types.DOUBLE}, {"trangthai", Types.INTEGER},
-		{"created_at", Types.TIMESTAMP}, {"updated_at", Types.TIMESTAMP}
+		{"check_in_chieu", Types.VARCHAR}, {"check_out_chieu", Types.VARCHAR},
+		{"di_muon_chieu", Types.INTEGER}, {"ve_som_chieu", Types.INTEGER},
+		{"gio_cham_cong_chieu", Types.INTEGER}, {"check_in_toi", Types.VARCHAR},
+		{"check_out_toi", Types.VARCHAR}, {"di_muon_toi", Types.INTEGER},
+		{"ve_som_toi", Types.INTEGER}, {"diem", Types.DOUBLE},
+		{"trangthai", Types.INTEGER}, {"created_at", Types.TIMESTAMP},
+		{"updated_at", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -87,18 +87,18 @@ public class GioLamModelImpl
 		TABLE_COLUMNS_MAP.put("user_id", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ngay_lam", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("ip", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("check_in_sang", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("check_out_sang", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("check_in_sang", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("check_out_sang", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("di_muon_sang", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("ve_som_sang", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("gio_cham_cong_sang", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("check_in_chieu", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("check_out_chieu", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("check_in_chieu", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("check_out_chieu", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("di_muon_chieu", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("ve_som_chieu", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("gio_cham_cong_chieu", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("check_in_toi", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("check_out_toi", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("check_in_toi", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("check_out_toi", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("di_muon_toi", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("ve_som_toi", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("diem", Types.DOUBLE);
@@ -108,7 +108,7 @@ public class GioLamModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table _GioLam (id_ INTEGER not null primary key,user_id LONG,ngay_lam DATE null,ip VARCHAR(75) null,check_in_sang DATE null,check_out_sang DATE null,di_muon_sang INTEGER,ve_som_sang INTEGER,gio_cham_cong_sang INTEGER,check_in_chieu DATE null,check_out_chieu DATE null,di_muon_chieu INTEGER,ve_som_chieu INTEGER,gio_cham_cong_chieu INTEGER,check_in_toi DATE null,check_out_toi DATE null,di_muon_toi INTEGER,ve_som_toi INTEGER,diem DOUBLE,trangthai INTEGER,created_at DATE null,updated_at DATE null)";
+		"create table _GioLam (id_ INTEGER not null primary key,user_id LONG,ngay_lam DATE null,ip VARCHAR(75) null,check_in_sang VARCHAR(75) null,check_out_sang VARCHAR(75) null,di_muon_sang INTEGER,ve_som_sang INTEGER,gio_cham_cong_sang INTEGER,check_in_chieu VARCHAR(75) null,check_out_chieu VARCHAR(75) null,di_muon_chieu INTEGER,ve_som_chieu INTEGER,gio_cham_cong_chieu INTEGER,check_in_toi VARCHAR(75) null,check_out_toi VARCHAR(75) null,di_muon_toi INTEGER,ve_som_toi INTEGER,diem DOUBLE,trangthai INTEGER,created_at DATE null,updated_at DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table _GioLam";
 
@@ -249,12 +249,12 @@ public class GioLamModelImpl
 		attributeGetterFunctions.put("check_in_sang", GioLam::getCheck_in_sang);
 		attributeSetterBiConsumers.put(
 			"check_in_sang",
-			(BiConsumer<GioLam, Date>)GioLam::setCheck_in_sang);
+			(BiConsumer<GioLam, String>)GioLam::setCheck_in_sang);
 		attributeGetterFunctions.put(
 			"check_out_sang", GioLam::getCheck_out_sang);
 		attributeSetterBiConsumers.put(
 			"check_out_sang",
-			(BiConsumer<GioLam, Date>)GioLam::setCheck_out_sang);
+			(BiConsumer<GioLam, String>)GioLam::setCheck_out_sang);
 		attributeGetterFunctions.put("di_muon_sang", GioLam::getDi_muon_sang);
 		attributeSetterBiConsumers.put(
 			"di_muon_sang",
@@ -271,12 +271,12 @@ public class GioLamModelImpl
 			"check_in_chieu", GioLam::getCheck_in_chieu);
 		attributeSetterBiConsumers.put(
 			"check_in_chieu",
-			(BiConsumer<GioLam, Date>)GioLam::setCheck_in_chieu);
+			(BiConsumer<GioLam, String>)GioLam::setCheck_in_chieu);
 		attributeGetterFunctions.put(
 			"check_out_chieu", GioLam::getCheck_out_chieu);
 		attributeSetterBiConsumers.put(
 			"check_out_chieu",
-			(BiConsumer<GioLam, Date>)GioLam::setCheck_out_chieu);
+			(BiConsumer<GioLam, String>)GioLam::setCheck_out_chieu);
 		attributeGetterFunctions.put("di_muon_chieu", GioLam::getDi_muon_chieu);
 		attributeSetterBiConsumers.put(
 			"di_muon_chieu",
@@ -292,11 +292,12 @@ public class GioLamModelImpl
 			(BiConsumer<GioLam, Integer>)GioLam::setGio_cham_cong_chieu);
 		attributeGetterFunctions.put("check_in_toi", GioLam::getCheck_in_toi);
 		attributeSetterBiConsumers.put(
-			"check_in_toi", (BiConsumer<GioLam, Date>)GioLam::setCheck_in_toi);
+			"check_in_toi",
+			(BiConsumer<GioLam, String>)GioLam::setCheck_in_toi);
 		attributeGetterFunctions.put("check_out_toi", GioLam::getCheck_out_toi);
 		attributeSetterBiConsumers.put(
 			"check_out_toi",
-			(BiConsumer<GioLam, Date>)GioLam::setCheck_out_toi);
+			(BiConsumer<GioLam, String>)GioLam::setCheck_out_toi);
 		attributeGetterFunctions.put("di_muon_toi", GioLam::getDi_muon_toi);
 		attributeSetterBiConsumers.put(
 			"di_muon_toi", (BiConsumer<GioLam, Integer>)GioLam::setDi_muon_toi);
@@ -399,12 +400,17 @@ public class GioLamModelImpl
 
 	@JSON
 	@Override
-	public Date getCheck_in_sang() {
-		return _check_in_sang;
+	public String getCheck_in_sang() {
+		if (_check_in_sang == null) {
+			return "";
+		}
+		else {
+			return _check_in_sang;
+		}
 	}
 
 	@Override
-	public void setCheck_in_sang(Date check_in_sang) {
+	public void setCheck_in_sang(String check_in_sang) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -414,12 +420,17 @@ public class GioLamModelImpl
 
 	@JSON
 	@Override
-	public Date getCheck_out_sang() {
-		return _check_out_sang;
+	public String getCheck_out_sang() {
+		if (_check_out_sang == null) {
+			return "";
+		}
+		else {
+			return _check_out_sang;
+		}
 	}
 
 	@Override
-	public void setCheck_out_sang(Date check_out_sang) {
+	public void setCheck_out_sang(String check_out_sang) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -474,12 +485,17 @@ public class GioLamModelImpl
 
 	@JSON
 	@Override
-	public Date getCheck_in_chieu() {
-		return _check_in_chieu;
+	public String getCheck_in_chieu() {
+		if (_check_in_chieu == null) {
+			return "";
+		}
+		else {
+			return _check_in_chieu;
+		}
 	}
 
 	@Override
-	public void setCheck_in_chieu(Date check_in_chieu) {
+	public void setCheck_in_chieu(String check_in_chieu) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -489,12 +505,17 @@ public class GioLamModelImpl
 
 	@JSON
 	@Override
-	public Date getCheck_out_chieu() {
-		return _check_out_chieu;
+	public String getCheck_out_chieu() {
+		if (_check_out_chieu == null) {
+			return "";
+		}
+		else {
+			return _check_out_chieu;
+		}
 	}
 
 	@Override
-	public void setCheck_out_chieu(Date check_out_chieu) {
+	public void setCheck_out_chieu(String check_out_chieu) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -549,12 +570,17 @@ public class GioLamModelImpl
 
 	@JSON
 	@Override
-	public Date getCheck_in_toi() {
-		return _check_in_toi;
+	public String getCheck_in_toi() {
+		if (_check_in_toi == null) {
+			return "";
+		}
+		else {
+			return _check_in_toi;
+		}
 	}
 
 	@Override
-	public void setCheck_in_toi(Date check_in_toi) {
+	public void setCheck_in_toi(String check_in_toi) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -564,12 +590,17 @@ public class GioLamModelImpl
 
 	@JSON
 	@Override
-	public Date getCheck_out_toi() {
-		return _check_out_toi;
+	public String getCheck_out_toi() {
+		if (_check_out_toi == null) {
+			return "";
+		}
+		else {
+			return _check_out_toi;
+		}
 	}
 
 	@Override
-	public void setCheck_out_toi(Date check_out_toi) {
+	public void setCheck_out_toi(String check_out_toi) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -747,9 +778,9 @@ public class GioLamModelImpl
 		gioLamImpl.setNgay_lam(this.<Date>getColumnOriginalValue("ngay_lam"));
 		gioLamImpl.setIp(this.<String>getColumnOriginalValue("ip"));
 		gioLamImpl.setCheck_in_sang(
-			this.<Date>getColumnOriginalValue("check_in_sang"));
+			this.<String>getColumnOriginalValue("check_in_sang"));
 		gioLamImpl.setCheck_out_sang(
-			this.<Date>getColumnOriginalValue("check_out_sang"));
+			this.<String>getColumnOriginalValue("check_out_sang"));
 		gioLamImpl.setDi_muon_sang(
 			this.<Integer>getColumnOriginalValue("di_muon_sang"));
 		gioLamImpl.setVe_som_sang(
@@ -757,9 +788,9 @@ public class GioLamModelImpl
 		gioLamImpl.setGio_cham_cong_sang(
 			this.<Integer>getColumnOriginalValue("gio_cham_cong_sang"));
 		gioLamImpl.setCheck_in_chieu(
-			this.<Date>getColumnOriginalValue("check_in_chieu"));
+			this.<String>getColumnOriginalValue("check_in_chieu"));
 		gioLamImpl.setCheck_out_chieu(
-			this.<Date>getColumnOriginalValue("check_out_chieu"));
+			this.<String>getColumnOriginalValue("check_out_chieu"));
 		gioLamImpl.setDi_muon_chieu(
 			this.<Integer>getColumnOriginalValue("di_muon_chieu"));
 		gioLamImpl.setVe_som_chieu(
@@ -767,9 +798,9 @@ public class GioLamModelImpl
 		gioLamImpl.setGio_cham_cong_chieu(
 			this.<Integer>getColumnOriginalValue("gio_cham_cong_chieu"));
 		gioLamImpl.setCheck_in_toi(
-			this.<Date>getColumnOriginalValue("check_in_toi"));
+			this.<String>getColumnOriginalValue("check_in_toi"));
 		gioLamImpl.setCheck_out_toi(
-			this.<Date>getColumnOriginalValue("check_out_toi"));
+			this.<String>getColumnOriginalValue("check_out_toi"));
 		gioLamImpl.setDi_muon_toi(
 			this.<Integer>getColumnOriginalValue("di_muon_toi"));
 		gioLamImpl.setVe_som_toi(
@@ -877,22 +908,20 @@ public class GioLamModelImpl
 			gioLamCacheModel.ip = null;
 		}
 
-		Date check_in_sang = getCheck_in_sang();
+		gioLamCacheModel.check_in_sang = getCheck_in_sang();
 
-		if (check_in_sang != null) {
-			gioLamCacheModel.check_in_sang = check_in_sang.getTime();
-		}
-		else {
-			gioLamCacheModel.check_in_sang = Long.MIN_VALUE;
+		String check_in_sang = gioLamCacheModel.check_in_sang;
+
+		if ((check_in_sang != null) && (check_in_sang.length() == 0)) {
+			gioLamCacheModel.check_in_sang = null;
 		}
 
-		Date check_out_sang = getCheck_out_sang();
+		gioLamCacheModel.check_out_sang = getCheck_out_sang();
 
-		if (check_out_sang != null) {
-			gioLamCacheModel.check_out_sang = check_out_sang.getTime();
-		}
-		else {
-			gioLamCacheModel.check_out_sang = Long.MIN_VALUE;
+		String check_out_sang = gioLamCacheModel.check_out_sang;
+
+		if ((check_out_sang != null) && (check_out_sang.length() == 0)) {
+			gioLamCacheModel.check_out_sang = null;
 		}
 
 		gioLamCacheModel.di_muon_sang = getDi_muon_sang();
@@ -901,22 +930,20 @@ public class GioLamModelImpl
 
 		gioLamCacheModel.gio_cham_cong_sang = getGio_cham_cong_sang();
 
-		Date check_in_chieu = getCheck_in_chieu();
+		gioLamCacheModel.check_in_chieu = getCheck_in_chieu();
 
-		if (check_in_chieu != null) {
-			gioLamCacheModel.check_in_chieu = check_in_chieu.getTime();
-		}
-		else {
-			gioLamCacheModel.check_in_chieu = Long.MIN_VALUE;
+		String check_in_chieu = gioLamCacheModel.check_in_chieu;
+
+		if ((check_in_chieu != null) && (check_in_chieu.length() == 0)) {
+			gioLamCacheModel.check_in_chieu = null;
 		}
 
-		Date check_out_chieu = getCheck_out_chieu();
+		gioLamCacheModel.check_out_chieu = getCheck_out_chieu();
 
-		if (check_out_chieu != null) {
-			gioLamCacheModel.check_out_chieu = check_out_chieu.getTime();
-		}
-		else {
-			gioLamCacheModel.check_out_chieu = Long.MIN_VALUE;
+		String check_out_chieu = gioLamCacheModel.check_out_chieu;
+
+		if ((check_out_chieu != null) && (check_out_chieu.length() == 0)) {
+			gioLamCacheModel.check_out_chieu = null;
 		}
 
 		gioLamCacheModel.di_muon_chieu = getDi_muon_chieu();
@@ -925,22 +952,20 @@ public class GioLamModelImpl
 
 		gioLamCacheModel.gio_cham_cong_chieu = getGio_cham_cong_chieu();
 
-		Date check_in_toi = getCheck_in_toi();
+		gioLamCacheModel.check_in_toi = getCheck_in_toi();
 
-		if (check_in_toi != null) {
-			gioLamCacheModel.check_in_toi = check_in_toi.getTime();
-		}
-		else {
-			gioLamCacheModel.check_in_toi = Long.MIN_VALUE;
+		String check_in_toi = gioLamCacheModel.check_in_toi;
+
+		if ((check_in_toi != null) && (check_in_toi.length() == 0)) {
+			gioLamCacheModel.check_in_toi = null;
 		}
 
-		Date check_out_toi = getCheck_out_toi();
+		gioLamCacheModel.check_out_toi = getCheck_out_toi();
 
-		if (check_out_toi != null) {
-			gioLamCacheModel.check_out_toi = check_out_toi.getTime();
-		}
-		else {
-			gioLamCacheModel.check_out_toi = Long.MIN_VALUE;
+		String check_out_toi = gioLamCacheModel.check_out_toi;
+
+		if ((check_out_toi != null) && (check_out_toi.length() == 0)) {
+			gioLamCacheModel.check_out_toi = null;
 		}
 
 		gioLamCacheModel.di_muon_toi = getDi_muon_toi();
@@ -1063,18 +1088,18 @@ public class GioLamModelImpl
 	private long _user_id;
 	private Date _ngay_lam;
 	private String _ip;
-	private Date _check_in_sang;
-	private Date _check_out_sang;
+	private String _check_in_sang;
+	private String _check_out_sang;
 	private int _di_muon_sang;
 	private int _ve_som_sang;
 	private int _gio_cham_cong_sang;
-	private Date _check_in_chieu;
-	private Date _check_out_chieu;
+	private String _check_in_chieu;
+	private String _check_out_chieu;
 	private int _di_muon_chieu;
 	private int _ve_som_chieu;
 	private int _gio_cham_cong_chieu;
-	private Date _check_in_toi;
-	private Date _check_out_toi;
+	private String _check_in_toi;
+	private String _check_out_toi;
 	private int _di_muon_toi;
 	private int _ve_som_toi;
 	private double _diem;

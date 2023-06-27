@@ -40,10 +40,10 @@ public class GioLamTable extends BaseTable<GioLamTable> {
 		"ngay_lam", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<GioLamTable, String> ip = createColumn(
 		"ip", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<GioLamTable, Date> check_in_sang = createColumn(
-		"check_in_sang", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<GioLamTable, Date> check_out_sang = createColumn(
-		"check_out_sang", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<GioLamTable, String> check_in_sang = createColumn(
+		"check_in_sang", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<GioLamTable, String> check_out_sang = createColumn(
+		"check_out_sang", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<GioLamTable, Integer> di_muon_sang = createColumn(
 		"di_muon_sang", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<GioLamTable, Integer> ve_som_sang = createColumn(
@@ -51,10 +51,10 @@ public class GioLamTable extends BaseTable<GioLamTable> {
 	public final Column<GioLamTable, Integer> gio_cham_cong_sang = createColumn(
 		"gio_cham_cong_sang", Integer.class, Types.INTEGER,
 		Column.FLAG_DEFAULT);
-	public final Column<GioLamTable, Date> check_in_chieu = createColumn(
-		"check_in_chieu", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<GioLamTable, Date> check_out_chieu = createColumn(
-		"check_out_chieu", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<GioLamTable, String> check_in_chieu = createColumn(
+		"check_in_chieu", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<GioLamTable, String> check_out_chieu = createColumn(
+		"check_out_chieu", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<GioLamTable, Integer> di_muon_chieu = createColumn(
 		"di_muon_chieu", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<GioLamTable, Integer> ve_som_chieu = createColumn(
@@ -63,10 +63,10 @@ public class GioLamTable extends BaseTable<GioLamTable> {
 		createColumn(
 			"gio_cham_cong_chieu", Integer.class, Types.INTEGER,
 			Column.FLAG_DEFAULT);
-	public final Column<GioLamTable, Date> check_in_toi = createColumn(
-		"check_in_toi", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<GioLamTable, Date> check_out_toi = createColumn(
-		"check_out_toi", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<GioLamTable, String> check_in_toi = createColumn(
+		"check_in_toi", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<GioLamTable, String> check_out_toi = createColumn(
+		"check_out_toi", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<GioLamTable, Integer> di_muon_toi = createColumn(
 		"di_muon_toi", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<GioLamTable, Integer> ve_som_toi = createColumn(

@@ -117,28 +117,30 @@ public interface GioLamModel extends BaseModel<GioLam> {
 	 *
 	 * @return the check_in_sang of this gio lam
 	 */
-	public Date getCheck_in_sang();
+	@AutoEscape
+	public String getCheck_in_sang();
 
 	/**
 	 * Sets the check_in_sang of this gio lam.
 	 *
 	 * @param check_in_sang the check_in_sang of this gio lam
 	 */
-	public void setCheck_in_sang(Date check_in_sang);
+	public void setCheck_in_sang(String check_in_sang);
 
 	/**
 	 * Returns the check_out_sang of this gio lam.
 	 *
 	 * @return the check_out_sang of this gio lam
 	 */
-	public Date getCheck_out_sang();
+	@AutoEscape
+	public String getCheck_out_sang();
 
 	/**
 	 * Sets the check_out_sang of this gio lam.
 	 *
 	 * @param check_out_sang the check_out_sang of this gio lam
 	 */
-	public void setCheck_out_sang(Date check_out_sang);
+	public void setCheck_out_sang(String check_out_sang);
 
 	/**
 	 * Returns the di_muon_sang of this gio lam.
@@ -187,28 +189,30 @@ public interface GioLamModel extends BaseModel<GioLam> {
 	 *
 	 * @return the check_in_chieu of this gio lam
 	 */
-	public Date getCheck_in_chieu();
+	@AutoEscape
+	public String getCheck_in_chieu();
 
 	/**
 	 * Sets the check_in_chieu of this gio lam.
 	 *
 	 * @param check_in_chieu the check_in_chieu of this gio lam
 	 */
-	public void setCheck_in_chieu(Date check_in_chieu);
+	public void setCheck_in_chieu(String check_in_chieu);
 
 	/**
 	 * Returns the check_out_chieu of this gio lam.
 	 *
 	 * @return the check_out_chieu of this gio lam
 	 */
-	public Date getCheck_out_chieu();
+	@AutoEscape
+	public String getCheck_out_chieu();
 
 	/**
 	 * Sets the check_out_chieu of this gio lam.
 	 *
 	 * @param check_out_chieu the check_out_chieu of this gio lam
 	 */
-	public void setCheck_out_chieu(Date check_out_chieu);
+	public void setCheck_out_chieu(String check_out_chieu);
 
 	/**
 	 * Returns the di_muon_chieu of this gio lam.
@@ -257,28 +261,30 @@ public interface GioLamModel extends BaseModel<GioLam> {
 	 *
 	 * @return the check_in_toi of this gio lam
 	 */
-	public Date getCheck_in_toi();
+	@AutoEscape
+	public String getCheck_in_toi();
 
 	/**
 	 * Sets the check_in_toi of this gio lam.
 	 *
 	 * @param check_in_toi the check_in_toi of this gio lam
 	 */
-	public void setCheck_in_toi(Date check_in_toi);
+	public void setCheck_in_toi(String check_in_toi);
 
 	/**
 	 * Returns the check_out_toi of this gio lam.
 	 *
 	 * @return the check_out_toi of this gio lam
 	 */
-	public Date getCheck_out_toi();
+	@AutoEscape
+	public String getCheck_out_toi();
 
 	/**
 	 * Sets the check_out_toi of this gio lam.
 	 *
 	 * @param check_out_toi the check_out_toi of this gio lam
 	 */
-	public void setCheck_out_toi(Date check_out_toi);
+	public void setCheck_out_toi(String check_out_toi);
 
 	/**
 	 * Returns the di_muon_toi of this gio lam.

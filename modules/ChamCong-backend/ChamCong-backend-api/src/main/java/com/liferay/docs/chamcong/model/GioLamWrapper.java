@@ -93,13 +93,13 @@ public class GioLamWrapper
 			setIp(ip);
 		}
 
-		Date check_in_sang = (Date)attributes.get("check_in_sang");
+		String check_in_sang = (String)attributes.get("check_in_sang");
 
 		if (check_in_sang != null) {
 			setCheck_in_sang(check_in_sang);
 		}
 
-		Date check_out_sang = (Date)attributes.get("check_out_sang");
+		String check_out_sang = (String)attributes.get("check_out_sang");
 
 		if (check_out_sang != null) {
 			setCheck_out_sang(check_out_sang);
@@ -124,13 +124,13 @@ public class GioLamWrapper
 			setGio_cham_cong_sang(gio_cham_cong_sang);
 		}
 
-		Date check_in_chieu = (Date)attributes.get("check_in_chieu");
+		String check_in_chieu = (String)attributes.get("check_in_chieu");
 
 		if (check_in_chieu != null) {
 			setCheck_in_chieu(check_in_chieu);
 		}
 
-		Date check_out_chieu = (Date)attributes.get("check_out_chieu");
+		String check_out_chieu = (String)attributes.get("check_out_chieu");
 
 		if (check_out_chieu != null) {
 			setCheck_out_chieu(check_out_chieu);
@@ -155,13 +155,13 @@ public class GioLamWrapper
 			setGio_cham_cong_chieu(gio_cham_cong_chieu);
 		}
 
-		Date check_in_toi = (Date)attributes.get("check_in_toi");
+		String check_in_toi = (String)attributes.get("check_in_toi");
 
 		if (check_in_toi != null) {
 			setCheck_in_toi(check_in_toi);
 		}
 
-		Date check_out_toi = (Date)attributes.get("check_out_toi");
+		String check_out_toi = (String)attributes.get("check_out_toi");
 
 		if (check_out_toi != null) {
 			setCheck_out_toi(check_out_toi);
@@ -215,7 +215,7 @@ public class GioLamWrapper
 	 * @return the check_in_chieu of this gio lam
 	 */
 	@Override
-	public Date getCheck_in_chieu() {
+	public String getCheck_in_chieu() {
 		return model.getCheck_in_chieu();
 	}
 
@@ -225,7 +225,7 @@ public class GioLamWrapper
 	 * @return the check_in_sang of this gio lam
 	 */
 	@Override
-	public Date getCheck_in_sang() {
+	public String getCheck_in_sang() {
 		return model.getCheck_in_sang();
 	}
 
@@ -235,7 +235,7 @@ public class GioLamWrapper
 	 * @return the check_in_toi of this gio lam
 	 */
 	@Override
-	public Date getCheck_in_toi() {
+	public String getCheck_in_toi() {
 		return model.getCheck_in_toi();
 	}
 
@@ -245,7 +245,7 @@ public class GioLamWrapper
 	 * @return the check_out_chieu of this gio lam
 	 */
 	@Override
-	public Date getCheck_out_chieu() {
+	public String getCheck_out_chieu() {
 		return model.getCheck_out_chieu();
 	}
 
@@ -255,7 +255,7 @@ public class GioLamWrapper
 	 * @return the check_out_sang of this gio lam
 	 */
 	@Override
-	public Date getCheck_out_sang() {
+	public String getCheck_out_sang() {
 		return model.getCheck_out_sang();
 	}
 
@@ -265,7 +265,7 @@ public class GioLamWrapper
 	 * @return the check_out_toi of this gio lam
 	 */
 	@Override
-	public Date getCheck_out_toi() {
+	public String getCheck_out_toi() {
 		return model.getCheck_out_toi();
 	}
 
@@ -450,7 +450,7 @@ public class GioLamWrapper
 	 * @param check_in_chieu the check_in_chieu of this gio lam
 	 */
 	@Override
-	public void setCheck_in_chieu(Date check_in_chieu) {
+	public void setCheck_in_chieu(String check_in_chieu) {
 		model.setCheck_in_chieu(check_in_chieu);
 	}
 
@@ -460,7 +460,7 @@ public class GioLamWrapper
 	 * @param check_in_sang the check_in_sang of this gio lam
 	 */
 	@Override
-	public void setCheck_in_sang(Date check_in_sang) {
+	public void setCheck_in_sang(String check_in_sang) {
 		model.setCheck_in_sang(check_in_sang);
 	}
 
@@ -470,7 +470,7 @@ public class GioLamWrapper
 	 * @param check_in_toi the check_in_toi of this gio lam
 	 */
 	@Override
-	public void setCheck_in_toi(Date check_in_toi) {
+	public void setCheck_in_toi(String check_in_toi) {
 		model.setCheck_in_toi(check_in_toi);
 	}
 
@@ -480,7 +480,7 @@ public class GioLamWrapper
 	 * @param check_out_chieu the check_out_chieu of this gio lam
 	 */
 	@Override
-	public void setCheck_out_chieu(Date check_out_chieu) {
+	public void setCheck_out_chieu(String check_out_chieu) {
 		model.setCheck_out_chieu(check_out_chieu);
 	}
 
@@ -490,7 +490,7 @@ public class GioLamWrapper
 	 * @param check_out_sang the check_out_sang of this gio lam
 	 */
 	@Override
-	public void setCheck_out_sang(Date check_out_sang) {
+	public void setCheck_out_sang(String check_out_sang) {
 		model.setCheck_out_sang(check_out_sang);
 	}
 
@@ -500,7 +500,7 @@ public class GioLamWrapper
 	 * @param check_out_toi the check_out_toi of this gio lam
 	 */
 	@Override
-	public void setCheck_out_toi(Date check_out_toi) {
+	public void setCheck_out_toi(String check_out_toi) {
 		model.setCheck_out_toi(check_out_toi);
 	}
 
