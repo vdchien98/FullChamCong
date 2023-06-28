@@ -121,7 +121,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 	public void sendMaXacThucToZalo(String message, String zalo_id) throws IOException, PortletException {
 		// System.out.println("da vao dc sendMaXacThucToZalo"+ message);
 
-//		 getAccessTokenZaloNew();
+		// getAccessTokenZaloNew();
 
 		JsonObject user_id_info = getInfoZalo(zalo_id);
 		System.out.println("user_id_info" + user_id_info);
@@ -364,7 +364,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
 
 			// Chuẩn bị dữ liệu gửi đi
-			String data = "refresh_token=TN6Os7FvOmv9KgMq6yW_R7PxdxOauKfB47YCX2lPI74TOg6G4SPYKsvjoPCzuMbFPtcnY4V1J7vgLBY8MkrLR5r4aznw-maMAt6fo7BhTZ1pQvhsMDrvCqyhW9O2qW1y2WNWsntBBbeJHlZGNk8w8NHyXA12-6n5I56k_nR62GDJLzZVUPStdqUkedXI0s4ChjoIsP50P7kdeg2WXpnZRRdDre7iHsvkkCFz_luP1MxbrzQvNbacJ_8X3chNMna"
+			String data = "refresh_token=ogNveYUcotFsXiJEJvUN4Scl_inmlk8shwpj_d-6xmoYkC_fGf_2P-wzagfHlVDovQdZYpQF-qRAcCUu4ARdNFs3uUz2d_idnPoN-7MEWG2jbxZWGB22FOsoYfHxrSTrWPNo_tpxs6IYjfcBSwcHVR6xg8DfmFfXjEJrq0_ud1om_y3J6flHNe6p6A_hyJ9d1lSK-Sk4Atr7hL3JYSihUIozA-2PppLrGw0N_8VsL6u4mYxEsiuWRracf7de2Jw8ysG"
 					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
 
 			// Gửi dữ liệu
@@ -442,8 +442,10 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			throws IOException, PortletException {
 		System.out.println("so sanh ma zalo");
 		String popupCapchaValue = ParamUtil.getString(request, "popupCapchaValue");
+		int statusHienThiNutValue = ParamUtil.getInteger(request, "statusHienThiNut");
 
 		System.out.println("popupCapchaValue " + popupCapchaValue);
+		System.out.println("statusHienThiNut &&&&&& " + statusHienThiNutValue);
 		response.sendRedirect("/nhanvien/gio-lam");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
@@ -486,30 +488,42 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 				// Giolam user = UsersLocalServiceUtil.getUsers(id);
 
 				List<GioLam> gioLamList = GioLamLocalServiceUtil.getGioLams(-1, -1);
-                
-				GioLamLocalServiceUtil.addGioLam(user_id, dateNgayHienTai, ipAddress, formattedTime, formattedTime, 0,
-						0, 0, formattedTime, formattedTime, 0, 0, 0, formattedTime, formattedTime, 0, 0, 1, 1,
+
+				System.out.println("gioLamList11111111111111111" + gioLamList);
+				GioLamLocalServiceUtil.addGioLam(user_id, dateNgayHienTai, ipAddress, formattedTime, formattedTime,
+						0, 0, 0, formattedTime, formattedTime, 0, 0, 0, formattedTime, formattedTime, 0, 0, 1, 1,
 						serviceContext);
 
-				for (GioLam gioLam : gioLamList) {
-					Date checkNgayLam = gioLam.getNgay_lam();
-					System.out.println("check ngay lam "+ checkNgayLam);
-					int comparison = checkNgayLam.compareTo(dateNgayHienTai);
-				    if (gioLam.getUser_id() == user_id && comparison == 0) {
-				        System.out.println("1111111111111111111111 " + gioLam); 
-				    }else {
-				    	System.out.println("chua cham cong vao thoi gian mong muon ");
-				    	GioLamLocalServiceUtil.addGioLam(user_id, dateNgayHienTai, ipAddress, formattedTime, formattedTime, 0,
-								0, 0, formattedTime, formattedTime, 0, 0, 0, formattedTime, formattedTime, 0, 0, 1, 1,
-								serviceContext);
-				    	
-				    }
-				}
+//				if (gioLamList.isEmpty()) {
+//					System.out.println("Mang gioLamList rong");
+//					
+//					
+//					
+//					
+//				} else {
+//					System.out.println("Mang gioLamList khong rong");
+//				
+//				}
 
-				
-				
-				
-				
+//				GioLamLocalServiceUtil.addGioLam(user_id, dateNgayHienTai, ipAddress, formattedTime, formattedTime, 0,
+//						0, 0, formattedTime, formattedTime, 0, 0, 0, formattedTime, formattedTime, 0, 0, 1, 1,
+//						serviceContext);
+//
+//				for (GioLam gioLam : gioLamList) {
+//					Date checkNgayLam = gioLam.getNgay_lam();
+//					System.out.println("check ngay lam "+ checkNgayLam);
+//					int comparison = checkNgayLam.compareTo(dateNgayHienTai);
+//				    if (gioLam.getUser_id() == user_id && comparison == 0) {
+//				        System.out.println("1111111111111111111111 " + gioLam); 
+//				    }else {
+//				    	System.out.println("chua cham cong vao thoi gian mong muon ");
+//				    	GioLamLocalServiceUtil.addGioLam(user_id, dateNgayHienTai, ipAddress, formattedTime, formattedTime, 0,
+//								0, 0, formattedTime, formattedTime, 0, 0, 0, formattedTime, formattedTime, 0, 0, 1, 1,
+//								serviceContext);
+//				    	
+//				    }
+//				}
+
 			} else {
 				System.out.println("DANG NHAP KHONG THANH CONG");
 			}

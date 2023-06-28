@@ -56,7 +56,7 @@ button.btn.btn-success.btn_chien {
 			if (hienthichamcong.equals("1")) {
 		%>
 		<button id="attendanceButton" type="button"
-			class="btn btn-success btn_chien" onclick="handleAttendanceButton();">
+			class="btn btn-success btn_chien" onclick="handleAttendanceButton(1);">
 			<i class="fas fa-check-square"></i> Chấm công vào sáng
 		</button>
 		<%
@@ -64,21 +64,21 @@ button.btn.btn-success.btn_chien {
 		%>
 
 		<button id="attendanceButton" type="button"
-			class="btn btn-success btn_chien" onclick="handleAttendanceButton();">
+			class="btn btn-success btn_chien" onclick="handleAttendanceButton(2);">
 			<i class="fas fa-check-square"></i> Chấm công ra sáng
 		</button>
 		<%
 			} else if (hienthichamcong.equals("3")) {
 		%>
 		<button id="attendanceButton" type="button"
-			class="btn btn-success btn_chien" onclick="handleAttendanceButton();">
+			class="btn btn-success btn_chien" onclick="handleAttendanceButton(3);">
 			<i class="fas fa-check-square"></i> Chấm công vào chiều
 		</button>
 		<%
 			} else if (hienthichamcong.equals("4")) {
 		%>
 		<button id="attendanceButton" type="button"
-			class="btn btn-success btn_chien" onclick="handleAttendanceButton();">
+			class="btn btn-success btn_chien" onclick="handleAttendanceButton(4);">
 			<i class="fas fa-check-square"></i> Chấm công ra chiều
 		</button>
 		<%
@@ -100,6 +100,8 @@ button.btn.btn-success.btn_chien {
 			action="<%=xacthumazaloActionURL%>" method="POST">
 			<input type="hidden" name="<portlet:namespace />popupCapchaValue"
 				id="popupCapchaValue" value="">
+				<input type="hidden" name="<portlet:namespace />statusHienThiNut"
+				id="statusHienThiNut" value="">
 		</form>
 	</div>
 	<div class="row mb-3 chien">
@@ -242,54 +244,64 @@ $(document).ready(function() {
 	<script>
   
  
-  function handleAttendanceButton() {
+  function handleAttendanceButton(status) {
 	  var button = document.getElementById("attendanceButton");
-	  var buttonText = button.textContent.trim();
+	  console.log("status @@@@@@@@@@@@@@@@@ " + status);
+	 // var button = document.getElementById("attendanceButton");
+	 // var buttonText = button.textContent.trim();
 
-	  switch (buttonText) {
-	    case "Chấm công vào sáng":
-	      attendanceStatus = "vào sáng";
+	  switch (status) {
+	    case 1:
+	      toggleAttendanceButton(2); // Chuyển đổi trạng thái sang 2
 	      break;
-	    case "Chấm công ra sáng":
-	      attendanceStatus = "ra sáng";
+	    case 2:
+	      toggleAttendanceButton(1); // Chuyển đổi trạng thái sang 1
 	      break;
-	    case "Chấm công vào chiều":
-	      attendanceStatus = "vào chiều";
+	    case 3:
+	      toggleAttendanceButton(4); // Chuyển đổi trạng thái sang 4
 	      break;
-	    case "Chấm công ra chiều":
-	      attendanceStatus = "ra chiều";
+	    case 4:
+	      toggleAttendanceButton(3); // Chuyển đổi trạng thái sang 3
 	      break;
 	    default:
-	      attendanceStatus = "";
 	      break;
 	  }
-    sendMaZaloAndConfirmCheckin(${userId});
-    toggleAttendanceButton();
+    sendMaZaloAndConfirmCheckin(${userId}, status);
+    toggleAttendanceButton(status);
+    localStorage.setItem("attendanceButtonStatus", status);
   }
 
-  function toggleAttendanceButton() {
-    var button = document.getElementById("attendanceButton");
-    console.log("button "+ button);
+  function toggleAttendanceButton(status) {
+	  var button = document.getElementById("attendanceButton");
+	  console.log("button " + button);
 
-    if (attendanceStatus === "vào sáng") {
-      button.innerHTML = '<i class="fas fa-check-square"></i> Chấm công ra sáng';
-      attendanceStatus = "ra sáng";
-      button.style.backgroundColor = "orange";
-    } else if (attendanceStatus === "ra sáng") {
-     // button.innerHTML = '<i class="fas fa-check-square"></i> Chấm công vào chiều';
-     // attendanceStatus = "vào chiều";
-        button.style.display = "none"; // Ẩn nút chấm công ra sáng
-    } else if (attendanceStatus === "vào chiều") {
-      button.innerHTML = '<i class="fas fa-check-square"></i> Chấm công ra chiều';
-      attendanceStatus = "ra chiều";
-      button.style.backgroundColor = "orange";
-    } else if (attendanceStatus === "ra chiều") {
-    	 button.style.display = "none"; // Ẩn nút chấm công ra sáng
-    }
-  }
+	  if (status === 1) {
+	    button.innerHTML = '<i class="fas fa-check-square"></i> Chấm công ra sáng';
+	    button.setAttribute("onclick", "handleAttendanceButton(2);");
+	  } else if (status === 2) {
+	    button.innerHTML = '<i class="fas fa-check-square"></i> Chấm công vào chiều';
+	    button.setAttribute("onclick", "handleAttendanceButton(3);");
+	  } else if (status === 3) {
+	    button.innerHTML = '<i class="fas fa-check-square"></i> Chấm công ra chiều';
+	    button.setAttribute("onclick", "handleAttendanceButton(4);");
+	  } else if (status === 4) {
+	    // Không có hành động nào
+	  }
+	}
+  
+  
+  
+  window.addEventListener("load", function () {
+	  // Lấy trạng thái từ localStorage nếu có
+	  var storedStatus = localStorage.getItem("attendanceButtonStatus");
+	  if (storedStatus !== null) {
+	    toggleAttendanceButton(parseInt(storedStatus));
+	  }
+	});
+  
 </script>
 	<script>
-	function Confirm(title, msg, okButton, cancelButton, userId) { /*change*/
+	function Confirm(title, msg, okButton, cancelButton, userId, statusHienThiNut) { /*change*/
 		var $content = "<div class='dialog-ovelay'>"
 				+ "<div class='dialog'><header class='text-center'>"
 				+ " <h3 class='text-white font-weight-bold'> "
@@ -323,7 +335,8 @@ $(document).ready(function() {
 				function(event) {
 					 var popupCapchaValueOne = $('#popup-capcha').val();
 					 console.log("xin chao dang chien *****111222222"+ popupCapchaValueOne);
-					 sosanhmazalo(popupCapchaValueOne);
+					 console.log("statusHienThiNut ########33333333333444444444 "+ statusHienThiNut);
+					 sosanhmazalo(popupCapchaValueOne,statusHienThiNut);
 					$(this).parents('.dialog-ovelay').fadeOut(500, function() {
 						$(this).remove();
 					});
@@ -336,7 +349,8 @@ $(document).ready(function() {
 	}
 
 	
-	function sendMaZaloAndConfirmCheckin(userId) {
+	function sendMaZaloAndConfirmCheckin(userId,statusHienThiNut) {
+		console.log("statusHienThiNut ########33333333333 "+ statusHienThiNut);
 	    sendMaZalo()
 	      .then(function(response) {
 	        // Xử lý phản hồi    từ hàm sendMaZalo nếu cần
@@ -344,7 +358,7 @@ $(document).ready(function() {
 	        // Gọi hàm confirmCheckin
 	      //  confirmCheckin(userId);
 	        setTimeout(function() {
-	            confirmCheckin(userId);
+	            confirmCheckin(userId,statusHienThiNut);
 	          }, 100); // 30000 milliseconds = 30 seconds
 	      })
 	      .catch(function(error) {
@@ -368,22 +382,24 @@ $(document).ready(function() {
 	      });
 	  }
 	  
-		function confirmCheckin(userId) { 
+		function confirmCheckin(userId,statusHienThiNut) { 
 			if (userId != 0) {
 				var title = 'THÔNG BÁO';
 				var msg = 'Bạn có chắc chắn muốn chấm công ?';
 				var okButton = 'OK';
 				var cancelButton = 'Hủy';
 				console.log("userId là " + userId)
-				Confirm(title, msg, okButton, cancelButton, userId);
+				Confirm(title, msg, okButton, cancelButton, userId,statusHienThiNut);
 			}
 		}
 		
 		
 		// Khi thực hiện bước ấn Oki trong ô thông báo 
-		function sosanhmazalo(popupCapchaValueOne) {
+		function sosanhmazalo(popupCapchaValueOne,statusHienThiNutOne) {
 			console.log("xin chao dang chien ***** "+ popupCapchaValueOne);
 			 $('#popupCapchaValue').val(popupCapchaValueOne); 
+			 console.log("xin chao dang chien statusHienThiNutOne ***** "+ statusHienThiNutOne);
+			 $('#statusHienThiNut').val(statusHienThiNutOne); 
 			 $('#check_mazalo').submit(); // Submit form có id là "check_mazalo"
 			 
 			
