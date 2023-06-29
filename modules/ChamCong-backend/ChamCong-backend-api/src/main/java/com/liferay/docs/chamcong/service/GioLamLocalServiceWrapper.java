@@ -52,7 +52,8 @@ public class GioLamLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.docs.chamcong.model.GioLam addGioLam(
+	public void addGioLam(
+			int idGioLam, int trangThaiTonTaiGioLam, int statusHienThiNutValue,
 			long user_id, java.util.Date ngaylam, String ip,
 			String check_in_sang, String check_out_sang, int di_muon_sang,
 			int ve_som_sang, int gio_cham_cong_sang, String check_in_chieu,
@@ -63,8 +64,9 @@ public class GioLamLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException,
 			   com.liferay.portal.kernel.exception.SystemException {
 
-		return _gioLamLocalService.addGioLam(
-			user_id, ngaylam, ip, check_in_sang, check_out_sang, di_muon_sang,
+		_gioLamLocalService.addGioLam(
+			idGioLam, trangThaiTonTaiGioLam, statusHienThiNutValue, user_id,
+			ngaylam, ip, check_in_sang, check_out_sang, di_muon_sang,
 			ve_som_sang, gio_cham_cong_sang, check_in_chieu, check_out_chieu,
 			di_muon_chieu, ve_som_chieu, gio_cham_cong_chieu, check_in_toi,
 			check_out_toi, di_muon_toi, ve_som_toi, diem, trangthai,
@@ -264,6 +266,14 @@ public class GioLamLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _gioLamLocalService.getGioLam(id);
+	}
+
+	@Override
+	public com.liferay.docs.chamcong.model.GioLam getGioLamByUserId(
+			long userId, java.util.Date NgayLam)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _gioLamLocalService.getGioLamByUserId(userId, NgayLam);
 	}
 
 	/**

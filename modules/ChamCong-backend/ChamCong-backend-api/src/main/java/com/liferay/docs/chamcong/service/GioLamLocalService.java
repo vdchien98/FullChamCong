@@ -77,7 +77,8 @@ public interface GioLamLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public GioLam addGioLam(GioLam gioLam);
 
-	public GioLam addGioLam(
+	public void addGioLam(
+			int idGioLam, int trangThaiTonTaiGioLam, int statusHienThiNutValue,
 			long user_id, Date ngaylam, String ip, String check_in_sang,
 			String check_out_sang, int di_muon_sang, int ve_som_sang,
 			int gio_cham_cong_sang, String check_in_chieu,
@@ -223,6 +224,10 @@ public interface GioLamLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public GioLam getGioLam(int id) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public GioLam getGioLamByUserId(long userId, Date NgayLam)
+		throws PortalException;
 
 	/**
 	 * Returns a range of all the gio lams.

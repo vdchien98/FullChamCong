@@ -60,7 +60,8 @@ public class GioLamLocalServiceUtil {
 		return getService().addGioLam(gioLam);
 	}
 
-	public static GioLam addGioLam(
+	public static void addGioLam(
+			int idGioLam, int trangThaiTonTaiGioLam, int statusHienThiNutValue,
 			long user_id, java.util.Date ngaylam, String ip,
 			String check_in_sang, String check_out_sang, int di_muon_sang,
 			int ve_som_sang, int gio_cham_cong_sang, String check_in_chieu,
@@ -70,8 +71,9 @@ public class GioLamLocalServiceUtil {
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		return getService().addGioLam(
-			user_id, ngaylam, ip, check_in_sang, check_out_sang, di_muon_sang,
+		getService().addGioLam(
+			idGioLam, trangThaiTonTaiGioLam, statusHienThiNutValue, user_id,
+			ngaylam, ip, check_in_sang, check_out_sang, di_muon_sang,
 			ve_som_sang, gio_cham_cong_sang, check_in_chieu, check_out_chieu,
 			di_muon_chieu, ve_som_chieu, gio_cham_cong_chieu, check_in_toi,
 			check_out_toi, di_muon_toi, ve_som_toi, diem, trangthai,
@@ -241,6 +243,12 @@ public class GioLamLocalServiceUtil {
 	 */
 	public static GioLam getGioLam(int id) throws PortalException {
 		return getService().getGioLam(id);
+	}
+
+	public static GioLam getGioLamByUserId(long userId, java.util.Date NgayLam)
+		throws PortalException {
+
+		return getService().getGioLamByUserId(userId, NgayLam);
 	}
 
 	/**
