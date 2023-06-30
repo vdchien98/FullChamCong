@@ -1,6 +1,8 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@ include file="../init.jsp"%>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
+
 <%@ page language="Java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <style>
@@ -56,7 +58,8 @@ button.btn.btn-success.btn_chien {
 			if (hienthichamcong.equals("1")) {
 		%>
 		<button id="attendanceButton" type="button"
-			class="btn btn-success btn_chien" onclick="handleAttendanceButton(1);">
+			class="btn btn-success btn_chien"
+			onclick="handleAttendanceButton(1);">
 			<i class="fas fa-check-square"></i> Chấm công vào sáng
 		</button>
 		<%
@@ -64,21 +67,24 @@ button.btn.btn-success.btn_chien {
 		%>
 
 		<button id="attendanceButton" type="button"
-			class="btn btn-success btn_chien" onclick="handleAttendanceButton(2);">
+			class="btn btn-success btn_chien"
+			onclick="handleAttendanceButton(2);">
 			<i class="fas fa-check-square"></i> Chấm công ra sáng
 		</button>
 		<%
 			} else if (hienthichamcong.equals("3")) {
 		%>
 		<button id="attendanceButton" type="button"
-			class="btn btn-success btn_chien" onclick="handleAttendanceButton(3);">
+			class="btn btn-success btn_chien"
+			onclick="handleAttendanceButton(3);">
 			<i class="fas fa-check-square"></i> Chấm công vào chiều
 		</button>
 		<%
 			} else if (hienthichamcong.equals("4")) {
 		%>
 		<button id="attendanceButton" type="button"
-			class="btn btn-success btn_chien" onclick="handleAttendanceButton(4);">
+			class="btn btn-success btn_chien"
+			onclick="handleAttendanceButton(4);">
 			<i class="fas fa-check-square"></i> Chấm công ra chiều
 		</button>
 		<%
@@ -99,9 +105,9 @@ button.btn.btn-success.btn_chien {
 		<form id="check_mazalo" class="float-right"
 			action="<%=xacthumazaloActionURL%>" method="POST">
 			<input type="hidden" name="<portlet:namespace />popupCapchaValue"
-				id="popupCapchaValue" value="">
-				<input type="hidden" name="<portlet:namespace />statusHienThiNut"
-				id="statusHienThiNut" value="">
+				id="popupCapchaValue" value=""> <input type="hidden"
+				name="<portlet:namespace />statusHienThiNut" id="statusHienThiNut"
+				value="">
 		</form>
 	</div>
 	<div class="row mb-3 chien">
@@ -121,85 +127,54 @@ button.btn.btn-success.btn_chien {
 }
 </style>
 
-	<div class="form-group row chien94">
+
+	<div class="form-group row">
 		<form class="pl-5" id="search-year" action="">
 			<div class="form-group row">
-				<div class="form-group row ">
+				<div class="form-group row">
+					<label class="col-form-label font-weight-bold text-info mr-3">Năm</label>
 					<input type="text" class="form-control datepicker col-md-6 ml-6"
-						name="year" id="year" placeholder="Năm" value="2023"> <i
-						class="icon-calendar"></i>
+						name="year" id="year" placeholder="Năm" value="2023">
 				</div>
 			</div>
 		</form>
 	</div>
 	<div class="tab-content" id="myTabContent">
-		<table id="timeTable">
-			<thead>
+		<div class="tab-pane fade show active" id="home" role="tabpanel"
+			aria-labelledby="home-tab">
 
-				<tr>
-					<th>Thứ 2</th>
-					<th>Thứ 3</th>
-					<th>Thứ 4</th>
-					<th>Thứ 5</th>
-					<th>Thứ 6</th>
-					<th>Thứ 7</th>
-					<th>Chủ nhật</th>
-				</tr>
-			</thead>
-			<tbody id="timeTableBody">
-			</tbody>
-		</table>
+
+			<table class="table table-bordered">
+				<thead>
+					<tr class="text-center text-white">
+						<th style="padding: 0;" class="bg-info">T2</th>
+						<th style="padding: 0;" class="bg-info">T3</th>
+						<th style="padding: 0;" class="bg-info">T4</th>
+						<th style="padding: 0;" class="bg-info">T5</th>
+						<th style="padding: 0;" class="bg-info">T6</th>
+						<th style="padding: 0;" class="bg-warning">T7</th>
+						<th style="padding: 0;" class="bg-warning">CN</th>
+					</tr>
+				</thead>
+				<tbody id="calendar-body">
+					<form id="checkThangNamGiolam"   method="GET">
+						<input type="hidden" id="selectedMonthInput" name="<portlet:namespace />selectedMonth"
+							value="" />
+					</form>
+
+
+				</tbody>
+			</table>
+
+			,
+
+		</div>
 	</div>
-	<script>
-	// Lấy ngày đầu tiên của tháng hiện tại
-	var currentDate = new Date();
-	var firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
 
-	// Lấy số ngày trong tháng
-	var lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-	var numDays = lastDay.getDate();
-
-	// Tính toán vị trí ngày đầu tiên trong tuần
-	var firstDayIndex = firstDay.getDay()-1; // (0: Chủ nhật, 1: Thứ 2, ..., 6: Thứ 7)
-	console.log("firstDayIndex " + firstDayIndex);
-
-	// Tạo bảng thời gian
-	var timeTableBody = document.getElementById("timeTableBody");
-	var row = document.createElement("tr");
-
-	// Thêm các ô trống cho các ngày trước ngày đầu tiên trong tuần
-	for (var i = 0; i < firstDayIndex; i++) {
-		var emptyCell = document.createElement("td");
-		row.appendChild(emptyCell);
-	}
-
-	// Thêm các ô với ngày trong tháng
-	for (var day = 1; day <= numDays; day++) {
-		var cell = document.createElement("td");
-		cell.textContent = day;
-		row.appendChild(cell);
-
-		// Kiểm tra xem đã đến ngày cuối tuần (Chủ nhật) chưa
-		if ((firstDayIndex + day) % 7 === 0) {
-			timeTableBody.appendChild(row);
-			row = document.createElement("tr");
-		}
-	}
-
-	// Thêm các ô trống cho các ngày sau ngày cuối cùng trong tuần
-	var remainingDays = 7 - ((firstDayIndex + numDays) % 7);
-	for (var i = 0; i < remainingDays; i++) {
-		var emptyCell = document.createElement("td");
-		row.appendChild(emptyCell);
-	}
-
-	timeTableBody.appendChild(row);
-</script>
+</div>
 
 
-
-
-	<script>
+<script>
 !(function($){
 	$.fn.datepicker.dates['vi'] = {
 		days: ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy", "Chủ nhật"],
@@ -212,18 +187,29 @@ button.btn.btn-success.btn_chien {
 		format: "dd/mm/yyyy"
 	};
 }(jQuery));
+
+
 $(document).ready(function() {
-    $('.datepicker').datepicker({
-        language: 'vi',
-        format: "mm/yyyy",
-        startView: "months", 
-        minViewMode: "months"
-    });
-}); 
+	  $('.datepicker').datepicker({
+	    language: 'vi',
+	    format: "mm/yyyy",
+	    startView: "months",
+	    minViewMode: "months"
+	  }).on('changeDate', function(e) {
+	    var selectedMonth = e.date.getMonth()+1; // Tháng được chọn (0-11)
+	    var selectedYear = e.date.getFullYear(); // Năm được chọn
+	    console.log("selectedMonth "+ selectedMonth)
+	    $('#selectedMonthInput').val(selectedMonth);
+	    $('#checkThangNamGiolam').submit();
+	    
+	  });
+	});
+
+
 </script>
 
 
-	<script>
+<script>
   // Lấy thẻ input theo id
   var input = document.getElementById('year');
 
@@ -241,7 +227,7 @@ $(document).ready(function() {
 
 
 
-	<script>
+<script>
   
  
   function handleAttendanceButton(status) {
@@ -300,7 +286,7 @@ $(document).ready(function() {
 	});
   
 </script>
-	<script>
+<script>
 	function Confirm(title, msg, okButton, cancelButton, userId, statusHienThiNut) { /*change*/
 		var $content = "<div class='dialog-ovelay'>"
 				+ "<div class='dialog'><header class='text-center'>"
