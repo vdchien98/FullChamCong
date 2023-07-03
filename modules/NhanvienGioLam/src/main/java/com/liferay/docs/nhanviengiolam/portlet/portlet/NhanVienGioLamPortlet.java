@@ -14,11 +14,13 @@ import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -36,6 +38,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -47,9 +50,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -85,9 +90,6 @@ import PortletUtils.portlet.CustomWebCacheItem;
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user" }, service = Portlet.class)
 public class NhanVienGioLamPortlet extends MVCPortlet {
-	
-	
-	
 	
 	public void sendMaZalo(ActionRequest request, ActionResponse sponse) throws IOException, PortletException {
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
@@ -370,7 +372,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
 
 			// Chuẩn bị dữ liệu gửi đi
-			String data = "refresh_token=WL15sFtIWmIzStYqbUFVPe9QGhQgogf1v5bHXANog7leG7oTcEQ4L9r769-on8HBabLXXiZdhdgVU6YHxVgwVvjRGyFcxkK5oMz_rEpvd1MsJb7epCchESjiFPJhZ9zoWrTkykYugtJQ9qw5bBomVSGYC_Q8XPul-IPZdjUuoKpZI57kdEvDOdiWeQ4QXz_jnVKvCe1Zq-hTd5vTvdxNwwY287xuOSJyi9PhTvioo8oCWLTRMIOr-1m4vFox4m"
+			String data = "refresh_token=ny-JXrHAxdpxxAxhF7ko7iJ5bEa3KiSveiQ7smngnGEktAtFDttk8TtRoCSPM-eqty-ttcfwp0NIuh7PULJO4-3oc8zIG8HebiUYcrfG-qxEtP6bS6RqJVcTYyKXQOq2lBFhY3vmeoIbyFFt0MYs9BhumBLfI9H-y-_Hw31tyWN4uCw03mBBP0s88kgZ9cS6QlpLri1jfNWJa_3wm673RHgNzzEfRwfm3u36pCr0p1SYzUwSX0IYRzh_foDDPDPh"
 					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
 
 			// Gửi dữ liệu
@@ -556,17 +558,24 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
-		
-		
-		 String selectedMonth = ParamUtil.getString(renderRequest, "selectedMonth");
-
-         System.out.println("selectedMonth !!!!!!!1111111111111 "+ selectedMonth);
-		
-		
-
 		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		long userId = themeDisplay.getUserId();
 		renderRequest.setAttribute("userId", userId);
+		String year = renderRequest.getParameter("year");
+		String thang = renderRequest.getParameter("thang");		
+//		String thangFormatted = String.format("%02d", Integer.parseInt(thang));
+		String nam = renderRequest.getParameter("nam");
+		String thangNam = thang+"-"+nam;
+		
+		System.out.println("selectedMonth !!!!!!!1111111111111 " + thangNam);
+//		
+		renderRequest.setAttribute("thangNam", thangNam);
+	 
+		
+		
+		
+		
+
 		try {
 			// Lấy ngày, tháng và giờ hiện tại từ máy tính
 			// Lấy ngày và giờ hiện tại từ máy tính
@@ -624,10 +633,6 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		} catch (PortalException e) {
 			e.printStackTrace();
 		}
-		
-		
-		 
-		
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -659,6 +664,5 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			return "khongphaigiochamcong";
 		}
 	}
-	
 
 }

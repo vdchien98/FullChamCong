@@ -1,3 +1,4 @@
+<%@page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@ include file="../init.jsp"%>
@@ -129,12 +130,23 @@ button.btn.btn-success.btn_chien {
 
 
 	<div class="form-group row">
-		<form class="pl-5" id="search-year" action="">
+		<form class="pl-5" id="search-year" method="get">
+			<input type="hidden" name="p_p_id"
+				value="<%=themeDisplay.getPortletDisplay().getId()%>" /> <input
+				type="hidden" name="p_p_auth"
+				value="<%=AuthTokenUtil.getToken(request, themeDisplay.getPlid(), themeDisplay.getPpid())%>" />
 			<div class="form-group row">
 				<div class="form-group row">
 					<label class="col-form-label font-weight-bold text-info mr-3">Năm</label>
 					<input type="text" class="form-control datepicker col-md-6 ml-6"
-						name="year" id="year" placeholder="Năm" value="2023">
+						name="<portlet:namespace />year" id="year" placeholder="Năm"
+						value="${thangNam}"> <input type="hidden"
+						class="form-control datepicker col-md-6 ml-6"
+						name="<portlet:namespace />thang" id="thang" placeholder="Năm"
+						value=""> <input type="hidden"
+						class="form-control datepicker col-md-6 ml-6"
+						name="<portlet:namespace />nam" id="nam" placeholder="Năm"
+						value="">
 				</div>
 			</div>
 		</form>
@@ -156,18 +168,16 @@ button.btn.btn-success.btn_chien {
 						<th style="padding: 0;" class="bg-warning">CN</th>
 					</tr>
 				</thead>
+
 				<tbody id="calendar-body">
-					<form id="checkThangNamGiolam"   method="GET">
-						<input type="hidden" id="selectedMonthInput" name="<portlet:namespace />selectedMonth"
-							value="" />
+					<form id="checkThangNamGiolam" method="GET">
+						<input type="hidden" id="selectedMonthInput"
+							name="<portlet:namespace />selectedMonth" value="" />
 					</form>
 
 
 				</tbody>
 			</table>
-
-			,
-
 		</div>
 	</div>
 
@@ -196,35 +206,27 @@ $(document).ready(function() {
 	    startView: "months",
 	    minViewMode: "months"
 	  }).on('changeDate', function(e) {
-	    var selectedMonth = e.date.getMonth()+1; // Tháng được chọn (0-11)
-	    var selectedYear = e.date.getFullYear(); // Năm được chọn
-	    console.log("selectedMonth "+ selectedMonth)
-	    $('#selectedMonthInput').val(selectedMonth);
-	    $('#checkThangNamGiolam').submit();
+		  var selectedMonth = e.date.getMonth()+1; // Tháng được chọn (0-11)
+		    var selectedYear = e.date.getFullYear(); // Năm được chọn
+		    var monthString = String(selectedMonth).padStart(2, '0'); // Đảm bảo tháng có 2 chữ số (01-12)
+		    var formattedDate =   monthString+ '-' +selectedYear ; // Chuỗi tháng và năm theo định dạng "mm/yyyy"
+
+		    $('#year').val(formattedDate);
+		    $('#thang').val(selectedMonth);
+		    $('#nam').val(selectedYear);
+		    $('#search-year').submit();
+	    
+	    
+	    
+	    
+	    
+	    
 	    
 	  });
 	});
 
 
 </script>
-
-
-<script>
-  // Lấy thẻ input theo id
-  var input = document.getElementById('year');
-
-  // Gắn sự kiện click vào thẻ input
-  input.addEventListener('click', function(event) {
-    // Lấy giá trị của input khi người dùng click vào nó
-    var value = event.target.value;
-
-    // In giá trị của input ra console
-    console.log(value);
-
-    // Hoặc làm bất kỳ thao tác nào khác với giá trị của input ở đây
-  });
-</script>
-
 
 
 <script>
