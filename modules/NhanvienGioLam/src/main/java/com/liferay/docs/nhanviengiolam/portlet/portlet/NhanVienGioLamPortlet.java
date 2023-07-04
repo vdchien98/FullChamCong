@@ -42,6 +42,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -90,7 +91,7 @@ import PortletUtils.portlet.CustomWebCacheItem;
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user" }, service = Portlet.class)
 public class NhanVienGioLamPortlet extends MVCPortlet {
-	
+
 	public void sendMaZalo(ActionRequest request, ActionResponse sponse) throws IOException, PortletException {
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		ServiceContext serviceContext = new ServiceContext();
@@ -372,7 +373,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
 
 			// Chuẩn bị dữ liệu gửi đi
-			String data = "refresh_token=ny-JXrHAxdpxxAxhF7ko7iJ5bEa3KiSveiQ7smngnGEktAtFDttk8TtRoCSPM-eqty-ttcfwp0NIuh7PULJO4-3oc8zIG8HebiUYcrfG-qxEtP6bS6RqJVcTYyKXQOq2lBFhY3vmeoIbyFFt0MYs9BhumBLfI9H-y-_Hw31tyWN4uCw03mBBP0s88kgZ9cS6QlpLri1jfNWJa_3wm673RHgNzzEfRwfm3u36pCr0p1SYzUwSX0IYRzh_foDDPDPh"
+			String data = "refresh_token=14wgkWzEV1quRPVMPtyWVmT4hTHOLbLOOKU-vbTkM69kNPZoR7jx2YPQpx9yMaGUBKYsd1LjAYS8VlolC4y_FJLerlfk0bzwD0JJqcKG9rfQETlnJImkOK8pe-S0LHrZ0n3McJHG7byw4_tU0meNNI4SoTvNMGzpLdtZj0LbQGzSK_MzUq1qTdKXj68795JI31xQOxSA0P7T0UvOuX0NvTSIWW2370kSt16g1OT57FQM5EDMsMe3XYP2UWn_5c142W"
 					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
 
 			// Gửi dữ liệu
@@ -493,7 +494,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 				String formattedTime = localTime.format(formatter);
 				System.out.println("Gio, phut va giay hien tai theo mui gio +7: " + formattedTime);
 				GioLam userGioLam = GioLamLocalServiceUtil.getGioLamByUserId(user_id, dateNgayHienTai);
-				System.out.println();
+
 				if (userGioLam == null) {
 					System.out.println("Khong co userGioLam");
 					if (statusHienThiNutValue == 1) {
@@ -558,23 +559,52 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
+		
+		
 		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		long userId = themeDisplay.getUserId();
 		renderRequest.setAttribute("userId", userId);
 		String year = renderRequest.getParameter("year");
-		String thang = renderRequest.getParameter("thang");		
-//		String thangFormatted = String.format("%02d", Integer.parseInt(thang));
+		String thang = renderRequest.getParameter("thang");
+//		String thangFormatted = thang.length() < 2 ? "0" + thang : thang;
 		String nam = renderRequest.getParameter("nam");
-		String thangNam = thang+"-"+nam;
 		
-		System.out.println("selectedMonth !!!!!!!1111111111111 " + thangNam);
-//		
-		renderRequest.setAttribute("thangNam", thangNam);
-	 
-		
-		
-		
-		
+	//	System.out.println("selectedMonth !!!!!!!1111111111111 " + thangNam);
+		System.out.println("year !!!!!!!1111111111111 " + year);
+		System.out.println("nam !!!!!!!1111111111111 " + nam);
+		if (thang == null && nam == null) {
+			System.out.println(" da vao dc day ");
+			Date currentDate = new Date();
+			int monthHienTai = currentDate.getMonth() + 1; // Lấy tháng
+			int namHienTai = currentDate.getYear() + 1900; // Lấy năm
+			String strMonthHienTai = String.valueOf(monthHienTai);
+			String strNamHienTai = String.valueOf(namHienTai);
+			System.out.println("Thang hien tai: " + monthHienTai);
+			System.out.println("Nam hien tai: " + namHienTai);
+			String thangNam = strMonthHienTai + "-" + strNamHienTai;
+			renderRequest.setAttribute("thangNam", thangNam);
+			try {
+			
+				List<GioLam> Listgiolamcanlay = getGioLamByUserIdAndMonth(userId, strMonthHienTai, strNamHienTai);
+				System.out.println("Listgiolamcanlay phien ban nulll "+ Listgiolamcanlay);
+				renderRequest.setAttribute("Listgiolamcanlay", Listgiolamcanlay);
+			} catch (PortalException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		} else {
+			try {
+				String thangNam = thang + "-" + nam;
+				renderRequest.setAttribute("thangNam", thangNam);
+				List<GioLam> Listgiolamcanlay = getGioLamByUserIdAndMonth(userId, thang, nam);
+				renderRequest.setAttribute("Listgiolamcanlay", Listgiolamcanlay);
+				System.out.println("giolamcanlay 1111112223345556 " + Listgiolamcanlay);
+			} catch (PortalException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 
 		try {
 			// Lấy ngày, tháng và giờ hiện tại từ máy tính
@@ -663,6 +693,34 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		} else {
 			return "khongphaigiochamcong";
 		}
+	}
+
+	public List<GioLam> getGioLamByUserIdAndMonth(long userId, String month, String nam) throws PortalException {
+
+		List<GioLam> gioLamList = GioLamLocalServiceUtil.getGioLams(-1, -1);
+
+		System.out.println("userId " + userId);
+		System.out.println("month " + month);
+		System.out.println("nam " + nam);
+		// Calendar calendar = Calendar.getInstance();
+//		GioLam ngayLamNew = gioLamList.get(0);
+//		calendar.setTime(ngayLamNew.getNgay_lam());
+//		System.out.println("ngayLamNew " + ngayLamNew);
+		// System.out.println("ngaylam nam " + calendar.YEAR);
+		List<GioLam> filteredGioLamList = gioLamList.stream().filter(gioLam -> gioLam.getUser_id() == userId)
+				.filter(gioLam -> {
+					LocalDate ngayLam = gioLam.getNgay_lam().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+					int gioLamMonth = ngayLam.getMonthValue();
+					int gioLamYear = ngayLam.getYear();
+					// System.out.println("ngayLam.getYear()" + gioLamYear);
+//					System.out.println("gioLamYear " + gioLamYear);
+					// System.out.println("ngayLam 123445533332!!!!!!!!!!! "+ ngayLam);
+//					System.out.println("gioLamMonth " + gioLamMonth);
+					return gioLamMonth == Integer.parseInt(month) && gioLamYear == Integer.parseInt(nam);
+				}).collect(Collectors.toList());
+
+		System.out.println("filteredGioLamList " + filteredGioLamList);
+		return filteredGioLamList;
 	}
 
 }

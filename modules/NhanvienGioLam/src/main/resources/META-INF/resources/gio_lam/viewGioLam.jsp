@@ -16,6 +16,7 @@ button.btn.btn-success.btn_chien {
 	max-width: 200px;
 }
 </style>
+
 <div class="container-fluid">
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
@@ -177,7 +178,15 @@ button.btn.btn-success.btn_chien {
 
 
 				</tbody>
+
 			</table>
+			<c:forEach var="gioLam" items="${Listgiolamcanlay}">
+				<p>Id: ${gioLam.id}</p>
+				<p>User Id: ${gioLam.user_id}</p>
+				<p>Ngay Lam: ${gioLam.ngay_lam}</p>
+				<p>Ngay Lam: ${gioLam.check_in_sang}</p>
+				<hr>
+			</c:forEach>
 		</div>
 	</div>
 
@@ -206,11 +215,11 @@ $(document).ready(function() {
 	    startView: "months",
 	    minViewMode: "months"
 	  }).on('changeDate', function(e) {
+		  location.reload();
 		  var selectedMonth = e.date.getMonth()+1; // Tháng được chọn (0-11)
 		    var selectedYear = e.date.getFullYear(); // Năm được chọn
 		    var monthString = String(selectedMonth).padStart(2, '0'); // Đảm bảo tháng có 2 chữ số (01-12)
 		    var formattedDate =   monthString+ '-' +selectedYear ; // Chuỗi tháng và năm theo định dạng "mm/yyyy"
-
 		    $('#year').val(formattedDate);
 		    $('#thang').val(selectedMonth);
 		    $('#nam').val(selectedYear);

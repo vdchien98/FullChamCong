@@ -199,22 +199,24 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 //	    System.out.println("userId "+ userId);
 //	    System.out.println("gioLamList" + gioLamList);
 //	    System.out.println("month "+ month);
-////	    List<GioLam> filteredGioLamList = gioLamList.stream()
-////	        .filter(gioLam -> gioLam.getUser_id() == userId)
-////	        .filter(gioLam -> {
-////	            String gioLamMonth = gioLam.getNgay_lam().toInstant()
-////	                .atZone(ZoneId.systemDefault())
-////	                .toLocalDate()
-////	                .format(DateTimeFormatter.ofPattern("MM-yyyy"));
-////	            
-////	            return gioLamMonth.equals(month);
-////	        })
-////	        .collect(Collectors.toList());
+//	    List<GioLam> filteredGioLamList = gioLamList.stream()
+//	        .filter(gioLam -> gioLam.getUser_id() == userId)
+//	        .filter(gioLam -> {
+//	            String gioLamMonth = gioLam.getNgay_lam().toInstant()
+//	                .atZone(ZoneId.systemDefault())
+//	                .toLocalDate()
+//	                .format(DateTimeFormatter.ofPattern("MM-yyyy"));
+//	            
+//	            return gioLamMonth.equals(month);
+//	        })
+//	        .collect(Collectors.toList());
 //	    
-//	   // System.out.println("filteredGioLamListqqqqqqqqqqqqqqqqq  "+filteredGioLamList );
+//	    System.out.println("filteredGioLamListqqqqqqqqqqqqqqqqq  "+filteredGioLamList );
 //	    return gioLamList;
 //	}
-//	
+	
+	
+	
 	
 	
 }
