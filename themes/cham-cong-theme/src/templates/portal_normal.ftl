@@ -83,9 +83,11 @@
 					<span class="text">Ngày Nghỉ Lễ</span>
 				</a>
 			</li>
-			</li>
-				<li class="active">
-				<a href="/nhanvien/gio-lam">
+			
+			
+			
+			<li class="active">
+				<a href="/nhanvien/gio-lam" >
 					<i class='bx bxs-dashboard' ></i>
 					<span class="text">Giờ Làm Nhân Viên</span>
 				</a>
@@ -116,6 +118,10 @@
 			</li>
 		</ul>
 	</section>
+	
+	
+	
+	
 	<section id="content">
 		<h2 class="hide-accessible sr-only" role="heading" aria-level="1">${htmlUtil.escape(the_title)}</h2>
 

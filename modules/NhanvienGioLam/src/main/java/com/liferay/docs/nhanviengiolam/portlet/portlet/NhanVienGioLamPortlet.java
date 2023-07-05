@@ -373,7 +373,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
 
 			// Chuẩn bị dữ liệu gửi đi
-			String data = "refresh_token=14wgkWzEV1quRPVMPtyWVmT4hTHOLbLOOKU-vbTkM69kNPZoR7jx2YPQpx9yMaGUBKYsd1LjAYS8VlolC4y_FJLerlfk0bzwD0JJqcKG9rfQETlnJImkOK8pe-S0LHrZ0n3McJHG7byw4_tU0meNNI4SoTvNMGzpLdtZj0LbQGzSK_MzUq1qTdKXj68795JI31xQOxSA0P7T0UvOuX0NvTSIWW2370kSt16g1OT57FQM5EDMsMe3XYP2UWn_5c142W"
+			String data = "refresh_token=BA-SaZ3nRpWGZA7-MC0pMY-bc_ndwKPzIQQ8pcZHIqT6iw3OKyjkBGwq_vX1xLOu1gQ5kIxTF0yaaC-A3FWj5Ho0vz9Jj4jV7kpY-bYcCtzmqUhPS9ewH6ZRaiyzumb6AVZdiGdc2deG-ypsFhy3Umlq-lvgxnbUV9NGc33LSYvzlSkHJV1lLrIY-ayn-J_oBGqzceD7msN-4WcXrbtL4VG1PVctKSbe_m9D_BC8tWAr1mIlxIV1SYPL92boATzNBm"
 					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
 
 			// Gửi dữ liệu

@@ -31,6 +31,8 @@ button.btn.btn-success.btn_chien {
 			method="POST"></form>
 		<form id="check-out" class="float-right" action="" method="POST">
 		</form>
+
+
 		<%-- 
 		<div class="chamcongravao">
 			<button type="button" class="btn btn-success"
@@ -152,11 +154,23 @@ button.btn.btn-success.btn_chien {
 			</div>
 		</form>
 	</div>
+	<%-- 
+					<form id="checkThangNamGiolam" method="GET">
+						<input type="hidden" id="selectedMonthInput"
+							name="<portlet:namespace />selectedMonth" value="" />
+					</form>
+					
+					<c:forEach var="gioLam" items="${Listgiolamcanlay}">
+				<p>Id: ${gioLam.id}</p>
+				<p>User Id: ${gioLam.user_id}</p>
+				<p>Ngay Lam: ${gioLam.ngay_lam}</p>
+				<p>Ngay Lam: ${gioLam.check_in_sang}</p>
+				<hr>
+			</c:forEach>
+--%>
 	<div class="tab-content" id="myTabContent">
 		<div class="tab-pane fade show active" id="home" role="tabpanel"
 			aria-labelledby="home-tab">
-
-
 			<table class="table table-bordered">
 				<thead>
 					<tr class="text-center text-white">
@@ -171,26 +185,82 @@ button.btn.btn-success.btn_chien {
 				</thead>
 
 				<tbody id="calendar-body">
-					<form id="checkThangNamGiolam" method="GET">
-						<input type="hidden" id="selectedMonthInput"
-							name="<portlet:namespace />selectedMonth" value="" />
-					</form>
+					<%
+						String selectedMonthStr = request.getParameter("thang");
+						String selectedYearStr = request.getParameter("nam");
 
+						if (selectedMonthStr != null && selectedYearStr != null) {
+							int selectedMonth = Integer.parseInt(selectedMonthStr);
+							int selectedYear = Integer.parseInt(selectedYearStr);
 
+							// Lấy ngày cuối cùng của tháng
+							java.util.Calendar cal = java.util.Calendar.getInstance();
+							cal.set(selectedYear, selectedMonth - 1, 1);
+							int numDays = cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
+
+							// Lấy ngày đầu tiên của tháng
+							cal.set(selectedYear, selectedMonth - 1, 1);
+							int startDayOfWeek = cal.get(java.util.Calendar.DAY_OF_WEEK) - 1; // Ngày đầu tiên của tuần
+							int previousDay = startDayOfWeek - 1 >= 0 ? startDayOfWeek - 1 : 6; // Thứ trước 1 ngày
+
+							// In ra danh sách các ngày trong từng cột
+							int numWeeks = (int) Math.ceil((previousDay + numDays) / 7.0); // Số tuần cần để hiển thị hết các ngày
+							for (int i = 0; i < numWeeks; i++) {
+					%>
+					<tr>
+						<%
+							for (int j = 0; j < 7; j++) {
+										int dayIndex = i * 7 + j - previousDay + 1; // Chỉ số của ngày trong danh sách daysInMonth
+										String day = "";
+										if (dayIndex >= 1 && dayIndex <= numDays) {
+											day = String.valueOf(dayIndex);
+										}
+						%>
+						<td>
+							<%
+								if (!day.isEmpty()) {
+							%>
+							<div><%=day%></div> <%
+ 	if (j >= 0 && j <= 4) {
+ %>
+							<div class="bg-primary border"
+								style="height: 10px; background-color: blue;">&nbsp;</div>
+							<div class="bg-primary border"
+								style="height: 10px; background-color: red;">&nbsp;</div> <%
+ 	} else if (j == 5) {
+ %> <%
+ 	} else if (j == 6) {
+ %> <%
+ 	}
+ %> <%
+ 	}
+ %>
+						</td>
+						<%
+							}
+						%>
+					</tr>
+					<%
+						}
+					%>
+					<%
+						}
+					%>
 				</tbody>
 
 			</table>
-			<c:forEach var="gioLam" items="${Listgiolamcanlay}">
-				<p>Id: ${gioLam.id}</p>
-				<p>User Id: ${gioLam.user_id}</p>
-				<p>Ngay Lam: ${gioLam.ngay_lam}</p>
-				<p>Ngay Lam: ${gioLam.check_in_sang}</p>
-				<hr>
-			</c:forEach>
+
+
+
+
+
 		</div>
 	</div>
 
 </div>
+
+
+
 
 
 <script>
@@ -215,24 +285,32 @@ $(document).ready(function() {
 	    startView: "months",
 	    minViewMode: "months"
 	  }).on('changeDate', function(e) {
-		  location.reload();
 		  var selectedMonth = e.date.getMonth()+1; // Tháng được chọn (0-11)
 		    var selectedYear = e.date.getFullYear(); // Năm được chọn
 		    var monthString = String(selectedMonth).padStart(2, '0'); // Đảm bảo tháng có 2 chữ số (01-12)
-		    var formattedDate =   monthString+ '-' +selectedYear ; // Chuỗi tháng và năm theo định dạng "mm/yyyy"
+		    var formattedDate =   selectedMonth+ '-' +selectedYear ; // Chuỗi tháng và năm theo định dạng "mm/yyyy"
 		    $('#year').val(formattedDate);
 		    $('#thang').val(selectedMonth);
 		    $('#nam').val(selectedYear);
 		    $('#search-year').submit();
-	    
-	    
-	    
-	    
-	    
-	    
-	    
 	  });
 	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 </script>
