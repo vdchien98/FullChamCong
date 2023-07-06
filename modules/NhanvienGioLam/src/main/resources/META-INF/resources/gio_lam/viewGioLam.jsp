@@ -1,3 +1,4 @@
+<%@page import="com.liferay.docs.chamcong.model.GioLam"%>
 <%@page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -178,9 +179,11 @@ button.btn.btn-success.btn_chien {
 						<th style="padding: 0;" class="bg-info">T3</th>
 						<th style="padding: 0;" class="bg-info">T4</th>
 						<th style="padding: 0;" class="bg-info">T5</th>
+
 						<th style="padding: 0;" class="bg-info">T6</th>
 						<th style="padding: 0;" class="bg-warning">T7</th>
 						<th style="padding: 0;" class="bg-warning">CN</th>
+
 					</tr>
 				</thead>
 
@@ -209,55 +212,201 @@ button.btn.btn-success.btn_chien {
 					%>
 					<tr>
 						<%
-							for (int j = 0; j < 7; j++) {
+							List<GioLam> Listgiolamcanlay = (List<GioLam>) request.getAttribute("Listgiolamcanlay");
+
+									for (int j = 0; j < 7; j++) {
 										int dayIndex = i * 7 + j - previousDay + 1; // Chỉ số của ngày trong danh sách daysInMonth
 										String day = "";
 										if (dayIndex >= 1 && dayIndex <= numDays) {
 											day = String.valueOf(dayIndex);
 										}
+										boolean hasData = false;
+										String checkInSang = "";
+										String checkOutSang = "";
+										String checkInChieu = "";
+										String checkOutChieu = "";
+										java.util.Date currentDate = new java.util.Date();
+										java.util.Calendar calendar = java.util.Calendar.getInstance();
+										calendar.setTime(currentDate);
+										int dayToday = calendar.get(java.util.Calendar.DAY_OF_MONTH);
+										int Thismonth = calendar.get(java.util.Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, cần +1 để hiển thị đúng
+										int Thisyear = calendar.get(java.util.Calendar.YEAR);
+
+										for (GioLam gioLam : Listgiolamcanlay) {
+											java.util.Calendar gioLamCal = java.util.Calendar.getInstance();
+											gioLamCal.setTime(gioLam.getNgay_lam());
+											int gioLamDay = gioLamCal.get(java.util.Calendar.DAY_OF_MONTH);
+											int gioLamMonth = gioLamCal.get(java.util.Calendar.MONTH) + 1;
+											if (gioLamDay == dayIndex && gioLamMonth == selectedMonth) {
+												hasData = true;
+												checkInSang = gioLam.getCheck_in_sang();
+												checkOutSang = gioLam.getCheck_out_sang();
+												checkInChieu = gioLam.getCheck_in_chieu();
+												checkOutChieu = gioLam.getCheck_out_chieu();
+												break;
+											}
+										}
+
+										boolean isBeforeCurrentDate = (selectedYear < Thisyear)
+												|| (selectedYear == Thisyear && selectedMonth < Thismonth)
+												|| (selectedYear == Thisyear && selectedMonth == Thismonth && dayIndex < dayToday);
+										boolean isNullInSang = checkInSang.isEmpty();
+										boolean isNullOutSang = checkOutSang.isEmpty();
+										String backgroundColorSang = (isBeforeCurrentDate && isNullInSang && isNullOutSang)
+												? "#e74a3b"
+												: ((isNullInSang || isNullOutSang) ? "#858796" : "#1cc88a");
+										boolean isNullInChieu = checkInChieu.isEmpty();
+										boolean isNullOutChieu = checkOutChieu.isEmpty();
+										String backgroundColorChieu = (isBeforeCurrentDate && isNullInChieu && isNullOutChieu)
+												? "#e74a3b"
+												: ((isNullInChieu || isNullOutChieu) ? "#858796" : "#1cc88a");
 						%>
-						<td>
-							<%
-								if (!day.isEmpty()) {
-							%>
-							<div><%=day%></div> <%
- 	if (j >= 0 && j <= 4) {
- %>
-							<div class="bg-primary border"
-								style="height: 10px; background-color: blue;">&nbsp;</div>
-							<div class="bg-primary border"
-								style="height: 10px; background-color: red;">&nbsp;</div> <%
- 	} else if (j == 5) {
- %> <%
- 	} else if (j == 6) {
- %> <%
- 	}
- %> <%
- 	}
- %>
-						</td>
+						    <td>
+						        <%
+						            if (!day.isEmpty()) {
+						        %>
+						        <div><%=day%></div> 
+						        <%
+						                if (hasData || isBeforeCurrentDate) {
+						                    if (j != 5 && j != 6) { // Bỏ qua thứ 7 và Chủ nhật
+						        %>
+						                    <div class="border"
+						                        style="height: 10px; background-color: <%=backgroundColorSang%>"
+						                        title="Vào sáng: <%=checkInSang.isEmpty() ? "Null" : checkInSang%> --- Ra Sáng: <%=checkOutSang.isEmpty() ? "Null" : checkOutSang%>">
+						                        &nbsp;</div>
+						                    <div class="border"
+						                        style="height: 10px; background-color: <%=backgroundColorChieu%>"
+						                        title="Vào sáng: <%=checkInChieu.isEmpty() ? "Null" : checkInChieu%> --- Ra Sáng: <%=checkOutChieu.isEmpty() ? "Null" : checkOutChieu%>">
+						                        &nbsp;</div>
+						        <%
+						                    }
+						                }
+						        %> 
+						        <%
+						            }
+						        %>
+						    </td>
 						<%
 							}
 						%>
 					</tr>
-					<%
-						}
+				  <%
+				        }
+				    %>
+				    <%
+				        } else {
+				        	java.util.Date currentDate = new java.util.Date();
+							java.util.Calendar calendar = java.util.Calendar.getInstance();
+							calendar.setTime(currentDate);
+							int dayToday = calendar.get(java.util.Calendar.DAY_OF_MONTH);
+							int Thismonth = calendar.get(java.util.Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, cần +1 để hiển thị đúng
+							int Thisyear = calendar.get(java.util.Calendar.YEAR);
+
+							int selectedMonth = Thismonth;
+							int selectedYear = Thisyear;
+
+							// Lấy ngày cuối cùng của tháng
+							java.util.Calendar cal = java.util.Calendar.getInstance();
+							cal.set(selectedYear, selectedMonth - 1, 1);
+							int numDays = cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
+
+							// Lấy ngày đầu tiên của tháng
+							cal.set(selectedYear, selectedMonth - 1, 1);
+							int startDayOfWeek = cal.get(java.util.Calendar.DAY_OF_WEEK) - 1; // Ngày đầu tiên của tuần
+							int previousDay = startDayOfWeek - 1 >= 0 ? startDayOfWeek - 1 : 6; // Thứ trước 1 ngày
+
+							// In ra danh sách các ngày trong từng cột
+							int numWeeks = (int) Math.ceil((previousDay + numDays) / 7.0); // Số tuần cần để hiển thị hết các ngày
+							for (int i = 0; i < numWeeks; i++) {
 					%>
-					<%
-						}
-					%>
+					<tr>
+						<%
+							List<GioLam> Listgiolamcanlay = (List<GioLam>) request.getAttribute("Listgiolamcanlay");
+
+									for (int j = 0; j < 7; j++) {
+										int dayIndex = i * 7 + j - previousDay + 1; // Chỉ số của ngày trong danh sách daysInMonth
+										String day = "";
+										if (dayIndex >= 1 && dayIndex <= numDays) {
+											day = String.valueOf(dayIndex);
+										}
+										boolean hasData = false;
+										String checkInSang = "";
+										String checkOutSang = "";
+										String checkInChieu = "";
+										String checkOutChieu = "";
+										
+										for (GioLam gioLam : Listgiolamcanlay) {
+											java.util.Calendar gioLamCal = java.util.Calendar.getInstance();
+											gioLamCal.setTime(gioLam.getNgay_lam());
+											int gioLamDay = gioLamCal.get(java.util.Calendar.DAY_OF_MONTH);
+											int gioLamMonth = gioLamCal.get(java.util.Calendar.MONTH) + 1;
+											if (gioLamDay == dayIndex && gioLamMonth == selectedMonth) {
+												hasData = true;
+												checkInSang = gioLam.getCheck_in_sang();
+												checkOutSang = gioLam.getCheck_out_sang();
+												checkInChieu = gioLam.getCheck_in_chieu();
+												checkOutChieu = gioLam.getCheck_out_chieu();
+												break;
+											}
+										}
+
+										boolean isBeforeCurrentDate = (selectedYear < Thisyear)
+												|| (selectedYear == Thisyear && selectedMonth < Thismonth)
+												|| (selectedYear == Thisyear && selectedMonth == Thismonth && dayIndex < dayToday);
+										boolean isNullInSang = checkInSang.isEmpty();
+										boolean isNullOutSang = checkOutSang.isEmpty();
+										String backgroundColorSang = (isBeforeCurrentDate && isNullInSang && isNullOutSang)
+												? "#e74a3b"
+												: ((isNullInSang || isNullOutSang) ? "#858796" : "#1cc88a");
+										boolean isNullInChieu = checkInChieu.isEmpty();
+										boolean isNullOutChieu = checkOutChieu.isEmpty();
+										String backgroundColorChieu = (isBeforeCurrentDate && isNullInChieu && isNullOutChieu)
+												? "#e74a3b"
+												: ((isNullInChieu || isNullOutChieu) ? "#858796" : "#1cc88a");
+						%>
+						    <td>
+						        <%
+						            if (!day.isEmpty()) {
+						        %>
+						        <div><%=day%></div> 
+						        <%
+						                if (hasData || isBeforeCurrentDate) {
+						                    if (j != 5 && j != 6) { // Bỏ qua thứ 7 và Chủ nhật
+						        %>
+						                    <div class="border"
+						                        style="height: 10px; background-color: <%=backgroundColorSang%>"
+						                        title="Vào sáng: <%=checkInSang.isEmpty() ? "Null" : checkInSang%> --- Ra Sáng: <%=checkOutSang.isEmpty() ? "Null" : checkOutSang%>">
+						                        &nbsp;</div>
+						                    <div class="border"
+						                        style="height: 10px; background-color: <%=backgroundColorChieu%>"
+						                        title="Vào sáng: <%=checkInChieu.isEmpty() ? "Null" : checkInChieu%> --- Ra Sáng: <%=checkOutChieu.isEmpty() ? "Null" : checkOutChieu%>">
+						                        &nbsp;</div>
+						        <%
+						                    }
+						                }
+						        %> 
+						        <%
+						            }
+						        %>
+						    </td>
+						<%
+							}
+						%>
+					</tr>
+				  <%
+				        }
+				    %>
+				    <%
+				    				        	
+				    %>
+   
+				    <%
+				        }
+				    %>
 				</tbody>
-
 			</table>
-
-
-
-
-
 		</div>
 	</div>
-
-</div>
 
 
 
@@ -479,6 +628,7 @@ $(document).ready(function() {
 			 
 			
 		}
-	 
-	
+
 </script>
+
+
