@@ -569,6 +569,10 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 //		String thangFormatted = thang.length() < 2 ? "0" + thang : thang;
 		String nam = renderRequest.getParameter("nam");
 		
+
+		
+		
+		
 	//	System.out.println("selectedMonth !!!!!!!1111111111111 " + thangNam);
 		System.out.println("year !!!!!!!1111111111111 " + year);
 		System.out.println("nam !!!!!!!1111111111111 " + nam);
@@ -605,6 +609,45 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 				e1.printStackTrace();
 			}
 		}
+		
+		
+		
+		
+		
+		
+		// Xử lý  bảng 2 chấm công của phòng
+		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
+		int IdUser = 0;
+		for (Users users : usersList) {
+			if (users.getUserId() == userId) {
+				IdUser = users.getId();
+				break;
+			}
+		}
+		Users user;
+		try {
+			user = UsersLocalServiceUtil.getUsers(IdUser);
+			System.out.println("user trong dang dang nhap 111111111111 "+user);
+			System.out.println("user.getChucvu_id() trong dang dang nhap 111111111111 "+user.getChucvu_id());
+			
+		} catch (PortalException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		try {
 			// Lấy ngày, tháng và giờ hiện tại từ máy tính
@@ -696,31 +739,39 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 	}
 
 	public List<GioLam> getGioLamByUserIdAndMonth(long userId, String month, String nam) throws PortalException {
-
 		List<GioLam> gioLamList = GioLamLocalServiceUtil.getGioLams(-1, -1);
-
 		System.out.println("userId " + userId);
 		System.out.println("month " + month);
 		System.out.println("nam " + nam);
-		// Calendar calendar = Calendar.getInstance();
-//		GioLam ngayLamNew = gioLamList.get(0);
-//		calendar.setTime(ngayLamNew.getNgay_lam());
-//		System.out.println("ngayLamNew " + ngayLamNew);
-		// System.out.println("ngaylam nam " + calendar.YEAR);
 		List<GioLam> filteredGioLamList = gioLamList.stream().filter(gioLam -> gioLam.getUser_id() == userId)
 				.filter(gioLam -> {
 					LocalDate ngayLam = gioLam.getNgay_lam().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 					int gioLamMonth = ngayLam.getMonthValue();
 					int gioLamYear = ngayLam.getYear();
-					// System.out.println("ngayLam.getYear()" + gioLamYear);
-//					System.out.println("gioLamYear " + gioLamYear);
-					// System.out.println("ngayLam 123445533332!!!!!!!!!!! "+ ngayLam);
-//					System.out.println("gioLamMonth " + gioLamMonth);
 					return gioLamMonth == Integer.parseInt(month) && gioLamYear == Integer.parseInt(nam);
 				}).collect(Collectors.toList());
 
 		System.out.println("filteredGioLamList " + filteredGioLamList);
 		return filteredGioLamList;
 	}
+	
+	
+	public List<GioLam> getAllofGioLamByNhanVien(long userId, String month, String nam) throws PortalException {
+		List<GioLam> gioLamList = GioLamLocalServiceUtil.getGioLams(-1, -1);
+		System.out.println("userId " + userId);
+		System.out.println("month " + month);
+		System.out.println("nam " + nam);
+		List<GioLam> filteredGioLamList = gioLamList.stream().filter(gioLam -> gioLam.getUser_id() == userId)
+				.filter(gioLam -> {
+					LocalDate ngayLam = gioLam.getNgay_lam().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+					int gioLamMonth = ngayLam.getMonthValue();
+					int gioLamYear = ngayLam.getYear();
+					return gioLamMonth == Integer.parseInt(month) && gioLamYear == Integer.parseInt(nam);
+				}).collect(Collectors.toList());
+
+		System.out.println("filteredGioLamList " + filteredGioLamList);
+		return filteredGioLamList;
+	}
+	
 
 }

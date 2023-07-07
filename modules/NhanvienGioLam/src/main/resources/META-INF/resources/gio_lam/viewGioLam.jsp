@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.util.Calendar"%>
 <%@page import="com.liferay.docs.chamcong.model.GioLam"%>
 <%@page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil"%>
 <%@page import="java.util.ArrayList"%>
@@ -7,16 +9,16 @@
 
 <%@ page language="Java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<style>
-i.icon-calendar {
-	font-size: 35px;
-	margin-left: 9px;
-}
-
-button.btn.btn-success.btn_chien {
-	max-width: 200px;
-}
-</style>
+		<style>
+		i.icon-calendar {
+			font-size: 35px;
+			margin-left: 9px;
+		}
+		
+		button.btn.btn-success.btn_chien {
+			max-width: 200px;
+		}
+		</style>
 
 <div class="container-fluid">
 	<div class="card shadow mb-4">
@@ -32,33 +34,6 @@ button.btn.btn-success.btn_chien {
 			method="POST"></form>
 		<form id="check-out" class="float-right" action="" method="POST">
 		</form>
-
-
-		<%-- 
-		<div class="chamcongravao">
-			<button type="button" class="btn btn-success"
-				onclick="sendMaZaloAndConfirmCheckin(${userId});">
-				<i class="fas fa-check-square"></i> Chấm công vào sáng
-			</button>
-			<button type="button" class="btn btn-success"
-				onclick="sendMaZaloAndConfirmCheckin(${userId});">
-				<i class="fas fa-check-square"></i> Chấm công ra sáng
-			</button>
-
-			<button type="button" class="btn btn-success"
-				onclick="sendMaZaloAndConfirmCheckin(${userId});">
-				<i class="fas fa-check-square"></i> Chấm công vào chiều
-			</button>
-			<button type="button" class="btn btn-success"
-				onclick="sendMaZaloAndConfirmCheckin(${userId});">
-				<i class="fas fa-check-square"></i> Chấm công ra chiều
-			</button>
-		</div>
-			--%>
-
-
-
-
 		<%
 			if (hienthichamcong.equals("1")) {
 		%>
@@ -95,16 +70,6 @@ button.btn.btn-success.btn_chien {
 		<%
 			}
 		%>
-
-		<%-- 
-		<button id="attendanceButton" type="button"
-			class="btn btn-success btn_chien" onclick="handleAttendanceButton();">
-			<i class="fas fa-check-square"></i> Chấm công vào sáng
-		</button>
-
-	  --%>
-
-
 		<portlet:actionURL var="xacthumazaloActionURL"
 			name="xacthumazaloAction" />
 		<form id="check_mazalo" class="float-right"
@@ -126,11 +91,11 @@ button.btn.btn-success.btn_chien {
 	</div>
 
 	<style>
-#timeTable td {
-	text-align: center;
-	vertical-align: middle;
-}
-</style>
+		#timeTable td {
+			text-align: center;
+			vertical-align: middle;
+		}
+    </style>
 
 
 	<div class="form-group row">
@@ -155,21 +120,9 @@ button.btn.btn-success.btn_chien {
 			</div>
 		</form>
 	</div>
-	<%-- 
-					<form id="checkThangNamGiolam" method="GET">
-						<input type="hidden" id="selectedMonthInput"
-							name="<portlet:namespace />selectedMonth" value="" />
-					</form>
-					
-					<c:forEach var="gioLam" items="${Listgiolamcanlay}">
-				<p>Id: ${gioLam.id}</p>
-				<p>User Id: ${gioLam.user_id}</p>
-				<p>Ngay Lam: ${gioLam.ngay_lam}</p>
-				<p>Ngay Lam: ${gioLam.check_in_sang}</p>
-				<hr>
-			</c:forEach>
---%>
+
 	<div class="tab-content" id="myTabContent">
+	    <div>Chấm công của tôi</div>
 		<div class="tab-pane fade show active" id="home" role="tabpanel"
 			aria-labelledby="home-tab">
 			<table class="table table-bordered">
@@ -179,7 +132,6 @@ button.btn.btn-success.btn_chien {
 						<th style="padding: 0;" class="bg-info">T3</th>
 						<th style="padding: 0;" class="bg-info">T4</th>
 						<th style="padding: 0;" class="bg-info">T5</th>
-
 						<th style="padding: 0;" class="bg-info">T6</th>
 						<th style="padding: 0;" class="bg-warning">T7</th>
 						<th style="padding: 0;" class="bg-warning">CN</th>
@@ -406,7 +358,64 @@ button.btn.btn-success.btn_chien {
 				</tbody>
 			</table>
 		</div>
-	</div>
+	    <%-- Bắt đầu bảng 2 chấm công của phòng  --%>
+	    <div>Chấm công của phòng/đơn vị</div>
+	  
+	    <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="home-tab">
+	          <table class="table table-bordered">
+				<thead>
+				    <tr>
+				        <th style="padding: 0;" class="text-center">STT</th>
+				        <th style="padding: 0;" class="text-center">Họ và tên</th>
+				        <%  
+				        
+				            if(selectedMonthStr != null && selectedYearStr != null){
+				            	   int selectedMonth = Integer.parseInt(selectedMonthStr);
+								    int selectedYear = Integer.parseInt(selectedYearStr);
+								    int daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();  
+								    System.out.println("daysInMonth !!!!!!!1111111111111 " + daysInMonth);
+								    for (int i = 1; i <= daysInMonth; i++) {
+						                out.println("<th style='padding: 0;' class='text-center'>" + i + "</th>");
+						            }
+				            }else {
+				            	java.util.Date currentDate = new java.util.Date();
+								java.util.Calendar calendar = java.util.Calendar.getInstance();
+								calendar.setTime(currentDate);
+								int dayToday = calendar.get(java.util.Calendar.DAY_OF_MONTH);
+								int Thismonth = calendar.get(java.util.Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, cần +1 để hiển thị đúng
+								int Thisyear = calendar.get(java.util.Calendar.YEAR);
+
+								int selectedMonth = Thismonth;
+								int selectedYear = Thisyear;
+								 int daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();  
+								 for (int i = 1; i <= daysInMonth; i++) {
+						                out.println("<th style='padding: 0;' class='text-center'>" + i + "</th>");
+						            }
+				            }
+				         
+						  
+				          %>
+				        <th style="padding: 0;" class="text-center">Đ</th>
+				        <th style="padding: 0;" class="text-center">M</th>
+				        <th style="padding: 0;" class="text-center">S</th>
+				    </tr>
+				</thead>
+	          </table>
+	    </div>	
+	   
+    	<%-- Kết thúc bảng 2 của nhân viên  --%>
+ 	</div>
+
+</div>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -427,6 +436,14 @@ button.btn.btn-success.btn_chien {
 }(jQuery));
 
 
+
+
+
+
+
+
+
+
 $(document).ready(function() {
 	  $('.datepicker').datepicker({
 	    language: 'vi',
@@ -442,26 +459,11 @@ $(document).ready(function() {
 		    $('#thang').val(selectedMonth);
 		    $('#nam').val(selectedYear);
 		    $('#search-year').submit();
+		    
+		  
+		    
 	  });
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
 </script>
 
 
@@ -630,5 +632,3 @@ $(document).ready(function() {
 		}
 
 </script>
-
-
