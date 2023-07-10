@@ -88,6 +88,7 @@
 			class="btn btn-info">Xin chấm công</span> <span
 			class="btn btn-danger">Nghỉ không phép</span> <span
 			class="btn btn-light">M: số lần đi muộn, S: số lần về sớm</span>
+
 	</div>
 
 	<style>
@@ -358,68 +359,80 @@
 				</tbody>
 			</table>
 		</div>
+		
+		
+		
+		
 	    <%-- Bắt đầu bảng 2 chấm công của phòng  --%>
 	    <div>Chấm công của phòng/đơn vị</div>
 	  
 	    <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="home-tab">
-	          <table class="table table-bordered">
+	    <table class="table table-bordered">
 				<thead>
 				    <tr>
 				        <th style="padding: 0;" class="text-center">STT</th>
 				        <th style="padding: 0;" class="text-center">Họ và tên</th>
-				        <%  
-				        
-				            if(selectedMonthStr != null && selectedYearStr != null){
-				            	   int selectedMonth = Integer.parseInt(selectedMonthStr);
-								    int selectedYear = Integer.parseInt(selectedYearStr);
-								    int daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();  
-								    System.out.println("daysInMonth !!!!!!!1111111111111 " + daysInMonth);
-								    for (int i = 1; i <= daysInMonth; i++) {
-						                out.println("<th style='padding: 0;' class='text-center'>" + i + "</th>");
-						            }
-				            }else {
-				            	java.util.Date currentDate = new java.util.Date();
-								java.util.Calendar calendar = java.util.Calendar.getInstance();
-								calendar.setTime(currentDate);
-								int dayToday = calendar.get(java.util.Calendar.DAY_OF_MONTH);
-								int Thismonth = calendar.get(java.util.Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, cần +1 để hiển thị đúng
-								int Thisyear = calendar.get(java.util.Calendar.YEAR);
-
-								int selectedMonth = Thismonth;
-								int selectedYear = Thisyear;
-								 int daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();  
-								 for (int i = 1; i <= daysInMonth; i++) {
-						                out.println("<th style='padding: 0;' class='text-center'>" + i + "</th>");
-						            }
+				        <%
+				        if(selectedMonthStr != null && selectedYearStr != null) {
+				            int selectedMonth = Integer.parseInt(selectedMonthStr);
+				            int selectedYear = Integer.parseInt(selectedYearStr);
+				            int daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+				            System.out.println("daysInMonth !!!!!!!1111111111111 " + daysInMonth);
+				            for (int i = 1; i <= daysInMonth; i++) {
+				                // Kiểm tra nếu ngày là thứ 7 hoặc chủ nhật
+				                boolean isWeekend = false;
+				                java.util.Calendar calendar = java.util.Calendar.getInstance();
+				                calendar.set(selectedYear, selectedMonth - 1, i);
+				                int dayOfWeek = calendar.get(java.util.Calendar.DAY_OF_WEEK);
+				                if (dayOfWeek == java.util.Calendar.SATURDAY || dayOfWeek == java.util.Calendar.SUNDAY) {
+				                    isWeekend = true;
+				                }
+				                %>
+				                <th style="padding: 0px; width: 0px;" class="text-center sorting_disabled <%= isWeekend ? "bg-warning" : "" %>" rowspan="1" colspan="1" aria-label="<%= i %>">
+				                    <%= i %>
+				                </th>
+				                <%
 				            }
-				         
-						  
-				          %>
+				        } else {
+				            java.util.Date currentDate = new java.util.Date();
+				            java.util.Calendar calendar = java.util.Calendar.getInstance();
+				            calendar.setTime(currentDate);
+				            int dayToday = calendar.get(java.util.Calendar.DAY_OF_MONTH);
+				            int Thismonth = calendar.get(java.util.Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, cần +1 để hiển thị đúng
+				            int Thisyear = calendar.get(java.util.Calendar.YEAR);
+				            int selectedMonth = Thismonth;
+				            int selectedYear = Thisyear;
+				            int daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+				            for (int i = 1; i <= daysInMonth; i++) {
+				                // Kiểm tra nếu ngày là thứ 7 hoặc chủ nhật
+				                boolean isWeekend = false;
+				              
+				                calendar.set(selectedYear, selectedMonth - 1, i);
+				                int dayOfWeek = calendar.get(java.util.Calendar.DAY_OF_WEEK);
+				                if (dayOfWeek == java.util.Calendar.SATURDAY || dayOfWeek == java.util.Calendar.SUNDAY) {
+				                    isWeekend = true;
+				                }
+				                %>
+				                <th style="padding: 0px; width: 0px;" class="text-center sorting_disabled <%= isWeekend ? "bg-warning" : "" %>" rowspan="1" colspan="1" aria-label="<%= i %>">
+				                    <%= i %>
+				                </th>
+				                <%
+				            }
+				        }
+				        %>
 				        <th style="padding: 0;" class="text-center">Đ</th>
 				        <th style="padding: 0;" class="text-center">M</th>
 				        <th style="padding: 0;" class="text-center">S</th>
 				    </tr>
 				</thead>
-	          </table>
+
+				</table>
 	    </div>	
 	   
     	<%-- Kết thúc bảng 2 của nhân viên  --%>
  	</div>
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <script>
 !(function($){

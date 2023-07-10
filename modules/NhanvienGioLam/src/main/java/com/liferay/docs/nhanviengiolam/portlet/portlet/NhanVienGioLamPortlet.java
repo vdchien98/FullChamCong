@@ -566,7 +566,6 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		renderRequest.setAttribute("userId", userId);
 		String year = renderRequest.getParameter("year");
 		String thang = renderRequest.getParameter("thang");
-//		String thangFormatted = thang.length() < 2 ? "0" + thang : thang;
 		String nam = renderRequest.getParameter("nam");
 		
 
@@ -590,7 +589,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			try {
 			
 				List<GioLam> Listgiolamcanlay = getGioLamByUserIdAndMonth(userId, strMonthHienTai, strNamHienTai);
-				System.out.println("Listgiolamcanlay phien ban nulll "+ Listgiolamcanlay);
+			//	System.out.println("Listgiolamcanlay phien ban nulll "+ Listgiolamcanlay);
 				renderRequest.setAttribute("Listgiolamcanlay", Listgiolamcanlay);
 			} catch (PortalException e) {
 				// TODO Auto-generated catch block
@@ -603,7 +602,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 				renderRequest.setAttribute("thangNam", thangNam);
 				List<GioLam> Listgiolamcanlay = getGioLamByUserIdAndMonth(userId, thang, nam);
 				renderRequest.setAttribute("Listgiolamcanlay", Listgiolamcanlay);
-				System.out.println("giolamcanlay 1111112223345556 " + Listgiolamcanlay);
+			//	System.out.println("giolamcanlay 1111112223345556 " + Listgiolamcanlay);
 			} catch (PortalException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -626,9 +625,54 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		}
 		Users user;
 		try {
+			List<Users> filteredUsersList = new ArrayList<>();
 			user = UsersLocalServiceUtil.getUsers(IdUser);
-			System.out.println("user trong dang dang nhap 111111111111 "+user);
-			System.out.println("user.getChucvu_id() trong dang dang nhap 111111111111 "+user.getChucvu_id());
+			long targetPhongBanId = user.getPhongban_id();
+			for (Users userNhanVien : usersList) {
+			    if (userNhanVien.getPhongban_id() == targetPhongBanId) {
+			        filteredUsersList.add(userNhanVien);
+			    }
+			}
+			
+			
+			System.out.println("-----------------");
+			
+			for (Users userlapNhanvien : filteredUsersList) {
+				System.out.println("userlapNhanvien******** "+ userlapNhanvien);
+				if (thang == null && nam == null) {
+					System.out.println(" da vao dc day ");
+					Date currentDate = new Date();
+					int monthHienTai = currentDate.getMonth() + 1; // Lấy tháng
+					int namHienTai = currentDate.getYear() + 1900; // Lấy năm
+					String strMonthHienTai = String.valueOf(monthHienTai);
+					String strNamHienTai = String.valueOf(namHienTai);
+					try {
+					
+						List<GioLam> ListgiolamcanlayTungNhanVien = getGioLamByUserIdAndMonth(userlapNhanvien.getUserId(), strMonthHienTai, strNamHienTai);
+						renderRequest.setAttribute("ListgiolamcanlayTungNhanVien", ListgiolamcanlayTungNhanVien);
+						System.out.println("Listgiolamcanlay từng nhân viên phiên bản nulll "+ ListgiolamcanlayTungNhanVien);
+						System.out.println("****************");
+						
+					} catch (PortalException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				} else {
+					try {
+						List<GioLam> ListgiolamcanlayTungNhanVien = getGioLamByUserIdAndMonth(userlapNhanvien.getUserId(), thang, nam);
+						renderRequest.setAttribute("ListgiolamcanlayTungNhanVien", ListgiolamcanlayTungNhanVien);
+						System.out.println("userTungNhanVienlapNhanvien----- "+ ListgiolamcanlayTungNhanVien);
+						System.out.println("****************");
+
+					} catch (PortalException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+
+			}
+			//System.out.println("user.getChucvu_id() trong dang dang nhap 111111111111 "+user.getChucvu_id());
 			
 		} catch (PortalException e1) {
 			// TODO Auto-generated catch block
@@ -756,22 +800,22 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 	}
 	
 	
-	public List<GioLam> getAllofGioLamByNhanVien(long userId, String month, String nam) throws PortalException {
-		List<GioLam> gioLamList = GioLamLocalServiceUtil.getGioLams(-1, -1);
-		System.out.println("userId " + userId);
-		System.out.println("month " + month);
-		System.out.println("nam " + nam);
-		List<GioLam> filteredGioLamList = gioLamList.stream().filter(gioLam -> gioLam.getUser_id() == userId)
-				.filter(gioLam -> {
-					LocalDate ngayLam = gioLam.getNgay_lam().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-					int gioLamMonth = ngayLam.getMonthValue();
-					int gioLamYear = ngayLam.getYear();
-					return gioLamMonth == Integer.parseInt(month) && gioLamYear == Integer.parseInt(nam);
-				}).collect(Collectors.toList());
-
-		System.out.println("filteredGioLamList " + filteredGioLamList);
-		return filteredGioLamList;
-	}
+//	public List<GioLam> getAllofGioLamByNhanVien(long userId, String month, String nam) throws PortalException {
+//		List<GioLam> gioLamList = GioLamLocalServiceUtil.getGioLams(-1, -1);
+//		System.out.println("userId " + userId);
+//		System.out.println("month " + month);
+//		System.out.println("nam " + nam);
+//		List<GioLam> filteredGioLamList = gioLamList.stream().filter(gioLam -> gioLam.getUser_id() == userId)
+//				.filter(gioLam -> {
+//					LocalDate ngayLam = gioLam.getNgay_lam().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//					int gioLamMonth = ngayLam.getMonthValue();
+//					int gioLamYear = ngayLam.getYear();
+//					return gioLamMonth == Integer.parseInt(month) && gioLamYear == Integer.parseInt(nam);
+//				}).collect(Collectors.toList());
+//
+//		System.out.println("filteredGioLamList " + filteredGioLamList);
+//		return filteredGioLamList;
+//	}
 	
 
 }
