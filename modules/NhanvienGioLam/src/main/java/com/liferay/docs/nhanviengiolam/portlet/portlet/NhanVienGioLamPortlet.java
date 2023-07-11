@@ -636,9 +636,10 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			
 			
 			System.out.println("-----------------");
-			
+			List<List<GioLam>> AllGioLamNhanVienPhong = new ArrayList<>();
 			for (Users userlapNhanvien : filteredUsersList) {
 				System.out.println("userlapNhanvien******** "+ userlapNhanvien);
+				 List<GioLam> ListgiolamcanlayTungNhanVien = null;
 				if (thang == null && nam == null) {
 					System.out.println(" da vao dc day ");
 					Date currentDate = new Date();
@@ -648,8 +649,9 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 					String strNamHienTai = String.valueOf(namHienTai);
 					try {
 					
-						List<GioLam> ListgiolamcanlayTungNhanVien = getGioLamByUserIdAndMonth(userlapNhanvien.getUserId(), strMonthHienTai, strNamHienTai);
-						renderRequest.setAttribute("ListgiolamcanlayTungNhanVien", ListgiolamcanlayTungNhanVien);
+						List<GioLam> ListgiolamcanlayTungNhanVienByMonth = getGioLamByUserIdAndMonth(userlapNhanvien.getUserId(), strMonthHienTai, strNamHienTai);
+					//	 renderRequest.setAttribute("ListgiolamcanlayTungNhanVien", ListgiolamcanlayTungNhanVien);
+						ListgiolamcanlayTungNhanVien = ListgiolamcanlayTungNhanVienByMonth;
 						System.out.println("Listgiolamcanlay từng nhân viên phiên bản nulll "+ ListgiolamcanlayTungNhanVien);
 						System.out.println("****************");
 						
@@ -660,8 +662,10 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 
 				} else {
 					try {
-						List<GioLam> ListgiolamcanlayTungNhanVien = getGioLamByUserIdAndMonth(userlapNhanvien.getUserId(), thang, nam);
-						renderRequest.setAttribute("ListgiolamcanlayTungNhanVien", ListgiolamcanlayTungNhanVien);
+						List<GioLam> ListgiolamcanlayTungNhanVienByMonth  = getGioLamByUserIdAndMonth(userlapNhanvien.getUserId(), thang, nam);
+					//	renderRequest.setAttribute("ListgiolamcanlayTungNhanVien", ListgiolamcanlayTungNhanVien);
+			            ListgiolamcanlayTungNhanVien = ListgiolamcanlayTungNhanVienByMonth;
+
 						System.out.println("userTungNhanVienlapNhanvien----- "+ ListgiolamcanlayTungNhanVien);
 						System.out.println("****************");
 
@@ -670,9 +674,14 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 						e1.printStackTrace();
 					}
 				}
-
+				 if (ListgiolamcanlayTungNhanVien != null) {
+				        AllGioLamNhanVienPhong.add(ListgiolamcanlayTungNhanVien); // Thêm ListgiolamcanlayTungNhanVien vào AllGioLamNhanVienPhong
+				    }
 			}
-			//System.out.println("user.getChucvu_id() trong dang dang nhap 111111111111 "+user.getChucvu_id());
+			
+			System.out.println("AllGioLamNhanVienPhong 111111112222223333344444455555-----------"+AllGioLamNhanVienPhong);
+			renderRequest.setAttribute("AllGioLamNhanVienPhong", AllGioLamNhanVienPhong);
+			renderRequest.setAttribute("filteredUsersList", filteredUsersList);
 			
 		} catch (PortalException e1) {
 			// TODO Auto-generated catch block

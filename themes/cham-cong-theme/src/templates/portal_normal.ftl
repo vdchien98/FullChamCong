@@ -111,10 +111,10 @@
 				</a>
 			</li>
 			<li>
-				<a href="#" class="logout">
+				<a href="/c/portal/logout" class="logout">
 					<i class='bx bxs-log-out-circle' ></i>
-					<span class="text">Logout</span>
-				</a>
+					<span class="text">Đăng Xuất</span>
+				</a>		
 			</li>
 		</ul>
 	</section>

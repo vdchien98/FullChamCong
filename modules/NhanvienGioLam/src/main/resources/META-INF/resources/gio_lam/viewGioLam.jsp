@@ -166,7 +166,6 @@
 					<tr>
 						<%
 							List<GioLam> Listgiolamcanlay = (List<GioLam>) request.getAttribute("Listgiolamcanlay");
-
 									for (int j = 0; j < 7; j++) {
 										int dayIndex = i * 7 + j - previousDay + 1; // Chỉ số của ngày trong danh sách daysInMonth
 										String day = "";
@@ -367,67 +366,107 @@
 	    <div>Chấm công của phòng/đơn vị</div>
 	  
 	    <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="home-tab">
-	    <table class="table table-bordered">
-				<thead>
-				    <tr>
-				        <th style="padding: 0;" class="text-center">STT</th>
-				        <th style="padding: 0;" class="text-center">Họ và tên</th>
-				        <%
-				        if(selectedMonthStr != null && selectedYearStr != null) {
-				            int selectedMonth = Integer.parseInt(selectedMonthStr);
-				            int selectedYear = Integer.parseInt(selectedYearStr);
-				            int daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
-				            System.out.println("daysInMonth !!!!!!!1111111111111 " + daysInMonth);
-				            for (int i = 1; i <= daysInMonth; i++) {
-				                // Kiểm tra nếu ngày là thứ 7 hoặc chủ nhật
-				                boolean isWeekend = false;
-				                java.util.Calendar calendar = java.util.Calendar.getInstance();
-				                calendar.set(selectedYear, selectedMonth - 1, i);
-				                int dayOfWeek = calendar.get(java.util.Calendar.DAY_OF_WEEK);
-				                if (dayOfWeek == java.util.Calendar.SATURDAY || dayOfWeek == java.util.Calendar.SUNDAY) {
-				                    isWeekend = true;
-				                }
-				                %>
-				                <th style="padding: 0px; width: 0px;" class="text-center sorting_disabled <%= isWeekend ? "bg-warning" : "" %>" rowspan="1" colspan="1" aria-label="<%= i %>">
-				                    <%= i %>
-				                </th>
-				                <%
-				            }
-				        } else {
-				            java.util.Date currentDate = new java.util.Date();
-				            java.util.Calendar calendar = java.util.Calendar.getInstance();
-				            calendar.setTime(currentDate);
-				            int dayToday = calendar.get(java.util.Calendar.DAY_OF_MONTH);
-				            int Thismonth = calendar.get(java.util.Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, cần +1 để hiển thị đúng
-				            int Thisyear = calendar.get(java.util.Calendar.YEAR);
-				            int selectedMonth = Thismonth;
-				            int selectedYear = Thisyear;
-				            int daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
-				            for (int i = 1; i <= daysInMonth; i++) {
-				                // Kiểm tra nếu ngày là thứ 7 hoặc chủ nhật
-				                boolean isWeekend = false;
-				              
-				                calendar.set(selectedYear, selectedMonth - 1, i);
-				                int dayOfWeek = calendar.get(java.util.Calendar.DAY_OF_WEEK);
-				                if (dayOfWeek == java.util.Calendar.SATURDAY || dayOfWeek == java.util.Calendar.SUNDAY) {
-				                    isWeekend = true;
-				                }
-				                %>
-				                <th style="padding: 0px; width: 0px;" class="text-center sorting_disabled <%= isWeekend ? "bg-warning" : "" %>" rowspan="1" colspan="1" aria-label="<%= i %>">
-				                    <%= i %>
-				                </th>
-				                <%
-				            }
-				        }
-				        %>
-				        <th style="padding: 0;" class="text-center">Đ</th>
-				        <th style="padding: 0;" class="text-center">M</th>
-				        <th style="padding: 0;" class="text-center">S</th>
-				    </tr>
-				</thead>
-
-				</table>
-	    </div>	
+		<table class="table table-bordered">
+			<thead>
+					    <tr>
+					        <th style="padding: 0;" class="text-center">STT</th>
+					        <th style="padding: 0;" class="text-center">Họ và tên</th>
+					        <%
+					        if(selectedMonthStr != null && selectedYearStr != null) {
+					            int selectedMonth = Integer.parseInt(selectedMonthStr);
+					            int selectedYear = Integer.parseInt(selectedYearStr);
+					            int daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+					            System.out.println("daysInMonth !!!!!!!1111111111111 " + daysInMonth);
+					            for (int i = 1; i <= daysInMonth; i++) {
+					                // Kiểm tra nếu ngày là thứ 7 hoặc chủ nhật
+					                boolean isWeekend = false;
+					                java.util.Calendar calendar = java.util.Calendar.getInstance();
+					                calendar.set(selectedYear, selectedMonth - 1, i);
+					                int dayOfWeek = calendar.get(java.util.Calendar.DAY_OF_WEEK);
+					                if (dayOfWeek == java.util.Calendar.SATURDAY || dayOfWeek == java.util.Calendar.SUNDAY) {
+					                    isWeekend = true;
+					                }
+					                %>
+					                <th style="padding: 0px; width: 0px;" class="text-center sorting_disabled <%= isWeekend ? "bg-warning" : "" %>" rowspan="1" colspan="1" aria-label="<%= i %>">
+					                    <%= i %>
+					                </th>
+					                <%
+					            }
+					        } else {
+					            java.util.Date currentDate = new java.util.Date();
+					            java.util.Calendar calendar = java.util.Calendar.getInstance();
+					            calendar.setTime(currentDate);
+					            int dayToday = calendar.get(java.util.Calendar.DAY_OF_MONTH);
+					            int Thismonth = calendar.get(java.util.Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, cần +1 để hiển thị đúng
+					            int Thisyear = calendar.get(java.util.Calendar.YEAR);
+					            int selectedMonth = Thismonth;
+					            int selectedYear = Thisyear;
+					            int daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+					            for (int i = 1; i <= daysInMonth; i++) {
+					                // Kiểm tra nếu ngày là thứ 7 hoặc chủ nhật
+					                boolean isWeekend = false;
+					              
+					                calendar.set(selectedYear, selectedMonth - 1, i);
+					                int dayOfWeek = calendar.get(java.util.Calendar.DAY_OF_WEEK);
+					                if (dayOfWeek == java.util.Calendar.SATURDAY || dayOfWeek == java.util.Calendar.SUNDAY) {
+					                    isWeekend = true;
+					                }
+					                %>
+					                <th style="padding: 0px; width: 0px;" class="text-center sorting_disabled <%= isWeekend ? "bg-warning" : "" %>" rowspan="1" colspan="1" aria-label="<%= i %>">
+					                    <%= i %>
+					                </th>
+					                <%
+					            }
+					        }
+					        %>
+					        <th style="padding: 0;" class="text-center">Đ</th>
+					        <th style="padding: 0;" class="text-center">M</th>
+					        <th style="padding: 0;" class="text-center">S</th>
+					    </tr>
+					</thead>
+		    <tbody>
+		        <% List<List<GioLam>> AllGioLamNhanVienPhong = (List<List<GioLam>>) renderRequest.getAttribute("AllGioLamNhanVienPhong");
+		        if (AllGioLamNhanVienPhong != null) {
+		            int stt = 1;
+		            for (List<GioLam> gioLamNhanVien : AllGioLamNhanVienPhong) {
+		                %>
+		                <tr>
+                <td><%= stt++ %></td>
+                <td><!-- Họ và tên --></td>
+               <%
+					int dayIndex = 0; // Biến đếm ngày trong tháng
+					for (GioLam gioLam : gioLamNhanVien) {
+					    // Lấy ngày từ gioLam và hiển thị vào thẻ <td>
+					    %>
+					    <td>
+					        <%
+					            Date ngaylam = gioLam.getNgay_lam();
+					            String checkInSang = gioLam.getCheck_in_sang();
+					            String checkOutSang = gioLam.getCheck_out_sang();
+					            String checkInChieu = gioLam.getCheck_in_chieu();
+					            String checkOutChieu = gioLam.getCheck_out_chieu();
+					            boolean isNullInSang = checkInSang.isEmpty();
+					            boolean isNullOutSang = checkOutSang.isEmpty();
+					            String backgroundColorSang = (isNullInSang || isNullOutSang) ? "#858796" : "#1cc88a";
+					            boolean isNullInChieu = checkInChieu.isEmpty();
+					            boolean isNullOutChieu = checkOutChieu.isEmpty();
+					            String backgroundColorChieu = (isNullInChieu || isNullOutChieu) ? "#858796" : "#1cc88a";
+					        %>
+					        <div class="border" style="height: 10px; background-color: <%=backgroundColorSang%>"
+					            title="Vào sáng: <%=checkInSang.isEmpty() ? "Null" : checkInSang%> --- Ra sáng: <%=checkOutSang.isEmpty() ? "Null" : checkOutSang%>">
+					            &nbsp;</div>
+					        <div class="border" style="height: 10px; background-color: <%=backgroundColorChieu%>"
+					            title="Vào chiều: <%=checkInChieu.isEmpty() ? "Null" : checkInChieu%> --- Ra chiều: <%=checkOutChieu.isEmpty() ? "Null" : checkOutChieu%>">
+					            &nbsp;</div>
+					    </td>
+					    <% 
+					        dayIndex++;
+					    } %>
+            </tr>
+		                <% } } %>
+		    </tbody>
+		</table>
+	  </div>	
 	   
     	<%-- Kết thúc bảng 2 của nhân viên  --%>
  	</div>
