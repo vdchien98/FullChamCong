@@ -130,6 +130,7 @@
 				<thead>
 					<tr class="text-center text-white">
 						<th style="padding: 0;" class="bg-info">T2</th>
+						
 						<th style="padding: 0;" class="bg-info">T3</th>
 						<th style="padding: 0;" class="bg-info">T4</th>
 						<th style="padding: 0;" class="bg-info">T5</th>

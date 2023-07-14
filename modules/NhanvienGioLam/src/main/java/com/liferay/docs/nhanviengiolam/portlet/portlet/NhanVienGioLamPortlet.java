@@ -639,6 +639,15 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			List<List<GioLam>> AllGioLamNhanVienPhong = new ArrayList<>();
 			for (Users userlapNhanvien : filteredUsersList) {
 				System.out.println("userlapNhanvien******** "+ userlapNhanvien);
+				System.out.println("userlapNhanvien.getUserId()******** "+ userlapNhanvien.getUserId());
+				
+				
+				
+				
+			//	user = UsersLocalServiceUtil.getUsers(userlapNhanvien.getUserId());
+				
+				
+				
 				 List<GioLam> ListgiolamcanlayTungNhanVien = null;
 				if (thang == null && nam == null) {
 					System.out.println(" da vao dc day ");
@@ -666,7 +675,130 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 					//	renderRequest.setAttribute("ListgiolamcanlayTungNhanVien", ListgiolamcanlayTungNhanVien);
 			            ListgiolamcanlayTungNhanVien = ListgiolamcanlayTungNhanVienByMonth;
 
-						System.out.println("userTungNhanVienlapNhanvien----- "+ ListgiolamcanlayTungNhanVien);
+			            
+			            // BẮT ĐẦU TEST
+			            
+			            
+			            System.out.println("userTungNhanVienlapNhanvien truoc ----- "+ ListgiolamcanlayTungNhanVien);
+			            
+			            
+			            List<Map<String, Object>> gioLamMapList = new ArrayList<>();
+
+			            for (GioLam gioLam : ListgiolamcanlayTungNhanVien) {
+			                Map<String, Object> gioLamMap = new HashMap<>();
+			                gioLamMap.put("id", gioLam.getId());
+			                gioLamMap.put("user_id", gioLam.getUser_id());
+			                gioLamMap.put("ngay_lam", gioLam.getNgay_lam());
+			                gioLamMap.put("ip", gioLam.getIp());
+			                gioLamMap.put("check_in_sang", gioLam.getCheck_in_sang());
+			                gioLamMap.put("check_out_sang", gioLam.getCheck_out_sang());
+			                gioLamMap.put("di_muon_sang", gioLam.getDi_muon_sang());
+			                gioLamMap.put("ve_som_sang", gioLam.getVe_som_sang());
+			                gioLamMap.put("gio_cham_cong_sang", gioLam.getGio_cham_cong_sang());
+			                gioLamMap.put("check_in_chieu", gioLam.getCheck_in_chieu());
+			                gioLamMap.put("check_out_chieu", gioLam.getCheck_out_chieu());
+			                gioLamMap.put("di_muon_chieu", gioLam.getDi_muon_chieu());
+			                gioLamMap.put("ve_som_chieu", gioLam.getVe_som_chieu());
+			                gioLamMap.put("gio_cham_cong_chieu", gioLam.getGio_cham_cong_chieu());
+			                gioLamMap.put("check_in_toi", gioLam.getCheck_in_toi());
+			                gioLamMap.put("check_out_toi", gioLam.getCheck_out_toi());
+			                gioLamMap.put("di_muon_toi", gioLam.getDi_muon_toi());
+			                gioLamMap.put("ve_som_toi", gioLam.getVe_som_toi());
+			                gioLamMap.put("diem", gioLam.getDiem());
+			                gioLamMap.put("trangthai", gioLam.getTrangthai());
+			                gioLamMap.put("created_at", gioLam.getCreated_at());
+			                gioLamMap.put("updated_at", gioLam.getUpdated_at());
+
+			                gioLamMapList.add(gioLamMap);
+			            }
+			            
+			    		List<Users> InfoNhanVienTableUser = new ArrayList<>();
+			    		
+						for (Users userNhanVienTableuser : usersList) {
+						    if (userNhanVienTableuser.getUserId() == userlapNhanvien.getUserId()) {
+						    	InfoNhanVienTableUser.add(userNhanVienTableuser);
+						    }
+						}
+						
+						System.out.println("InfoNhanVienTableUser000000000000000000********** "+ InfoNhanVienTableUser);
+						
+						List<Map<String, Object>> infoNhanVienTableUserMapList = new ArrayList<>();
+
+						for (Users userzaaa : InfoNhanVienTableUser) {
+						    Map<String, Object> userMap = new HashMap<>();
+						    userMap.put("id", userzaaa.getId());
+						    userMap.put("hovaten", userzaaa.getHovaten());
+						    userMap.put("email", userzaaa.getEmail());
+						    userMap.put("chucvu_id", userzaaa.getChucvu_id());
+						    userMap.put("trangthai", userzaaa.getTrangthai());
+						    userMap.put("phongban_id", userzaaa.getPhongban_id());
+						    userMap.put("ca_lam_id", userzaaa.getCa_lam_id());
+						    userMap.put("ca_lam_toi", userzaaa.getCa_lam_toi());
+						    userMap.put("ma_xac_nhan", userzaaa.getMa_xac_nhan());
+						    userMap.put("zalo_id", userzaaa.getZalo_id());
+						    userMap.put("cham_cong_ngoai", userzaaa.getCham_cong_ngoai());
+						    userMap.put("so_ngay_nghi_phep", userzaaa.getSo_ngay_nghi_phep());
+						    userMap.put("phu_trach_phong", userzaaa.getPhu_trach_phong());
+						    userMap.put("created_at", userzaaa.getCreated_at());
+						    userMap.put("updated_at", userzaaa.getUpdated_at());
+						    userMap.put("groupId", userzaaa.getGroupId());
+						    userMap.put("userId", userzaaa.getUserId());
+
+						    infoNhanVienTableUserMapList.add(userMap);
+						}
+						
+						
+						
+						
+						
+						List<Map<String, Object>> list3 = new ArrayList<>();
+						long userIdOne = userlapNhanvien.getUserId(); // userId cần tìm
+						for (Map<String, Object> map : infoNhanVienTableUserMapList) {
+						    long user_id = (long) map.get("userId");
+						    if (user_id == userIdOne) {
+						        for (Map<String, Object> entry : gioLamMapList) {
+						            if (entry.containsKey("user_id") && (long) entry.get("user_id") == userIdOne) {
+						                Map<String, Object> combinedMap = new HashMap<>();
+						                combinedMap.putAll(map);
+						                combinedMap.putAll(entry);
+						                list3.add(combinedMap);
+						            }
+						        }
+						    }
+						}
+						
+						System.out.println("list3----------------------! "+ list3);
+						
+
+						List<Map<String, Object>> modifiedList = new ArrayList<>();
+						for (Map<String, Object> map : list3) {
+						    Map<String, Object> modifiedMap = new HashMap<>();
+						    for (Map.Entry<String, Object> entry : map.entrySet()) {
+						        String key = entry.getKey();
+						        Object value = entry.getValue();
+						        modifiedMap.put(key , value);
+						    }
+						    modifiedList.add(modifiedMap);
+						}
+
+						Gson gson = new Gson();
+						String json = gson.toJson(modifiedList);
+
+						System.out.println("list3 as JSON################## : " + json);
+						
+				
+						
+						
+			            
+			            System.out.println("userTungNhanVienlapNhanvien sau ----- "+ ListgiolamcanlayTungNhanVien);
+						
+			            
+			           //KẾT THÚC TEST
+			            
+			            
+			            
+			            
+			            
 						System.out.println("****************");
 
 					} catch (PortalException e1) {
@@ -681,7 +813,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			
 			System.out.println("AllGioLamNhanVienPhong 111111112222223333344444455555-----------"+AllGioLamNhanVienPhong);
 			renderRequest.setAttribute("AllGioLamNhanVienPhong", AllGioLamNhanVienPhong);
-			renderRequest.setAttribute("filteredUsersList", filteredUsersList);
+//			renderRequest.setAttribute("filteredUsersList", filteredUsersList);
 			
 		} catch (PortalException e1) {
 			// TODO Auto-generated catch block
@@ -827,4 +959,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 //	}
 	
 
+	
+	
+	
 }
