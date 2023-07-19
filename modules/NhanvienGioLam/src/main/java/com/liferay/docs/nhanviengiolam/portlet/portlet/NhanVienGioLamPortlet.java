@@ -573,8 +573,8 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		
 		
 	//	System.out.println("selectedMonth !!!!!!!1111111111111 " + thangNam);
-		System.out.println("year !!!!!!!1111111111111 " + year);
-		System.out.println("nam !!!!!!!1111111111111 " + nam);
+//		System.out.println("year !!!!!!!1111111111111 " + year);
+//		System.out.println("nam !!!!!!!1111111111111 " + nam);
 		if (thang == null && nam == null) {
 			System.out.println(" da vao dc day ");
 			Date currentDate = new Date();
@@ -608,6 +608,19 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 				e1.printStackTrace();
 			}
 		}
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
@@ -625,30 +638,23 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		}
 		Users user;
 		try {
-			List<Users> filteredUsersList = new ArrayList<>();
+			List<Users> filteredUsersListPhong = new ArrayList<>();
 			user = UsersLocalServiceUtil.getUsers(IdUser);
 			long targetPhongBanId = user.getPhongban_id();
 			for (Users userNhanVien : usersList) {
 			    if (userNhanVien.getPhongban_id() == targetPhongBanId) {
-			        filteredUsersList.add(userNhanVien);
+			    	filteredUsersListPhong.add(userNhanVien);
 			    }
 			}
+			//System.out.println("filteredUsersList############# "+ filteredUsersListPhong);
 			
 			
 			System.out.println("-----------------");
-			List<List<GioLam>> AllGioLamNhanVienPhong = new ArrayList<>();
-			for (Users userlapNhanvien : filteredUsersList) {
-				System.out.println("userlapNhanvien******** "+ userlapNhanvien);
-				System.out.println("userlapNhanvien.getUserId()******** "+ userlapNhanvien.getUserId());
-				
-				
-				
-				
-			//	user = UsersLocalServiceUtil.getUsers(userlapNhanvien.getUserId());
-				
-				
-				
+			//List<Map<String, Object>> AllGioLamNhanVienPhong = new ArrayList<>();
+			List<List<Map<String, Object>>> AllGioLamNhanVienPhong = new ArrayList<>();
+			for (Users userlapNhanvien : filteredUsersListPhong) {		
 				 List<GioLam> ListgiolamcanlayTungNhanVien = null;
+				 List<Map<String, Object>> newgioLamMapListNhanVien = new ArrayList<>();
 				if (thang == null && nam == null) {
 					System.out.println(" da vao dc day ");
 					Date currentDate = new Date();
@@ -661,8 +667,8 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 						List<GioLam> ListgiolamcanlayTungNhanVienByMonth = getGioLamByUserIdAndMonth(userlapNhanvien.getUserId(), strMonthHienTai, strNamHienTai);
 					//	 renderRequest.setAttribute("ListgiolamcanlayTungNhanVien", ListgiolamcanlayTungNhanVien);
 						ListgiolamcanlayTungNhanVien = ListgiolamcanlayTungNhanVienByMonth;
-						System.out.println("Listgiolamcanlay từng nhân viên phiên bản nulll "+ ListgiolamcanlayTungNhanVien);
-						System.out.println("****************");
+//						System.out.println("Listgiolamcanlay từng nhân viên phiên bản nulll "+ ListgiolamcanlayTungNhanVien);
+//						System.out.println("****************");
 						
 					} catch (PortalException e) {
 						// TODO Auto-generated catch block
@@ -670,23 +676,21 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 					}
 
 				} else {
+					
 					try {
 						List<GioLam> ListgiolamcanlayTungNhanVienByMonth  = getGioLamByUserIdAndMonth(userlapNhanvien.getUserId(), thang, nam);
 					//	renderRequest.setAttribute("ListgiolamcanlayTungNhanVien", ListgiolamcanlayTungNhanVien);
 			            ListgiolamcanlayTungNhanVien = ListgiolamcanlayTungNhanVienByMonth;
-
+//			            System.out.println("userlapNhanvien @@@@@"+ userlapNhanvien.getHovaten());
+//			            System.out.println("ListgiolamcanlayTungNhanVienByMonth @@@@@"+ ListgiolamcanlayTungNhanVienByMonth);
+ 
 			            
-			            // BẮT ĐẦU TEST
+			            // Bắt đầu test 
 			            
-			            
-			            System.out.println("userTungNhanVienlapNhanvien truoc ----- "+ ListgiolamcanlayTungNhanVien);
-			            
-			            
-			            List<Map<String, Object>> gioLamMapList = new ArrayList<>();
-
-			            for (GioLam gioLam : ListgiolamcanlayTungNhanVien) {
+			            for (GioLam gioLam : ListgiolamcanlayTungNhanVienByMonth) {
 			                Map<String, Object> gioLamMap = new HashMap<>();
 			                gioLamMap.put("id", gioLam.getId());
+			                gioLamMap.put("nameNhanVien", userlapNhanvien.getHovaten());
 			                gioLamMap.put("user_id", gioLam.getUser_id());
 			                gioLamMap.put("ngay_lam", gioLam.getNgay_lam());
 			                gioLamMap.put("ip", gioLam.getIp());
@@ -709,116 +713,39 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			                gioLamMap.put("created_at", gioLam.getCreated_at());
 			                gioLamMap.put("updated_at", gioLam.getUpdated_at());
 
-			                gioLamMapList.add(gioLamMap);
+			                newgioLamMapListNhanVien.add(gioLamMap);
 			            }
 			            
-			    		List<Users> InfoNhanVienTableUser = new ArrayList<>();
-			    		
-						for (Users userNhanVienTableuser : usersList) {
-						    if (userNhanVienTableuser.getUserId() == userlapNhanvien.getUserId()) {
-						    	InfoNhanVienTableUser.add(userNhanVienTableuser);
-						    }
-						}
-						
-						System.out.println("InfoNhanVienTableUser000000000000000000********** "+ InfoNhanVienTableUser);
-						
-						List<Map<String, Object>> infoNhanVienTableUserMapList = new ArrayList<>();
-
-						for (Users userzaaa : InfoNhanVienTableUser) {
-						    Map<String, Object> userMap = new HashMap<>();
-						    userMap.put("id", userzaaa.getId());
-						    userMap.put("hovaten", userzaaa.getHovaten());
-						    userMap.put("email", userzaaa.getEmail());
-						    userMap.put("chucvu_id", userzaaa.getChucvu_id());
-						    userMap.put("trangthai", userzaaa.getTrangthai());
-						    userMap.put("phongban_id", userzaaa.getPhongban_id());
-						    userMap.put("ca_lam_id", userzaaa.getCa_lam_id());
-						    userMap.put("ca_lam_toi", userzaaa.getCa_lam_toi());
-						    userMap.put("ma_xac_nhan", userzaaa.getMa_xac_nhan());
-						    userMap.put("zalo_id", userzaaa.getZalo_id());
-						    userMap.put("cham_cong_ngoai", userzaaa.getCham_cong_ngoai());
-						    userMap.put("so_ngay_nghi_phep", userzaaa.getSo_ngay_nghi_phep());
-						    userMap.put("phu_trach_phong", userzaaa.getPhu_trach_phong());
-						    userMap.put("created_at", userzaaa.getCreated_at());
-						    userMap.put("updated_at", userzaaa.getUpdated_at());
-						    userMap.put("groupId", userzaaa.getGroupId());
-						    userMap.put("userId", userzaaa.getUserId());
-
-						    infoNhanVienTableUserMapList.add(userMap);
-						}
-						
-						
-						
-						
-						
-						List<Map<String, Object>> list3 = new ArrayList<>();
-						long userIdOne = userlapNhanvien.getUserId(); // userId cần tìm
-						for (Map<String, Object> map : infoNhanVienTableUserMapList) {
-						    long user_id = (long) map.get("userId");
-						    if (user_id == userIdOne) {
-						        for (Map<String, Object> entry : gioLamMapList) {
-						            if (entry.containsKey("user_id") && (long) entry.get("user_id") == userIdOne) {
-						                Map<String, Object> combinedMap = new HashMap<>();
-						                combinedMap.putAll(map);
-						                combinedMap.putAll(entry);
-						                list3.add(combinedMap);
-						            }
-						        }
-						    }
-						}
-						
-						System.out.println("list3----------------------! "+ list3);
-						
-
-						List<Map<String, Object>> modifiedList = new ArrayList<>();
-						for (Map<String, Object> map : list3) {
-						    Map<String, Object> modifiedMap = new HashMap<>();
-						    for (Map.Entry<String, Object> entry : map.entrySet()) {
-						        String key = entry.getKey();
-						        Object value = entry.getValue();
-						        modifiedMap.put(key , value);
-						    }
-						    modifiedList.add(modifiedMap);
-						}
-
-						Gson gson = new Gson();
-						String json = gson.toJson(modifiedList);
-
-						System.out.println("list3 as JSON################## : " + json);
-						
-				
-						
-						
-			            
-			            System.out.println("userTungNhanVienlapNhanvien sau ----- "+ ListgiolamcanlayTungNhanVien);
-						
-			            
+			         //   System.out.println("newgioLamMapListNhanVien "+ newgioLamMapListNhanVien);
+			          
 			           //KẾT THÚC TEST
-			            
-			            
-			            
-			            
-			            
-						System.out.println("****************");
+
+						// System.out.println("****************");
 
 					} catch (PortalException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+					 
 				}
-				 if (ListgiolamcanlayTungNhanVien != null) {
-				        AllGioLamNhanVienPhong.add(ListgiolamcanlayTungNhanVien); // Thêm ListgiolamcanlayTungNhanVien vào AllGioLamNhanVienPhong
-				    }
+//				 if (ListgiolamcanlayTungNhanVien != null) {
+//				        AllGioLamNhanVienPhong.add(ListgiolamcanlayTungNhanVien); // Thêm ListgiolamcanlayTungNhanVien vào AllGioLamNhanVienPhong
+//				    }
+				 AllGioLamNhanVienPhong.add(newgioLamMapListNhanVien);
 			}
 			
-			System.out.println("AllGioLamNhanVienPhong 111111112222223333344444455555-----------"+AllGioLamNhanVienPhong);
-			renderRequest.setAttribute("AllGioLamNhanVienPhong", AllGioLamNhanVienPhong);
+			
+			
+			//System.out.println("AllGioLamNhanVienPhong 111111112222223333344444455555-----------"+AllGioLamNhanVienPhong);
+			renderRequest.setAttribute("allGioLamNhanVienPhong", AllGioLamNhanVienPhong);
 //			renderRequest.setAttribute("filteredUsersList", filteredUsersList);
 			
 		} catch (PortalException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		
 		
 		
 		
@@ -925,9 +852,9 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 
 	public List<GioLam> getGioLamByUserIdAndMonth(long userId, String month, String nam) throws PortalException {
 		List<GioLam> gioLamList = GioLamLocalServiceUtil.getGioLams(-1, -1);
-		System.out.println("userId " + userId);
-		System.out.println("month " + month);
-		System.out.println("nam " + nam);
+//		System.out.println("userId " + userId);
+//		System.out.println("month " + month);
+//		System.out.println("nam " + nam);
 		List<GioLam> filteredGioLamList = gioLamList.stream().filter(gioLam -> gioLam.getUser_id() == userId)
 				.filter(gioLam -> {
 					LocalDate ngayLam = gioLam.getNgay_lam().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -936,7 +863,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 					return gioLamMonth == Integer.parseInt(month) && gioLamYear == Integer.parseInt(nam);
 				}).collect(Collectors.toList());
 
-		System.out.println("filteredGioLamList " + filteredGioLamList);
+		//System.out.println("filteredGioLamList " + filteredGioLamList);
 		return filteredGioLamList;
 	}
 	

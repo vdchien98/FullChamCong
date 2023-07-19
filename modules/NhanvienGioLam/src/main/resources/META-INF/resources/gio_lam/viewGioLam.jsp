@@ -1,3 +1,4 @@
+<%@page import="java.util.Map"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="com.liferay.docs.chamcong.model.GioLam"%>
@@ -377,7 +378,7 @@
 					            int selectedMonth = Integer.parseInt(selectedMonthStr);
 					            int selectedYear = Integer.parseInt(selectedYearStr);
 					            int daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
-					            System.out.println("daysInMonth !!!!!!!1111111111111 " + daysInMonth);
+					          //  System.out.println("daysInMonth !!!!!!!1111111111111 " + daysInMonth);
 					            for (int i = 1; i <= daysInMonth; i++) {
 					                // Kiểm tra nếu ngày là thứ 7 hoặc chủ nhật
 					                boolean isWeekend = false;
@@ -426,50 +427,39 @@
 					    </tr>
 					</thead>
 		    <tbody>
-		        <% List<List<GioLam>> AllGioLamNhanVienPhong = (List<List<GioLam>>) renderRequest.getAttribute("AllGioLamNhanVienPhong");
-		        if (AllGioLamNhanVienPhong != null) {
-		            int stt = 1;
-		            for (List<GioLam> gioLamNhanVien : AllGioLamNhanVienPhong) {
-		                %>
-		                <tr>
-                <td><%= stt++ %></td>
-                <td><!-- Họ và tên --></td>
-               <%
-					int dayIndex = 0; // Biến đếm ngày trong tháng
-					for (GioLam gioLam : gioLamNhanVien) {
-					    // Lấy ngày từ gioLam và hiển thị vào thẻ <td>
-					    %>
-					    <td>
-					        <%
-					            Date ngaylam = gioLam.getNgay_lam();
-					            String checkInSang = gioLam.getCheck_in_sang();
-					            String checkOutSang = gioLam.getCheck_out_sang();
-					            String checkInChieu = gioLam.getCheck_in_chieu();
-					            String checkOutChieu = gioLam.getCheck_out_chieu();
-					            boolean isNullInSang = checkInSang.isEmpty();
-					            boolean isNullOutSang = checkOutSang.isEmpty();
-					            String backgroundColorSang = (isNullInSang || isNullOutSang) ? "#858796" : "#1cc88a";
-					            boolean isNullInChieu = checkInChieu.isEmpty();
-					            boolean isNullOutChieu = checkOutChieu.isEmpty();
-					            String backgroundColorChieu = (isNullInChieu || isNullOutChieu) ? "#858796" : "#1cc88a";
-					        %>
-					        <div class="border" style="height: 10px; background-color: <%=backgroundColorSang%>"
-					            title="Vào sáng: <%=checkInSang.isEmpty() ? "Null" : checkInSang%> --- Ra sáng: <%=checkOutSang.isEmpty() ? "Null" : checkOutSang%>">
-					            &nbsp;</div>
-					        <div class="border" style="height: 10px; background-color: <%=backgroundColorChieu%>"
-					            title="Vào chiều: <%=checkInChieu.isEmpty() ? "Null" : checkInChieu%> --- Ra chiều: <%=checkOutChieu.isEmpty() ? "Null" : checkOutChieu%>">
-					            &nbsp;</div>
-					    </td>
-					    <% 
-					        dayIndex++;
-					    } %>
-            </tr>
-		                <% } } %>
+		      <%
+    List<List<Map<String, Object>>> AllGioLamNhanVienPhong = (List<List<Map<String, Object>>>) renderRequest.getAttribute("allGioLamNhanVienPhong");
+    if (AllGioLamNhanVienPhong != null) {
+        int stt = 1;
+        for (List<Map<String, Object>> gioLamNhanVien : AllGioLamNhanVienPhong) {
+        	System.out.println("userlapNhanvien jspppppppppppp @@@@@"+ gioLamNhanVien);
+            for (Map<String, Object> gioLam : gioLamNhanVien) {
+            	System.out.println("userlapNhanvien jspppppppppppp phien 2 \\\\\\\\\\\33"+ gioLam);
+                %>
+                <tr>
+                    <td><%= stt++ %></td>
+                    <td><%= gioLam.get("nameNhanVien") %></td>
+                    <!-- Hiển thị các thuộc tính khác của gioLam -->
+                    <td><%= gioLam.get("check_in_sang") %></td>
+                    <td><%= gioLam.get("check_out_sang") %></td>
+                    <td><%= gioLam.get("check_in_chieu") %></td>
+                    <td><%= gioLam.get("check_out_chieu") %></td>
+                    <!-- Thêm các cột khác tương ứng với thuộc tính của gioLam -->
+                </tr>
+                <% 
+            }
+        } 
+    } 
+%>
+
 		    </tbody>
 		</table>
 	  </div>	
 	   
     	<%-- Kết thúc bảng 2 của nhân viên  --%>
+    	
+    	
+    	
  	</div>
 
 </div>
