@@ -373,7 +373,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
 
 			// Chuẩn bị dữ liệu gửi đi
-			String data = "refresh_token=sLJbmlEXzqJbTzYkcv2h9jfUugoakTu1l5tndgk1t3koGzc6a9Fp5SD5luooiVC5p5R0ai2Jr3J1UyQGshF39FbaxCNoffzVZr7MqVgsu7dNI-Nlq83lUkyB_u-EZvOrgYMVmf6Mk1EpPeUzhOAd2hHJlURUauPG_Kghiu6Ww2FCHxlRljNHGgJ8RR6p5aSWFJ3D12xHqjT4N-WeBjsqmarRxm57qztVM4pU7YFykxXrEVPEQhZLm6EFo5xgZyzJ"
+			String data = "refresh_token=bvS6pCrzAGYhj3kWfKnrQfIT0QAQPG1DyfuIa9LT3NVyX322fqqX6Ro6RCAoQHWEj9SJuzjOTZkNeLdG-tvl8A2rVuAjDGzifjbwfwOqNdx8zrksZWXNHT3z8w33SMH7aTvMtlTqPtketNsPm2ngUx_IJ9sOVNDUoBDf-iPJSX76ZnV0i7PlQEzDQHlCed38baLbcCkxHmdmMb6Zdg5HVVf9FVl_hKq4yKeL_llqMcwxJrojfTj57YOJaFKSr5CH7m"
 					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
 
 			// Gửi dữ liệu
@@ -559,20 +559,15 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
-		
-		
+
 		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		long userId = themeDisplay.getUserId();
 		renderRequest.setAttribute("userId", userId);
 		String year = renderRequest.getParameter("year");
 		String thang = renderRequest.getParameter("thang");
 		String nam = renderRequest.getParameter("nam");
-		
 
-		
-		
-		
-	//	System.out.println("selectedMonth !!!!!!!1111111111111 " + thangNam);
+		// System.out.println("selectedMonth !!!!!!!1111111111111 " + thangNam);
 //		System.out.println("year !!!!!!!1111111111111 " + year);
 //		System.out.println("nam !!!!!!!1111111111111 " + nam);
 		if (thang == null && nam == null) {
@@ -587,9 +582,9 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			String thangNam = strMonthHienTai + "-" + strNamHienTai;
 			renderRequest.setAttribute("thangNam", thangNam);
 			try {
-			
+
 				List<GioLam> Listgiolamcanlay = getGioLamByUserIdAndMonth(userId, strMonthHienTai, strNamHienTai);
-			//	System.out.println("Listgiolamcanlay phien ban nulll "+ Listgiolamcanlay);
+				// System.out.println("Listgiolamcanlay phien ban nulll "+ Listgiolamcanlay);
 				renderRequest.setAttribute("Listgiolamcanlay", Listgiolamcanlay);
 			} catch (PortalException e) {
 				// TODO Auto-generated catch block
@@ -602,32 +597,14 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 				renderRequest.setAttribute("thangNam", thangNam);
 				List<GioLam> Listgiolamcanlay = getGioLamByUserIdAndMonth(userId, thang, nam);
 				renderRequest.setAttribute("Listgiolamcanlay", Listgiolamcanlay);
-			//	System.out.println("giolamcanlay 1111112223345556 " + Listgiolamcanlay);
+				// System.out.println("giolamcanlay 1111112223345556 " + Listgiolamcanlay);
 			} catch (PortalException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		// Xử lý  bảng 2 chấm công của phòng
+		// Xử lý bảng 2 chấm công của phòng
 		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
 		int IdUser = 0;
 		for (Users users : usersList) {
@@ -640,21 +617,25 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		try {
 			List<Users> filteredUsersListPhong = new ArrayList<>();
 			user = UsersLocalServiceUtil.getUsers(IdUser);
+			System.out.println("phutrachphong " + user.getPhu_trach_phong());
+			renderRequest.setAttribute("phutrachphong", user.getPhu_trach_phong());
+			
+			System.out.println("user la 11111111111111111111122222222222222222222233333333333333333    "+ user);
 			long targetPhongBanId = user.getPhongban_id();
 			for (Users userNhanVien : usersList) {
-			    if (userNhanVien.getPhongban_id() == targetPhongBanId) {
-			    	filteredUsersListPhong.add(userNhanVien);
-			    }
+				if (userNhanVien.getPhongban_id() == targetPhongBanId) {
+					filteredUsersListPhong.add(userNhanVien);
+				}
 			}
-			//System.out.println("filteredUsersList############# "+ filteredUsersListPhong);
-			
-			
+			// System.out.println("filteredUsersList############# "+
+			// filteredUsersListPhong);
+
 			System.out.println("-----------------");
-			//List<Map<String, Object>> AllGioLamNhanVienPhong = new ArrayList<>();
+			// List<Map<String, Object>> AllGioLamNhanVienPhong = new ArrayList<>();
 			List<List<Map<String, Object>>> AllGioLamNhanVienPhong = new ArrayList<>();
-			for (Users userlapNhanvien : filteredUsersListPhong) {		
-				 List<GioLam> ListgiolamcanlayTungNhanVien = null;
-				 List<Map<String, Object>> newgioLamMapListNhanVien = new ArrayList<>();
+			for (Users userlapNhanvien : filteredUsersListPhong) {
+				List<GioLam> ListgiolamcanlayTungNhanVien = null;
+				List<Map<String, Object>> newgioLamMapListNhanVien = new ArrayList<>();
 				if (thang == null && nam == null) {
 					System.out.println(" da vao dc day ");
 					Date currentDate = new Date();
@@ -662,63 +643,64 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 					int namHienTai = currentDate.getYear() + 1900; // Lấy năm
 					String strMonthHienTai = String.valueOf(monthHienTai);
 					String strNamHienTai = String.valueOf(namHienTai);
+
+
 					try {
-					
-						List<GioLam> ListgiolamcanlayTungNhanVienByMonth = getGioLamByUserIdAndMonth(userlapNhanvien.getUserId(), strMonthHienTai, strNamHienTai);
-					//	 renderRequest.setAttribute("ListgiolamcanlayTungNhanVien", ListgiolamcanlayTungNhanVien);
+						List<GioLam> ListgiolamcanlayTungNhanVienByMonth = getGioLamByUserIdAndMonth(
+								userlapNhanvien.getUserId(), strMonthHienTai, strNamHienTai);
+						// renderRequest.setAttribute("ListgiolamcanlayTungNhanVien",
+						// ListgiolamcanlayTungNhanVien);
 						ListgiolamcanlayTungNhanVien = ListgiolamcanlayTungNhanVienByMonth;
-//						System.out.println("Listgiolamcanlay từng nhân viên phiên bản nulll "+ ListgiolamcanlayTungNhanVien);
-//						System.out.println("****************");
-						
-					} catch (PortalException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+						System.out.println("userlapNhanvien @@@@@" + userlapNhanvien.getHovaten());
+						System.out.println(
+								"ListgiolamcanlayTungNhanVienByMonth @@@@@" + ListgiolamcanlayTungNhanVienByMonth);
 
-				} else {
-					
-					try {
-						List<GioLam> ListgiolamcanlayTungNhanVienByMonth  = getGioLamByUserIdAndMonth(userlapNhanvien.getUserId(), thang, nam);
-					//	renderRequest.setAttribute("ListgiolamcanlayTungNhanVien", ListgiolamcanlayTungNhanVien);
-			            ListgiolamcanlayTungNhanVien = ListgiolamcanlayTungNhanVienByMonth;
-//			            System.out.println("userlapNhanvien @@@@@"+ userlapNhanvien.getHovaten());
-//			            System.out.println("ListgiolamcanlayTungNhanVienByMonth @@@@@"+ ListgiolamcanlayTungNhanVienByMonth);
- 
-			            
-			            // Bắt đầu test 
-			            
-			            for (GioLam gioLam : ListgiolamcanlayTungNhanVienByMonth) {
-			                Map<String, Object> gioLamMap = new HashMap<>();
-			                gioLamMap.put("id", gioLam.getId());
-			                gioLamMap.put("nameNhanVien", userlapNhanvien.getHovaten());
-			                gioLamMap.put("user_id", gioLam.getUser_id());
-			                gioLamMap.put("ngay_lam", gioLam.getNgay_lam());
-			                gioLamMap.put("ip", gioLam.getIp());
-			                gioLamMap.put("check_in_sang", gioLam.getCheck_in_sang());
-			                gioLamMap.put("check_out_sang", gioLam.getCheck_out_sang());
-			                gioLamMap.put("di_muon_sang", gioLam.getDi_muon_sang());
-			                gioLamMap.put("ve_som_sang", gioLam.getVe_som_sang());
-			                gioLamMap.put("gio_cham_cong_sang", gioLam.getGio_cham_cong_sang());
-			                gioLamMap.put("check_in_chieu", gioLam.getCheck_in_chieu());
-			                gioLamMap.put("check_out_chieu", gioLam.getCheck_out_chieu());
-			                gioLamMap.put("di_muon_chieu", gioLam.getDi_muon_chieu());
-			                gioLamMap.put("ve_som_chieu", gioLam.getVe_som_chieu());
-			                gioLamMap.put("gio_cham_cong_chieu", gioLam.getGio_cham_cong_chieu());
-			                gioLamMap.put("check_in_toi", gioLam.getCheck_in_toi());
-			                gioLamMap.put("check_out_toi", gioLam.getCheck_out_toi());
-			                gioLamMap.put("di_muon_toi", gioLam.getDi_muon_toi());
-			                gioLamMap.put("ve_som_toi", gioLam.getVe_som_toi());
-			                gioLamMap.put("diem", gioLam.getDiem());
-			                gioLamMap.put("trangthai", gioLam.getTrangthai());
-			                gioLamMap.put("created_at", gioLam.getCreated_at());
-			                gioLamMap.put("updated_at", gioLam.getUpdated_at());
+						// Bắt đầu test
+						String nameNhanVien = userlapNhanvien.getHovaten();
 
-			                newgioLamMapListNhanVien.add(gioLamMap);
-			            }
-			            
-			         //   System.out.println("newgioLamMapListNhanVien "+ newgioLamMapListNhanVien);
-			          
-			           //KẾT THÚC TEST
+						if (ListgiolamcanlayTungNhanVienByMonth.isEmpty()) {
+							Map<String, Object> gioLamMap = new HashMap<>();
+							gioLamMap.put("nameNhanVien", nameNhanVien); // Giá trị mặc định khi danh sách rỗng
+
+							newgioLamMapListNhanVien.add(gioLamMap);
+						} 
+						for (GioLam gioLam : ListgiolamcanlayTungNhanVienByMonth) {
+							Map<String, Object> gioLamMap = new HashMap<>();
+							gioLamMap.put("id", gioLam.getId());
+
+//	                gioLamMap.put("id", gioLam.getId());
+							gioLamMap.put("nameNhanVien", nameNhanVien);
+							gioLamMap.put("user_id", gioLam.getUser_id());
+							gioLamMap.put("ngay_lam", gioLam.getNgay_lam());
+							gioLamMap.put("ip", gioLam.getIp());
+							gioLamMap.put("check_in_sang", gioLam.getCheck_in_sang());
+							gioLamMap.put("check_out_sang", gioLam.getCheck_out_sang());
+							gioLamMap.put("di_muon_sang", gioLam.getDi_muon_sang());
+							gioLamMap.put("ve_som_sang", gioLam.getVe_som_sang());
+							gioLamMap.put("gio_cham_cong_sang", gioLam.getGio_cham_cong_sang());
+							gioLamMap.put("check_in_chieu", gioLam.getCheck_in_chieu());
+							gioLamMap.put("check_out_chieu", gioLam.getCheck_out_chieu());
+							gioLamMap.put("di_muon_chieu", gioLam.getDi_muon_chieu());
+							gioLamMap.put("ve_som_chieu", gioLam.getVe_som_chieu());
+							gioLamMap.put("gio_cham_cong_chieu", gioLam.getGio_cham_cong_chieu());
+							gioLamMap.put("check_in_toi", gioLam.getCheck_in_toi());
+							gioLamMap.put("check_out_toi", gioLam.getCheck_out_toi());
+							gioLamMap.put("di_muon_toi", gioLam.getDi_muon_toi());
+							gioLamMap.put("ve_som_toi", gioLam.getVe_som_toi());
+							gioLamMap.put("diem", gioLam.getDiem());
+							gioLamMap.put("trangthai", gioLam.getTrangthai());
+							gioLamMap.put("created_at", gioLam.getCreated_at());
+							gioLamMap.put("updated_at", gioLam.getUpdated_at());
+							System.out.println("gioLamMap " + gioLamMap);
+							newgioLamMapListNhanVien.add(gioLamMap);
+
+						}
+
+						System.out.println("newgioLamMapListNhanVien " + newgioLamMapListNhanVien);
+
+						System.out.println("----------------------------------------------------- ");
+
+						// KẾT THÚC TEST
 
 						// System.out.println("****************");
 
@@ -726,40 +708,91 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					 
+
+				
+
+				} else {
+
+					try {
+						List<GioLam> ListgiolamcanlayTungNhanVienByMonth = getGioLamByUserIdAndMonth(
+								userlapNhanvien.getUserId(), thang, nam);
+						// renderRequest.setAttribute("ListgiolamcanlayTungNhanVien",
+						// ListgiolamcanlayTungNhanVien);
+						ListgiolamcanlayTungNhanVien = ListgiolamcanlayTungNhanVienByMonth;
+						System.out.println("userlapNhanvien @@@@@" + userlapNhanvien.getHovaten());
+						System.out.println(
+								"ListgiolamcanlayTungNhanVienByMonth @@@@@" + ListgiolamcanlayTungNhanVienByMonth);
+
+						// Bắt đầu test
+						String nameNhanVien = userlapNhanvien.getHovaten();
+
+						if (ListgiolamcanlayTungNhanVienByMonth.isEmpty()) {
+							Map<String, Object> gioLamMap = new HashMap<>();
+							gioLamMap.put("nameNhanVien", nameNhanVien); // Giá trị mặc định khi danh sách rỗng
+
+							newgioLamMapListNhanVien.add(gioLamMap);
+						} 
+						for (GioLam gioLam : ListgiolamcanlayTungNhanVienByMonth) {
+							Map<String, Object> gioLamMap = new HashMap<>();
+							gioLamMap.put("id", gioLam.getId());
+
+//	                gioLamMap.put("id", gioLam.getId());
+							gioLamMap.put("nameNhanVien", nameNhanVien);
+							gioLamMap.put("user_id", gioLam.getUser_id());
+							gioLamMap.put("ngay_lam", gioLam.getNgay_lam());
+							gioLamMap.put("ip", gioLam.getIp());
+							gioLamMap.put("check_in_sang", gioLam.getCheck_in_sang());
+							gioLamMap.put("check_out_sang", gioLam.getCheck_out_sang());
+							gioLamMap.put("di_muon_sang", gioLam.getDi_muon_sang());
+							gioLamMap.put("ve_som_sang", gioLam.getVe_som_sang());
+							gioLamMap.put("gio_cham_cong_sang", gioLam.getGio_cham_cong_sang());
+							gioLamMap.put("check_in_chieu", gioLam.getCheck_in_chieu());
+							gioLamMap.put("check_out_chieu", gioLam.getCheck_out_chieu());
+							gioLamMap.put("di_muon_chieu", gioLam.getDi_muon_chieu());
+							gioLamMap.put("ve_som_chieu", gioLam.getVe_som_chieu());
+							gioLamMap.put("gio_cham_cong_chieu", gioLam.getGio_cham_cong_chieu());
+							gioLamMap.put("check_in_toi", gioLam.getCheck_in_toi());
+							gioLamMap.put("check_out_toi", gioLam.getCheck_out_toi());
+							gioLamMap.put("di_muon_toi", gioLam.getDi_muon_toi());
+							gioLamMap.put("ve_som_toi", gioLam.getVe_som_toi());
+							gioLamMap.put("diem", gioLam.getDiem());
+							gioLamMap.put("trangthai", gioLam.getTrangthai());
+							gioLamMap.put("created_at", gioLam.getCreated_at());
+							gioLamMap.put("updated_at", gioLam.getUpdated_at());
+							System.out.println("gioLamMap " + gioLamMap);
+							newgioLamMapListNhanVien.add(gioLamMap);
+
+						}
+
+						System.out.println("newgioLamMapListNhanVien " + newgioLamMapListNhanVien);
+
+						System.out.println("----------------------------------------------------- ");
+
+						// KẾT THÚC TEST
+
+						// System.out.println("****************");
+
+					} catch (PortalException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
 				}
 //				 if (ListgiolamcanlayTungNhanVien != null) {
 //				        AllGioLamNhanVienPhong.add(ListgiolamcanlayTungNhanVien); // Thêm ListgiolamcanlayTungNhanVien vào AllGioLamNhanVienPhong
 //				    }
-				 AllGioLamNhanVienPhong.add(newgioLamMapListNhanVien);
+				AllGioLamNhanVienPhong.add(newgioLamMapListNhanVien);
 			}
-			
-			
-			
-			//System.out.println("AllGioLamNhanVienPhong 111111112222223333344444455555-----------"+AllGioLamNhanVienPhong);
+
+			// System.out.println("AllGioLamNhanVienPhong
+			// 111111112222223333344444455555-----------"+AllGioLamNhanVienPhong);
 			renderRequest.setAttribute("allGioLamNhanVienPhong", AllGioLamNhanVienPhong);
 //			renderRequest.setAttribute("filteredUsersList", filteredUsersList);
-			
+
 		} catch (PortalException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 
 		try {
 			// Lấy ngày, tháng và giờ hiện tại từ máy tính
@@ -863,11 +896,10 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 					return gioLamMonth == Integer.parseInt(month) && gioLamYear == Integer.parseInt(nam);
 				}).collect(Collectors.toList());
 
-		//System.out.println("filteredGioLamList " + filteredGioLamList);
+		// System.out.println("filteredGioLamList " + filteredGioLamList);
 		return filteredGioLamList;
 	}
-	
-	
+
 //	public List<GioLam> getAllofGioLamByNhanVien(long userId, String month, String nam) throws PortalException {
 //		List<GioLam> gioLamList = GioLamLocalServiceUtil.getGioLams(-1, -1);
 //		System.out.println("userId " + userId);
@@ -884,9 +916,5 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 //		System.out.println("filteredGioLamList " + filteredGioLamList);
 //		return filteredGioLamList;
 //	}
-	
 
-	
-	
-	
 }
