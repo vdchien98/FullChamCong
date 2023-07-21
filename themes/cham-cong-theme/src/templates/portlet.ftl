@@ -32,7 +32,7 @@
 						<@liferay_ui["menu"] menu=portletTitleMenu />
 					</menu>
 				</#foreach>
-
+   				 <#--
 				<#if portlet_configuration_icons?has_content>
 					<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_${portlet_id}" type="toolbar">
 						<@liferay_frontend["icon-options"]
@@ -41,6 +41,7 @@
 						/>
 					</menu>
 				</#if>
+				-->
 			</header>
 
 			<#assign portlet_content_css_class = portlet_content_css_class + " portlet-content-editable" />

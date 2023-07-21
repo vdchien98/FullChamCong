@@ -74,9 +74,9 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		System.out.println("UserId "+ userId);
 	//	PortletSession portletSession = actionRequest.getPortletSession();
 //		portletSession.setAttribute("userId", userId, PortletSession.APPLICATION_SCOPE);
-	AuthenticatedSessionManagerUtil.login(request, response, login, password, rememberMe, authType);
+	    AuthenticatedSessionManagerUtil.login(request, response, login, password, rememberMe, authType);
 		actionRequest.setAttribute("userId", String.valueOf(userId));
-		actionResponse.sendRedirect("/home");
-
+		actionResponse.sendRedirect("/nhanvien/gio-lam");
+        
 	}
 }

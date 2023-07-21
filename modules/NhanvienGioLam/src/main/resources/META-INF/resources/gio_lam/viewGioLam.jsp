@@ -152,6 +152,7 @@ px
 						<th style="padding: 0;" class="bg-info">T5</th>
 						<th style="padding: 0;" class="bg-info">T6</th>
 						<th style="padding: 0;" class="bg-warning">T7</th>
+						
 						<th style="padding: 0;" class="bg-warning">CN</th>
 
 					</tr>
@@ -386,7 +387,7 @@ px
 			
 		<% 
     int phutrachphong = (int) renderRequest.getAttribute("phutrachphong");
-    System.out.println("phutrachphong jsp jjjjjjjjjjjjjjjjjjjjjjjj " + phutrachphong);
+   //System.out.println("phutrachphong jsp jjjjjjjjjjjjjjjjjjjjjjjj " + phutrachphong);
     
     if (phutrachphong == 1) {
 				%>
@@ -398,12 +399,6 @@ px
 							            <tr>
 							                <th style="padding: 0;" class="text-center stt">STT</th>
 							                <th style="padding: 0;" class="text-center">Họ và tên</th>
-							                
-							                
-							                
-							                
-							                
-							                
 							                <% if(selectedMonthStr != null && selectedYearStr != null) {
 							                    int selectedMonth = Integer.parseInt(selectedMonthStr);
 							                    int selectedYear = Integer.parseInt(selectedYearStr);
@@ -417,7 +412,7 @@ px
 							                            isWeekend = true;
 							                        }
 							                %>
-							                <th style="padding: 0px; width: 0px;" class="text-center sorting_disabled <%= isWeekend ? "bg-warning" : "" %>" rowspan="1" colspan="1" aria-label="<%= i %>">
+							                <th style="padding: 0px; width: 20px;" class="text-center sorting_disabled <%= isWeekend ? "bg-warning" : "" %>" rowspan="1" colspan="1" aria-label="<%= i %>">
 							                    <%= i %>
 							                </th>
 							                <% } } else {
@@ -450,7 +445,7 @@ px
 							        <tbody>
 				    <% 
 						List<List<Map<String, Object>>> AllGioLamNhanVienPhong = (List<List<Map<String, Object>>>) renderRequest.getAttribute("allGioLamNhanVienPhong");
-						System.out.println("AllGioLamNhanVienPhong 11111111222222333334444445555 JSP-----------"+AllGioLamNhanVienPhong);
+						// System.out.println("AllGioLamNhanVienPhong 11111111222222333334444445555 JSP-----------"+AllGioLamNhanVienPhong);
 						
 						if (AllGioLamNhanVienPhong != null) {
 						    int stt = 1;
@@ -478,7 +473,7 @@ px
 						            	        isWeekend = true;
 						            	    }
 						            	    %>
-						            	 <td style="padding: 0px; width: 0px;" class="text-center sorting_disabled <%= isWeekend ? "" : "" %>" rowspan="1" colspan="1" aria-label="<%= i %>">
+						            	 <td style="padding: 0px; width: 20px;" class="text-center sorting_disabled <%= isWeekend ? "" : "" %>" rowspan="1" colspan="1" aria-label="<%= i %>">
 									    <% if (!isWeekend) { %>
 									        <% if (isAllRed) { %>
 									            <div class="bg-danger border" style="height: 10px" data-toggle="tooltip" data-html="true" title="No data">&nbsp;</div>
@@ -703,12 +698,6 @@ px
 		format: "dd/mm/yyyy"
 	};
 }(jQuery));
-
-
-
-
-
-
 
 
 

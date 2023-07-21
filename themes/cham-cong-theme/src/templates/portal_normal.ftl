@@ -39,89 +39,22 @@
 <@liferay.control_menu />
 
 <div class="container-fluid position-relative" id="wrapper">
+<#assign
+	time_zone = user.getTimeZoneId()
+	is_login_redirect_required = portalUtil.isLoginRedirectRequired(request)
+	is_signed_in = theme_display.isSignedIn()
+	group_id = theme_display.getScopeGroupId()
+/>
 
-<section id="sidebar">
-		<a href="#" class="brand">
-			<span class="text">Chấm Công</span>
-		</a>
-		<ul class="side-menu top">
-			<li class="active">
-				<a href="/home">
-					<i class='bx bxs-dashboard' ></i>
-					<span class="text">Home</span>
-				</a>
-			</li>
-			<li class="active">
-				<a href="/login">
-					<i class='bx bxs-dashboard' ></i>
-					<span class="text">Login</span>
-				</a>
-			</li>
-				<li class="active">
-				<a href="/phong-ban">
-					<i class='bx bxs-dashboard' ></i>
-					<span class="text">Phòng Ban</span>
-				</a>
-			</li>
-				<li class="active">
-				<a href="/chuc-vu">
-					<i class='bx bxs-dashboard' ></i>
-					<span class="text">Chức Vụ</span>
-				</a>
-			</li>
-			</li>
-				<li class="active">
-				<a href="/ca-lam-viec">
-					<i class='bx bxs-dashboard' ></i>
-					<span class="text">Ca Làm Việc</span>
-				</a>
-			</li>
-			</li>
-				<li class="active">
-				<a href="/ngay-nghi-le">
-					<i class='bx bxs-dashboard' ></i>
-					<span class="text">Ngày Nghỉ Lễ</span>
-				</a>
-			</li>
-			
-			
-			
-			<li class="active">
-				<a href="/nhanvien/gio-lam" >
-					<i class='bx bxs-dashboard' ></i>
-					<span class="text">Giờ Làm Nhân Viên</span>
-				</a>
-			</li>
-			
-			
-			
-			
-			<li>
-				<a href="#">
-					<i class='bx bxs-shopping-bag-alt' ></i>
-					<span class="text"></span>
-				</a>
-			</li>
-		</ul>
-		<ul class="side-menu">
-			<li>
-				<a href="#">
-					<i class='bx bxs-cog' ></i>
-					<span class="text">Settings</span>
-				</a>
-			</li>
-			<li>
-				<a href="/c/portal/logout" class="logout">
-					<i class='bx bxs-log-out-circle' ></i>
-					<span class="text">Đăng Xuất</span>
-				</a>		
-			</li>
-		</ul>
-	</section>
-	
-	
-	
-	
+
+<#if is_signed_in>
+		<section id="sidebar">
+			<@liferay_portlet["runtime"]
+				defaultPreferences="<portlet-preferences></portlet-preferences>"
+				portletProviderAction=portletProviderAction.VIEW
+				portletName="com_liferay_docs_sidebar_portlet_SidebarPortlet"/>
+		</section>
+</#if>
 	<section id="content">
 		<h2 class="hide-accessible sr-only" role="heading" aria-level="1">${htmlUtil.escape(the_title)}</h2>
 

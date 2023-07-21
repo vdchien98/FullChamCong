@@ -96,7 +96,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		ServiceContext serviceContext = new ServiceContext();
 		long userId = themeDisplay.getUserId();
-		System.out.println("userId la *******" + userId);
+		//System.out.println("userId la *******" + userId);
 		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
 		int IdUser = 0;
 		for (Users users : usersList) {
@@ -108,13 +108,13 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		try {
 			// tao ma_xac_nhan va luu vao data
 			Users user = UsersLocalServiceUtil.getUsers(IdUser);
-			System.out.println(user);
+			//System.out.println(user);
 			int id = user.getId();
-			System.out.println("id " + id);
+			//System.out.println("id " + id);
 			Random random = new Random();
 			int ma_xac_nhan = random.nextInt(9000) + 1000; // Tạo số ngẫu nhiên có 4 chữ số
 			String ma_xac_nhan_string = "" + ma_xac_nhan;
-			System.out.println("randomNumber " + ma_xac_nhan);
+			//System.out.println("randomNumber " + ma_xac_nhan);
 			UsersLocalServiceUtil.updateUser(id, ma_xac_nhan_string, serviceContext);
 			String message = ma_xac_nhan_string
 					+ " : M\u00E3 x\u00E1c nh\u1EADn ch\u1EA5m c\u00F4ng t\u1EEB H\u1EC7 th\u1ED1ng ch\u1EA5m c\u00F4ng, giao vi\u1EC7c.";
@@ -130,7 +130,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 	public void sendMaXacThucToZalo(String message, String zalo_id) throws IOException, PortletException {
 		// System.out.println("da vao dc sendMaXacThucToZalo"+ message);
 
-		// getAccessTokenZaloNew();
+	    //getAccessTokenZaloNew();
 
 		JsonObject user_id_info = getInfoZalo(zalo_id);
 		System.out.println("user_id_info" + user_id_info);
@@ -236,7 +236,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		JSONObject data = JSONFactoryUtil.createJSONObject();
 		data.put("user_id", zalo_id);
 		String dataString = data.toString();
-		System.out.println("dataString $$$$$$$ " + dataString);
+		// System.out.println("dataString $$$$$$$ " + dataString);
 
 		String zalo_key = (String) WebCachePoolUtil.get("access_token_key", access_token_value);
 		System.out.println("zalo_key 9999999995555555     " + zalo_key);
@@ -269,7 +269,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 
 			// Giải mã phản hồi từ JSON thành đối tượng
 			JsonObject jsonObject = new Gson().fromJson(response.toString(), JsonObject.class);
-			System.out.println("jsonObject: " + jsonObject);
+		//	System.out.println("jsonObject: " + jsonObject);
 
 			// Trả về kết quả
 			return jsonObject;
@@ -373,7 +373,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
 
 			// Chuẩn bị dữ liệu gửi đi
-			String data = "refresh_token=bvS6pCrzAGYhj3kWfKnrQfIT0QAQPG1DyfuIa9LT3NVyX322fqqX6Ro6RCAoQHWEj9SJuzjOTZkNeLdG-tvl8A2rVuAjDGzifjbwfwOqNdx8zrksZWXNHT3z8w33SMH7aTvMtlTqPtketNsPm2ngUx_IJ9sOVNDUoBDf-iPJSX76ZnV0i7PlQEzDQHlCed38baLbcCkxHmdmMb6Zdg5HVVf9FVl_hKq4yKeL_llqMcwxJrojfTj57YOJaFKSr5CH7m"
+			String data = "refresh_token=icYQtgR_hrwEIwUopixpFB5YdR3nvuORrs6EWlxVYo7STQwMoCMkIPrp-TRJufLOcs65yRdJ-csxLy_3b_ViT8bCvfJFiOmpYY3ZlCIZz1Fa7UkVx9_zAFmNaucXviuglJJczvNZpHQ4Dysmehl44van_hVmuzizxb7Itw_Ul4dkVyFSrlkXCCV2AXcgK2cEllG54gjtFSVUwp4f_cqhizJuNN6VOJVAt_jrT9iu8A2L_ZmdnHS_q2PTxUzOlz6NIG"
 					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
 
 			// Gửi dữ liệu
@@ -420,7 +420,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			tokenPairs.add(refreshTokenPair);
 			// In danh sách các cặp khóa-giá trị
 			// In danh sách các cặp khóa-giá trị
-			System.out.println("tokenPairs la 111111112222222" + tokenPairs);
+			//System.out.println("tokenPairs la 111111112222222" + tokenPairs);
 			for (Map<String, String> tokenPair : tokenPairs) {
 				for (Map.Entry<String, String> entry : tokenPair.entrySet()) {
 					String key = entry.getKey();
@@ -453,14 +453,14 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		String popupCapchaValue = ParamUtil.getString(request, "popupCapchaValue");
 		int statusHienThiNutValue = ParamUtil.getInteger(request, "statusHienThiNut");
 
-		System.out.println("popupCapchaValue " + popupCapchaValue);
-		System.out.println("statusHienThiNut &&&&&& " + statusHienThiNutValue);
+//		System.out.println("popupCapchaValue " + popupCapchaValue);
+//		System.out.println("statusHienThiNut &&&&&& " + statusHienThiNutValue);
 		response.sendRedirect("/nhanvien/gio-lam");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		ServiceContext serviceContext = new ServiceContext();
 		long userId = themeDisplay.getUserId();
-		System.out.println("userId la *******" + userId);
+	//	System.out.println("userId la *******" + userId);
 		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
 		int IdUser = 0;
 		for (Users users : usersList) {
@@ -472,16 +472,16 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		try {
 			// tao ma_xac_nhan va luu vao data
 			Users user = UsersLocalServiceUtil.getUsers(IdUser);
-			System.out.println("*****************" + user);
+			//System.out.println("*****************" + user);
 			int id = user.getId();
 			System.out.println("id " + id);
 			long user_id = user.getUserId();
-			System.out.println("user_id ***** " + user_id);
-			System.out.println("ma xac nhan " + user.getMa_xac_nhan());
+//			System.out.println("user_id ***** " + user_id);
+//			System.out.println("ma xac nhan " + user.getMa_xac_nhan());
 			if (user.getMa_xac_nhan().equals(popupCapchaValue)) {
 				LocalDate currentDate = LocalDate.now();
 				Date dateNgayHienTai = Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-				System.out.println("Ngay hien tai: " + dateNgayHienTai);
+				//System.out.println("Ngay hien tai: " + dateNgayHienTai);
 				// Lấy địa chỉ IP của thiết bị
 				HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(request);
 				String ipAddress = httpServletRequest.getRemoteAddr();
@@ -492,11 +492,11 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 				LocalTime localTime = currentDateTime.toLocalTime();
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 				String formattedTime = localTime.format(formatter);
-				System.out.println("Gio, phut va giay hien tai theo mui gio +7: " + formattedTime);
+				//System.out.println("Gio, phut va giay hien tai theo mui gio +7: " + formattedTime);
 				GioLam userGioLam = GioLamLocalServiceUtil.getGioLamByUserId(user_id, dateNgayHienTai);
 
 				if (userGioLam == null) {
-					System.out.println("Khong co userGioLam");
+					//System.out.println("Khong co userGioLam");
 					if (statusHienThiNutValue == 1) {
 						GioLamLocalServiceUtil.addGioLam(0, 0, statusHienThiNutValue, user_id, dateNgayHienTai,
 								ipAddress, formattedTime, "", 0, 0, 0, "", "", 0, 0, 0, "", "", 0, 0, 0, 0,
@@ -566,23 +566,16 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		String year = renderRequest.getParameter("year");
 		String thang = renderRequest.getParameter("thang");
 		String nam = renderRequest.getParameter("nam");
-
-		// System.out.println("selectedMonth !!!!!!!1111111111111 " + thangNam);
-//		System.out.println("year !!!!!!!1111111111111 " + year);
-//		System.out.println("nam !!!!!!!1111111111111 " + nam);
 		if (thang == null && nam == null) {
-			System.out.println(" da vao dc day ");
+			//System.out.println(" da vao dc day ");
 			Date currentDate = new Date();
 			int monthHienTai = currentDate.getMonth() + 1; // Lấy tháng
 			int namHienTai = currentDate.getYear() + 1900; // Lấy năm
 			String strMonthHienTai = String.valueOf(monthHienTai);
 			String strNamHienTai = String.valueOf(namHienTai);
-			System.out.println("Thang hien tai: " + monthHienTai);
-			System.out.println("Nam hien tai: " + namHienTai);
 			String thangNam = strMonthHienTai + "-" + strNamHienTai;
 			renderRequest.setAttribute("thangNam", thangNam);
 			try {
-
 				List<GioLam> Listgiolamcanlay = getGioLamByUserIdAndMonth(userId, strMonthHienTai, strNamHienTai);
 				// System.out.println("Listgiolamcanlay phien ban nulll "+ Listgiolamcanlay);
 				renderRequest.setAttribute("Listgiolamcanlay", Listgiolamcanlay);
@@ -590,7 +583,6 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		} else {
 			try {
 				String thangNam = thang + "-" + nam;
@@ -617,10 +609,10 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		try {
 			List<Users> filteredUsersListPhong = new ArrayList<>();
 			user = UsersLocalServiceUtil.getUsers(IdUser);
-			System.out.println("phutrachphong " + user.getPhu_trach_phong());
+			//System.out.println("phutrachphong " + user.getPhu_trach_phong());
 			renderRequest.setAttribute("phutrachphong", user.getPhu_trach_phong());
 			
-			System.out.println("user la 11111111111111111111122222222222222222222233333333333333333    "+ user);
+			//System.out.println("user la 11111111111111111111122222222222222222222233333333333333333    "+ user);
 			long targetPhongBanId = user.getPhongban_id();
 			for (Users userNhanVien : usersList) {
 				if (userNhanVien.getPhongban_id() == targetPhongBanId) {
@@ -630,14 +622,14 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			// System.out.println("filteredUsersList############# "+
 			// filteredUsersListPhong);
 
-			System.out.println("-----------------");
+			//System.out.println("-----------------");
 			// List<Map<String, Object>> AllGioLamNhanVienPhong = new ArrayList<>();
 			List<List<Map<String, Object>>> AllGioLamNhanVienPhong = new ArrayList<>();
 			for (Users userlapNhanvien : filteredUsersListPhong) {
 				List<GioLam> ListgiolamcanlayTungNhanVien = null;
 				List<Map<String, Object>> newgioLamMapListNhanVien = new ArrayList<>();
 				if (thang == null && nam == null) {
-					System.out.println(" da vao dc day ");
+				//	System.out.println(" da vao dc day ");
 					Date currentDate = new Date();
 					int monthHienTai = currentDate.getMonth() + 1; // Lấy tháng
 					int namHienTai = currentDate.getYear() + 1900; // Lấy năm
@@ -651,9 +643,8 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 						// renderRequest.setAttribute("ListgiolamcanlayTungNhanVien",
 						// ListgiolamcanlayTungNhanVien);
 						ListgiolamcanlayTungNhanVien = ListgiolamcanlayTungNhanVienByMonth;
-						System.out.println("userlapNhanvien @@@@@" + userlapNhanvien.getHovaten());
-						System.out.println(
-								"ListgiolamcanlayTungNhanVienByMonth @@@@@" + ListgiolamcanlayTungNhanVienByMonth);
+						// System.out.println("userlapNhanvien @@@@@" + userlapNhanvien.getHovaten());
+						//System.out.println("ListgiolamcanlayTungNhanVienByMonth @@@@@" + ListgiolamcanlayTungNhanVienByMonth);
 
 						// Bắt đầu test
 						String nameNhanVien = userlapNhanvien.getHovaten();
@@ -691,14 +682,14 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 							gioLamMap.put("trangthai", gioLam.getTrangthai());
 							gioLamMap.put("created_at", gioLam.getCreated_at());
 							gioLamMap.put("updated_at", gioLam.getUpdated_at());
-							System.out.println("gioLamMap " + gioLamMap);
+							//System.out.println("gioLamMap " + gioLamMap);
 							newgioLamMapListNhanVien.add(gioLamMap);
 
 						}
 
-						System.out.println("newgioLamMapListNhanVien " + newgioLamMapListNhanVien);
+					//	System.out.println("newgioLamMapListNhanVien " + newgioLamMapListNhanVien);
 
-						System.out.println("----------------------------------------------------- ");
+						//System.out.println("----------------------------------------------------- ");
 
 						// KẾT THÚC TEST
 
@@ -719,9 +710,8 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 						// renderRequest.setAttribute("ListgiolamcanlayTungNhanVien",
 						// ListgiolamcanlayTungNhanVien);
 						ListgiolamcanlayTungNhanVien = ListgiolamcanlayTungNhanVienByMonth;
-						System.out.println("userlapNhanvien @@@@@" + userlapNhanvien.getHovaten());
-						System.out.println(
-								"ListgiolamcanlayTungNhanVienByMonth @@@@@" + ListgiolamcanlayTungNhanVienByMonth);
+						//System.out.println("userlapNhanvien @@@@@" + userlapNhanvien.getHovaten());
+						//System.out.println("ListgiolamcanlayTungNhanVienByMonth @@@@@" + ListgiolamcanlayTungNhanVienByMonth);
 
 						// Bắt đầu test
 						String nameNhanVien = userlapNhanvien.getHovaten();
@@ -759,14 +749,14 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 							gioLamMap.put("trangthai", gioLam.getTrangthai());
 							gioLamMap.put("created_at", gioLam.getCreated_at());
 							gioLamMap.put("updated_at", gioLam.getUpdated_at());
-							System.out.println("gioLamMap " + gioLamMap);
+							//System.out.println("gioLamMap " + gioLamMap);
 							newgioLamMapListNhanVien.add(gioLamMap);
 
 						}
 
-						System.out.println("newgioLamMapListNhanVien " + newgioLamMapListNhanVien);
-
-						System.out.println("----------------------------------------------------- ");
+//						System.out.println("newgioLamMapListNhanVien " + newgioLamMapListNhanVien);
+//
+//						System.out.println("----------------------------------------------------- ");
 
 						// KẾT THÚC TEST
 

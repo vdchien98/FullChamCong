@@ -1,0 +1,4 @@
+Bundle-Name: Sidebar
+Bundle-SymbolicName: com.liferay.docs.sidebar.portlet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.docs.sidebar.portlet.constants
