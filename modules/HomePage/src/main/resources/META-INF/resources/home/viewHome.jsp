@@ -104,7 +104,9 @@ i.fa.fa-user-circle-o {
     padding: 5px 15px;
     border-radius: 3px
 }
-
+span.font-weight-bold.text-warning.styleChucVuHome {
+    margin: 0px 10px;
+}
 
 </style>
 
@@ -148,7 +150,7 @@ i.fa.fa-user-circle-o {
 												aria-hidden="true"></i>
 											<c:forEach var="itemChucVu" items="${selectChucVu}">
 												<c:if test="${itemChucVu.id == user.chucvu_id}">
-													<span class="font-weight-bold text-warning styleChucVu">
+													<span class="font-weight-bold text-warning styleChucVuHome">
 														${itemChucVu.name}</span>
 												</c:if>
 											</c:forEach>

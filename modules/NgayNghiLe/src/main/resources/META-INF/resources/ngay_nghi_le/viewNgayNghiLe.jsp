@@ -17,7 +17,10 @@
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+</head>
 
 <div class="container-fluid">
 	<h1 class="h3 mb-2 text-gray-800 font-weight-bold text-uppercase">Quản

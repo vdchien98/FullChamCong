@@ -39,8 +39,7 @@ px
 <div class="container-fluid">
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h4 class="m-0 font-weight-bold text-primary">Bảng giờ làm tháng
-				6</h4>
+			<h4 class="m-0 font-weight-bold text-primary">Bảng giờ làm tháng 6</h4>
 		</div>
 		<%
 			String hienthichamcong = (String) request.getAttribute("hienthichamcong");
@@ -56,7 +55,7 @@ px
 		<button id="attendanceButton" type="button"
 			class="btn btn-success btn_chien"
 			onclick="handleAttendanceButton(1);">
-			<i class="fas fa-check-square"></i> Chấm công vào sáng
+			<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào sáng
 		</button>
 		<%
 			} else if (hienthichamcong.equals("2")) {
@@ -65,7 +64,7 @@ px
 		<button id="attendanceButton" type="button"
 			class="btn btn-success btn_chien"
 			onclick="handleAttendanceButton(2);">
-			<i class="fas fa-check-square"></i> Chấm công ra sáng
+			<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra sáng
 		</button>
 		<%
 			} else if (hienthichamcong.equals("3")) {
@@ -73,7 +72,7 @@ px
 		<button id="attendanceButton" type="button"
 			class="btn btn-success btn_chien"
 			onclick="handleAttendanceButton(3);">
-			<i class="fas fa-check-square"></i> Chấm công vào chiều
+			<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào chiều
 		</button>
 		<%
 			} else if (hienthichamcong.equals("4")) {
@@ -81,7 +80,7 @@ px
 		<button id="attendanceButton" type="button"
 			class="btn btn-success btn_chien"
 			onclick="handleAttendanceButton(4);">
-			<i class="fas fa-check-square"></i> Chấm công ra chiều
+			<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra chiều
 		</button>
 		<%
 			}
@@ -149,6 +148,7 @@ px
 						
 						<th style="padding: 0;" class="bg-info">T3</th>
 						<th style="padding: 0;" class="bg-info">T4</th>
+						
 						<th style="padding: 0;" class="bg-info">T5</th>
 						<th style="padding: 0;" class="bg-info">T6</th>
 						<th style="padding: 0;" class="bg-warning">T7</th>
@@ -760,21 +760,19 @@ $(document).ready(function() {
 	  console.log("button " + button);
 
 	  if (status === 1) {
-	    button.innerHTML = '<i class="fas fa-check-square"></i> Chấm công ra sáng';
+	    button.innerHTML = '<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra sáng';
 	    button.setAttribute("onclick", "handleAttendanceButton(2);");
 	  } else if (status === 2) {
-	    button.innerHTML = '<i class="fas fa-check-square"></i> Chấm công vào chiều';
+	    button.innerHTML = '<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào chiều';
 	    button.setAttribute("onclick", "handleAttendanceButton(3);");
 	  } else if (status === 3) {
-	    button.innerHTML = '<i class="fas fa-check-square"></i> Chấm công ra chiều';
+	    button.innerHTML = '<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra chiều';
 	    button.setAttribute("onclick", "handleAttendanceButton(4);");
 	  } else if (status === 4) {
 	    // Không có hành động nào
 	  }
 	}
-  
-  
-  
+ 
   window.addEventListener("load", function () {
 	  // Lấy trạng thái từ localStorage nếu có
 	  var storedStatus = localStorage.getItem("attendanceButtonStatus");
