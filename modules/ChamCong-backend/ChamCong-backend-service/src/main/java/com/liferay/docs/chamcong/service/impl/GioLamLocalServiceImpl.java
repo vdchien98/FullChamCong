@@ -64,6 +64,7 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 				giolam.setCheck_in_sang(check_in_sang);
 				giolam.setCreated_at(now);
 				giolam.setUpdated_at(now);
+				giolam.setTrangthai(trangthai);
 				GioLamLocalServiceUtil.updateGioLam(giolam);
 //				return giolam;
 			} else if (statusHienThiNutValue == 2) {
@@ -78,7 +79,9 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 
 				giolam.setCreated_at(now);
 				giolam.setUpdated_at(now);
+				giolam.setTrangthai(trangthai);
 				GioLamLocalServiceUtil.updateGioLam(giolam);
+				
 //				return giolam;
 
 			} else if (statusHienThiNutValue == 3) {
@@ -93,6 +96,7 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 
 				giolam.setCreated_at(now);
 				giolam.setUpdated_at(now);
+				giolam.setTrangthai(trangthai);
 				GioLamLocalServiceUtil.updateGioLam(giolam);
 
 //				return giolam;
@@ -109,6 +113,7 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 
 				giolam.setCreated_at(now);
 				giolam.setUpdated_at(now);
+				giolam.setTrangthai(trangthai);
 				GioLamLocalServiceUtil.updateGioLam(giolam);
 
 //				return giolam;
@@ -124,6 +129,7 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 
 				giolam.setCreated_at(now);
 				giolam.setUpdated_at(now);
+				giolam.setTrangthai(trangthai);
 				GioLamLocalServiceUtil.updateGioLam(giolam);
 //				return giolam;
 			} else if (statusHienThiNutValue == 2) {
@@ -137,6 +143,7 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 
 				giolam.setCreated_at(now);
 				giolam.setUpdated_at(now);
+				giolam.setTrangthai(trangthai);
 				GioLamLocalServiceUtil.updateGioLam(giolam);
 //				return giolam;
 
@@ -151,6 +158,7 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 
 				giolam.setCreated_at(now);
 				giolam.setUpdated_at(now);
+				giolam.setTrangthai(trangthai);
 				GioLamLocalServiceUtil.updateGioLam(giolam);
 
 //				return giolam;
@@ -166,6 +174,7 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 
 				giolam.setCreated_at(now);
 				giolam.setUpdated_at(now);
+				giolam.setTrangthai(trangthai);
 				GioLamLocalServiceUtil.updateGioLam(giolam);
 
 //				return giolam;

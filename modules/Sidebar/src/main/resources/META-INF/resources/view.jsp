@@ -55,7 +55,7 @@ p.thongtinnhanvien.chucnangsiderbar {
     margin-left: 15px;
 }
 div#collapseUtilities {
-    margin-top: -15px;
+    margin-top: -10px;
 }
 
 </style>
@@ -128,30 +128,43 @@ i.fa.fa-sign-out.iconchiendangxuat  {
 <div>
     <p class="thongtinnhanvien chucnangsiderbar">Chức Năng</p>
     <div class="chucnanghethongsiderbar">
-    <li class="nav-item"><a class="nav-link collapsed" href="#"
-		data-toggle="collapse" data-target="#collapseUtilities"
-		aria-expanded="true" aria-controls="collapseUtilities"
-		onclick="toggleCollapse()"> <i class="fa fa-cogs"
-			aria-hidden="true"></i> <span class="cauhinhhethong">Cấu hình hệ thống</span>
-	</a>
-		<div id="collapseUtilities" class="collapse collapsed-content"
-			aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item item-small" href="/home">Nhân viên</a> <a
-					class="collapse-item item-small" href="/phong-ban">Phòng ban</a> <a
-					class="collapse-item item-small" href="/chuc-vu">Chức vụ</a> <a
-					class="collapse-item item-small" href="/ca-lam-viec">Ca làm việc</a>
-				<a class="collapse-item item-small" href="/ngay-nghi-le">Ngày
-					nghỉ lễ</a> <a class="collapse-item item-small" href="">Ngày làm
-					việc</a>
-			</div>
-		</div>
-	</li>
-	<li class="nav-item "><a class="nav-link" href="/nhanvien/gio-lam"> <i class="fa fa-clock-o" aria-hidden="true"></i> <span>Bảng giờlàm</span></a></li>
-	
-	<li class="nav-item"><a class="nav-link" href=""> <i class="fa fa-calendar-times-o" aria-hidden="true"></i> <span>Xin nghỉ</span></a></li>
-	
-	<li class="nav-item"><a class="nav-link" href=""> <i class="fa fa-calendar-check-o" aria-hidden="true"></i> <span>Xin chấm công</span></a></li>
+    
+       <% 
+       
+       
+       long roleadmin = (long) request.getAttribute("roleadmin");
+       
+       
+       %>
+       <% if(roleadmin == 20103) { %>
+		    <li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapseUtilities"
+				aria-expanded="true" aria-controls="collapseUtilities"
+				onclick="toggleCollapse()"> <i class="fa fa-cogs"
+					aria-hidden="true"></i> <span class="cauhinhhethong">Cấu hình hệ thống</span>
+			</a>
+				<div id="collapseUtilities" class="collapse collapsed-content"
+					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item item-small" href="/home">Nhân viên</a> <a
+							class="collapse-item item-small" href="/phong-ban">Phòng ban</a> <a
+							class="collapse-item item-small" href="/chuc-vu">Chức vụ</a> <a
+							class="collapse-item item-small" href="/ca-lam-viec">Ca làm việc</a>
+						<a class="collapse-item item-small" href="/ngay-nghi-le">Ngày
+							nghỉ lễ</a> <a class="collapse-item item-small" href="">Ngày làm
+							việc</a>
+					</div>
+				</div>
+			</li>
+		<% } %>
+		
+		
+		
+		<li class="nav-item "><a class="nav-link" href="/nhanvien/gio-lam"> <i class="fa fa-clock-o" aria-hidden="true"></i> <span>Bảng giờlàm</span></a></li>
+		
+		<li class="nav-item"><a class="nav-link" href=""> <i class="fa fa-calendar-times-o" aria-hidden="true"></i> <span>Xin nghỉ</span></a></li>
+		
+		<li class="nav-item"><a class="nav-link" href=""> <i class="fa fa-calendar-check-o" aria-hidden="true"></i> <span>Xin chấm công</span></a></li>
 
     
     

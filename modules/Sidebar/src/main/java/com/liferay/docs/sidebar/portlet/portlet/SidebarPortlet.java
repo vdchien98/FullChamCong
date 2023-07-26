@@ -10,7 +10,13 @@ import com.liferay.docs.chamcong.service.UsersLocalServiceUtil;
 import com.liferay.docs.sidebar.portlet.constants.SidebarPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.Users_RolesTable;
+import com.liferay.portal.kernel.model.Users_UserGroupsTable;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -77,6 +83,26 @@ public class SidebarPortlet extends MVCPortlet {
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
+		
+		List<Role> userRoles=RoleLocalServiceUtil.getUserRoles(userId);
+		Role userRolesLiferay = userRoles.get(0);
+	    long roleadmin = userRolesLiferay.getRoleId();
+	    renderRequest.setAttribute("roleadmin", roleadmin);
+	   // System.out.println("roleadmin "+ roleadmin);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		super.render(renderRequest, renderResponse);
 	}

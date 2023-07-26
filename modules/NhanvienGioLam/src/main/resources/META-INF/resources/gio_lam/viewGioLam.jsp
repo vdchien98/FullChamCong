@@ -34,6 +34,11 @@ px
 		th.text-center.dms {
     width: 5px;
 }
+
+	#timeTable td {
+			text-align: center;
+			vertical-align: middle;
+		}
 		</style>
 
 <div class="container-fluid">
@@ -41,52 +46,177 @@ px
 		<div class="card-header py-3">
 			<h4 class="m-0 font-weight-bold text-primary">Bảng giờ làm tháng 6</h4>
 		</div>
-		<%
-			String hienthichamcong = (String) request.getAttribute("hienthichamcong");
-		%>
+		
+		<%-- xử lý cham cong --%>
+		
+	
 		<portlet:actionURL var="sendMaZaloURL" name="sendMaZalo" />
 		<form id="check-in" class="float-right" action="<%=sendMaZaloURL%>"
 			method="POST"></form>
 		<form id="check-out" class="float-right" action="" method="POST">
 		</form>
+	
 		<%
-			if (hienthichamcong.equals("1")) {
+			int hienthichamcong = (int) request.getAttribute("hienthichamcong");
+		   long usreid = (long) request.getAttribute("userId");  
+		   GioLam giolam = (GioLam) request.getAttribute("userGioLamNutChamCong");  
+		  
 		%>
-		<button id="attendanceButton" type="button"
-			class="btn btn-success btn_chien"
-			onclick="handleAttendanceButton(1);">
-			<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào sáng
-		</button>
-		<%
-			} else if (hienthichamcong.equals("2")) {
-		%>
+		<% if (giolam == null) { %>    
+		    <%
+					if (hienthichamcong ==1 ) {
+				%>
+					<button id="attendanceButton1" type="button"
+						class="btn btn-success btn_chien"
+						onclick="changeAttendance1(${userId})">
+						<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào sáng
+					</button>
+					<button id="attendanceButton2" type="button"
+						class="btn btn-success btn_chien"
+						onclick="changeAttendance2(${userId})" style="display: none; background-color: #e74a3b;">
+						<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra sáng
+					</button>
+				<%
+					} else if (hienthichamcong ==3 ) {
+				%>
+					<button id="attendanceButton3" type="button"
+							class="btn btn-success btn_chien"
+							onclick="changeAttendance3(${userId})">
+							<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào chiều
+						</button>
+						<button id="attendanceButton4" type="button"
+							class="btn btn-success btn_chien"
+							onclick="changeAttendance4(${userId})" style="display: none; background-color: #e74a3b;">
+							<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra chiều
+						</button>
+				<%
+					}
+				%>
+		<% } else { %>	
+		    <%
+		            int trangthai = giolam.getTrangthai();
+					if (trangthai == 1 ) {
+				%>
+					<button id="attendanceButton2" type="button"
+						class="btn btn-success btn_chien"
+						onclick="changeAttendance2(${userId})" style=" background-color: #e74a3b;">
+						<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra sáng
+					</button>
+					<button id="attendanceButton1" type="button"
+						class="btn btn-success btn_chien"  style="display: none;"
+						onclick="changeAttendance1(${userId})">
+						<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào sáng
+					</button>
+				<%
+					} else if (trangthai ==2 ) {
+				%>
+				        <button id="attendanceButton2" type="button"
+							class="btn btn-success btn_chien"
+							onclick="changeAttendance2(${userId})" style=" display: none; background-color: #e74a3b;">
+							<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra sáng
+						</button>
+						<button id="attendanceButton1" type="button"
+							class="btn btn-success btn_chien"  style="display: none;"
+							onclick="changeAttendance1(${userId})">
+							<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào sáng
+						</button>
+				<%
+					}else if (trangthai ==3 ) {
+				%>
+				        <button id="attendanceButton4" type="button"
+							class="btn btn-success btn_chien"
+							onclick="changeAttendance4(${userId})" style=" background-color: #e74a3b;">
+							<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra chiều 
+						</button>
+						<button id="attendanceButton3" type="button"
+							class="btn btn-success btn_chien"  style="display: none;"
+							onclick="changeAttendance3(${userId})">
+							<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào chiều 
+						</button>
+				<%
+					}else if (trangthai ==4 ) {
+				%>
+				        <button id="attendanceButton2" type="button"
+							class="btn btn-success btn_chien"
+							onclick="changeAttendance(${userId})" style=" display: none; background-color: #e74a3b;">
+							<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra sáng
+						</button>
+						<button id="attendanceButton1" type="button"
+							class="btn btn-success btn_chien"  style="display: none;"
+							onclick="changeAttendance1(${userId})">
+							<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào sáng
+						</button>
+				<%
+					}
+				%>
+	    
+		<% } %>
+						
+	<script>
+		function changeAttendance1() {
+			var button1 = document.getElementById("attendanceButton1");
+			var button2 = document.getElementById("attendanceButton2");
+			
+			button1.style.display = "none"; // Ẩn nút "Chấm công vào sáng"
+			button2.style.display = "block"; // Hiển thị nút "Chấm công ra sáng" với màu nền #e74a3b
+			
+			sendMaZaloAndConfirmCheckin(${userId},1);
+			
 
-		<button id="attendanceButton" type="button"
-			class="btn btn-success btn_chien"
-			onclick="handleAttendanceButton(2);">
-			<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra sáng
-		</button>
-		<%
-			} else if (hienthichamcong.equals("3")) {
-		%>
-		<button id="attendanceButton" type="button"
-			class="btn btn-success btn_chien"
-			onclick="handleAttendanceButton(3);">
-			<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào chiều
-		</button>
-		<%
-			} else if (hienthichamcong.equals("4")) {
-		%>
-		<button id="attendanceButton" type="button"
-			class="btn btn-success btn_chien"
-			onclick="handleAttendanceButton(4);">
-			<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra chiều
-		</button>
-		<%
-			}
-		%>
-		<portlet:actionURL var="xacthumazaloActionURL"
-			name="xacthumazaloAction" />
+			
+		}
+	
+		function changeAttendance2() {
+			var button1 = document.getElementById("attendanceButton1");
+			var button2 = document.getElementById("attendanceButton2");
+	
+			button1.style.display = "none"; // Hiển thị lại nút "Chấm công vào sáng"
+			button2.style.display = "none"; // Ẩn nút "Chấm công ra sáng"
+			
+			sendMaZaloAndConfirmCheckin(${userId},2);
+			
+			
+		}
+		
+		
+		
+		
+		function changeAttendance3() {
+			var button1 = document.getElementById("attendanceButton3");
+			var button2 = document.getElementById("attendanceButton4");
+			
+			button1.style.display = "none"; // Ẩn nút "Chấm công vào sáng"
+			button2.style.display = "block"; // Hiển thị nút "Chấm công ra sáng" với màu nền #e74a3b
+			
+			sendMaZaloAndConfirmCheckin(${userId},3);
+			
+			
+			
+		}
+	
+		function changeAttendance4() {
+			var button1 = document.getElementById("attendanceButton3");
+			var button2 = document.getElementById("attendanceButton4");
+	
+			button1.style.display = "none"; // Hiển thị lại nút "Chấm công vào sáng"
+			button2.style.display = "none"; // Ẩn nút "Chấm công ra sáng"
+			
+			sendMaZaloAndConfirmCheckin(${userId},4);
+			
+			
+		}
+		
+		
+   </script>
+		
+		
+		
+		<%-- kêt thúc xử lý nút chấm công --%>
+		
+		
+		
+		
+		<portlet:actionURL var="xacthumazaloActionURL" name="xacthumazaloAction" />
 		<form id="check_mazalo" class="float-right"
 			action="<%=xacthumazaloActionURL%>" method="POST">
 			<input type="hidden" name="<portlet:namespace />popupCapchaValue"
@@ -95,6 +225,14 @@ px
 				value="">
 		</form>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	
 	<div class="row mb-3 chien">
 		<span class="btn btn-success">Đúng giờ</span> <span
 			class="btn btn-warning">Đi muộn/Về sớm</span> <span
@@ -106,14 +244,9 @@ px
 
 	</div>
 
-	<style>
-		#timeTable td {
-			text-align: center;
-			vertical-align: middle;
-		}
-    </style>
 
 
+	
 	<div class="form-group row">
 		<form class="pl-5" id="search-year" method="get">
 			<input type="hidden" name="p_p_id"
@@ -148,7 +281,6 @@ px
 						
 						<th style="padding: 0;" class="bg-info">T3</th>
 						<th style="padding: 0;" class="bg-info">T4</th>
-						
 						<th style="padding: 0;" class="bg-info">T5</th>
 						<th style="padding: 0;" class="bg-info">T6</th>
 						<th style="padding: 0;" class="bg-warning">T7</th>
@@ -246,7 +378,7 @@ px
 						                        &nbsp;</div>
 						                    <div class="border"
 						                        style="height: 10px; background-color: <%=backgroundColorChieu%>"
-						                        title="Vào sáng: <%=checkInChieu.isEmpty() ? "Null" : checkInChieu%> --- Ra Sáng: <%=checkOutChieu.isEmpty() ? "Null" : checkOutChieu%>">
+						                        title="Vào chiều: <%=checkInChieu.isEmpty() ? "Null" : checkInChieu%> --- Ra Chiều : <%=checkOutChieu.isEmpty() ? "Null" : checkOutChieu%>">
 						                        &nbsp;</div>
 						        <%
 						                    }
@@ -349,7 +481,7 @@ px
 						                        &nbsp;</div>
 						                    <div class="border"
 						                        style="height: 10px; background-color: <%=backgroundColorChieu%>"
-						                        title="Vào sáng: <%=checkInChieu.isEmpty() ? "Null" : checkInChieu%> --- Ra Sáng: <%=checkOutChieu.isEmpty() ? "Null" : checkOutChieu%>">
+						                        title="Vào Chiều: <%=checkInChieu.isEmpty() ? "Null" : checkInChieu%> --- Ra Chiều: <%=checkOutChieu.isEmpty() ? "Null" : checkOutChieu%>">
 						                        &nbsp;</div>
 						        <%
 						                    }
@@ -728,58 +860,10 @@ $(document).ready(function() {
 <script>
   
  
-  function handleAttendanceButton(status) {
-	  var button = document.getElementById("attendanceButton");
-	  console.log("status @@@@@@@@@@@@@@@@@ " + status);
-	 // var button = document.getElementById("attendanceButton");
-	 // var buttonText = button.textContent.trim();
 
-	  switch (status) {
-	    case 1:
-	      toggleAttendanceButton(2); // Chuyển đổi trạng thái sang 2
-	      break;
-	    case 2:
-	      toggleAttendanceButton(1); // Chuyển đổi trạng thái sang 1
-	      break;
-	    case 3:
-	      toggleAttendanceButton(4); // Chuyển đổi trạng thái sang 4
-	      break;
-	    case 4:
-	      toggleAttendanceButton(3); // Chuyển đổi trạng thái sang 3
-	      break;
-	    default:
-	      break;
-	  }
-    sendMaZaloAndConfirmCheckin(${userId}, status);
-    toggleAttendanceButton(status);
-    localStorage.setItem("attendanceButtonStatus", status);
-  }
-
-  function toggleAttendanceButton(status) {
-	  var button = document.getElementById("attendanceButton");
-	  console.log("button " + button);
-
-	  if (status === 1) {
-	    button.innerHTML = '<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra sáng';
-	    button.setAttribute("onclick", "handleAttendanceButton(2);");
-	  } else if (status === 2) {
-	    button.innerHTML = '<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào chiều';
-	    button.setAttribute("onclick", "handleAttendanceButton(3);");
-	  } else if (status === 3) {
-	    button.innerHTML = '<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra chiều';
-	    button.setAttribute("onclick", "handleAttendanceButton(4);");
-	  } else if (status === 4) {
-	    // Không có hành động nào
-	  }
-	}
  
-  window.addEventListener("load", function () {
-	  // Lấy trạng thái từ localStorage nếu có
-	  var storedStatus = localStorage.getItem("attendanceButtonStatus");
-	  if (storedStatus !== null) {
-	    toggleAttendanceButton(parseInt(storedStatus));
-	  }
-	});
+  
+ 
   
 </script>
 <script>
@@ -831,8 +915,9 @@ $(document).ready(function() {
 	}
 
 	
-	function sendMaZaloAndConfirmCheckin(userId,statusHienThiNut) {
-		console.log("statusHienThiNut ########33333333333 "+ statusHienThiNut);
+	function sendMaZaloAndConfirmCheckin(userId, trangthai) {
+	//	console.log("userId ########33333333333 "+ userId);
+	//	console.log("trangthai ########33333333333 "+ trangthai);
 	    sendMaZalo()
 	      .then(function(response) {
 	        // Xử lý phản hồi    từ hàm sendMaZalo nếu cần
@@ -840,7 +925,7 @@ $(document).ready(function() {
 	        // Gọi hàm confirmCheckin
 	      //  confirmCheckin(userId);
 	        setTimeout(function() {
-	            confirmCheckin(userId,statusHienThiNut);
+	            confirmCheckin(userId,trangthai);
 	          }, 100); // 30000 milliseconds = 30 seconds
 	      })
 	      .catch(function(error) {

@@ -130,7 +130,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 	public void sendMaXacThucToZalo(String message, String zalo_id) throws IOException, PortletException {
 		// System.out.println("da vao dc sendMaXacThucToZalo"+ message);
 
-	    //getAccessTokenZaloNew();
+//	   / getAccessTokenZaloNew();
 
 		JsonObject user_id_info = getInfoZalo(zalo_id);
 		System.out.println("user_id_info" + user_id_info);
@@ -373,7 +373,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
 
 			// Chuẩn bị dữ liệu gửi đi
-			String data = "refresh_token=icYQtgR_hrwEIwUopixpFB5YdR3nvuORrs6EWlxVYo7STQwMoCMkIPrp-TRJufLOcs65yRdJ-csxLy_3b_ViT8bCvfJFiOmpYY3ZlCIZz1Fa7UkVx9_zAFmNaucXviuglJJczvNZpHQ4Dysmehl44van_hVmuzizxb7Itw_Ul4dkVyFSrlkXCCV2AXcgK2cEllG54gjtFSVUwp4f_cqhizJuNN6VOJVAt_jrT9iu8A2L_ZmdnHS_q2PTxUzOlz6NIG"
+			String data = "refresh_token=gBqGilbcy02KdYtUaLUiOgkt5zokVjb5pRG4xg56r7_7gIJvdLFn58sfVBcEUCC3WwGJhE9QkGAbabYNnt-j5fk5USESDCPMdEbywvScldRor7J8lngtJUhU3DxoOuHFg_rveCPcXtEI_bBdyJg8SOlsPU6dQ9LP_9PAZlXGzoV-lLs0WtNgNjV3Tpt_7Q6OhfRyCDnP4TViYSWBYKC7e-QQf5FeJnlQxPcCLkmM3B2ddCK5iZaJm2OOeJfgu4Z85m"
 					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
 
 			// Gửi dữ liệu
@@ -452,15 +452,12 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		System.out.println("so sanh ma zalo");
 		String popupCapchaValue = ParamUtil.getString(request, "popupCapchaValue");
 		int statusHienThiNutValue = ParamUtil.getInteger(request, "statusHienThiNut");
-
-//		System.out.println("popupCapchaValue " + popupCapchaValue);
-//		System.out.println("statusHienThiNut &&&&&& " + statusHienThiNutValue);
-		response.sendRedirect("/nhanvien/gio-lam");
-
+ 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		ServiceContext serviceContext = new ServiceContext();
 		long userId = themeDisplay.getUserId();
-	//	System.out.println("userId la *******" + userId);
+	
+		
 		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
 		int IdUser = 0;
 		for (Users users : usersList) {
@@ -472,16 +469,13 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		try {
 			// tao ma_xac_nhan va luu vao data
 			Users user = UsersLocalServiceUtil.getUsers(IdUser);
-			//System.out.println("*****************" + user);
 			int id = user.getId();
 			System.out.println("id " + id);
 			long user_id = user.getUserId();
-//			System.out.println("user_id ***** " + user_id);
-//			System.out.println("ma xac nhan " + user.getMa_xac_nhan());
+
 			if (user.getMa_xac_nhan().equals(popupCapchaValue)) {
 				LocalDate currentDate = LocalDate.now();
 				Date dateNgayHienTai = Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-				//System.out.println("Ngay hien tai: " + dateNgayHienTai);
 				// Lấy địa chỉ IP của thiết bị
 				HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(request);
 				String ipAddress = httpServletRequest.getRemoteAddr();
@@ -492,28 +486,27 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 				LocalTime localTime = currentDateTime.toLocalTime();
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 				String formattedTime = localTime.format(formatter);
-				//System.out.println("Gio, phut va giay hien tai theo mui gio +7: " + formattedTime);
 				GioLam userGioLam = GioLamLocalServiceUtil.getGioLamByUserId(user_id, dateNgayHienTai);
 
 				if (userGioLam == null) {
 					//System.out.println("Khong co userGioLam");
 					if (statusHienThiNutValue == 1) {
 						GioLamLocalServiceUtil.addGioLam(0, 0, statusHienThiNutValue, user_id, dateNgayHienTai,
-								ipAddress, formattedTime, "", 0, 0, 0, "", "", 0, 0, 0, "", "", 0, 0, 0, 0,
+								ipAddress, formattedTime, "", 0, 0, 0, "", "", 0, 0, 0, "", "", 0, 0, 0, statusHienThiNutValue,
 								serviceContext);
 					} else if (statusHienThiNutValue == 2) {
 						GioLamLocalServiceUtil.addGioLam(0, 0, statusHienThiNutValue, user_id, dateNgayHienTai,
-								ipAddress, "", formattedTime, 0, 0, 0, "", "", 0, 0, 0, "", "", 0, 0, 0, 0,
+								ipAddress, "", formattedTime, 0, 0, 0, "", "", 0, 0, 0, "", "", 0, 0, 0, statusHienThiNutValue,
 								serviceContext);
 
 					} else if (statusHienThiNutValue == 3) {
 						GioLamLocalServiceUtil.addGioLam(0, 0, statusHienThiNutValue, user_id, dateNgayHienTai,
-								ipAddress, "", "", 0, 0, 0, formattedTime, "", 0, 0, 0, "", "", 0, 0, 0, 0,
+								ipAddress, "", "", 0, 0, 0, formattedTime, "", 0, 0, 0, "", "", 0, 0, 0, statusHienThiNutValue,
 								serviceContext);
 
 					} else if (statusHienThiNutValue == 4) {
 						GioLamLocalServiceUtil.addGioLam(0, 0, statusHienThiNutValue, user_id, dateNgayHienTai,
-								ipAddress, "", "", 0, 0, 0, "", formattedTime, 0, 0, 0, "", "", 0, 0, 0, 0,
+								ipAddress, "", "", 0, 0, 0, "", formattedTime, 0, 0, 0, "", "", 0, 0, 0, statusHienThiNutValue,
 								serviceContext);
 					}
 				} else {
@@ -522,26 +515,26 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 
 					if (statusHienThiNutValue == 1) {
 						GioLamLocalServiceUtil.addGioLam(idGioLam, 1, statusHienThiNutValue, user_id, dateNgayHienTai,
-								ipAddress, formattedTime, "", 0, 0, 0, "", "", 0, 0, 0, "", "", 0, 0, 0, 0,
+								ipAddress, formattedTime, "", 0, 0, 0, "", "", 0, 0, 0, "", "", 0, 0, 0, statusHienThiNutValue,
 								serviceContext);
 					} else if (statusHienThiNutValue == 2) {
 						GioLam giolamUpadete = GioLamLocalServiceUtil.getGioLam(idGioLam);
 
 						GioLamLocalServiceUtil.addGioLam(idGioLam, 1, statusHienThiNutValue, user_id, dateNgayHienTai,
 								ipAddress, giolamUpadete.getCheck_in_sang(), formattedTime, 0, 0, 0, "", "", 0, 0, 0,
-								"", "", 0, 0, 0, 0, serviceContext);
+								"", "", 0, 0, 0, statusHienThiNutValue, serviceContext);
 
 					} else if (statusHienThiNutValue == 3) {
 						GioLam giolamUpadete = GioLamLocalServiceUtil.getGioLam(idGioLam);
 						GioLamLocalServiceUtil.addGioLam(idGioLam, 1, statusHienThiNutValue, user_id, dateNgayHienTai,
 								ipAddress, giolamUpadete.getCheck_in_sang(), giolamUpadete.getCheck_out_sang(), 0, 0, 0,
-								formattedTime, "", 0, 0, 0, "", "", 0, 0, 0, 0, serviceContext);
+								formattedTime, "", 0, 0, 0, "", "", 0, 0, 0, statusHienThiNutValue, serviceContext);
 
 					} else if (statusHienThiNutValue == 4) {
 						GioLam giolamUpadete = GioLamLocalServiceUtil.getGioLam(idGioLam);
 						GioLamLocalServiceUtil.addGioLam(idGioLam, 1, statusHienThiNutValue, user_id, dateNgayHienTai,
 								ipAddress, giolamUpadete.getCheck_in_sang(), giolamUpadete.getCheck_out_sang(), 0, 0, 0,
-								giolamUpadete.getCheck_in_chieu(), formattedTime, 0, 0, 0, "", "", 0, 0, 0, 0,
+								giolamUpadete.getCheck_in_chieu(), formattedTime, 0, 0, 0, "", "", 0, 0, 0, statusHienThiNutValue,
 								serviceContext);
 					}
 
@@ -550,12 +543,18 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 				System.out.println("DANG NHAP KHONG THANH CONG");
 			}
 
+				
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		response.sendRedirect("/nhanvien/gio-lam");
 	}
 
+	
+	
+	
+	
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
@@ -566,6 +565,9 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		String year = renderRequest.getParameter("year");
 		String thang = renderRequest.getParameter("thang");
 		String nam = renderRequest.getParameter("nam");
+		
+		
+		
 		if (thang == null && nam == null) {
 			//System.out.println(" da vao dc day ");
 			Date currentDate = new Date();
@@ -598,6 +600,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 
 		// Xử lý bảng 2 chấm công của phòng
 		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
+		Users user;
 		int IdUser = 0;
 		for (Users users : usersList) {
 			if (users.getUserId() == userId) {
@@ -605,14 +608,14 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 				break;
 			}
 		}
-		Users user;
+		
 		try {
 			List<Users> filteredUsersListPhong = new ArrayList<>();
 			user = UsersLocalServiceUtil.getUsers(IdUser);
 			//System.out.println("phutrachphong " + user.getPhu_trach_phong());
 			renderRequest.setAttribute("phutrachphong", user.getPhu_trach_phong());
 			
-			//System.out.println("user la 11111111111111111111122222222222222222222233333333333333333    "+ user);
+			System.out.println("user la 11111111111111111111122222222222222222222233333333333333333    "+ user);
 			long targetPhongBanId = user.getPhongban_id();
 			for (Users userNhanVien : usersList) {
 				if (userNhanVien.getPhongban_id() == targetPhongBanId) {
@@ -783,6 +786,34 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		// xử lý hiện nút ấn chấm công
+
+	
+	
+		LocalDate currentDate = LocalDate.now();
+		Date dateNgayHienTai = Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		try {
+			GioLam userGioLam = GioLamLocalServiceUtil.getGioLamByUserId(userId, dateNgayHienTai);
+			System.out.println("userGioLam render 11111111111111 "+ userGioLam);
+			
+			renderRequest.setAttribute("userGioLamNutChamCong", userGioLam);
+		} catch (PortalException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		
+		
+		
 
 		try {
 			// Lấy ngày, tháng và giờ hiện tại từ máy tính
@@ -835,44 +866,52 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			DateTimeFormatter timeFormatter4 = DateTimeFormatter.ofPattern("HH:mm:ss");
 			String gioRaChieuSaucStr = gioRaChieuSau.format(timeFormatter4);
 			LocalTime checkGioPhutGiaysangTime = LocalTime.parse(gioPhutGiay);
-			String hienthichamcong = checkGioPhutGiay(checkGioPhutGiaysangTime, gioVaoSangTruocStr, gioVaoSang,
+			int hienthichamcong = checkGioPhutGiay(checkGioPhutGiaysangTime, gioVaoSangTruocStr, gioVaoSang,
 					gioRaSang, gioRaSangSaucStr, gioVaoChieuTruocStr, gioVaoChieu, gioRaChieu, gioRaChieuSaucStr);
 			renderRequest.setAttribute("hienthichamcong", hienthichamcong);
 		} catch (PortalException e) {
 			e.printStackTrace();
 		}
+		
+		
+		
+		
 
 		super.render(renderRequest, renderResponse);
 	}
 
-	public String checkGioPhutGiay(LocalTime gioPhutGiay, String gioVaoSangTruocStr, String gioVaoSang,
+	public int checkGioPhutGiay(LocalTime gioPhutGiay, String gioVaoSangTruocStr, String gioVaoSang,
 			String gioRaSang, String gioRaSangSaucStr, String gioVaoChieuTruocStr, String gioVaoChieu,
 			String gioRaChieu, String gioRaChieuSaucStr) {
+		System.out.println("gioPhutGiay%%%%%%%%%%%%%%%%%%% "+ gioPhutGiay);
 		LocalTime gioVaoSangTruoc45Phut = LocalTime.parse(gioVaoSangTruocStr);
-		LocalTime gioVaoSangDungGio = LocalTime.parse(gioVaoSang);
+	//	LocalTime gioVaoSangDungGio = LocalTime.parse(gioVaoSang);
 		LocalTime gioRaSangSau30Phut = LocalTime.parse(gioRaSangSaucStr);
-		LocalTime gioRaSangDungGio = LocalTime.parse(gioRaSang);
+		//LocalTime gioRaSangDungGio = LocalTime.parse(gioRaSang);
 
 		LocalTime gioVaoChieuTruoc45Phut = LocalTime.parse(gioVaoChieuTruocStr);
-		LocalTime gioVaoChieuDungGio = LocalTime.parse(gioVaoChieu);
+	//	LocalTime gioVaoChieuDungGio = LocalTime.parse(gioVaoChieu);
 		LocalTime gioRaChieuSau80Phut = LocalTime.parse(gioRaChieuSaucStr);
-		LocalTime gioRaChieuDungGio = LocalTime.parse(gioRaChieu);
+		//LocalTime gioRaChieuDungGio = LocalTime.parse(gioRaChieu);
 
 		// Kiểm tra xem gioPhutGiay có nằm trong khoảng từ gioVaoSangTruoc đến
 		// gioVaoSangSau không
-		if (gioPhutGiay.isAfter(gioVaoSangTruoc45Phut) && gioPhutGiay.isBefore(gioVaoSangDungGio)) {
-			return "1";
-		} else if (gioPhutGiay.isAfter(gioRaSangDungGio) && gioPhutGiay.isBefore(gioRaSangSau30Phut)) {
-			return "2";
-		} else if (gioPhutGiay.isAfter(gioVaoChieuTruoc45Phut) && gioPhutGiay.isBefore(gioVaoChieuDungGio)) {
-			return "3";
-		} else if (gioPhutGiay.isAfter(gioRaChieuDungGio) && gioPhutGiay.isBefore(gioRaChieuSau80Phut)) {
-			return "4";
-		} else {
-			return "khongphaigiochamcong";
+		if (gioPhutGiay.isAfter(gioVaoSangTruoc45Phut) && gioPhutGiay.isBefore(gioRaSangSau30Phut)) {
+			return 1;
+		} else if (gioPhutGiay.isAfter(gioVaoChieuTruoc45Phut) && gioPhutGiay.isBefore(gioRaChieuSau80Phut)) {
+			return 3;
+		}  else {
+			return 5;
 		}
 	}
 
+	// Kết thúc nút ấn chấm công
+	
+	
+	
+	
+	
+	
 	public List<GioLam> getGioLamByUserIdAndMonth(long userId, String month, String nam) throws PortalException {
 		List<GioLam> gioLamList = GioLamLocalServiceUtil.getGioLams(-1, -1);
 //		System.out.println("userId " + userId);
