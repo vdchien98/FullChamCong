@@ -10,26 +10,20 @@
 	src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
 <!-- jQuery UI CSS -->
-<link rel="stylesheet"
-	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 
 
-<link rel="stylesheet"
-	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <div class="container-fluid">
-	<h1 class="h3 mb-2 text-gray-800 font-weight-bold text-uppercase">Quản
-		trị ngày nghỉ lễ</h1>
+	<h1 class="h3 mb-2 text-gray-800 font-weight-bold text-uppercase">Quản trị ngày nghỉ lễ</h1>
 
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h4 class="m-0 font-weight-bold text-primary">Danh sách ngày
-				nghỉ lễ</h4>
+			<h4 class="m-0 font-weight-bold text-primary">Danh sách ngày nghỉ lễ</h4>
 		</div>
 		<div class="card-body">
 			<div class="row">
@@ -45,8 +39,7 @@
 							</div>
 						</form>
 					</div>
-					<table class="table table-bordered table-hover" id="dataTable"
-						width="100%" cellspacing="0">
+					<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
 						<thead>
 							<tr>
 								<th style="width: 5%;">STT</th>
@@ -57,10 +50,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="ngaynghile" items="${ngayNghiLeList}"
-								varStatus="loop">
-
-
+							<c:forEach var="ngaynghile" items="${ngayNghiLeList}" varStatus="loop">
 								<tr>
 									<td>${loop.index +1}</td>
 									<td>${ngaynghile.ten}</td>
@@ -98,11 +88,13 @@
 						</tbody>
 					</table>
 				</div>
-
+                
+                
+                
+                <%-- thêm mới ngày nghĩ lễ  --%>
 				<div class="col-md-5">
 					<div class="modal-header">
-						<h5 class="modal-title text-uppercase font-weight-bold">Thêm
-							mới ngày nghỉ lễ</h5>
+						<h5 class="modal-title text-uppercase font-weight-bold">Thêm mới ngày nghỉ lễ</h5>
 					</div>
 					<portlet:actionURL name="saveNgayNghiLe"
 						var="formNgayNghiLeActionURL" />
@@ -143,7 +135,7 @@
 						</div>
 						<div class="modal-footer justify-content-center">
 							<button type="submit" class="btn btn-primary">
-								<i class="far fa-save"></i> Lưu
+								<i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu
 							</button>
 						</div>
 					</form>

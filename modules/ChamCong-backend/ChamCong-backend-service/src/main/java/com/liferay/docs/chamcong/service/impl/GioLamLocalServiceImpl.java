@@ -54,7 +54,9 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 
 		System.out.println("da vao dc addGioLam trong service ");
 		if (trangThaiTonTaiGioLam == 0 && idGioLam ==0) {
-			if (statusHienThiNutValue == 1) {
+			if (statusHienThiNutValue == 1) {				
+				
+				
 				int idGioLamnew = (int) CounterLocalServiceUtil.increment();
 				GioLam giolam = gioLamPersistence.create(idGioLamnew);
 				Date now = new Date();
@@ -62,6 +64,9 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 				giolam.setUser_id(user_id);
 				giolam.setNgay_lam(ngaylam);
 				giolam.setCheck_in_sang(check_in_sang);
+				giolam.setDi_muon_sang(di_muon_sang);
+				
+				giolam.setDiem(diem);
 				giolam.setCreated_at(now);
 				giolam.setUpdated_at(now);
 				giolam.setTrangthai(trangthai);
@@ -76,7 +81,7 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 				giolam.setIp(ip);
 				giolam.setNgay_lam(ngaylam);
 				giolam.setCheck_out_sang(check_out_sang);
-
+				giolam.setDiem(diem);
 				giolam.setCreated_at(now);
 				giolam.setUpdated_at(now);
 				giolam.setTrangthai(trangthai);
@@ -93,7 +98,11 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 				giolam.setIp(ip);
 				giolam.setNgay_lam(ngaylam);
 				giolam.setCheck_in_chieu(check_in_chieu);
-
+                
+				giolam.setDi_muon_chieu(di_muon_chieu);
+				
+				
+				giolam.setDiem(diem);
 				giolam.setCreated_at(now);
 				giolam.setUpdated_at(now);
 				giolam.setTrangthai(trangthai);
@@ -110,7 +119,7 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 				giolam.setIp(ip);
 				giolam.setNgay_lam(ngaylam);
 				giolam.setCheck_out_chieu(check_out_chieu);
-
+				giolam.setDiem(diem);
 				giolam.setCreated_at(now);
 				giolam.setUpdated_at(now);
 				giolam.setTrangthai(trangthai);
@@ -126,7 +135,7 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 				giolam.setUser_id(user_id);
 				giolam.setNgay_lam(ngaylam);
 				giolam.setCheck_in_sang(check_in_sang);
-
+				giolam.setDiem(diem);
 				giolam.setCreated_at(now);
 				giolam.setUpdated_at(now);
 				giolam.setTrangthai(trangthai);
@@ -141,6 +150,11 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 				giolam.setNgay_lam(ngaylam);
 				giolam.setCheck_out_sang(check_out_sang);
 
+				giolam.setDiem(diem);
+				
+                giolam.setVe_som_sang(ve_som_sang);
+				
+				
 				giolam.setCreated_at(now);
 				giolam.setUpdated_at(now);
 				giolam.setTrangthai(trangthai);
@@ -155,7 +169,10 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 				giolam.setIp(ip);
 				giolam.setNgay_lam(ngaylam);
 				giolam.setCheck_in_chieu(check_in_chieu);
-
+                
+				giolam.setDi_muon_chieu(di_muon_chieu);
+                
+				giolam.setDiem(diem);
 				giolam.setCreated_at(now);
 				giolam.setUpdated_at(now);
 				giolam.setTrangthai(trangthai);
@@ -171,7 +188,9 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 				giolam.setIp(ip);
 				giolam.setNgay_lam(ngaylam);
 				giolam.setCheck_out_chieu(check_out_chieu);
-
+                
+				giolam.setDiem(diem);
+				giolam.setVe_som_chieu(ve_som_chieu);
 				giolam.setCreated_at(now);
 				giolam.setUpdated_at(now);
 				giolam.setTrangthai(trangthai);

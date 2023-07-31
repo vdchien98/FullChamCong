@@ -8,8 +8,7 @@
 <%@ include file="../init.jsp"%>
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 
-<%@ page language="Java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="Java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 		<style>
 		i.icon-calendar {
 			font-size: 35px;
@@ -95,87 +94,108 @@ px
 		<% } else { %>	
 		    <%
 		            int trangthai = giolam.getTrangthai();
-					if (trangthai == 1 ) {
-				%>
-					<button id="attendanceButton2" type="button"
-						class="btn btn-success btn_chien"
-						onclick="changeAttendance2(${userId})" style=" background-color: #e74a3b;">
-						<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra sáng
-					</button>
-					<button id="attendanceButton1" type="button"
-						class="btn btn-success btn_chien"  style="display: none;"
-						onclick="changeAttendance1(${userId})">
-						<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào sáng
-					</button>
-				<%
-					} else if (trangthai ==2 ) {
-				%>
-				        <button id="attendanceButton2" type="button"
-							class="btn btn-success btn_chien"
-							onclick="changeAttendance2(${userId})" style=" display: none; background-color: #e74a3b;">
-							<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra sáng
-						</button>
-						<button id="attendanceButton1" type="button"
-							class="btn btn-success btn_chien"  style="display: none;"
-							onclick="changeAttendance1(${userId})">
-							<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào sáng
-						</button>
-				<%
-					}else if (trangthai ==3 ) {
-				%>
-				        <button id="attendanceButton4" type="button"
-							class="btn btn-success btn_chien"
-							onclick="changeAttendance4(${userId})" style=" background-color: #e74a3b;">
-							<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra chiều 
+		            if(hienthichamcong == 1 || (hienthichamcong == 3 && trangthai == 2) || (hienthichamcong == 3 && trangthai ==3)) {
+		            	
+		     %>
+		            
+		                    <%       			
+		                         if (trangthai == 1 ) {
+							%>
+								<button id="attendanceButton2" type="button"
+									class="btn btn-success btn_chien"
+									onclick="changeAttendance2(${userId})" style=" background-color: #e74a3b;">
+									<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra sáng
+								</button>
+								<button id="attendanceButton1" type="button"
+									class="btn btn-success btn_chien"  style="display: none;"
+									onclick="changeAttendance1(${userId})">
+									<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào sáng
+								</button>
+							<%
+								} else if (hienthichamcong == 1 && trangthai ==2 ) {
+							%>
+							        <button id="attendanceButton2" type="button"
+										class="btn btn-success btn_chien"
+										onclick="changeAttendance2(${userId})" style=" display: none; background-color: #e74a3b;">
+										<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra sáng
+									</button>
+									<button id="attendanceButton1" type="button"
+										class="btn btn-success btn_chien"  style="display: none;"
+										onclick="changeAttendance1(${userId})">
+										<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào sáng
+									</button>
+							<%
+								} else if (hienthichamcong == 3 && trangthai == 2 ) {
+							%>		
+								<button id="attendanceButton3" type="button"
+									class="btn btn-success btn_chien"
+									onclick="changeAttendance3(${userId})">
+									<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào chiều
+								</button>
+								<button id="attendanceButton4" type="button"
+									class="btn btn-success btn_chien"
+									onclick="changeAttendance4(${userId})" style="display: none; background-color: #e74a3b;">
+									<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra chiều
+								</button>
+									
+							<%
+								}else if (trangthai ==3 ) {
+							%>
+							        <button id="attendanceButton4" type="button"
+										class="btn btn-success btn_chien"
+										onclick="changeAttendance4(${userId})" style=" background-color: #e74a3b;">
+										<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra chiều 
+									</button>
+									<button id="attendanceButton3" type="button"
+										class="btn btn-success btn_chien"  style="display: none;"
+										onclick="changeAttendance3(${userId})">
+										<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào chiều 
+									</button>
+							<%
+								}else if (trangthai ==4 ) {
+							%>
+							        <button id="attendanceButton2" type="button"
+										class="btn btn-success btn_chien"
+										onclick="changeAttendance(${userId})" style=" display: none; background-color: #e74a3b;">
+										<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra sáng
+									</button>
+									<button id="attendanceButton1" type="button"
+										class="btn btn-success btn_chien"  style="display: none;"
+										onclick="changeAttendance1(${userId})">
+										<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào sáng
+									</button>
+							<%
+								}
+							%> 
+		     <% }else if (hienthichamcong == 3 && trangthai ==1 ) {   %>
+	                    <button id="attendanceButton4" type="button"
+										class="btn btn-success btn_chien"
+										onclick="changeAttendance4(${userId})" style=" background-color: #e74a3b;">
+										<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra chiều 
 						</button>
 						<button id="attendanceButton3" type="button"
-							class="btn btn-success btn_chien"  style="display: none;"
-							onclick="changeAttendance3(${userId})">
-							<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào chiều 
+										class="btn btn-success btn_chien"  style="display: none;"
+										onclick="changeAttendance3(${userId})">
+										<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào chiều 
 						</button>
-				<%
-					}else if (trangthai ==4 ) {
-				%>
-				        <button id="attendanceButton2" type="button"
-							class="btn btn-success btn_chien"
-							onclick="changeAttendance(${userId})" style=" display: none; background-color: #e74a3b;">
-							<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công ra sáng
-						</button>
-						<button id="attendanceButton1" type="button"
-							class="btn btn-success btn_chien"  style="display: none;"
-							onclick="changeAttendance1(${userId})">
-							<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công vào sáng
-						</button>
-				<%
-					}
-				%>
-	    
+	           <% } %>
 		<% } %>
 						
 	<script>
 		function changeAttendance1() {
 			var button1 = document.getElementById("attendanceButton1");
 			var button2 = document.getElementById("attendanceButton2");
-			
 			button1.style.display = "none"; // Ẩn nút "Chấm công vào sáng"
 			button2.style.display = "block"; // Hiển thị nút "Chấm công ra sáng" với màu nền #e74a3b
-			
 			sendMaZaloAndConfirmCheckin(${userId},1);
-			
-
-			
 		}
 	
 		function changeAttendance2() {
 			var button1 = document.getElementById("attendanceButton1");
 			var button2 = document.getElementById("attendanceButton2");
-	
 			button1.style.display = "none"; // Hiển thị lại nút "Chấm công vào sáng"
 			button2.style.display = "none"; // Ẩn nút "Chấm công ra sáng"
-			
 			sendMaZaloAndConfirmCheckin(${userId},2);
-			
-			
 		}
 		
 		
@@ -184,14 +204,9 @@ px
 		function changeAttendance3() {
 			var button1 = document.getElementById("attendanceButton3");
 			var button2 = document.getElementById("attendanceButton4");
-			
 			button1.style.display = "none"; // Ẩn nút "Chấm công vào sáng"
 			button2.style.display = "block"; // Hiển thị nút "Chấm công ra sáng" với màu nền #e74a3b
-			
 			sendMaZaloAndConfirmCheckin(${userId},3);
-			
-			
-			
 		}
 	
 		function changeAttendance4() {
@@ -208,14 +223,7 @@ px
 		
 		
    </script>
-		
-		
-		
 		<%-- kêt thúc xử lý nút chấm công --%>
-		
-		
-		
-		
 		<portlet:actionURL var="xacthumazaloActionURL" name="xacthumazaloAction" />
 		<form id="check_mazalo" class="float-right"
 			action="<%=xacthumazaloActionURL%>" method="POST">
@@ -225,14 +233,7 @@ px
 				value="">
 		</form>
 	</div>
-	
-	
-	
-	
-	
-	
-	
-	
+
 	<div class="row mb-3 chien">
 		<span class="btn btn-success">Đúng giờ</span> <span
 			class="btn btn-warning">Đi muộn/Về sớm</span> <span
@@ -244,9 +245,6 @@ px
 
 	</div>
 
-
-
-	
 	<div class="form-group row">
 		<form class="pl-5" id="search-year" method="get">
 			<input type="hidden" name="p_p_id"
@@ -278,15 +276,13 @@ px
 				<thead>
 					<tr class="text-center text-white">
 						<th style="padding: 0;" class="bg-info">T2</th>
-						
 						<th style="padding: 0;" class="bg-info">T3</th>
 						<th style="padding: 0;" class="bg-info">T4</th>
+								
 						<th style="padding: 0;" class="bg-info">T5</th>
 						<th style="padding: 0;" class="bg-info">T6</th>
 						<th style="padding: 0;" class="bg-warning">T7</th>
-						
 						<th style="padding: 0;" class="bg-warning">CN</th>
-
 					</tr>
 				</thead>
 
@@ -354,11 +350,15 @@ px
 												|| (selectedYear == Thisyear && selectedMonth == Thismonth && dayIndex < dayToday);
 										boolean isNullInSang = checkInSang.isEmpty();
 										boolean isNullOutSang = checkOutSang.isEmpty();
+										
+										
 										String backgroundColorSang = (isBeforeCurrentDate && isNullInSang && isNullOutSang)
 												? "#e74a3b"
 												: ((isNullInSang || isNullOutSang) ? "#858796" : "#1cc88a");
 										boolean isNullInChieu = checkInChieu.isEmpty();
 										boolean isNullOutChieu = checkOutChieu.isEmpty();
+										
+										
 										String backgroundColorChieu = (isBeforeCurrentDate && isNullInChieu && isNullOutChieu)
 												? "#e74a3b"
 												: ((isNullInChieu || isNullOutChieu) ? "#858796" : "#1cc88a");
@@ -424,7 +424,6 @@ px
 					<tr>
 						<%
 							List<GioLam> Listgiolamcanlay = (List<GioLam>) request.getAttribute("Listgiolamcanlay");
-
 									for (int j = 0; j < 7; j++) {
 										int dayIndex = i * 7 + j - previousDay + 1; // Chỉ số của ngày trong danh sách daysInMonth
 										String day = "";
@@ -518,9 +517,7 @@ px
 			<%-- Bắt đầu bảng 2 chấm công của phòng dành cho phụ trách phòng --%>
 			
 		<% 
-    int phutrachphong = (int) renderRequest.getAttribute("phutrachphong");
-   //System.out.println("phutrachphong jsp jjjjjjjjjjjjjjjjjjjjjjjj " + phutrachphong);
-    
+    int phutrachphong = (int) renderRequest.getAttribute("phutrachphong");    
     if (phutrachphong == 1) {
 				%>
 				        <div>Chấm công của phòng/đơn vị</div>

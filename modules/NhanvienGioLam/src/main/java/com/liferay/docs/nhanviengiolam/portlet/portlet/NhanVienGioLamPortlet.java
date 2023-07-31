@@ -46,6 +46,7 @@ import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -96,7 +97,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		ServiceContext serviceContext = new ServiceContext();
 		long userId = themeDisplay.getUserId();
-		//System.out.println("userId la *******" + userId);
+		// System.out.println("userId la *******" + userId);
 		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
 		int IdUser = 0;
 		for (Users users : usersList) {
@@ -108,13 +109,13 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		try {
 			// tao ma_xac_nhan va luu vao data
 			Users user = UsersLocalServiceUtil.getUsers(IdUser);
-			//System.out.println(user);
+			// System.out.println(user);
 			int id = user.getId();
-			//System.out.println("id " + id);
+			// System.out.println("id " + id);
 			Random random = new Random();
 			int ma_xac_nhan = random.nextInt(9000) + 1000; // Tạo số ngẫu nhiên có 4 chữ số
 			String ma_xac_nhan_string = "" + ma_xac_nhan;
-			//System.out.println("randomNumber " + ma_xac_nhan);
+			// System.out.println("randomNumber " + ma_xac_nhan);
 			UsersLocalServiceUtil.updateUser(id, ma_xac_nhan_string, serviceContext);
 			String message = ma_xac_nhan_string
 					+ " : M\u00E3 x\u00E1c nh\u1EADn ch\u1EA5m c\u00F4ng t\u1EEB H\u1EC7 th\u1ED1ng ch\u1EA5m c\u00F4ng, giao vi\u1EC7c.";
@@ -130,7 +131,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 	public void sendMaXacThucToZalo(String message, String zalo_id) throws IOException, PortletException {
 		// System.out.println("da vao dc sendMaXacThucToZalo"+ message);
 
-//	   / getAccessTokenZaloNew();
+		// getAccessTokenZaloNew();
 
 		JsonObject user_id_info = getInfoZalo(zalo_id);
 		System.out.println("user_id_info" + user_id_info);
@@ -269,7 +270,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 
 			// Giải mã phản hồi từ JSON thành đối tượng
 			JsonObject jsonObject = new Gson().fromJson(response.toString(), JsonObject.class);
-		//	System.out.println("jsonObject: " + jsonObject);
+			// System.out.println("jsonObject: " + jsonObject);
 
 			// Trả về kết quả
 			return jsonObject;
@@ -373,7 +374,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
 
 			// Chuẩn bị dữ liệu gửi đi
-			String data = "refresh_token=gBqGilbcy02KdYtUaLUiOgkt5zokVjb5pRG4xg56r7_7gIJvdLFn58sfVBcEUCC3WwGJhE9QkGAbabYNnt-j5fk5USESDCPMdEbywvScldRor7J8lngtJUhU3DxoOuHFg_rveCPcXtEI_bBdyJg8SOlsPU6dQ9LP_9PAZlXGzoV-lLs0WtNgNjV3Tpt_7Q6OhfRyCDnP4TViYSWBYKC7e-QQf5FeJnlQxPcCLkmM3B2ddCK5iZaJm2OOeJfgu4Z85m"
+			String data = "refresh_token=OdplcQ9ivrbUNzBrobsxEs5swFVrTCuS1tNxnVfCp2ODQzRHmLxb17XjiDhhT-OHTtBBm95InI1wNiN2Y7FSCa17x9QXO8LADdBMWgbm-cnkQEMyWqRrRrae_zpIIOmW70QVaSrGeWO5HOVkz4ot3nX8lwMORPvLK5kgziTJ_ofWKRQK-2R6Ixrt1_v0J3SfhpSqKrOpCSRMM15_LZzNqzzS5bO_CJxEoaidILiUMAddFWyP4besqObgqXYxGjzE"
 					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
 
 			// Gửi dữ liệu
@@ -420,7 +421,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			tokenPairs.add(refreshTokenPair);
 			// In danh sách các cặp khóa-giá trị
 			// In danh sách các cặp khóa-giá trị
-			//System.out.println("tokenPairs la 111111112222222" + tokenPairs);
+			// System.out.println("tokenPairs la 111111112222222" + tokenPairs);
 			for (Map<String, String> tokenPair : tokenPairs) {
 				for (Map.Entry<String, String> entry : tokenPair.entrySet()) {
 					String key = entry.getKey();
@@ -449,15 +450,15 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 
 	public void xacthumazaloAction(ActionRequest request, ActionResponse response)
 			throws IOException, PortletException {
-		System.out.println("so sanh ma zalo");
+		System.out.println("so sanh ma zalo ");
 		String popupCapchaValue = ParamUtil.getString(request, "popupCapchaValue");
+		System.out.println("popupCapchaValue o xacthumazaloAction  " + popupCapchaValue);
 		int statusHienThiNutValue = ParamUtil.getInteger(request, "statusHienThiNut");
- 
+
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		ServiceContext serviceContext = new ServiceContext();
 		long userId = themeDisplay.getUserId();
-	
-		
+
 		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
 		int IdUser = 0;
 		for (Users users : usersList) {
@@ -488,26 +489,123 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 				String formattedTime = localTime.format(formatter);
 				GioLam userGioLam = GioLamLocalServiceUtil.getGioLamByUserId(user_id, dateNgayHienTai);
 
+				/// xử lý chấm vào muộn ra muộn
+
+				Calendar calendar = Calendar.getInstance();
+				TimeZone timeZone = TimeZone.getTimeZone("GMT+7"); // Đặt múi giờ +7
+				calendar.setTimeZone(timeZone);
+				calendar.setTime(new Date());
+
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+				dateFormat.setCalendar(calendar);
+				timeFormat.setCalendar(calendar);
+
+				String ngayThangNam = dateFormat.format(calendar.getTime());
+				String gioPhutGiay = timeFormat.format(calendar.getTime());
+
+				System.out.println("gioPhutGiay @@@@@@@@ tai ham render " + gioPhutGiay);
+				// Test chỗ chấm công vào muộn
+
+				Calamviec calamviecChuan = CalamviecLocalServiceUtil.getCalamviecs(-1, -1).get(0);
+
 				if (userGioLam == null) {
-					//System.out.println("Khong co userGioLam");
+					// System.out.println("Khong co userGioLam");
 					if (statusHienThiNutValue == 1) {
+						System.out.println("da vao dc day &&&&&&&&&&&&&&&&&88888888888888888888888888888888888888");
+						String giovaosang = calamviecChuan.getGio_vao_sang();
+						System.out.println("giovaochieu action @@@@@@ " + giovaosang);
+						/// xử lý chấm vào muộn ra muộn
+
+						DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+						LocalTime gioPhutGiayTime = LocalTime.parse(gioPhutGiay, timeFormatter);
+						LocalTime giovaosangTime = LocalTime.parse(giovaosang, timeFormatter);
+
+						// So sánh thời gian giữa gioPhutGiayTime và giovaosangTime
+						long minutesDifference = ChronoUnit.MINUTES.between(giovaosangTime, gioPhutGiayTime);
+						System.out.println("minutesDifference########### " + minutesDifference);
+						int muonvaosom = 0;
+						if (minutesDifference < 0) {
+							System.out.println("Thoi gian cham vao trucc gio ra");
+							muonvaosom = -(int) Math.abs(minutesDifference);
+						} else if (minutesDifference >= 0) {
+							System.out.println("Thoi gian cham vao sau gio ra");
+							muonvaosom = (int) Math.abs(minutesDifference);
+						}
+
+						// xử lý tính điểm
+//						    
+						float diem = 0;
+
+						if (minutesDifference < 0) {
+							diem += 1;
+						} else if (minutesDifference > 1 && minutesDifference < 10) {
+							diem += 0.8;
+						} else if (minutesDifference >= 10 && minutesDifference < 15) {
+							diem += 0.6;
+						} else if (minutesDifference >= 15 && minutesDifference < 20) {
+							diem += 0.4;
+						} else if (minutesDifference >= 20 && minutesDifference < 30) {
+							diem += 0.2;
+						} else {
+							diem += 0;
+						}
 						GioLamLocalServiceUtil.addGioLam(0, 0, statusHienThiNutValue, user_id, dateNgayHienTai,
-								ipAddress, formattedTime, "", 0, 0, 0, "", "", 0, 0, 0, "", "", 0, 0, 0, statusHienThiNutValue,
-								serviceContext);
+								ipAddress, formattedTime, "", muonvaosom, 0, 0, "", "", 0, 0, 0, "", "", 0, 0, diem,
+								statusHienThiNutValue, serviceContext);
 					} else if (statusHienThiNutValue == 2) {
 						GioLamLocalServiceUtil.addGioLam(0, 0, statusHienThiNutValue, user_id, dateNgayHienTai,
-								ipAddress, "", formattedTime, 0, 0, 0, "", "", 0, 0, 0, "", "", 0, 0, 0, statusHienThiNutValue,
-								serviceContext);
+								ipAddress, "", formattedTime, 0, 0, 0, "", "", 0, 0, 0, "", "", 0, 0, 0,
+								statusHienThiNutValue, serviceContext);
 
 					} else if (statusHienThiNutValue == 3) {
+						System.out.println("da vao dc day &&&&&&&&&&&&&&&&&88888888888888888888888888888888888888");
+						String giovaochieu = calamviecChuan.getGio_vao_chieu();
+						System.out.println("giovaochieu action @@@@@@ " + giovaochieu);
+
+						/// xử lý chấm vào muộn ra muộn
+
+						DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+						LocalTime gioPhutGiayTime = LocalTime.parse(gioPhutGiay, timeFormatter);
+						LocalTime giovaochieuTime = LocalTime.parse(giovaochieu, timeFormatter);
+
+						// So sánh thời gian giữa gioPhutGiayTime và giovaosangTime
+						long minutesDifference = ChronoUnit.MINUTES.between(giovaochieuTime, gioPhutGiayTime);
+						System.out.println("minutesDifference########### " + minutesDifference);
+						int muonvaosom = 0;
+						if (minutesDifference < 0) {
+							System.out.println("Thoi gian cham vao trucc gio ra");
+							muonvaosom = -(int) Math.abs(minutesDifference);
+						} else if (minutesDifference >= 0) {
+							System.out.println("Thoi gian cham vao sau gio ra");
+							muonvaosom = (int) Math.abs(minutesDifference);
+						}
+
+						// xử lý tính điểm
+						float diem = 0;
+						System.out.println("diem tu lop B " + diem);
+						if (minutesDifference < 0) {
+							diem += 1;
+						} else if (minutesDifference > 1 && minutesDifference < 10) {
+							diem += 0.8;
+						} else if (minutesDifference >= 10 && minutesDifference < 15) {
+							diem += 0.6;
+						} else if (minutesDifference >= 15 && minutesDifference < 20) {
+							diem += 0.4;
+						} else if (minutesDifference >= 20 && minutesDifference < 30) {
+							diem += 0.2;
+						} else {
+							diem += 0;
+						}
+
 						GioLamLocalServiceUtil.addGioLam(0, 0, statusHienThiNutValue, user_id, dateNgayHienTai,
-								ipAddress, "", "", 0, 0, 0, formattedTime, "", 0, 0, 0, "", "", 0, 0, 0, statusHienThiNutValue,
-								serviceContext);
+								ipAddress, "", "", 0, 0, 0, formattedTime, "", muonvaosom, 0, 0, "", "", 0, 0, 0,
+								statusHienThiNutValue, serviceContext);
 
 					} else if (statusHienThiNutValue == 4) {
 						GioLamLocalServiceUtil.addGioLam(0, 0, statusHienThiNutValue, user_id, dateNgayHienTai,
-								ipAddress, "", "", 0, 0, 0, "", formattedTime, 0, 0, 0, "", "", 0, 0, 0, statusHienThiNutValue,
-								serviceContext);
+								ipAddress, "", "", 0, 0, 0, "", formattedTime, 0, 0, 0, "", "", 0, 0, 0,
+								statusHienThiNutValue, serviceContext);
 					}
 				} else {
 					System.out.println("Co userGioLam: " + userGioLam.getId());
@@ -515,27 +613,165 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 
 					if (statusHienThiNutValue == 1) {
 						GioLamLocalServiceUtil.addGioLam(idGioLam, 1, statusHienThiNutValue, user_id, dateNgayHienTai,
-								ipAddress, formattedTime, "", 0, 0, 0, "", "", 0, 0, 0, "", "", 0, 0, 0, statusHienThiNutValue,
-								serviceContext);
+								ipAddress, formattedTime, "", 0, 0, 0, "", "", 0, 0, 0, "", "", 0, 0, 0,
+								statusHienThiNutValue, serviceContext);
 					} else if (statusHienThiNutValue == 2) {
+						System.out.println("da vao dc day &&&&&&&&&&&&&&&&&88888888888888888888888888888888888888");
+						String giorasang = calamviecChuan.getGio_ra_sang();
+						System.out.println("giorasang khac null action @@@@@@ " + giorasang);
+						/// xử lý chấm vào muộn ra muộn
+
+						DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+						LocalTime gioPhutGiayTime = LocalTime.parse(gioPhutGiay, timeFormatter);
+						LocalTime giorasangTime = LocalTime.parse(giorasang, timeFormatter);
+
+						// So sánh thời gian giữa gioPhutGiayTime và giovaosangTime
+						long minutesDifference = ChronoUnit.MINUTES.between(gioPhutGiayTime, giorasangTime);
+						System.out.println("minutesDifference########### " + minutesDifference);
+						int muonvaosom = 0;
+						if (minutesDifference < 0) {
+							System.out.println("Thoi gian cham vao trucc gio ra");
+							muonvaosom = -(int) Math.abs(minutesDifference);
+						} else if (minutesDifference >= 0) {
+							System.out.println("Thoi gian cham vao sau gio ra");
+							muonvaosom = (int) Math.abs(minutesDifference);
+						}
+
+						// xử lý tính điểm
+						float diem = (float) userGioLam.getDiem();
+						System.out.println("diem tu lop B " + diem);
+						if (minutesDifference < 0) {
+							diem += 1;
+						} else if (minutesDifference > 1 && minutesDifference < 10) {
+							diem += 0.8;
+						} else if (minutesDifference >= 10 && minutesDifference < 15) {
+							diem += 0.6;
+						} else if (minutesDifference >= 15 && minutesDifference < 20) {
+							diem += 0.4;
+						} else if (minutesDifference >= 20 && minutesDifference < 30) {
+							diem += 0.2;
+						} else {
+							diem += 0;
+						}
 						GioLam giolamUpadete = GioLamLocalServiceUtil.getGioLam(idGioLam);
 
 						GioLamLocalServiceUtil.addGioLam(idGioLam, 1, statusHienThiNutValue, user_id, dateNgayHienTai,
-								ipAddress, giolamUpadete.getCheck_in_sang(), formattedTime, 0, 0, 0, "", "", 0, 0, 0,
-								"", "", 0, 0, 0, statusHienThiNutValue, serviceContext);
+								ipAddress, giolamUpadete.getCheck_in_sang(), formattedTime, 0, muonvaosom, 0, "", "", 0,
+								0, 0, "", "", 0, 0, diem, statusHienThiNutValue, serviceContext);
 
 					} else if (statusHienThiNutValue == 3) {
+
+						String giovaochieu = calamviecChuan.getGio_vao_chieu();
+						System.out.println("giovaochieu action @@@@@@ " + giovaochieu);
+
+						/// xử lý chấm vào muộn ra muộn
+
+						DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+						LocalTime gioPhutGiayTime = LocalTime.parse(gioPhutGiay, timeFormatter);
+						LocalTime giovaochieuTime = LocalTime.parse(giovaochieu, timeFormatter);
+
+						// So sánh thời gian giữa gioPhutGiayTime và giovaosangTime
+						long minutesDifference = ChronoUnit.MINUTES.between(giovaochieuTime, gioPhutGiayTime);
+						System.out.println("minutesDifference########### " + minutesDifference);
+						int muonvaosom = 0;
+						if (minutesDifference < 0) {
+							System.out.println("Thoi gian cham vao trucc gio ra");
+							muonvaosom = -(int) Math.abs(minutesDifference);
+						} else if (minutesDifference >= 0) {
+							System.out.println("Thoi gian cham vao sau gio ra");
+							muonvaosom = (int) Math.abs(minutesDifference);
+						}
+
+						// xử lý tính điểm
+						float diem = (float) userGioLam.getDiem();
+						System.out.println("diem tu lop B " + diem);
+						if (minutesDifference < 0) {
+							diem += 1;
+						} else if (minutesDifference > 1 && minutesDifference < 10) {
+							diem += 0.8;
+						} else if (minutesDifference >= 10 && minutesDifference < 15) {
+							diem += 0.6;
+						} else if (minutesDifference >= 15 && minutesDifference < 20) {
+							diem += 0.4;
+						} else if (minutesDifference >= 20 && minutesDifference < 30) {
+							diem += 0.2;
+						} else {
+							diem += 0;
+						}
 						GioLam giolamUpadete = GioLamLocalServiceUtil.getGioLam(idGioLam);
 						GioLamLocalServiceUtil.addGioLam(idGioLam, 1, statusHienThiNutValue, user_id, dateNgayHienTai,
 								ipAddress, giolamUpadete.getCheck_in_sang(), giolamUpadete.getCheck_out_sang(), 0, 0, 0,
-								formattedTime, "", 0, 0, 0, "", "", 0, 0, 0, statusHienThiNutValue, serviceContext);
+								formattedTime, "", muonvaosom, 0, 0, "", "", 0, 0, diem, statusHienThiNutValue,
+								serviceContext);
 
 					} else if (statusHienThiNutValue == 4) {
+
+						String giorachieu = calamviecChuan.getGio_ra_chieu();
+						System.out.println("giorachieu render @@@@@@ " + giorachieu);
+
+						/// xử lý chấm vào muộn ra muộn
+
+						DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+						LocalTime gioPhutGiayTime = LocalTime.parse(gioPhutGiay, timeFormatter);
+						LocalTime giorasangTime = LocalTime.parse(giorachieu, timeFormatter);
+
+						// So sánh thời gian giữa gioPhutGiayTime và giovaosangTime
+						long minutesDifference = ChronoUnit.MINUTES.between(gioPhutGiayTime, giorasangTime);
+						System.out.println("minutesDifference########### " + minutesDifference);
+						int muonvaosom = 0;
+						if (minutesDifference < 0) {
+							System.out.println("Thoi gian cham vao trucc gio ra");
+							muonvaosom = -(int) Math.abs(minutesDifference);
+						} else if (minutesDifference >= 0) {
+							System.out.println("Thoi gian cham vao sau gio ra");
+							muonvaosom = (int) Math.abs(minutesDifference);
+						}
+
+						// xử lý tính điểm
+						float diem = (float) userGioLam.getDiem();
+						String checkoutsang = userGioLam.getCheck_out_sang();
+						System.out.println("checkoutsang tai cham diem 4 ------" + checkoutsang);
+						String checkinchieu = userGioLam.getCheck_in_chieu();
+						System.out.println("checkinchieu tai cham diem 4 ------" + checkinchieu);
+
+						if (statusHienThiNutValue == 4 && (!checkoutsang.equals("") || !checkinchieu.equals(""))) {
+
+							if (minutesDifference < 0) {
+								diem += 1;
+							} else if (minutesDifference > 1 && minutesDifference < 10) {
+								diem += 0.8;
+							} else if (minutesDifference >= 10 && minutesDifference < 15) {
+								diem += 0.6;
+							} else if (minutesDifference >= 15 && minutesDifference < 20) {
+								diem += 0.4;
+							} else if (minutesDifference >= 20 && minutesDifference < 30) {
+								diem += 0.2;
+							} else {
+								diem += 0;
+							}
+						} else if (statusHienThiNutValue == 4 && (checkinchieu.equals("") && checkoutsang.equals(""))) {
+
+							if (minutesDifference < 0) {
+								diem += 3;
+							} else if (minutesDifference > 1 && minutesDifference < 10) {
+								diem += 2.8;
+							} else if (minutesDifference >= 10 && minutesDifference < 15) {
+								diem += 2.6;
+							} else if (minutesDifference >= 15 && minutesDifference < 20) {
+								diem += 2.4;
+							} else if (minutesDifference >= 20 && minutesDifference < 30) {
+								diem += 2.2;
+							} else {
+								diem += 2;
+							}
+						}
+
 						GioLam giolamUpadete = GioLamLocalServiceUtil.getGioLam(idGioLam);
 						GioLamLocalServiceUtil.addGioLam(idGioLam, 1, statusHienThiNutValue, user_id, dateNgayHienTai,
 								ipAddress, giolamUpadete.getCheck_in_sang(), giolamUpadete.getCheck_out_sang(), 0, 0, 0,
-								giolamUpadete.getCheck_in_chieu(), formattedTime, 0, 0, 0, "", "", 0, 0, 0, statusHienThiNutValue,
-								serviceContext);
+								giolamUpadete.getCheck_in_chieu(), formattedTime, 0, muonvaosom, 0, "", "", 0, 0, diem,
+								statusHienThiNutValue, serviceContext);
+
 					}
 
 				}
@@ -543,18 +779,12 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 				System.out.println("DANG NHAP KHONG THANH CONG");
 			}
 
-				
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		response.sendRedirect("/nhanvien/gio-lam");
 	}
 
-	
-	
-	
-	
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
@@ -565,11 +795,9 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		String year = renderRequest.getParameter("year");
 		String thang = renderRequest.getParameter("thang");
 		String nam = renderRequest.getParameter("nam");
-		
-		
-		
+
 		if (thang == null && nam == null) {
-			//System.out.println(" da vao dc day ");
+			// System.out.println(" da vao dc day ");
 			Date currentDate = new Date();
 			int monthHienTai = currentDate.getMonth() + 1; // Lấy tháng
 			int namHienTai = currentDate.getYear() + 1900; // Lấy năm
@@ -591,9 +819,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 				renderRequest.setAttribute("thangNam", thangNam);
 				List<GioLam> Listgiolamcanlay = getGioLamByUserIdAndMonth(userId, thang, nam);
 				renderRequest.setAttribute("Listgiolamcanlay", Listgiolamcanlay);
-				// System.out.println("giolamcanlay 1111112223345556 " + Listgiolamcanlay);
 			} catch (PortalException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -608,56 +834,41 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 				break;
 			}
 		}
-		
+
 		try {
 			List<Users> filteredUsersListPhong = new ArrayList<>();
 			user = UsersLocalServiceUtil.getUsers(IdUser);
-			//System.out.println("phutrachphong " + user.getPhu_trach_phong());
 			renderRequest.setAttribute("phutrachphong", user.getPhu_trach_phong());
-			
-			System.out.println("user la 11111111111111111111122222222222222222222233333333333333333    "+ user);
+
+			System.out.println("user la 11111111111111111111122222222222222222222233333333333333333    " + user);
 			long targetPhongBanId = user.getPhongban_id();
 			for (Users userNhanVien : usersList) {
 				if (userNhanVien.getPhongban_id() == targetPhongBanId) {
 					filteredUsersListPhong.add(userNhanVien);
 				}
 			}
-			// System.out.println("filteredUsersList############# "+
-			// filteredUsersListPhong);
-
-			//System.out.println("-----------------");
-			// List<Map<String, Object>> AllGioLamNhanVienPhong = new ArrayList<>();
 			List<List<Map<String, Object>>> AllGioLamNhanVienPhong = new ArrayList<>();
 			for (Users userlapNhanvien : filteredUsersListPhong) {
 				List<GioLam> ListgiolamcanlayTungNhanVien = null;
 				List<Map<String, Object>> newgioLamMapListNhanVien = new ArrayList<>();
 				if (thang == null && nam == null) {
-				//	System.out.println(" da vao dc day ");
+					// System.out.println(" da vao dc day ");
 					Date currentDate = new Date();
 					int monthHienTai = currentDate.getMonth() + 1; // Lấy tháng
 					int namHienTai = currentDate.getYear() + 1900; // Lấy năm
 					String strMonthHienTai = String.valueOf(monthHienTai);
 					String strNamHienTai = String.valueOf(namHienTai);
 
-
 					try {
-						List<GioLam> ListgiolamcanlayTungNhanVienByMonth = getGioLamByUserIdAndMonth(
-								userlapNhanvien.getUserId(), strMonthHienTai, strNamHienTai);
-						// renderRequest.setAttribute("ListgiolamcanlayTungNhanVien",
-						// ListgiolamcanlayTungNhanVien);
+						List<GioLam> ListgiolamcanlayTungNhanVienByMonth = getGioLamByUserIdAndMonth(userlapNhanvien.getUserId(), strMonthHienTai, strNamHienTai);
 						ListgiolamcanlayTungNhanVien = ListgiolamcanlayTungNhanVienByMonth;
-						// System.out.println("userlapNhanvien @@@@@" + userlapNhanvien.getHovaten());
-						//System.out.println("ListgiolamcanlayTungNhanVienByMonth @@@@@" + ListgiolamcanlayTungNhanVienByMonth);
-
 						// Bắt đầu test
 						String nameNhanVien = userlapNhanvien.getHovaten();
-
 						if (ListgiolamcanlayTungNhanVienByMonth.isEmpty()) {
 							Map<String, Object> gioLamMap = new HashMap<>();
 							gioLamMap.put("nameNhanVien", nameNhanVien); // Giá trị mặc định khi danh sách rỗng
-
 							newgioLamMapListNhanVien.add(gioLamMap);
-						} 
+						}
 						for (GioLam gioLam : ListgiolamcanlayTungNhanVienByMonth) {
 							Map<String, Object> gioLamMap = new HashMap<>();
 							gioLamMap.put("id", gioLam.getId());
@@ -685,36 +896,23 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 							gioLamMap.put("trangthai", gioLam.getTrangthai());
 							gioLamMap.put("created_at", gioLam.getCreated_at());
 							gioLamMap.put("updated_at", gioLam.getUpdated_at());
-							//System.out.println("gioLamMap " + gioLamMap);
 							newgioLamMapListNhanVien.add(gioLamMap);
 
 						}
 
-					//	System.out.println("newgioLamMapListNhanVien " + newgioLamMapListNhanVien);
-
-						//System.out.println("----------------------------------------------------- ");
-
 						// KẾT THÚC TEST
-
-						// System.out.println("****************");
 
 					} catch (PortalException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-
-				
 
 				} else {
 
 					try {
 						List<GioLam> ListgiolamcanlayTungNhanVienByMonth = getGioLamByUserIdAndMonth(
 								userlapNhanvien.getUserId(), thang, nam);
-						// renderRequest.setAttribute("ListgiolamcanlayTungNhanVien",
-						// ListgiolamcanlayTungNhanVien);
 						ListgiolamcanlayTungNhanVien = ListgiolamcanlayTungNhanVienByMonth;
-						//System.out.println("userlapNhanvien @@@@@" + userlapNhanvien.getHovaten());
-						//System.out.println("ListgiolamcanlayTungNhanVienByMonth @@@@@" + ListgiolamcanlayTungNhanVienByMonth);
 
 						// Bắt đầu test
 						String nameNhanVien = userlapNhanvien.getHovaten();
@@ -724,7 +922,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 							gioLamMap.put("nameNhanVien", nameNhanVien); // Giá trị mặc định khi danh sách rỗng
 
 							newgioLamMapListNhanVien.add(gioLamMap);
-						} 
+						}
 						for (GioLam gioLam : ListgiolamcanlayTungNhanVienByMonth) {
 							Map<String, Object> gioLamMap = new HashMap<>();
 							gioLamMap.put("id", gioLam.getId());
@@ -752,72 +950,39 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 							gioLamMap.put("trangthai", gioLam.getTrangthai());
 							gioLamMap.put("created_at", gioLam.getCreated_at());
 							gioLamMap.put("updated_at", gioLam.getUpdated_at());
-							//System.out.println("gioLamMap " + gioLamMap);
 							newgioLamMapListNhanVien.add(gioLamMap);
 
 						}
 
-//						System.out.println("newgioLamMapListNhanVien " + newgioLamMapListNhanVien);
-//
-//						System.out.println("----------------------------------------------------- ");
-
-						// KẾT THÚC TEST
-
-						// System.out.println("****************");
-
 					} catch (PortalException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 
 				}
-//				 if (ListgiolamcanlayTungNhanVien != null) {
-//				        AllGioLamNhanVienPhong.add(ListgiolamcanlayTungNhanVien); // Thêm ListgiolamcanlayTungNhanVien vào AllGioLamNhanVienPhong
-//				    }
 				AllGioLamNhanVienPhong.add(newgioLamMapListNhanVien);
 			}
 
-			// System.out.println("AllGioLamNhanVienPhong
-			// 111111112222223333344444455555-----------"+AllGioLamNhanVienPhong);
 			renderRequest.setAttribute("allGioLamNhanVienPhong", AllGioLamNhanVienPhong);
-//			renderRequest.setAttribute("filteredUsersList", filteredUsersList);
 
 		} catch (PortalException e1) {
-			// TODO Auto-generated catch block
+
 			e1.printStackTrace();
 		}
-		
-		
-		
-		
-		
-		
-		
-		
+
 		// xử lý hiện nút ấn chấm công
 
-	
-	
 		LocalDate currentDate = LocalDate.now();
 		Date dateNgayHienTai = Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		try {
 			GioLam userGioLam = GioLamLocalServiceUtil.getGioLamByUserId(userId, dateNgayHienTai);
-			System.out.println("userGioLam render 11111111111111 "+ userGioLam);
-			
+			System.out.println("userGioLam render 11111111111111 " + userGioLam);
+
 			renderRequest.setAttribute("userGioLamNutChamCong", userGioLam);
 		} catch (PortalException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		
-		
-		
-		
 
 		try {
-			// Lấy ngày, tháng và giờ hiện tại từ máy tính
-			// Lấy ngày và giờ hiện tại từ máy tính
 			Calendar calendar = Calendar.getInstance();
 			TimeZone timeZone = TimeZone.getTimeZone("GMT+7"); // Đặt múi giờ +7
 			calendar.setTimeZone(timeZone);
@@ -866,57 +1031,37 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			DateTimeFormatter timeFormatter4 = DateTimeFormatter.ofPattern("HH:mm:ss");
 			String gioRaChieuSaucStr = gioRaChieuSau.format(timeFormatter4);
 			LocalTime checkGioPhutGiaysangTime = LocalTime.parse(gioPhutGiay);
-			int hienthichamcong = checkGioPhutGiay(checkGioPhutGiaysangTime, gioVaoSangTruocStr, gioVaoSang,
-					gioRaSang, gioRaSangSaucStr, gioVaoChieuTruocStr, gioVaoChieu, gioRaChieu, gioRaChieuSaucStr);
+			int hienthichamcong = checkGioPhutGiay(checkGioPhutGiaysangTime, gioVaoSangTruocStr, gioVaoSang, gioRaSang,
+					gioRaSangSaucStr, gioVaoChieuTruocStr, gioVaoChieu, gioRaChieu, gioRaChieuSaucStr);
 			renderRequest.setAttribute("hienthichamcong", hienthichamcong);
 		} catch (PortalException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
 
 		super.render(renderRequest, renderResponse);
 	}
 
-	public int checkGioPhutGiay(LocalTime gioPhutGiay, String gioVaoSangTruocStr, String gioVaoSang,
-			String gioRaSang, String gioRaSangSaucStr, String gioVaoChieuTruocStr, String gioVaoChieu,
-			String gioRaChieu, String gioRaChieuSaucStr) {
-		System.out.println("gioPhutGiay%%%%%%%%%%%%%%%%%%% "+ gioPhutGiay);
+	public int checkGioPhutGiay(LocalTime gioPhutGiay, String gioVaoSangTruocStr, String gioVaoSang, String gioRaSang,
+			String gioRaSangSaucStr, String gioVaoChieuTruocStr, String gioVaoChieu, String gioRaChieu,
+			String gioRaChieuSaucStr) {
+		System.out.println("gioPhutGiay%%%%%%%%%%%%%%%%%%% " + gioPhutGiay);
 		LocalTime gioVaoSangTruoc45Phut = LocalTime.parse(gioVaoSangTruocStr);
-	//	LocalTime gioVaoSangDungGio = LocalTime.parse(gioVaoSang);
 		LocalTime gioRaSangSau30Phut = LocalTime.parse(gioRaSangSaucStr);
-		//LocalTime gioRaSangDungGio = LocalTime.parse(gioRaSang);
-
 		LocalTime gioVaoChieuTruoc45Phut = LocalTime.parse(gioVaoChieuTruocStr);
-	//	LocalTime gioVaoChieuDungGio = LocalTime.parse(gioVaoChieu);
 		LocalTime gioRaChieuSau80Phut = LocalTime.parse(gioRaChieuSaucStr);
-		//LocalTime gioRaChieuDungGio = LocalTime.parse(gioRaChieu);
-
-		// Kiểm tra xem gioPhutGiay có nằm trong khoảng từ gioVaoSangTruoc đến
-		// gioVaoSangSau không
 		if (gioPhutGiay.isAfter(gioVaoSangTruoc45Phut) && gioPhutGiay.isBefore(gioRaSangSau30Phut)) {
 			return 1;
 		} else if (gioPhutGiay.isAfter(gioVaoChieuTruoc45Phut) && gioPhutGiay.isBefore(gioRaChieuSau80Phut)) {
 			return 3;
-		}  else {
+		} else {
 			return 5;
 		}
 	}
 
 	// Kết thúc nút ấn chấm công
-	
-	
-	
-	
-	
-	
+
 	public List<GioLam> getGioLamByUserIdAndMonth(long userId, String month, String nam) throws PortalException {
 		List<GioLam> gioLamList = GioLamLocalServiceUtil.getGioLams(-1, -1);
-//		System.out.println("userId " + userId);
-//		System.out.println("month " + month);
-//		System.out.println("nam " + nam);
 		List<GioLam> filteredGioLamList = gioLamList.stream().filter(gioLam -> gioLam.getUser_id() == userId)
 				.filter(gioLam -> {
 					LocalDate ngayLam = gioLam.getNgay_lam().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -928,22 +1073,4 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		// System.out.println("filteredGioLamList " + filteredGioLamList);
 		return filteredGioLamList;
 	}
-
-//	public List<GioLam> getAllofGioLamByNhanVien(long userId, String month, String nam) throws PortalException {
-//		List<GioLam> gioLamList = GioLamLocalServiceUtil.getGioLams(-1, -1);
-//		System.out.println("userId " + userId);
-//		System.out.println("month " + month);
-//		System.out.println("nam " + nam);
-//		List<GioLam> filteredGioLamList = gioLamList.stream().filter(gioLam -> gioLam.getUser_id() == userId)
-//				.filter(gioLam -> {
-//					LocalDate ngayLam = gioLam.getNgay_lam().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//					int gioLamMonth = ngayLam.getMonthValue();
-//					int gioLamYear = ngayLam.getYear();
-//					return gioLamMonth == Integer.parseInt(month) && gioLamYear == Integer.parseInt(nam);
-//				}).collect(Collectors.toList());
-//
-//		System.out.println("filteredGioLamList " + filteredGioLamList);
-//		return filteredGioLamList;
-//	}
-
 }

@@ -93,13 +93,7 @@ public class NgayNghiLePortlet extends MVCPortlet {
 	
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
-//		WebCacheItem access_token_value = new CustomWebCacheItem("access_token_key");
-//	    Object access_token = WebCachePoolUtil.get("access_token_key", access_token_value);
-//		System.out.println("access_token:  " + access_token);
-//		
-//		WebCacheItem refresh_token_value = new CustomWebCacheItem("refresh_token_key");
-//	    Object refresh_token = WebCachePoolUtil.get("refresh_token_key", refresh_token_value);
-//		System.out.println("refresh_token: " + refresh_token);
+
 		
 		List<Ngaynghile> ngayNghiLeList = NgaynghileLocalServiceUtil.getNgaynghiles(-1, -1);
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);

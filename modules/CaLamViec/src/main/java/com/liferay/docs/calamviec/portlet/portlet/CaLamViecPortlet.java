@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -49,7 +51,9 @@ public class CaLamViecPortlet extends MVCPortlet {
 
 		String tencalamviec = "Gi\u1EDD h\u00E0nh ch\u00EDnh";
 		String gio_vao_chieu = ParamUtil.getString(request, "gio_vao_chieu");
+		System.out.println("gio_vao_sang o ca lam viec portlet   " + gio_vao_chieu);
 		String gio_ra_chieu = ParamUtil.getString(request, "gio_ra_chieu");
+		System.out.println("gio_vao_sang o ca lam viec portlet    " + gio_ra_chieu);
 		int vao_truoc_chieu = ParamUtil.getInteger(request, "vao_truoc_chieu");
 		int ra_sau_chieu = ParamUtil.getInteger(request, "ra_sau_chieu");
 		
@@ -63,7 +67,10 @@ public class CaLamViecPortlet extends MVCPortlet {
 		 
 		 
 	    String gio_vao_sang = ParamUtil.getString(request, "gio_vao_sang");
-	    String gio_ra_sang = ParamUtil.getString(request, "gio_ra_sang");
+	    System.out.println("gio_vao_sang o ca lam viec portlet    " + gio_vao_sang);
+	    String gio_ra_sang = ParamUtil.getString(request, "gio_ra_sang");	    
+	    System.out.println("gio_ra_sang o ca lam viec portlet   " + gio_ra_sang);
+	    
 	    int vao_truoc_sang = ParamUtil.getInteger(request, "vao_truoc_sang");   
 	    int ra_sau_sang = ParamUtil.getInteger(request, "ra_sau_sang");
 
