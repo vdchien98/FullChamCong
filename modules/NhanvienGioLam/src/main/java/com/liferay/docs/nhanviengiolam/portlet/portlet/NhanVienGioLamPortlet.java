@@ -834,6 +834,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 				break;
 			}
 		}
+		
 
 		try {
 			List<Users> filteredUsersListPhong = new ArrayList<>();

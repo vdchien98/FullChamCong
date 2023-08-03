@@ -2,3 +2,6 @@ Bundle-Name: Login
 Bundle-SymbolicName: com.liferay.docs.login.portlet
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.docs.login.portlet.constants
+
+
+ 

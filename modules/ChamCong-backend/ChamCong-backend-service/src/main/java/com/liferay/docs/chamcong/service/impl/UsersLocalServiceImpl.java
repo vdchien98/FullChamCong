@@ -65,12 +65,14 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 			throws PortalException, SystemException {
 		// tạo tài khoản và người dùng  vào hệ thống Liferay
 		long IdUserLiferay = CounterLocalServiceUtil.increment();	
+		 Date now = new Date();
 		int idUser = (int)IdUserLiferay;
 		long companyId = PortalUtil.getDefaultCompanyId();
 		Locale locale = new Locale("", "");
 		long prefixId = 0;
 		long suffixId = 0;
 		boolean male = true;
+		
 		int birthdayMonth = 4;
 		int birthdayDay = 1;
 		int birthdayYear = 2000;
@@ -80,15 +82,18 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 		long[] roleIds = null;
 		long[] userGroupIds = null;
 		boolean sendEmail = true;	
+		//serviceContext.setAttribute("passwordReset", false);
+		
 		User user = UserLocalServiceUtil.addUser(20125, companyId, true, ma_xac_nhan, ma_xac_nhan, 
 				true, hovaten, email, locale, hovaten, "", "", 
 				prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, 
 				organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+		user.setPasswordReset(false);
+		//user.setLastFailedLoginDate(now);
 		UserLocalServiceUtil.updateUser(user);
 		
         // Tạo bảng user cho cham cong
 		Users users = usersPersistence.create(idUser);
-		Date now = new Date();
 		users.setId(idUser);
 		users.setHovaten(hovaten);
 		users.setEmail(email);
