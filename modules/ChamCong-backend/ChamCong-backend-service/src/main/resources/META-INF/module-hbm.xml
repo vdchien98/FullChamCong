@@ -5,6 +5,7 @@
 	<import class="com.liferay.docs.chamcong.model.Calamviec" />
 	<import class="com.liferay.docs.chamcong.model.Chucvu" />
 	<import class="com.liferay.docs.chamcong.model.GioLam" />
+	<import class="com.liferay.docs.chamcong.model.Ngaylamviec" />
 	<import class="com.liferay.docs.chamcong.model.Ngaynghile" />
 	<import class="com.liferay.docs.chamcong.model.Phongban" />
 	<import class="com.liferay.docs.chamcong.model.Users" />
@@ -60,6 +61,17 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="di_muon_toi" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ve_som_toi" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="diem" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="trangthai" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="created_at" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="updated_at" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.docs.chamcong.model.impl.NgaylamviecImpl" table="_Ngaylamviec">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="id_" name="id" type="int">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="nam" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="thang" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="so_ngay_lam_viec" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="trangthai" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="created_at" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="updated_at" type="org.hibernate.type.TimestampType" />

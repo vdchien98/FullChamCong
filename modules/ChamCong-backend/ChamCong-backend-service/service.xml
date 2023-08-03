@@ -141,6 +141,29 @@
 		<reference entity="AssetTag"
 			package-path="com.liferay.portlet.asset" />
 	</entity>
+	
+	
+	
+	<entity local-service="true" name="Ngaylamviec"
+		remote-service="true" uuid="false">
+		<column type="int" name="id" primary="true"></column>
+		<column type="int" name="nam"></column>
+        <column type="int" name="thang"></column>
+        <column type="int" name="so_ngay_lam_viec"></column>
+        <column type="int" name="trangthai"></column>
+		<column type="Date" name="created_at"></column>
+		<column type="Date" name="updated_at"></column>
+		<finder name="id" return-type="Collection">
+			<finder-column name="id" />
+		</finder>
+		<reference entity="AssetEntry"
+			package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetTag"
+			package-path="com.liferay.portlet.asset" />
+	</entity>
+	
+	
+	
 
 	<entity local-service="true" name="GioLam" remote-service="true"
 		uuid="false">

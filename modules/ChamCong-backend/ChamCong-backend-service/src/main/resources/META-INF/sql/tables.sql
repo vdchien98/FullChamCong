@@ -51,6 +51,16 @@ create table _GioLam (
 	updated_at DATE null
 );
 
+create table _Ngaylamviec (
+	id_ INTEGER not null primary key,
+	nam INTEGER,
+	thang INTEGER,
+	so_ngay_lam_viec INTEGER,
+	trangthai INTEGER,
+	created_at DATE null,
+	updated_at DATE null
+);
+
 create table _Ngaynghile (
 	id_ INTEGER not null primary key,
 	ten VARCHAR(75) null,

@@ -150,9 +150,8 @@ i.fa.fa-sign-out.iconchiendangxuat  {
 							class="collapse-item item-small" href="/phong-ban">Phòng ban</a> <a
 							class="collapse-item item-small" href="/chuc-vu">Chức vụ</a> <a
 							class="collapse-item item-small" href="/ca-lam-viec">Ca làm việc</a>
-						<a class="collapse-item item-small" href="/ngay-nghi-le">Ngày
-							nghỉ lễ</a> <a class="collapse-item item-small" href="">Ngày làm
-							việc</a>
+						<a class="collapse-item item-small" href="/ngay-nghi-le">Ngày nghỉ lễ</a> 
+						<a class="collapse-item item-small" href="/ngay-lam-viec">Ngày làm việc</a>
 					</div>
 				</div>
 			</li>

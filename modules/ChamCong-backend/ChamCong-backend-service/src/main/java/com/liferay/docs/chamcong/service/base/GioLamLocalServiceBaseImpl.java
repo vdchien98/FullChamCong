@@ -20,6 +20,7 @@ import com.liferay.docs.chamcong.service.GioLamLocalServiceUtil;
 import com.liferay.docs.chamcong.service.persistence.CalamviecPersistence;
 import com.liferay.docs.chamcong.service.persistence.ChucvuPersistence;
 import com.liferay.docs.chamcong.service.persistence.GioLamPersistence;
+import com.liferay.docs.chamcong.service.persistence.NgaylamviecPersistence;
 import com.liferay.docs.chamcong.service.persistence.NgaynghilePersistence;
 import com.liferay.docs.chamcong.service.persistence.PhongbanPersistence;
 import com.liferay.docs.chamcong.service.persistence.UsersPersistence;
@@ -463,6 +464,9 @@ public abstract class GioLamLocalServiceBaseImpl
 
 	@Reference
 	protected GioLamPersistence gioLamPersistence;
+
+	@Reference
+	protected NgaylamviecPersistence ngaylamviecPersistence;
 
 	@Reference
 	protected NgaynghilePersistence ngaynghilePersistence;

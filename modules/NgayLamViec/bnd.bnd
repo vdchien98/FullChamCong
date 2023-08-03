@@ -1,0 +1,4 @@
+Bundle-Name: NgayLamViec
+Bundle-SymbolicName: com.liferay.docs.ngaylamviec.portlet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.docs.ngaylamviec.portlet.constants

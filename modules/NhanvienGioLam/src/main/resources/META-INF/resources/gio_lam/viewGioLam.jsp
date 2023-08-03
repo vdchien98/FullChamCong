@@ -267,7 +267,7 @@ px
 			</div>
 		</form>
 	</div>
-
+   <%-- Bảng điểm cá nhân  --%>
 	<div class="tab-content" id="myTabContent">
 	    <div>Chấm công của tôi</div>
 		<div class="tab-pane fade show active" id="home" role="tabpanel"
@@ -280,6 +280,7 @@ px
 						<th style="padding: 0;" class="bg-info">T4</th>
 						<th style="padding: 0;" class="bg-info">T5</th>
 						<th style="padding: 0;" class="bg-info">T6</th>
+						
 						<th style="padding: 0;" class="bg-warning">T7</th>
 						<th style="padding: 0;" class="bg-warning">CN</th>
 					</tr>
@@ -507,6 +508,45 @@ px
 			</table>
 		</div>
 		
+		<%-- Kết thúc bảng điểm cá nhân  --%>
+		
+		<%-- Thông báo xếp loại --%>
+		
+		<div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row ml-2">
+                                <strong>Điểm tối đa của tháng: <span class="text-danger">{{ $ngayLamViecTrongThang->so_ngay_lam_viec * config('constants.DIEM+2') }}</span></strong>
+                            </div>
+                            <div class="row ml-2">
+                                <strong>Xếp loại hiện tại của bạn: <span class="text-danger">{{ $xepLoai }}</span></strong>
+                            </div>
+
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-info text-uppercase"><i class="fas fa-running fa-2x"></i> <span class="font-weight-bold">Cố lên nào !!!</span></div>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col-auto">
+                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $diemPhanTram }}%</div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="progress progress-sm mr-2">
+                                                <div class="progress-bar bg-info" role="progressbar" style="width: {{ $diemPhanTram }}%" aria-valuenow="{{ $diemPhanTram }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-trophy fa-2x text-warning"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		
+		
 		
 		
 		
@@ -515,9 +555,9 @@ px
 		
 			<%-- Bắt đầu bảng 2 chấm công của phòng dành cho phụ trách phòng --%>
 			
-		<% 
-    int phutrachphong = (int) renderRequest.getAttribute("phutrachphong");    
-    if (phutrachphong == 1) {
+		        <% 
+			    int phutrachphong = (int) renderRequest.getAttribute("phutrachphong");    
+			    if (phutrachphong == 1) {
 				%>
 				        <div>Chấm công của phòng/đơn vị</div>
 								  

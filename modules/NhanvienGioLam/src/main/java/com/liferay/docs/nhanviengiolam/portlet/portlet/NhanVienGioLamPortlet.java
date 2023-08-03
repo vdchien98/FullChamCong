@@ -374,7 +374,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
 
 			// Chuẩn bị dữ liệu gửi đi
-			String data = "refresh_token=OdplcQ9ivrbUNzBrobsxEs5swFVrTCuS1tNxnVfCp2ODQzRHmLxb17XjiDhhT-OHTtBBm95InI1wNiN2Y7FSCa17x9QXO8LADdBMWgbm-cnkQEMyWqRrRrae_zpIIOmW70QVaSrGeWO5HOVkz4ot3nX8lwMORPvLK5kgziTJ_ofWKRQK-2R6Ixrt1_v0J3SfhpSqKrOpCSRMM15_LZzNqzzS5bO_CJxEoaidILiUMAddFWyP4besqObgqXYxGjzE"
+			String data = "refresh_token=-5L2v2Sc_0l4Td-8JnUWQVjVHOfmFjLEdLnMk7y6s7INGt2iG1Vo7Dv5BkzICyWFqbzHn3q9nJVuRdNs5o_TBy5eV9HE2EfY-tiAWtaPa4MJS2MRJ2UJUBDL5-ztGjOmlt9lX71ioI6SKGJmVpw7F8zSDFLcL-efYGDeeGHgY5UC6LYc50t55RrLhEsuPmeRPn4AwwtJkL4JYax1xvovLNYQDVB_cATP5uS9xk6Xna9GvJ3Sl9coGracbWbaDpu8n1m"
 					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
 
 			// Gửi dữ liệu
@@ -618,7 +618,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 					} else if (statusHienThiNutValue == 2) {
 						System.out.println("da vao dc day &&&&&&&&&&&&&&&&&88888888888888888888888888888888888888");
 						String giorasang = calamviecChuan.getGio_ra_sang();
-						System.out.println("giorasang khac null action @@@@@@ " + giorasang);
+  						System.out.println("giorasang khac null action @@@@@@ " + giorasang);
 						/// xử lý chấm vào muộn ra muộn
 
 						DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -791,6 +791,7 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		long userId = themeDisplay.getUserId();
+		System.out.println("userId render la "+userId);
 		renderRequest.setAttribute("userId", userId);
 		String year = renderRequest.getParameter("year");
 		String thang = renderRequest.getParameter("thang");
@@ -1038,6 +1039,72 @@ public class NhanVienGioLamPortlet extends MVCPortlet {
 		} catch (PortalException e) {
 			e.printStackTrace();
 		}
+		
+		
+		
+		
+		// Xử lý thông báo xếp loại 
+		
+		
+		
+	
+		
+		if (thang == null && nam == null) {
+			Date currentDateNew = new Date();
+			int monthHienTai = currentDateNew.getMonth() + 1; // Lấy tháng
+			int namHienTai = currentDateNew.getYear() + 1900; // Lấy năm
+			String strMonthHienTai = String.valueOf(monthHienTai);
+			String strNamHienTai = String.valueOf(namHienTai);
+			try {
+				List<GioLam> ListgiolamcanlayTungNhanVienByMonth = getGioLamByUserIdAndMonth(userId, strMonthHienTai, strNamHienTai);
+				System.out.println("ListgiolamcanlayTungNhanVienByMonth "+ ListgiolamcanlayTungNhanVienByMonth);
+				float diem = 0 ;
+				for (GioLam gioLam : ListgiolamcanlayTungNhanVienByMonth) {
+					
+					diem += gioLam.getDiem();
+				}
+				
+				System.out.println("diem hien tai la    " + diem);
+				renderRequest.setAttribute("diemhientaicuaThang", diem);
+			} catch (PortalException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+		} else {
+
+			try {
+				List<GioLam> ListgiolamcanlayTungNhanVienByMonth = getGioLamByUserIdAndMonth(userId, thang, nam);
+				System.out.println("ListgiolamcanlayTungNhanVienByMonth "+ ListgiolamcanlayTungNhanVienByMonth);
+				float diem = 0 ;
+				for (GioLam gioLam : ListgiolamcanlayTungNhanVienByMonth) {
+					
+					diem += gioLam.getDiem();
+				}
+				System.out.println("diem hien tai la    " + diem);
+				renderRequest.setAttribute("diemhientaicuaThang", diem);
+				
+			} catch (PortalException e1) {
+				e1.printStackTrace();
+			}
+
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		super.render(renderRequest, renderResponse);
 	}

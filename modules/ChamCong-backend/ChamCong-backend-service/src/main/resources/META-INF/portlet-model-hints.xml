@@ -51,6 +51,15 @@
 		<field name="created_at" type="Date" />
 		<field name="updated_at" type="Date" />
 	</model>
+	<model name="com.liferay.docs.chamcong.model.Ngaylamviec">
+		<field name="id" type="int" />
+		<field name="nam" type="int" />
+		<field name="thang" type="int" />
+		<field name="so_ngay_lam_viec" type="int" />
+		<field name="trangthai" type="int" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
+	</model>
 	<model name="com.liferay.docs.chamcong.model.Ngaynghile">
 		<field name="id" type="int" />
 		<field name="ten" type="String" />

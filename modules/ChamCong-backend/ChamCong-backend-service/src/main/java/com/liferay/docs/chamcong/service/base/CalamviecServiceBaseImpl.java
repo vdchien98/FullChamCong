@@ -20,6 +20,7 @@ import com.liferay.docs.chamcong.service.CalamviecServiceUtil;
 import com.liferay.docs.chamcong.service.persistence.CalamviecPersistence;
 import com.liferay.docs.chamcong.service.persistence.ChucvuPersistence;
 import com.liferay.docs.chamcong.service.persistence.GioLamPersistence;
+import com.liferay.docs.chamcong.service.persistence.NgaylamviecPersistence;
 import com.liferay.docs.chamcong.service.persistence.NgaynghilePersistence;
 import com.liferay.docs.chamcong.service.persistence.PhongbanPersistence;
 import com.liferay.docs.chamcong.service.persistence.UsersPersistence;
@@ -149,6 +150,9 @@ public abstract class CalamviecServiceBaseImpl
 
 	@Reference
 	protected GioLamPersistence gioLamPersistence;
+
+	@Reference
+	protected NgaylamviecPersistence ngaylamviecPersistence;
 
 	@Reference
 	protected NgaynghilePersistence ngaynghilePersistence;
