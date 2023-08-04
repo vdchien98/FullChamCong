@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for Ngaylamviec. This utility wraps
@@ -45,6 +46,13 @@ public class NgaylamviecLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.docs.chamcong.service.impl.NgaylamviecLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void addNgayLamViec(
+			Map<Integer, Integer> soNgayCuaThang, int year,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().addNgayLamViec(soNgayCuaThang, year, serviceContext);
+	}
 
 	/**
 	 * Adds the ngaylamviec to the database. Also notifies the appropriate model listeners.
@@ -275,12 +283,12 @@ public class NgaylamviecLocalServiceUtil {
 	}
 
 	public static Ngaylamviec updateNgayLamViec(
-			int id, int thang, int so_ngay_lam_viec,
+			int idngaylamviec, int thang, int so_ngay_lam_viec,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return getService().updateNgayLamViec(
-			id, thang, so_ngay_lam_viec, serviceContext);
+			idngaylamviec, thang, so_ngay_lam_viec, serviceContext);
 	}
 
 	/**

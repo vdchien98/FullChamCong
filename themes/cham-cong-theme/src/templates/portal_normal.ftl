@@ -47,14 +47,21 @@
 />
 
 
-<#if is_signed_in>
-		<section id="sidebar">
-			<@liferay_portlet["runtime"]
-				defaultPreferences="<portlet-preferences></portlet-preferences>"
-				portletProviderAction=portletProviderAction.VIEW
-				portletName="com_liferay_docs_sidebar_portlet_SidebarPortlet"/>
-		</section>
-</#if>
+	<#if is_signed_in>
+				<style>
+						@media screen and (max-width: 500px) {
+							#sidebar {
+								display: none;
+							}
+				}
+			</style>
+			<section id="sidebar">
+				<@liferay_portlet["runtime"]
+					defaultPreferences="<portlet-preferences></portlet-preferences>"
+					portletProviderAction=portletProviderAction.VIEW
+					portletName="com_liferay_docs_sidebar_portlet_SidebarPortlet"/>
+			</section>
+	</#if>
  
     
 

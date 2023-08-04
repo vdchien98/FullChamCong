@@ -14,6 +14,8 @@
 
 package com.liferay.docs.chamcong.service.impl;
 
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.docs.chamcong.model.Calamviec;
 import com.liferay.docs.chamcong.model.Chucvu;
 import com.liferay.docs.chamcong.model.Ngaylamviec;
 import com.liferay.docs.chamcong.service.base.NgaylamviecLocalServiceBaseImpl;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -50,4 +53,38 @@ public class NgaylamviecLocalServiceImpl extends NgaylamviecLocalServiceBaseImpl
    		ngaylamviecLocalService.updateNgaylamviec(ngaylamviec) ;
         return ngaylamviec;
 	}
+	
+	
+	public void addNgayLamViec(Map<Integer, Integer>  soNgayCuaThang , int year , ServiceContext serviceContext)
+			throws PortalException, SystemException {
+		
+		
+		 for (Map.Entry<Integer, Integer> entry : soNgayCuaThang.entrySet()) {
+			   System.out.println("da vao dc service soNgayCuaThang ------------ ");
+
+	            int thang = entry.getKey();
+	            int soNgay = entry.getValue();
+	            int nam = year ;
+	            Date now = new Date();
+	            long IdUserLiferay = CounterLocalServiceUtil.increment();	
+	            int idNgayNghiLe = (int)IdUserLiferay;
+	    		idNgayNghiLe++; 
+	    		System.out.println("id la " + idNgayNghiLe);
+	    		Ngaylamviec ngaylamviec = ngaylamviecPersistence.create(idNgayNghiLe);
+	    		ngaylamviec.setId(idNgayNghiLe);
+	    		ngaylamviec.setNam(nam);
+	    		ngaylamviec.setThang(thang);
+	    		ngaylamviec.setSo_ngay_lam_viec(soNgay);
+	    		ngaylamviec.setCreated_at(now);
+	    		ngaylamviec.setUpdated_at(now);
+	       		ngaylamviecLocalService.updateNgaylamviec(ngaylamviec) ;
+	            System.out.println("Tháng " + thang + " có " + soNgay + " ngày.");
+	           
+	        }
+
+      
+	}
+	
+	
+	
 }

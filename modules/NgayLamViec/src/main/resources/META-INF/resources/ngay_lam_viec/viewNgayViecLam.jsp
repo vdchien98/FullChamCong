@@ -51,13 +51,25 @@
 								</div>
 							</div>
 						</form>
+						
+						
+						
+						<%-- Khởi tạo ngày làm việc --%>
+						<portlet:actionURL name="khoitaongaylamviec" var="khoitaongaylamviecURL" />
+						 <form id ="khoitaongaylamviec" method="POST" class="pl-5" action="<%=khoitaongaylamviecURL.toString()%>">
+                            <div class="form-group row">
+                                <input  type="hidden" name="<portlet:namespace />namlamviec" value="${thangNam}">
+		                        <button class="btn btn-info" style="button">Khởi tạo ngày làm việc</button>
+                            </div>
+                        </form>
+						
+						
+						
+						
 					</div>
+                   <%  List<Ngaylamviec> ListNgayLamViecOfNam = (List<Ngaylamviec>) request.getAttribute("ListNgayLamViecOfNam"); %>
 
-
-					<%
-						List<Ngaylamviec> ListNgayLamViecOfNam = (List<Ngaylamviec>) request.getAttribute("ListNgayLamViecOfNam");
-						System.out.println("ListNgayLamViecOfNam --------jsp --- " + ListNgayLamViecOfNam);
-					%>
+					
 					<table class="table table-bordered table-hover" width="100%"
 						cellspacing="0">
 						<thead>
@@ -85,11 +97,6 @@
 
 						</tbody>
 					</table>
-
-
-
-
-
 				</div>
 				<%-- cập nhật ngày làm việc  --%>
 			<div class="col-md-5">
@@ -107,13 +114,13 @@
 									name="<portlet:namespace />idngaylamviec" required autofocus
 									placeholder="ID" value=""> 
 									<input
-									id="thangId" type="text" class="form-control inpputreset"
-									name="<portlet:namespace />thangId" required autofocus
-									placeholder="Nhập tên phòng" value="">
+									id="thangId"  type="number"  class="form-control inpputreset"
+									name="<portlet:namespace />thangId" required autofocus readonly
+									placeholder="Nhập tháng" value="">
 							</div>
 							<div class="form-group row mt-4">
 								<label for="nguoi_phu_trach" class="col-form-label text-md-right">Số ngày làm việc </label> 
-								<input id="so_ngay_lam_viecId" type="text" class="form-control inpputreset"
+								<input id="so_ngay_lam_viecId"  type="number"  class="form-control inpputreset"
 									name="<portlet:namespace />so_ngay_lam_viecId" required autofocus
 									placeholder="Nhập số ngày " value="">
 							</div>

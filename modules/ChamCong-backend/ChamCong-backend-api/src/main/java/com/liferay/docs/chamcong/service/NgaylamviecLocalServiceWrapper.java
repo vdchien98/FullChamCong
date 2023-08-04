@@ -37,6 +37,17 @@ public class NgaylamviecLocalServiceWrapper
 		_ngaylamviecLocalService = ngaylamviecLocalService;
 	}
 
+	@Override
+	public void addNgayLamViec(
+			java.util.Map<Integer, Integer> soNgayCuaThang, int year,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		_ngaylamviecLocalService.addNgayLamViec(
+			soNgayCuaThang, year, serviceContext);
+	}
+
 	/**
 	 * Adds the ngaylamviec to the database. Also notifies the appropriate model listeners.
 	 *
@@ -312,13 +323,13 @@ public class NgaylamviecLocalServiceWrapper
 
 	@Override
 	public com.liferay.docs.chamcong.model.Ngaylamviec updateNgayLamViec(
-			int id, int thang, int so_ngay_lam_viec,
+			int idngaylamviec, int thang, int so_ngay_lam_viec,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			   com.liferay.portal.kernel.exception.SystemException {
 
 		return _ngaylamviecLocalService.updateNgayLamViec(
-			id, thang, so_ngay_lam_viec, serviceContext);
+			idngaylamviec, thang, so_ngay_lam_viec, serviceContext);
 	}
 
 	/**

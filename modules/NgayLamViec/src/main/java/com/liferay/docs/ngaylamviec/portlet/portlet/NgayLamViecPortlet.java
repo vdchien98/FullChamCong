@@ -5,12 +5,15 @@ package com.liferay.docs.ngaylamviec.portlet.portlet;
 
 import com.liferay.docs.chamcong.model.GioLam;
 import com.liferay.docs.chamcong.model.Ngaylamviec;
+import com.liferay.docs.chamcong.model.Ngaynghile;
 import com.liferay.docs.chamcong.model.Phongban;
 import com.liferay.docs.chamcong.service.GioLamLocalServiceUtil;
 import com.liferay.docs.chamcong.service.NgaylamviecLocalServiceUtil;
+import com.liferay.docs.chamcong.service.NgaynghileLocalServiceUtil;
 import com.liferay.docs.chamcong.service.PhongbanLocalServiceUtil;
 import com.liferay.docs.ngaylamviec.portlet.constants.NgayLamViecPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -20,8 +23,14 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import javax.portlet.ActionRequest;
@@ -53,23 +62,88 @@ import org.osgi.service.component.annotations.Component;
 )
 public class NgayLamViecPortlet extends MVCPortlet {
 	
-	public void khoitaongayla(ActionRequest request, ActionResponse sponse) throws IOException, PortletException {
+	public void khoitaongaylamviec(ActionRequest request, ActionResponse sponse) throws IOException, PortletException {
 //		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 //		ServiceContext serviceContext = new ServiceContext();
 		//long userId = themeDisplay.getUserId();
+		System.out.println("da vao dc khoitaongaylamviec ------");
+		int namlamviec = ParamUtil.getInteger(request, "namlamviec");
+		System.out.println("namlamviec @@@@@@@@@@@@@@ "+ namlamviec);
+		Map<Integer, Integer> soNgayCuaThang = new HashMap<>();
+		
+		 
+		
+		 for (int thang = 1; thang <= 12; thang++) {
+	            int soNgay = getSoNgayCuaThang(namlamviec, thang);	            
+	            try {
+					int ngaynghileofThang =  songaynghitrongthang(thang , namlamviec);
+					soNgayCuaThang.put(thang, soNgay - ngaynghileofThang);
+				} catch (PortalException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	            
+	        }
+
+	        // In kết quả ra màn hình
+	        System.out.println(soNgayCuaThang);
+	        ServiceContext serviceContext = new ServiceContext();
+//	        List<Ngaylamviec> namdacotrongData = NgaylamviecLocalServiceUtil.get 
+	        
+	        try {
+				boolean namdacotrongData = Namdatontai(namlamviec);
+				System.out.println("namdacotrongData!!!!!!!!!!!!!!!!!!!!!--------------------------- " + namdacotrongData);
+				if (namdacotrongData == true) {
+					String namlamviecNew = Integer.toString(namlamviec);
+					List<Ngaylamviec> ListNgayLamViecOfNam = getNgayLamViecOfNam(namlamviecNew);
+					
+					for (Ngaylamviec ngaylamviec : ListNgayLamViecOfNam) {
+//						System.out.println("ngaylamviec trong  hhhhhhhhhhhhhh   "+ ngaylamviec);
+						int so_ngay_lam_viec_new =  songaylamviecnew(ngaylamviec.getThang(), soNgayCuaThang);
+						//System.out.println("so_ngay_lam_viec moooooooooooooooiiiiiiiiiiiiiiiiii "+ so_ngay_lam_viec_new);
+						NgaylamviecLocalServiceUtil.updateNgayLamViec(ngaylamviec.getId(), ngaylamviec.getThang(), so_ngay_lam_viec_new, serviceContext);
+					}
+										
+					
+				} else {
+					NgaylamviecLocalServiceUtil.addNgayLamViec(soNgayCuaThang, namlamviec, serviceContext);
+				}
+				
+				
+			} catch (PortalException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 	
 	}
 
+	// hàm tính số ngày của tháng
+	private static int getSoNgayCuaThang(int nam, int thang) {
+        if (thang == 2) {
+            // Xét năm nhuận
+            if ((nam % 4 == 0 && nam % 100 != 0) || (nam % 400 == 0)) {
+                return 29;
+            } else {
+                return 28;
+            }
+        } else if (thang == 4 || thang == 6 || thang == 9 || thang == 11) {
+            return 30;
+        } else {
+            return 31;
+        }
+    }
+	
 	public void saveNgayLamViec(ActionRequest request, ActionResponse response) throws IOException, PortletException {
 		ServiceContext serviceContext = new ServiceContext();
 		
 		int idngaylamviec = ParamUtil.getInteger(request, "idngaylamviec");
 		
-		System.out.println("idngaylamviec la ------ "+ idngaylamviec);
+		//System.out.println("idngaylamviec la ------ "+ idngaylamviec);
 		int thang = ParamUtil.getInteger(request, "thangId");
 		System.out.println("idThang la ------ "+ thang);
 		int so_ngay_lam_viec = ParamUtil.getInteger(request, "so_ngay_lam_viecId");
-		System.out.println("so_ngay_lam_viec la ------ "+ so_ngay_lam_viec);
+		//System.out.println("so_ngay_lam_viec la ------ "+ so_ngay_lam_viec);
 				
 		
 		
@@ -120,7 +194,7 @@ public class NgayLamViecPortlet extends MVCPortlet {
 			
 			
 		} else {
-			 System.out.println(" da vao dc day ------------");
+			// System.out.println(" da vao dc day ------------");
 			String thangNam =  year;
 			renderRequest.setAttribute("thangNam", thangNam);
 			
@@ -132,22 +206,9 @@ public class NgayLamViecPortlet extends MVCPortlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
-			
-			
-			
-			
 
 		}
 		
-		
-		
-		
-		
-		
-		
-
 		super.render(renderRequest, renderResponse);
 	}
 	
@@ -162,6 +223,45 @@ public class NgayLamViecPortlet extends MVCPortlet {
 		return NgayLamViecList;
 	}
 	
+	public int songaynghitrongthang (int thang , int year) throws PortalException {
+		List<Ngaynghile> listNgayNghiLe = NgaynghileLocalServiceUtil.getNgaynghiles(-1, -1);
+		  // Lọc các ngày nghỉ lễ trong tháng và năm cụ thể
+        List<Ngaynghile> filteredNgayNghiLe = listNgayNghiLe.stream()
+                .filter(ngaynghi -> {
+                    Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"), Locale.ENGLISH);
+                    cal.setTime(ngaynghi.getNgay_nghi());
+                    int month = cal.get(Calendar.MONTH) + 1; // Tháng trong Calendar bắt đầu từ 0
+                    int yearOfNgayNghi = cal.get(Calendar.YEAR);
+                    return month == thang && yearOfNgayNghi == year;
+                })
+                .collect(Collectors.toList());
+
+        // Đếm số ngày trong danh sách đã lọc
+        int soNgayNghi = filteredNgayNghiLe.size();
+        
+        System.out.println("---------------- so ngay nghi   --------------- " + soNgayNghi );
+        return soNgayNghi;
+	}
+	
+	public boolean Namdatontai (int year) throws PortalException {
+		List<Ngaylamviec> ListNgayLamViec = NgaylamviecLocalServiceUtil.getNgaylamviecs(-1, -1);
+		System.out.println("ListNgayLamViec  --------------8888888888    " + ListNgayLamViec );
+		 boolean namDaTonTai = ListNgayLamViec.stream()
+	                .anyMatch(ngayLamViec -> ngayLamViec.getNam() == year);
+
+	        return namDaTonTai;
+	}
+	
+	public int songaylamviecnew (int thang , Map<Integer, Integer> soNgayCuaThang) throws PortalException {
+		System.out.println("da chay vao day 0000000000000000000" + soNgayCuaThang);
+		Integer  songaylamviecnew = soNgayCuaThang.get(thang);
+		int songaylamviecInt = songaylamviecnew != null ? songaylamviecnew.intValue() : 0;
+
+		System.out.println("songaylamviecnew WWWWWWWWWWWWWWWWWWWWWWWWWWWW "+ songaylamviecnew);
+          return songaylamviecInt;
+	}
+	
+
 	
 	
 

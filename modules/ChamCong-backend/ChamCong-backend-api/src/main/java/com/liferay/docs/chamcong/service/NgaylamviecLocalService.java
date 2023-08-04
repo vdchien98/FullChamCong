@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -62,6 +63,10 @@ public interface NgaylamviecLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.docs.chamcong.service.impl.NgaylamviecLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the ngaylamviec local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link NgaylamviecLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public void addNgayLamViec(
+			Map<Integer, Integer> soNgayCuaThang, int year,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	/**
 	 * Adds the ngaylamviec to the database. Also notifies the appropriate model listeners.
@@ -254,7 +259,7 @@ public interface NgaylamviecLocalService
 		throws PortalException;
 
 	public Ngaylamviec updateNgayLamViec(
-			int id, int thang, int so_ngay_lam_viec,
+			int idngaylamviec, int thang, int so_ngay_lam_viec,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
