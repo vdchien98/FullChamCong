@@ -47,7 +47,7 @@
 />
 
 
-	<#if is_signed_in>
+  	<#if is_signed_in>
 				<style>
 						@media screen and (max-width: 500px) {
 							#sidebar {

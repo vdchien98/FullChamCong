@@ -24,6 +24,7 @@ import com.liferay.docs.chamcong.service.persistence.NgaylamviecPersistence;
 import com.liferay.docs.chamcong.service.persistence.NgaynghilePersistence;
 import com.liferay.docs.chamcong.service.persistence.PhongbanPersistence;
 import com.liferay.docs.chamcong.service.persistence.UsersPersistence;
+import com.liferay.docs.chamcong.service.persistence.XinnghiPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -161,6 +162,9 @@ public abstract class UsersServiceBaseImpl
 
 	@Reference
 	protected UsersPersistence usersPersistence;
+
+	@Reference
+	protected XinnghiPersistence xinnghiPersistence;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

@@ -24,6 +24,7 @@ import com.liferay.docs.chamcong.service.persistence.NgaylamviecPersistence;
 import com.liferay.docs.chamcong.service.persistence.NgaynghilePersistence;
 import com.liferay.docs.chamcong.service.persistence.PhongbanPersistence;
 import com.liferay.docs.chamcong.service.persistence.UsersPersistence;
+import com.liferay.docs.chamcong.service.persistence.XinnghiPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -480,6 +481,9 @@ public abstract class NgaynghileLocalServiceBaseImpl
 
 	@Reference
 	protected UsersPersistence usersPersistence;
+
+	@Reference
+	protected XinnghiPersistence xinnghiPersistence;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

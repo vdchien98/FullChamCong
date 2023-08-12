@@ -1,3 +1,4 @@
+<%@page import="com.liferay.docs.chamcong.model.Ngaynghile"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
@@ -314,7 +315,9 @@ input#year {
 				<tbody id="calendar-body">
 					<%
 						String selectedMonthStr = request.getParameter("thang");
+					
 						String selectedYearStr = request.getParameter("nam");
+						
 
 						if (selectedMonthStr != null && selectedYearStr != null) {
 							int selectedMonth = Integer.parseInt(selectedMonthStr);
@@ -322,23 +325,34 @@ input#year {
 
 							// Lấy ngày cuối cùng của tháng
 							java.util.Calendar cal = java.util.Calendar.getInstance();
+							
 							cal.set(selectedYear, selectedMonth - 1, 1);
+							
 							int numDays = cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
+							
 
 							// Lấy ngày đầu tiên của tháng
 							cal.set(selectedYear, selectedMonth - 1, 1);
+							
 							int startDayOfWeek = cal.get(java.util.Calendar.DAY_OF_WEEK) - 1; // Ngày đầu tiên của tuần
+							
 							int previousDay = startDayOfWeek - 1 >= 0 ? startDayOfWeek - 1 : 6; // Thứ trước 1 ngày
+							
+						
 
 							// In ra danh sách các ngày trong từng cột
 							int numWeeks = (int) Math.ceil((previousDay + numDays) / 7.0); // Số tuần cần để hiển thị hết các ngày
+							
 							for (int i = 0; i < numWeeks; i++) {
+								
 					%>
 					<tr>
 						<%
 							List<GioLam> Listgiolamcanlay = (List<GioLam>) request.getAttribute("Listgiolamcanlay");
+						  List<Ngaynghile> listngaynghiletheothang = (List<Ngaynghile>) request.getAttribute("listngaynghiletheothang");
 									for (int j = 0; j < 7; j++) {
 										int dayIndex = i * 7 + j - previousDay + 1; // Chỉ số của ngày trong danh sách daysInMonth
+		
 										String day = "";
 										if (dayIndex >= 1 && dayIndex <= numDays) {
 											day = String.valueOf(dayIndex);
@@ -346,71 +360,177 @@ input#year {
 										boolean hasData = false;
 										String checkInSang = "";
 										String checkOutSang = "";
+										int dimuonsang = 0;
+										int vesomsang =0 ;
+										
+										
 										String checkInChieu = "";
 										String checkOutChieu = "";
+										int dimuonchieu = 0;
+										int vesomchieu =0 ;
 										java.util.Date currentDate = new java.util.Date();
 										java.util.Calendar calendar = java.util.Calendar.getInstance();
 										calendar.setTime(currentDate);
 										int dayToday = calendar.get(java.util.Calendar.DAY_OF_MONTH);
 										int Thismonth = calendar.get(java.util.Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, cần +1 để hiển thị đúng
 										int Thisyear = calendar.get(java.util.Calendar.YEAR);
-
 										for (GioLam gioLam : Listgiolamcanlay) {
 											java.util.Calendar gioLamCal = java.util.Calendar.getInstance();
 											gioLamCal.setTime(gioLam.getNgay_lam());
-											int gioLamDay = gioLamCal.get(java.util.Calendar.DAY_OF_MONTH);
-											int gioLamMonth = gioLamCal.get(java.util.Calendar.MONTH) + 1;
-											if (gioLamDay == dayIndex && gioLamMonth == selectedMonth) {
+			
+											int gioLamDay = gioLamCal.get(java.util.Calendar.DAY_OF_MONTH);	
+											int gioLamMonth = gioLamCal.get(java.util.Calendar.MONTH) + 1;	
+											if (gioLamDay == dayIndex && gioLamMonth == selectedMonth) {  // nếu ngày trong data trung vs ngày trong tháng đang xét 
 												hasData = true;
 												checkInSang = gioLam.getCheck_in_sang();
 												checkOutSang = gioLam.getCheck_out_sang();
+												dimuonsang = gioLam.getDi_muon_sang();
+												vesomsang = gioLam.getVe_som_sang();
+												
+												
 												checkInChieu = gioLam.getCheck_in_chieu();
 												checkOutChieu = gioLam.getCheck_out_chieu();
+												dimuonchieu = gioLam.getDi_muon_chieu();
+												vesomchieu = gioLam.getVe_som_chieu();
+												
 												break;
 											}
+											
+											
 										}
 
+										 boolean isSpecialEvent = false;
+										for (Ngaynghile ngaynghi : listngaynghiletheothang) {
+								            java.util.Calendar ngayNghiCal = java.util.Calendar.getInstance();
+								            ngayNghiCal.setTime(ngaynghi.getNgay_nghi());
+
+								            int ngayNghiDay = ngayNghiCal.get(java.util.Calendar.DAY_OF_MONTH);
+								      //      System.out.println("ngayNghiDay &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& ----------" + ngayNghiDay);
+								            int ngayNghiMonth = ngayNghiCal.get(java.util.Calendar.MONTH) + 1;
+								   //         System.out.println("ngayNghiMonth &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& ----------" + ngayNghiMonth);
+								            if (ngayNghiDay == dayIndex && ngayNghiMonth == selectedMonth) {
+								                isSpecialEvent = true;
+								                break;
+								            }
+								        }
+										
+									
+										
+								        
+								        
 										boolean isBeforeCurrentDate = (selectedYear < Thisyear)
 												|| (selectedYear == Thisyear && selectedMonth < Thismonth)
 												|| (selectedYear == Thisyear && selectedMonth == Thismonth && dayIndex < dayToday);
 										boolean isNullInSang = checkInSang.isEmpty();
 										boolean isNullOutSang = checkOutSang.isEmpty();
+										boolean dimuonvesomsang = (dimuonsang > 0 || vesomsang >0);
+										
+										String backgroundColorSang = "";
 
-										String backgroundColorSang = (isBeforeCurrentDate && isNullInSang && isNullOutSang)
-												? "#e74a3b"
-												: ((isNullInSang || isNullOutSang) ? "#858796" : "#1cc88a");
+										if( isSpecialEvent &&isBeforeCurrentDate){
+											 backgroundColorSang = "#4e73df";
+										}else if (isBeforeCurrentDate && isNullInSang && isNullOutSang) {
+										    backgroundColorSang = "#e74a3b";
+										} else if ((isNullInSang || isNullOutSang) && !dimuonvesomsang) {
+										    backgroundColorSang = "#858796";
+										} else if (dimuonvesomsang && !isNullInSang && !isNullOutSang) {
+										    backgroundColorSang = "#f6c23e";
+										} else if (!dimuonvesomsang && !isNullInSang && !isNullOutSang) {
+										    backgroundColorSang = "#1cc88a";
+										}else if (dimuonvesomsang && (isNullInSang || isNullOutSang)  ){
+											   backgroundColorSang = "#f6c23e";
+										}
+
+										
+	
 										boolean isNullInChieu = checkInChieu.isEmpty();
 										boolean isNullOutChieu = checkOutChieu.isEmpty();
-
-										String backgroundColorChieu = (isBeforeCurrentDate && isNullInChieu && isNullOutChieu)
-												? "#e74a3b"
-												: ((isNullInChieu || isNullOutChieu) ? "#858796" : "#1cc88a");
+										boolean dimuonvesomchieu = (dimuonchieu > 0 || vesomchieu >0);
+										
+										String backgroundColorChieu = "";
+										if(isSpecialEvent && isBeforeCurrentDate) {
+											backgroundColorChieu = "#4e73df";
+										}else if (isBeforeCurrentDate && isNullInChieu && isNullOutChieu) {
+											backgroundColorChieu = "#e74a3b";
+										} else if ((isNullInChieu || isNullOutChieu) && !dimuonvesomchieu ) {
+											backgroundColorChieu = "#858796";
+										} else if (dimuonvesomchieu && !isNullOutChieu && !isNullInChieu) {
+											backgroundColorChieu = "#f6c23e";
+										} else if (!dimuonvesomchieu && !isNullInChieu && !isNullOutChieu) {
+											backgroundColorChieu = "#1cc88a";
+										}else if (dimuonvesomchieu && (isNullInChieu || isNullOutChieu)  ){
+											   backgroundColorSang = "#f6c23e";
+										}
+										// xử lý ngày nghỉ trùng vs ngày dayIndex   
+			
 						%>
 						<td>
 							<%
 								if (!day.isEmpty()) {
 							%>
 							<div><%=day%></div> <%
- 	if (hasData || isBeforeCurrentDate) {
- 						if (j != 5 && j != 6) { // Bỏ qua thứ 7 và Chủ nhật
- %>
+							 	if (hasData || isBeforeCurrentDate) {
+									if (j != 5 && j != 6) { // Bỏ qua thứ 7 và Chủ nhật
+						%>
+						<%
+						if (isBeforeCurrentDate && !isNullInSang && isNullOutSang && 
+						isNullInChieu && !isNullOutChieu && !dimuonvesomsang && !dimuonvesomchieu) {
+						%>
+						<div class="border"
+						    style="height: 10px; background-color: #1cc88a"
+						    title="Vào sáng: <%=checkInSang.isEmpty() ? "Null" : checkInSang%> --- Ra Sáng: <%=checkOutSang.isEmpty() ? "Null" : checkOutSang%>">
+						    &nbsp;
+						</div>
+						<div class="border"
+						    style="height: 10px; background-color: #1cc88a"
+						    title="Vào chiều: <%=checkInChieu.isEmpty() ? "Null" : checkInChieu%> --- Ra Chiều : <%=checkOutChieu.isEmpty() ? "Null" : checkOutChieu%>">
+						    &nbsp;
+						</div>
+						<%
+						} else if(isBeforeCurrentDate && !isNullInSang && isNullOutSang && 
+								isNullInChieu && !isNullOutChieu && dimuonvesomchieu) { %>
+									<div class="border"
+						    style="height: 10px; background-color: #1cc88a"
+						    title="Vào sáng: <%=checkInSang.isEmpty() ? "Null" : checkInSang%> --- Ra Sáng: <%=checkOutSang.isEmpty() ? "Null" : checkOutSang%>">
+						    &nbsp;
+						</div>
+						<div class="border"
+						    style="height: 10px; background-color: #f6c23e"
+						    title="Vào chiều: <%=checkInChieu.isEmpty() ? "Null" : checkInChieu%> --- Ra Chiều : <%=checkOutChieu.isEmpty() ? "Null" : checkOutChieu%>">
+						    &nbsp;
+						</div>
+						
+						
+						<% } else { %>		
+						
 							<div class="border"
-								style="height: 10px; background-color: <%=backgroundColorSang%>"
-								title="Vào sáng: <%=checkInSang.isEmpty() ? "Null" : checkInSang%> --- Ra Sáng: <%=checkOutSang.isEmpty() ? "Null" : checkOutSang%>">
-								&nbsp;</div>
-							<div class="border"
-								style="height: 10px; background-color: <%=backgroundColorChieu%>"
-								title="Vào chiều: <%=checkInChieu.isEmpty() ? "Null" : checkInChieu%> --- Ra Chiều : <%=checkOutChieu.isEmpty() ? "Null" : checkOutChieu%>">
-								&nbsp;</div> <%
- 	}
- 					}
- %> <%
- 	}
- %>
+							        style="height: 10px; background-color: <%=backgroundColorSang %>"
+							        title="Vào sáng: <%=checkInSang.isEmpty() ? "Null" : checkInSang%> --- Ra Sáng: <%=checkOutSang.isEmpty() ? "Null" : checkOutSang%>">
+							        &nbsp;
+							    </div>
+							    <div class="border"
+							        style="height: 10px; background-color: <%=backgroundColorChieu %>"
+							        title="Vào chiều: <%=checkInChieu.isEmpty() ? "Null" : checkInChieu%> --- Ra Chiều : <%=checkOutChieu.isEmpty() ? "Null" : checkOutChieu%>">
+							        &nbsp;
+							    </div>
+						
+						<% } %>
+						
+						
+												
+						<%
+							      }
+							      }
+										 %>
+										 <%
+										 	}
+										 %>
 						</td>
 						<%
 							}
 						%>
+						
+						
 					</tr>
 					<%
 						}
@@ -444,6 +564,7 @@ input#year {
 					<tr>
 						<%
 							List<GioLam> Listgiolamcanlay = (List<GioLam>) request.getAttribute("Listgiolamcanlay");
+						List<Ngaynghile> listngaynghiletheothang = (List<Ngaynghile>) request.getAttribute("listngaynghiletheothang");
 									for (int j = 0; j < 7; j++) {
 										int dayIndex = i * 7 + j - previousDay + 1; // Chỉ số của ngày trong danh sách daysInMonth
 										String day = "";
@@ -455,6 +576,10 @@ input#year {
 										String checkOutSang = "";
 										String checkInChieu = "";
 										String checkOutChieu = "";
+										int dimuonchieu = 0;
+										int vesomchieu =0 ;
+										int dimuonsang = 0;
+										int vesomsang =0 ;
 
 										for (GioLam gioLam : Listgiolamcanlay) {
 											java.util.Calendar gioLamCal = java.util.Calendar.getInstance();
@@ -465,47 +590,134 @@ input#year {
 												hasData = true;
 												checkInSang = gioLam.getCheck_in_sang();
 												checkOutSang = gioLam.getCheck_out_sang();
+												dimuonsang = gioLam.getDi_muon_sang();
+												vesomsang = gioLam.getVe_som_sang();
+												
+												
 												checkInChieu = gioLam.getCheck_in_chieu();
 												checkOutChieu = gioLam.getCheck_out_chieu();
+												dimuonchieu = gioLam.getDi_muon_chieu();
+												vesomchieu = gioLam.getVe_som_chieu();
 												break;
 											}
 										}
 
+										
+
+										 boolean isSpecialEvent = false;
+										for (Ngaynghile ngaynghi : listngaynghiletheothang) {
+								            java.util.Calendar ngayNghiCal = java.util.Calendar.getInstance();
+								            ngayNghiCal.setTime(ngaynghi.getNgay_nghi());
+
+								            int ngayNghiDay = ngayNghiCal.get(java.util.Calendar.DAY_OF_MONTH);
+								            int ngayNghiMonth = ngayNghiCal.get(java.util.Calendar.MONTH) + 1;
+								            if (ngayNghiDay == dayIndex && ngayNghiMonth == selectedMonth) {
+								                isSpecialEvent = true;
+								                break;
+								            }
+								        }
+										
+										
+										
 										boolean isBeforeCurrentDate = (selectedYear < Thisyear)
 												|| (selectedYear == Thisyear && selectedMonth < Thismonth)
 												|| (selectedYear == Thisyear && selectedMonth == Thismonth && dayIndex < dayToday);
 										boolean isNullInSang = checkInSang.isEmpty();
 										boolean isNullOutSang = checkOutSang.isEmpty();
-										String backgroundColorSang = (isBeforeCurrentDate && isNullInSang && isNullOutSang)
-												? "#e74a3b"
-												: ((isNullInSang || isNullOutSang) ? "#858796" : "#1cc88a");
+										boolean dimuonvesomsang = (dimuonsang > 0 || vesomsang >0);
+										
+										String backgroundColorSang = "";
+										if( isSpecialEvent &&isBeforeCurrentDate){
+											 backgroundColorSang = "#4e73df";
+										}else if (isBeforeCurrentDate && isNullInSang && isNullOutSang) {
+										    backgroundColorSang = "#e74a3b";
+										} else if (isNullInSang || isNullOutSang) {
+										    backgroundColorSang = "#858796";
+										} else if (dimuonvesomsang && !isNullInSang && !isNullOutSang) {
+										    backgroundColorSang = "#f6c23e";
+										} else if (!dimuonvesomsang && !isNullInSang && !isNullOutSang) {
+										    backgroundColorSang = "#1cc88a";
+										}
+
+										
+	
 										boolean isNullInChieu = checkInChieu.isEmpty();
 										boolean isNullOutChieu = checkOutChieu.isEmpty();
-										String backgroundColorChieu = (isBeforeCurrentDate && isNullInChieu && isNullOutChieu)
-												? "#e74a3b"
-												: ((isNullInChieu || isNullOutChieu) ? "#858796" : "#1cc88a");
+										boolean dimuonvesomchieu = (dimuonchieu > 0 || vesomchieu >0 || (dimuonchieu > 0 && vesomchieu>0));
+										
+										String backgroundColorChieu = "";
+										if(isSpecialEvent && isBeforeCurrentDate) {
+											backgroundColorChieu = "#4e73df";
+										}else if (isBeforeCurrentDate && isNullInChieu && isNullOutChieu) {
+											backgroundColorChieu = "#e74a3b";
+										} else if (isNullInChieu || isNullOutChieu) {
+											backgroundColorChieu = "#858796";
+										} else if (dimuonvesomchieu && !isNullOutChieu && !isNullInChieu) {
+											backgroundColorChieu = "#f6c23e";
+										} else if (!dimuonvesomchieu && !isNullInChieu && !isNullOutChieu) {
+											backgroundColorChieu = "#1cc88a";
+										}
 						%>
 						<td>
 							<%
 								if (!day.isEmpty()) {
 							%>
 							<div><%=day%></div> <%
- 	if (hasData || isBeforeCurrentDate) {
- 						if (j != 5 && j != 6) { // Bỏ qua thứ 7 và Chủ nhật
- %>
-							<div class="border"
-								style="height: 10px; background-color: <%=backgroundColorSang%>"
-								title="Vào sáng: <%=checkInSang.isEmpty() ? "Null" : checkInSang%> --- Ra Sáng: <%=checkOutSang.isEmpty() ? "Null" : checkOutSang%>">
-								&nbsp;</div>
-							<div class="border"
-								style="height: 10px; background-color: <%=backgroundColorChieu%>"
-								title="Vào Chiều: <%=checkInChieu.isEmpty() ? "Null" : checkInChieu%> --- Ra Chiều: <%=checkOutChieu.isEmpty() ? "Null" : checkOutChieu%>">
-								&nbsp;</div> <%
- 	}
- 					}
- %> <%
- 	}
- %>
+									 	if (hasData || isBeforeCurrentDate) {
+												if (j != 5 && j != 6) { // Bỏ qua thứ 7 và Chủ nhật
+									%>
+									<%
+									if (isBeforeCurrentDate && !isNullInSang && isNullOutSang && 
+									isNullInChieu && !isNullOutChieu && !dimuonvesomsang && !dimuonvesomchieu) {
+									%>
+									<div class="border"
+									    style="height: 10px; background-color: #1cc88a"
+									    title="Vào sáng: <%=checkInSang.isEmpty() ? "Null" : checkInSang%> --- Ra Sáng: <%=checkOutSang.isEmpty() ? "Null" : checkOutSang%>">
+									    &nbsp;
+									</div>
+									<div class="border"
+									    style="height: 10px; background-color: #1cc88a"
+									    title="Vào chiều: <%=checkInChieu.isEmpty() ? "Null" : checkInChieu%> --- Ra Chiều : <%=checkOutChieu.isEmpty() ? "Null" : checkOutChieu%>">
+									    &nbsp;
+									</div>
+									<%
+									} else if(isBeforeCurrentDate && !isNullInSang && isNullOutSang && 
+											isNullInChieu && !isNullOutChieu && dimuonvesomchieu) { %>
+												<div class="border"
+									    style="height: 10px; background-color: #1cc88a"
+									    title="Vào sáng: <%=checkInSang.isEmpty() ? "Null" : checkInSang%> --- Ra Sáng: <%=checkOutSang.isEmpty() ? "Null" : checkOutSang%>">
+									    &nbsp;
+									</div>
+									<div class="border"
+									    style="height: 10px; background-color: #f6c23e"
+									    title="Vào chiều: <%=checkInChieu.isEmpty() ? "Null" : checkInChieu%> --- Ra Chiều : <%=checkOutChieu.isEmpty() ? "Null" : checkOutChieu%>">
+									    &nbsp;
+									</div>
+									
+									
+									<% } else { %>		
+									
+										<div class="border"
+										        style="height: 10px; background-color: <%=backgroundColorSang %>"
+										        title="Vào sáng: <%=checkInSang.isEmpty() ? "Null" : checkInSang%> --- Ra Sáng: <%=checkOutSang.isEmpty() ? "Null" : checkOutSang%>">
+										        &nbsp;
+										    </div>
+										    <div class="border"
+										        style="height: 10px; background-color: <%=backgroundColorChieu %>"
+										        title="Vào chiều: <%=checkInChieu.isEmpty() ? "Null" : checkInChieu%> --- Ra Chiều : <%=checkOutChieu.isEmpty() ? "Null" : checkOutChieu%>">
+										        &nbsp;
+										    </div>
+									
+									<% } %>
+									
+									
+															
+									<%
+										      }
+										      }
+									 %> <%
+									 	}
+									 %>
 						</td>
 						<%
 							}
@@ -601,157 +813,157 @@ input#year {
 				</thead>
 				<tbody>
 					<%
-						List<List<Map<String, Object>>> AllGioLamNhanVienPhong = (List<List<Map<String, Object>>>) renderRequest
-									.getAttribute("allGioLamNhanVienPhong");
-							// System.out.println("AllGioLamNhanVienPhong 11111111222222333334444445555 JSP-----------"+AllGioLamNhanVienPhong);
-
+						List<List<Map<String, Object>>> AllGioLamNhanVienPhong = (List<List<Map<String, Object>>>) renderRequest.getAttribute("allGioLamNhanVienPhong");
 							if (AllGioLamNhanVienPhong != null) {
 								int stt = 1;
 								for (List<Map<String, Object>> gioLamNhanVien : AllGioLamNhanVienPhong) {
+									 System.out.println("gioLamNhanVien ------- " + gioLamNhanVien);
 									boolean hasData = !gioLamNhanVien.isEmpty();
 									boolean isAllRed = !hasData;
-					%>
+				 	%>
 					<tr class="">
 						<td style="padding: 0;" class="text-center"><%=stt%></td>
 						<td style="padding: 0;" class="text-center hovaten"><%=gioLamNhanVien.get(0).get("nameNhanVien")%></td>
 
 						<%
 							if (selectedMonthStr != null && selectedYearStr != null) {
-											int selectedMonth = Integer.parseInt(selectedMonthStr);
-											int selectedYear = Integer.parseInt(selectedYearStr);
-											int daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
-											java.util.Calendar todayCalendar = java.util.Calendar.getInstance();
-											java.util.Date todayDate = todayCalendar.getTime();
-											for (int i = 1; i <= daysInMonth; i++) {
-												boolean isWeekend = false;
-												java.util.Calendar calendar = java.util.Calendar.getInstance();
-												calendar.set(selectedYear, selectedMonth - 1, i);
-												int dayOfWeek = calendar.get(java.util.Calendar.DAY_OF_WEEK);
-												if (dayOfWeek == java.util.Calendar.SATURDAY
-														|| dayOfWeek == java.util.Calendar.SUNDAY) {
-													isWeekend = true;
-												}
+								int selectedMonth = Integer.parseInt(selectedMonthStr);
+								System.out.println("selectedMonth --------------- " + selectedMonth);
+								int selectedYear = Integer.parseInt(selectedYearStr);
+								System.out.println("selectedYear --------------- " + selectedYear);
+								int daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+								System.out.println("daysInMonth --------------- " + daysInMonth);
+								java.util.Calendar todayCalendar = java.util.Calendar.getInstance();
+								System.out.println("todayCalendar --------------- " + todayCalendar);
+								java.util.Date todayDate = todayCalendar.getTime();
+								System.out.println("todayDate --------------- " + todayDate);
+								
+								
+								System.out.println(" ************************************************************************************************ ");
+								
+								for (int i = 1; i <= daysInMonth; i++) {
+									boolean isWeekend = false;
+									java.util.Calendar calendar = java.util.Calendar.getInstance();
+									//System.out.println("calendar 11111 --------------- " + calendar);
+									calendar.set(selectedYear, selectedMonth - 1, i);
+									//System.out.println("calendar 22222 --------------- " + calendar);
+									int dayOfWeek = calendar.get(java.util.Calendar.DAY_OF_WEEK);
+									//System.out.println("dayOfWeek  --------------- " + dayOfWeek);
+									if (dayOfWeek == java.util.Calendar.SATURDAY || dayOfWeek == java.util.Calendar.SUNDAY) {
+										isWeekend = true;
+									}
 						%>
 						<td style="padding: 0px; width: 20px;"
 							class="text-center sorting_disabled <%=isWeekend ? "" : ""%>"
 							rowspan="1" colspan="1" aria-label="<%=i%>">
 							<%
 								if (!isWeekend) {
-							%> <%
- 	if (isAllRed) {
- %>
-							<div class="bg-danger border" style="height: 10px"
-								data-toggle="tooltip" data-html="true" title="No data">&nbsp;</div>
-							<div class="bg-danger border" style="height: 10px"
-								data-toggle="tooltip" data-html="true" title="No data">&nbsp;</div>
-							<%
-								} else {
-							%> <%
- 	boolean hasDataForCurrentDate = false;
- %> <%
- 	if (hasData) {
- %> <%
- 	for (Map<String, Object> gioLam : gioLamNhanVien) {
- 										java.util.Date ngayLam = (java.util.Date) gioLam.get("ngay_lam");
- 										if (ngayLam == null) {
- %> <%-- 
-									                        
-									                         <div class="bg-danger border" style="height: 10px" data-toggle="tooltip" data-html="true" title="No data">&nbsp;</div>
-									                        <div class="bg-danger border" style="height: 10px" data-toggle="tooltip" data-html="true" title="No data">&nbsp;</div>
-									                         --%> <%
- 	} else {
- 											java.util.Calendar gioLamCalendar = java.util.Calendar
- 													.getInstance();
- 											gioLamCalendar.setTime(ngayLam);
- 											int gioLamDay = gioLamCalendar.get(java.util.Calendar.DAY_OF_MONTH);
- 											int gioLamMonth = gioLamCalendar.get(java.util.Calendar.MONTH) + 1;
- 											if (gioLamDay == i && gioLamMonth == selectedMonth) {
- 												String checkInSang = (String) gioLam.get("check_in_sang");
- 												String checkOutSang = (String) gioLam.get("check_out_sang");
- 												String checkInChieu = (String) gioLam.get("check_in_chieu");
- 												String checkOuChieu = (String) gioLam.get("check_out_chieu");
- 												if (checkInSang != "" && checkOutSang != "") {
- %>
-							<div class="border"
-								style="height: 10px; background-color: #1cc88a;"
-								data-toggle="tooltip" data-html="true"
-								title="Ca sáng-- Giờ vào: <%=checkInSang%> | Giờ ra: <%=checkOutSang%>">&nbsp;</div>
-
-							<%
-								} else if (checkInSang != "" || checkOutSang != "") {
-							%>
-							<div class="border"
-								style="height: 10px; background-color: #858796;"
-								data-toggle="tooltip" data-html="true"
-								title="Ca sáng -- Giờ vào: <%=checkInSang%> | Giờ ra: <%=checkOutSang%>">&nbsp;</div>
-
-							<%
-								} else {
-							%>
-							<div class="border"
-								style="height: 10px; background-color: #e74a3b;"
-								data-toggle="tooltip" data-html="true"
-								title="Ca sáng -- Giờ vào: Null | Giờ ra :Null "">&nbsp;</div> <%
- 	}
- 												if (checkInChieu != "" && checkOuChieu != "") {
- %>
-							<div class="border"
-								style="height: 10px; background-color: #1cc88a;"
-								data-toggle="tooltip" data-html="true"
-								title="Ca chiều -- Giờ vào: <%=checkInChieu%> | Giờ ra: <%=checkOuChieu%>">&nbsp;</div>
-
-							<%
-								} else if (checkInChieu != "" || checkOuChieu != "") {
-							%>
-							<div class="border"
-								style="height: 10px; background-color: #858796;"
-								data-toggle="tooltip" data-html="true"
-								title="Ca chiều -- Giờ vào: <%=checkInChieu%> | Giờ ra: <%=checkOuChieu%>">&nbsp;</div>
-
-							<%
-								} else {
-							%>
-							<div class="border"
-								style="height: 10px; background-color: #e74a3b;"
-								data-toggle="tooltip" data-html="true"
-								title="Ca chiều -- Giờ vào: Null | Giờ ra :Null ">&nbsp;</div> <%
- 	}
- 												hasDataForCurrentDate = true;
- 											}
- 										}
-
- 									}
- %> <%
- 	}
- 								if (!hasDataForCurrentDate) {
- 									// java.util.Calendar todayCalendar = java.util.Calendar.getInstance();
- 									todayCalendar.set(java.util.Calendar.HOUR_OF_DAY, 0);
- 									todayCalendar.set(java.util.Calendar.MINUTE, 0);
- 									todayCalendar.set(java.util.Calendar.SECOND, 0);
- 									todayCalendar.set(java.util.Calendar.MILLISECOND, 0);
- 									java.util.Date today = todayCalendar.getTime();
- 									//   java.util.Calendar calendar = java.util.Calendar.getInstance();
- 									calendar.set(selectedYear, selectedMonth - 1, i);
- 									java.util.Date date = calendar.getTime();
- 									if (date.before(today)) {
- %>
-							<div class="border"
-								style="height: 10px; background-color: #e74a3b;"
-								data-toggle="tooltip" data-html="true"
-								title="Ca sáng -- Giờ vào: Null | Giờ ra :Null "">&nbsp;</div>
-							<div class="border"
-								style="height: 10px; background-color: #e74a3b;"
-								data-toggle="tooltip" data-html="true"
-								title="Ca chiều -- Giờ vào: Null | Giờ ra :Null ">&nbsp;</div> <%
- 	}
- %> <%
- 	}
- %> <%
- 	}
- %> <%
- 	}
- %>
-						</td>
+							%> 
+							       <%
+									 if (isAllRed) {
+								   %>
+										<div class="bg-danger border" style="height: 10px" data-toggle="tooltip" data-html="true" title="No data">&nbsp;</div>
+										<div class="bg-danger border" style="height: 10px" data-toggle="tooltip" data-html="true" title="No data">&nbsp;</div>
+								  <% }else { %>
+								     <%
+									 	boolean hasDataForCurrentDate = false;
+									 %> 
+										 <%
+										 	if (hasData) {
+										 %> 
+										 <%
+										 	for (Map<String, Object> gioLam : gioLamNhanVien) {
+										 		java.util.Date ngayLam = (java.util.Date) gioLam.get("ngay_lam");
+										 		if (ngayLam == null) {
+										 %> 
+								    	 <%
+									 	 } else {
+										 	java.util.Calendar gioLamCalendar = java.util.Calendar.getInstance();
+										 	gioLamCalendar.setTime(ngayLam);
+										 	int gioLamDay = gioLamCalendar.get(java.util.Calendar.DAY_OF_MONTH);
+										 	int gioLamMonth = gioLamCalendar.get(java.util.Calendar.MONTH) + 1;
+										 	if (gioLamDay == i && gioLamMonth == selectedMonth) {
+										 			String checkInSang = (String) gioLam.get("check_in_sang");
+										 			String checkOutSang = (String) gioLam.get("check_out_sang");
+										 			String checkInChieu = (String) gioLam.get("check_in_chieu");
+										 			String checkOuChieu = (String) gioLam.get("check_out_chieu");
+										 	     if (checkInSang != "" && checkOutSang != "") {
+									    %>
+												<div class="border" style="height: 10px; 
+												     background-color: #1cc88a;" 
+												     data-toggle="tooltip" 
+												     data-html="true" 
+												     title="Ca sáng-- Giờ vào: <%=checkInSang%> | Giờ ra: <%=checkOutSang%>">&nbsp;
+												 </div>							
+												<% } else if (checkInSang != "" || checkOutSang != "") { %>
+														<div class="border"
+															style="height: 10px; background-color: #858796;"
+															data-toggle="tooltip" data-html="true"
+															title="Ca sáng -- Giờ vào: <%=checkInSang%> | Giờ ra: <%=checkOutSang%>">&nbsp;
+														</div>
+									             <%} else { %>
+														<div class="border"
+															style="height: 10px; background-color: #e74a3b;"
+															data-toggle="tooltip" data-html="true"
+															title="Ca sáng -- Giờ vào: Null | Giờ ra :Null "">&nbsp;</div> 
+												<% }
+                                                  if (checkInChieu != "" && checkOuChieu != "") {
+								             	%>
+									 				<div class="border"
+														 style="height: 10px; background-color: #1cc88a;"
+														 data-toggle="tooltip" data-html="true"
+														 title="Ca chiều -- Giờ vào: <%=checkInChieu%> | Giờ ra: <%=checkOuChieu%>">&nbsp;
+													</div>
+									
+												<% } else if (checkInChieu != "" || checkOuChieu != "") { %>
+													<div class="border"
+														 style="height: 10px; background-color: #858796;"
+														 data-toggle="tooltip" data-html="true"
+														 title="Ca chiều -- Giờ vào: <%=checkInChieu%> | Giờ ra: <%=checkOuChieu%>">&nbsp;
+													</div>
+									
+												<% } else {%>
+													<div class="border"
+														 style="height: 10px; background-color: #e74a3b;"
+														 data-toggle="tooltip" data-html="true"
+														 title="Ca chiều -- Giờ vào: Null | Giờ ra :Null ">&nbsp;</div> 
+												<% }
+									 				hasDataForCurrentDate = true;
+									 				}
+									 				}
+									                }
+									            %> 
+									            <% } if (!hasDataForCurrentDate) {
+									 					// java.util.Calendar todayCalendar = java.util.Calendar.getInstance();
+									 						todayCalendar.set(java.util.Calendar.HOUR_OF_DAY, 0);
+									 						todayCalendar.set(java.util.Calendar.MINUTE, 0);
+									 						todayCalendar.set(java.util.Calendar.SECOND, 0);
+									 						todayCalendar.set(java.util.Calendar.MILLISECOND, 0);
+									 						java.util.Date today = todayCalendar.getTime();
+									 					//   java.util.Calendar calendar = java.util.Calendar.getInstance();
+									 						calendar.set(selectedYear, selectedMonth - 1, i);
+									 						java.util.Date date = calendar.getTime();
+									 					if (date.before(today)) {
+									             %>
+														<div class="border"
+															 style="height: 10px; background-color: #e74a3b;"
+															 data-toggle="tooltip" data-html="true"
+															 title="Ca sáng -- Giờ vào: Null | Giờ ra :Null "">&nbsp;</div>
+														<div class="border"
+															 style="height: 10px; background-color: #e74a3b;"
+															 data-toggle="tooltip" data-html="true"
+															 title="Ca chiều -- Giờ vào: Null | Giờ ra :Null ">&nbsp;
+														</div> 
+												 <%
+												 	}
+												 %> <%
+												 	}
+												 %> <%
+												 	}
+												 %> <%
+												 	}
+												 %>
+						         </td>
 						<%
 							}
 										}
@@ -786,8 +998,8 @@ input#year {
 							<%
 								if (!isWeekend) {
 							%> <%
- 	if (isAllRed) {
- %>
+							 	if (isAllRed) {
+							 %>
 							<div class="bg-danger border" style="height: 10px"
 								data-toggle="tooltip" data-html="true" title="No data">&nbsp;</div>
 							<div class="bg-danger border" style="height: 10px"
@@ -795,19 +1007,16 @@ input#year {
 							<%
 								} else {
 							%> <%
- 	boolean hasDataForCurrentDate = false;
- %> <%
- 	if (hasData) {
- %> <%
- 	for (Map<String, Object> gioLam : gioLamNhanVien) {
- 										java.util.Date ngayLam = (java.util.Date) gioLam.get("ngay_lam");
- 										if (ngayLam == null) {
- %> <%-- 
-								                        
-								                         <div class="bg-danger border" style="height: 10px" data-toggle="tooltip" data-html="true" title="No data">&nbsp;</div>
-								                        <div class="bg-danger border" style="height: 10px" data-toggle="tooltip" data-html="true" title="No data">&nbsp;</div>
-								                         --%> <%
- 	} else {
+							 	boolean hasDataForCurrentDate = false;
+							 %> <%
+							 	if (hasData) {
+							 %> <%
+							 	for (Map<String, Object> gioLam : gioLamNhanVien) {
+							 										java.util.Date ngayLam = (java.util.Date) gioLam.get("ngay_lam");
+							 										if (ngayLam == null) {
+							 %> 
+								  <%
+ 	                                } else {
  											java.util.Calendar gioLamCalendar = java.util.Calendar
  													.getInstance();
  											gioLamCalendar.setTime(ngayLam);
@@ -819,7 +1028,7 @@ input#year {
  												String checkInChieu = (String) gioLam.get("check_in_chieu");
  												String checkOuChieu = (String) gioLam.get("check_out_chieu");
  												if (checkInSang != "" && checkOutSang != "") {
- %>
+                                  %>
 							<div class="border"
 								style="height: 10px; background-color: #1cc88a;"
 								data-toggle="tooltip" data-html="true"
@@ -842,7 +1051,7 @@ input#year {
 								title="Ca sáng -- Giờ vào: Null | Giờ ra :Null "">&nbsp;</div> <%
  	}
  												if (checkInChieu != "" && checkOuChieu != "") {
- %>
+                        %>
 							<div class="border"
 								style="height: 10px; background-color: #1cc88a;"
 								data-toggle="tooltip" data-html="true"
@@ -869,48 +1078,48 @@ input#year {
  										}
 
  									}
- %> <%
- 	}
- 								if (!hasDataForCurrentDate) {
- 									// java.util.Calendar todayCalendar = java.util.Calendar.getInstance();
- 									todayCalendar.set(java.util.Calendar.HOUR_OF_DAY, 0);
- 									todayCalendar.set(java.util.Calendar.MINUTE, 0);
- 									todayCalendar.set(java.util.Calendar.SECOND, 0);
- 									todayCalendar.set(java.util.Calendar.MILLISECOND, 0);
- 									java.util.Date today = todayCalendar.getTime();
- 									//   java.util.Calendar calendar = java.util.Calendar.getInstance();
- 									calendar.set(selectedYear, selectedMonth - 1, i);
- 									java.util.Date date = calendar.getTime();
- 									if (date.before(today)) {
- %>
-							<div class="border"
-								style="height: 10px; background-color: #e74a3b;"
-								data-toggle="tooltip" data-html="true"
-								title="Ca sáng -- Giờ vào: Null | Giờ ra :Null "">&nbsp;</div>
-							<div class="border"
-								style="height: 10px; background-color: #e74a3b;"
-								data-toggle="tooltip" data-html="true"
-								title="Ca chiều -- Giờ vào: Null | Giờ ra :Null ">&nbsp;</div> <%
- 	}
- %> <%
- 	}
- %> <%
- 	}
- %> <%
- 	}
- %>
-						</td>
-						<%
-							}
-
-										}
-						%>
-					</tr>
-					<%
-						stt++;
-								}
-							}
-					%>
+								 %> <%
+								 	}
+		 								if (!hasDataForCurrentDate) {
+		 									// java.util.Calendar todayCalendar = java.util.Calendar.getInstance();
+		 									todayCalendar.set(java.util.Calendar.HOUR_OF_DAY, 0);
+		 									todayCalendar.set(java.util.Calendar.MINUTE, 0);
+		 									todayCalendar.set(java.util.Calendar.SECOND, 0);
+		 									todayCalendar.set(java.util.Calendar.MILLISECOND, 0);
+		 									java.util.Date today = todayCalendar.getTime();
+		 									//   java.util.Calendar calendar = java.util.Calendar.getInstance();
+		 									calendar.set(selectedYear, selectedMonth - 1, i);
+		 									java.util.Date date = calendar.getTime();
+		 									if (date.before(today)) {
+											 %>
+																		<div class="border"
+																			style="height: 10px; background-color: #e74a3b;"
+																			data-toggle="tooltip" data-html="true"
+																			title="Ca sáng -- Giờ vào: Null | Giờ ra :Null "">&nbsp;</div>
+																		<div class="border"
+																			style="height: 10px; background-color: #e74a3b;"
+																			data-toggle="tooltip" data-html="true"
+																			title="Ca chiều -- Giờ vào: Null | Giờ ra :Null ">&nbsp;</div> <%
+											 	}
+											 %> <%
+											 	}
+											 %> <%
+											 	}
+											 %> <%
+											 	}
+											 %>
+																	</td>
+																	<%
+																		}
+											
+																					}
+																	%>
+																</tr>
+																<%
+																	stt++;
+																			}
+																		}
+																%>
 
 				</tbody>
 			</table>
@@ -920,9 +1129,10 @@ input#year {
 			}
 		%>
 
-
-
 		<%-- Kết thúc bảng 2 của nhân viên  --%>
+
+
+
 
 	<%-- Thông báo xếp loại --%>
 

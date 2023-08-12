@@ -1,0 +1,16 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.portal.api"
+
+	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "3.1.0"
+		compileOnly project(":modules:ChamCong-backend:ChamCong-backend-api")
+    compileOnly project(":modules:ChamCong-backend:ChamCong-backend-service")
+    compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+   implementation 'com.google.code.gson:gson:2.8.9'
+   compileOnly project(":modules:PortletUtils")
+  //  compileOnly group: "com.itextpdf", name: "itext7-core", version: "7.1.0"
+  
+ testImplementation 'junit:junit:4.11'
+    implementation 'org.jsoup:jsoup:1.15.3'
+    implementation 'org.xhtmlrenderer:flying-saucer-pdf-openpdf:9.1.22'
+   
+}

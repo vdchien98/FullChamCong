@@ -96,4 +96,21 @@
 		<field name="groupId" type="long" />
 		<field name="userId" type="long" />
 	</model>
+	<model name="com.liferay.docs.chamcong.model.Xinnghi">
+		<field name="id" type="int" />
+		<field name="user_id" type="long" />
+		<field name="tu_ngay" type="Date" />
+		<field name="den_ngay" type="Date" />
+		<field name="ly_do" type="String">
+			<hint name="max-length">5000</hint>
+		</field>
+		<field name="chon_ly_do" type="String" />
+		<field name="trangthai" type="int" />
+		<field name="nua_ngay" type="int" />
+		<field name="so_ngay" type="int" />
+		<field name="file_url" type="String" />
+		<field name="nguoi_huy" type="long" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
+	</model>
 </model-hints>

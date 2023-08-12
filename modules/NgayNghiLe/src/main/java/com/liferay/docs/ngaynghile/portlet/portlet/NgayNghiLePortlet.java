@@ -108,6 +108,28 @@ public class NgayNghiLePortlet extends MVCPortlet {
 				e.printStackTrace();
 			}
 		}
+		
+		
+		
+		
+		
+		
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		super.render(renderRequest, renderResponse);
 	}
 

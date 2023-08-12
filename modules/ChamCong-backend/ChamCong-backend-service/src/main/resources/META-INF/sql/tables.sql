@@ -99,3 +99,19 @@ create table _Users (
 	groupId LONG,
 	userId LONG
 );
+
+create table _Xinnghi (
+	id_ INTEGER not null primary key,
+	user_id LONG,
+	tu_ngay DATE null,
+	den_ngay DATE null,
+	ly_do TEXT null,
+	chon_ly_do VARCHAR(75) null,
+	trangthai INTEGER,
+	nua_ngay INTEGER,
+	so_ngay INTEGER,
+	file_url VARCHAR(75) null,
+	nguoi_huy LONG,
+	created_at DATE null,
+	updated_at DATE null
+);
