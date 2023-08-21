@@ -67,7 +67,7 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 	service = Portlet.class
 )
 public class XinNghiPortlet extends MVCPortlet {
-	public void saveXinNghiCaNgay(ActionRequest request, ActionResponse response) throws IOException, PortletException {
+	public  void saveXinNghiCaNgay(ActionRequest request, ActionResponse response) throws IOException, PortletException {
 		
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		long userId = themeDisplay.getUserId();
@@ -97,14 +97,7 @@ public class XinNghiPortlet extends MVCPortlet {
 		String file_url = "file-xin-nghi/0b3cfa7b469f47271e70f85091d91d9b.pdf";
 		long nguoihuy = 9498;
     
-		
-		
 
-		
-		
-		
-		
-		
 		
 	   
 		try {

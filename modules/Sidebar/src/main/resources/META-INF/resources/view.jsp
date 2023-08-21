@@ -163,7 +163,7 @@ i.fa.fa-sign-out.iconchiendangxuat  {
 		
 		<li class="nav-item"><a class="nav-link" href="/nhanvien/xin-nghi"> <i class="fa fa-calendar-times-o" aria-hidden="true"></i> <span>Xin nghỉ</span></a></li>
 		
-		<li class="nav-item"><a class="nav-link" href=""> <i class="fa fa-calendar-check-o" aria-hidden="true"></i> <span>Xin chấm công</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="/nhanvien/xin-cham-cong"> <i class="fa fa-calendar-check-o" aria-hidden="true"></i> <span>Xin chấm công</span></a></li>
 
     
     

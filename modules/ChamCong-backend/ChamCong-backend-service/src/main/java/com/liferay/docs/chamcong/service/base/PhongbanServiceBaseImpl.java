@@ -24,6 +24,7 @@ import com.liferay.docs.chamcong.service.persistence.NgaylamviecPersistence;
 import com.liferay.docs.chamcong.service.persistence.NgaynghilePersistence;
 import com.liferay.docs.chamcong.service.persistence.PhongbanPersistence;
 import com.liferay.docs.chamcong.service.persistence.UsersPersistence;
+import com.liferay.docs.chamcong.service.persistence.XinchamcongPersistence;
 import com.liferay.docs.chamcong.service.persistence.XinnghiPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -163,6 +164,9 @@ public abstract class PhongbanServiceBaseImpl
 
 	@Reference
 	protected UsersPersistence usersPersistence;
+
+	@Reference
+	protected XinchamcongPersistence xinchamcongPersistence;
 
 	@Reference
 	protected XinnghiPersistence xinnghiPersistence;

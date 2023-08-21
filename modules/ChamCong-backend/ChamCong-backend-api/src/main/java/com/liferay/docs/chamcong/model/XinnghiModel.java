@@ -240,6 +240,20 @@ public interface XinnghiModel extends BaseModel<Xinnghi> {
 	 */
 	public void setUpdated_at(Date updated_at);
 
+	/**
+	 * Returns the phongban_id of this xinnghi.
+	 *
+	 * @return the phongban_id of this xinnghi
+	 */
+	public long getPhongban_id();
+
+	/**
+	 * Sets the phongban_id of this xinnghi.
+	 *
+	 * @param phongban_id the phongban_id of this xinnghi
+	 */
+	public void setPhongban_id(long phongban_id);
+
 	@Override
 	public Xinnghi cloneWithOriginalValues();
 

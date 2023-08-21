@@ -100,6 +100,23 @@ create table _Users (
 	userId LONG
 );
 
+create table _Xinchamcong (
+	id_ INTEGER not null primary key,
+	user_id LONG,
+	ly_do VARCHAR(75) null,
+	ca_lam VARCHAR(75) null,
+	check_in VARCHAR(75) null,
+	check_out VARCHAR(75) null,
+	ngay_lam DATE null,
+	nguoi_duyet LONG,
+	nguoi_huy LONG,
+	diem DOUBLE,
+	trangthai INTEGER,
+	created_at DATE null,
+	updated_at DATE null,
+	phongban_id LONG
+);
+
 create table _Xinnghi (
 	id_ INTEGER not null primary key,
 	user_id LONG,
@@ -113,5 +130,6 @@ create table _Xinnghi (
 	file_url VARCHAR(75) null,
 	nguoi_huy LONG,
 	created_at DATE null,
-	updated_at DATE null
+	updated_at DATE null,
+	phongban_id LONG
 );

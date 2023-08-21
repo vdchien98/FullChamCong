@@ -307,6 +307,7 @@ input#year {
 						<th style="padding: 0;" class="bg-info">T4</th>
 						<th style="padding: 0;" class="bg-info">T5</th>
 						<th style="padding: 0;" class="bg-info">T6</th>
+						
 						<th style="padding: 0;" class="bg-warning">T7</th>
 						<th style="padding: 0;" class="bg-warning">CN</th>
 					</tr>

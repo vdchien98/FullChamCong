@@ -257,7 +257,8 @@ public interface XinnghiLocalService
 	public Xinnghi saveXinNghiCaNgay(
 			long userId, Date tu_ngay, Date den_ngay, String chon_ly_do,
 			String ly_do, int trangthai, int nuangay, int soNgay,
-			String file_url, long nguoihuy, ServiceContext serviceContext)
+			String file_url, long nguoihuy, long phongban_id,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	/**

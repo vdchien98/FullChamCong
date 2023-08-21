@@ -1,0 +1,4 @@
+Bundle-Name: XinChamCong
+Bundle-SymbolicName: com.liferay.docs.xinchamcong.portlet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.docs.xinchamcong.portlet.constants

@@ -55,6 +55,7 @@ public class XinnghiWrapper
 		attributes.put("nguoi_huy", getNguoi_huy());
 		attributes.put("created_at", getCreated_at());
 		attributes.put("updated_at", getUpdated_at());
+		attributes.put("phongban_id", getPhongban_id());
 
 		return attributes;
 	}
@@ -137,6 +138,12 @@ public class XinnghiWrapper
 
 		if (updated_at != null) {
 			setUpdated_at(updated_at);
+		}
+
+		Long phongban_id = (Long)attributes.get("phongban_id");
+
+		if (phongban_id != null) {
+			setPhongban_id(phongban_id);
 		}
 	}
 
@@ -223,6 +230,16 @@ public class XinnghiWrapper
 	@Override
 	public int getNua_ngay() {
 		return model.getNua_ngay();
+	}
+
+	/**
+	 * Returns the phongban_id of this xinnghi.
+	 *
+	 * @return the phongban_id of this xinnghi
+	 */
+	@Override
+	public long getPhongban_id() {
+		return model.getPhongban_id();
 	}
 
 	/**
@@ -368,6 +385,16 @@ public class XinnghiWrapper
 	@Override
 	public void setNua_ngay(int nua_ngay) {
 		model.setNua_ngay(nua_ngay);
+	}
+
+	/**
+	 * Sets the phongban_id of this xinnghi.
+	 *
+	 * @param phongban_id the phongban_id of this xinnghi
+	 */
+	@Override
+	public void setPhongban_id(long phongban_id) {
+		model.setPhongban_id(phongban_id);
 	}
 
 	/**

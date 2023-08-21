@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class XinnghiLocalServiceImpl extends XinnghiLocalServiceBaseImpl {
 	public Xinnghi saveXinNghiCaNgay( long userId, Date tu_ngay, Date den_ngay , String chon_ly_do, String ly_do, 
-			                          int trangthai ,int nuangay, int soNgay, String file_url, long nguoihuy   ,ServiceContext serviceContext) throws PortalException, SystemException {
+			                          int trangthai ,int nuangay, int soNgay, String file_url, long nguoihuy , long phongban_id  ,ServiceContext serviceContext) throws PortalException, SystemException {
         	long groupId = serviceContext.getScopeGroupId();
     		int idXinNghi = (int) CounterLocalServiceUtil.increment();
     		System.out.println("id la " + idXinNghi);
@@ -55,10 +55,29 @@ public class XinnghiLocalServiceImpl extends XinnghiLocalServiceBaseImpl {
     		xinnghi.setNguoi_huy(nguoihuy);
     		xinnghi.setCreated_at(now);
     		xinnghi.setUpdated_at(now);
+    		xinnghi.setPhongban_id(phongban_id);
     		
     		
        		xinnghiLocalService.updateXinnghi(xinnghi);
     		return xinnghi;
 	}
+	
+	public Xinnghi updateXinNghiCaNgay( int idxinNghi , long userId ,ServiceContext serviceContext) throws PortalException, SystemException {
+
+		
+		Xinnghi xinnghi = xinnghiPersistence.create(idxinNghi) ;
+		Date now = new Date();
+		xinnghi.setId(idxinNghi);
+		
+		xinnghi.setUser_id(userId);
+	
+		xinnghi.setCreated_at(now);
+		xinnghi.setUpdated_at(now);
+	
+		
+		
+		xinnghiLocalService.updateXinnghi(xinnghi);
+		return xinnghi;
+		}
 	
 }
