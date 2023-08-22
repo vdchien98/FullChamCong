@@ -9,17 +9,16 @@
 
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 
-	<@liferay_util["include"] page=top_head_include />
-	<@liferay.css file_name="${css_folder}/styles.css" />
+	<@liferay_util["include"] page=top_head_include />  
 	<@liferay.css file_name="${css_folder}/app.css" />
 	<@liferay.css file_name="${css_folder}/base.css" />
 	<@liferay.css file_name="${css_folder}/sb-admin-2.min.css" />
+	<@liferay.css file_name="${css_folder}/styles.css" />
 	<@liferay.css file_name="${css_folder}/style.css" />
+
 	<@liferay.css file_name="${css_folder}/bootstrap-datepicker.css" />
 	<@liferay.css file_name="${css_folder}/bootstrap-datetimepicker.css" />
 	<@liferay.css file_name="${css_folder}/bootstrap-datetimepicker.min.css" />
-	
-	
 	
 	<@liferay.js file_name="${javascript_folder}/jquery.js" />
 	<@liferay.js file_name="${javascript_folder}/style.js" />

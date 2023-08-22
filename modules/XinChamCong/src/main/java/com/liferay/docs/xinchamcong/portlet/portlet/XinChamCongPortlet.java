@@ -164,6 +164,35 @@ public class XinChamCongPortlet extends MVCPortlet {
 		response.sendRedirect("/nhanvien/xin-cham-cong");
 	}
 
+	
+	
+	public void updateChamCongCaNgay(ActionRequest request, ActionResponse response)
+			throws IOException, PortletException {
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		long userId = themeDisplay.getUserId();
+		ServiceContext serviceContext = new ServiceContext();
+		System.out.println("----da vao duoc xin cham cong ca ngay va cho truong phong xac nhan -----------");
+		String idxinchamcong = ParamUtil.getString(request, "idxinchamcong");
+		int idxValue = Integer.parseInt(idxinchamcong);
+		System.out.println("idxValue ------------ " + idxValue);
+		String xac_nhan_truongphong = ParamUtil.getString(request, "xac_nhan_truongphong");
+		
+		
+		System.out.println(" xac_nhan_truongphong ------------****** " + xac_nhan_truongphong);
+		
+		try {
+			XinnghiLocalServiceUtil.updateXinNghiCaNgay(idxValue, xac_nhan_truongphong, userId, serviceContext);
+		} catch (PortalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		response.sendRedirect("/nhanvien/xin-cham-cong");
+
+	}
+	
+	
+	
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {

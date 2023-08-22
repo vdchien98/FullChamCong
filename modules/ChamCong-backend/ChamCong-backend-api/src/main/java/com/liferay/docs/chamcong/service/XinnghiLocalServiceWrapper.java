@@ -334,6 +334,17 @@ public class XinnghiLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.docs.chamcong.model.Xinnghi updateXinNghiCaNgay(
+			int idxinNghi, String trangthai, long userId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _xinnghiLocalService.updateXinNghiCaNgay(
+			idxinNghi, trangthai, userId, serviceContext);
+	}
+
+	@Override
 	public XinnghiLocalService getWrappedService() {
 		return _xinnghiLocalService;
 	}

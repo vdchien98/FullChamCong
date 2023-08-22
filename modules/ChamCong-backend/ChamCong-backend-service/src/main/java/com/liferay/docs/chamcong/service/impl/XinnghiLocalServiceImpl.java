@@ -16,6 +16,7 @@ package com.liferay.docs.chamcong.service.impl;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.docs.chamcong.model.Chucvu;
+import com.liferay.docs.chamcong.model.Phongban;
 import com.liferay.docs.chamcong.model.Xinnghi;
 import com.liferay.docs.chamcong.service.base.XinnghiLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -62,19 +63,21 @@ public class XinnghiLocalServiceImpl extends XinnghiLocalServiceBaseImpl {
     		return xinnghi;
 	}
 	
-	public Xinnghi updateXinNghiCaNgay( int idxinNghi , long userId ,ServiceContext serviceContext) throws PortalException, SystemException {
+	public Xinnghi updateXinNghiCaNgay( int idxinNghi, String trangthai , long userId ,ServiceContext serviceContext) throws PortalException, SystemException {
 
 		
-		Xinnghi xinnghi = xinnghiPersistence.create(idxinNghi) ;
-		Date now = new Date();
-		xinnghi.setId(idxinNghi);
-		
-		xinnghi.setUser_id(userId);
 	
+		Date now = new Date();
+		Xinnghi xinnghi = getXinnghi(idxinNghi);
+		if (trangthai.equals("xac_nhan")) {
+			xinnghi.setTrangthai(xinnghi.getTrangthai()+2);
+		} else if (trangthai.equals("tu_choi")){
+			xinnghi.setTrangthai(xinnghi.getTrangthai()+1);
+		}
+		
 		xinnghi.setCreated_at(now);
 		xinnghi.setUpdated_at(now);
-	
-		
+
 		
 		xinnghiLocalService.updateXinnghi(xinnghi);
 		return xinnghi;

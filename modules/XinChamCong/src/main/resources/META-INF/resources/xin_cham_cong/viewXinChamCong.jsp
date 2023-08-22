@@ -43,7 +43,7 @@ button.btn.btn-default.tuchoi {
 
 		<div class="tab-content" id="myTabContent">
 			<div class="tab-pane fade show active" id="profile">
-
+               <%-- 
 				<div class="mt-2 mb-2">
 					<a class="btn btn-primary text-white" data-toggle="modal"> <i
 						class="fa fa-check-square-o" aria-hidden="true"></i> Nửa ngày
@@ -53,7 +53,19 @@ button.btn.btn-default.tuchoi {
 					</a>
 				</div>
 
-
+                --%>
+                <div class="mt-2 mb-2">
+				    <a class="btn btn-primary text-white" data-toggle="modal" data-target="#exampleModalCenter1">
+				       <i class="fa fa-check-square-o" aria-hidden="true"></i> Nửa ngày
+				    </a>
+				    <a class="btn btn-success text-white" data-toggle="modal" data-target="#exampleModalCenter2">
+				       <i class="fa fa-check-square-o" aria-hidden="true"></i> Cả ngày
+				     </a>
+				</div>
+                
+                
+                
+                
 
 				<div id="dataTable1_wrapper"
 					class="dataTables_wrapper dt-bootstrap4 no-footer">
@@ -162,69 +174,26 @@ button.btn.btn-default.tuchoi {
 								                    </c:when>
 								                </c:choose>
 								            </td>
-								            <td>
-								                <c:choose>
+								            <td> 
+								            <c:choose>
 								                    <%-- xac nhan cua trưởng phòng  --%>  
-								                    <c:when test="${item.trangthai == 0}">
-								                        <div class="container bootstrap snippets bootdey">
-														    <div class="btn-demo btn-success" id="btn-color-targets">
-														          <a href="#modalColor" data-target-color="blue" data-toggle="modal" class="btn btn-default " 
-														             onclick="confirmTuChoiXinChamCong(${item.id});">
-											                            <i class="fa fa-check" aria-hidden="true"></i>Xác nhận
-											                        </a>
-														    </div>
-													     </div>
-													     
-													     <button type="button" class="btn btn-default tuchoi" data-toggle="modal" data-target="#exampleModal">
-															  <i class="fa fa-times-circle" aria-hidden="true"></i>Từ chối
-														 </button>
-													     <%-- 
+								                    <c:when test="${item.trangthai == 0 || item.trangthai == 3}">
 													      <div class="container bootstrap snippets bootdey">
-															   <a  href=""  class="btn btn-light mt-1" type="button" data-toggle="tooltip" title="Từ chối"
-										                            onclick="confirmTuChoiXinChamCong(${item.id});">
-										                            <i class="fa fa-times-circle" aria-hidden="true"></i>Từ chối
-										                        </a>
-													       </div>
-														
-														
-										                        <a class="btn btn-light mt-1" type="button" data-toggle="tooltip" title="Từ chối"
-										                            onclick="confirmTuChoiXinChamCong(${item.id});">
-										                            <i class="fa fa-times-circle" aria-hidden="true"></i>Từ chối
-										                        </a>
-								                         --%>
-								                        
-								                        
-								                        <%-- 
-								                        
-								                        <form id="tu-choi-xin-cham-cong-${item.id}" action="" method="POST">
-								                            <input type="hidden" name="_token" value="">
-								                        </form>
-								                        <form id="active-${item.id}" action="" method="POST">
-								                            <input type="hidden" name="_token" value="4bC32VySEur1scSQtkMMEzhKPAWL3jeOwkwWZaLc">
-								                            <input type="hidden" name="trangthai" value="1">
-								                            <input type="hidden" name="id" value="${item.id}">
-								                        </form>
-								                         --%>
+														    <div class="btn-demo btn-success" id="btn-color-targets">
+														        <a href="#modalColor" data-target-color="blue" data-toggle="modal" class="btn btn-default" 
+														           onclick="openModal('confirm', ${item.id});">
+														            <i class="fa fa-check" aria-hidden="true"></i>Xác nhận
+														        </a>
+														        <button type="button" class="btn btn-default tuchoi" data-toggle="modal" 
+														                onclick="openModal('reject', ${item.id});">
+														            <i class="fa fa-times-circle" aria-hidden="true"></i>Từ chối
+														        </button>
+														    </div>
+														</div>
+
 								                    </c:when>
 								                    
-								                    <%-- xac nhan cua lanh dao --%>
-								                     <c:when test="${item.trangthai == 3}">
-								                        <button type="button" class="btn btn-success" onclick="confirmActive(${item.id});">
-								                            <i class="fa fa-check" aria-hidden="true"></i>Xác nhận
-								                        </button>
-								                        <a class="btn btn-light mt-1" type="button" data-toggle="tooltip" title="Từ chối"
-								                            onclick="confirmTuChoiXinChamCong(${item.id});">
-								                            <i class="fa fa-times-circle" aria-hidden="true"></i>Từ chối
-								                        </a>
-								                        <form id="tu-choi-xin-cham-cong-${item.id}" action="" method="POST">
-								                            <input type="hidden" name="_token" value="">
-								                        </form>
-								                        <form id="active-${item.id}" action="" method="POST">
-								                            <input type="hidden" name="_token" value="4bC32VySEur1scSQtkMMEzhKPAWL3jeOwkwWZaLc">
-								                            <input type="hidden" name="trangthai" value="1">
-								                            <input type="hidden" name="id" value="${item.id}">
-								                        </form>
-								                    </c:when>
+								                  
 								                   
 								                </c:choose>
 								            </td>
@@ -356,9 +325,9 @@ button.btn.btn-default.tuchoi {
 
 <%-- modal thực hiện chấm công nửa ngày --%>
 
-
-<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
+<!-- Modal for Nửa ngày -->
+<div class="modal fade custom-modal" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalCenterTitle1">Xin chấm công</h5>
@@ -406,13 +375,11 @@ button.btn.btn-default.tuchoi {
                 </form>
             </div>
         </div>
-    
-</div>
+    </div>
 </div>
 
-<%-- Modal chấm công cả ngày  --%>
-
-<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
+<!-- Modal for Cả ngày -->
+<div class="modal fade custom-modal" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter2Label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -464,10 +431,9 @@ button.btn.btn-default.tuchoi {
 
 
 
-
 <%-- Modal chấm công ra/vào 
 
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade custom-modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -524,48 +490,105 @@ button.btn.btn-default.tuchoi {
 
 
 
-
-
-<%-- Hôm thông báo  --%>
-<div class="modal fade" data-modal-color="" id="modalColor" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+<!-- Modal -->
+<div class="modal fade custom-modal" id="modalColor" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Thông Báo </h4>
+                <h4 class="modal-title">Thông Báo</h4>
             </div>
             <div class="modal-body">
-                <p>Bạn có chắc chắn xác nhận lý do và thời gian này?</p>
+                <p id="modal-message"></p>
             </div>
             <div class="modal-footer">
-                
-                <button type="button" class="btn btn-primary">Đồng Ý</button>
+                <button type="button" class="btn btn-primary" id="modal-confirm-button">Đồng Ý</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>
 </div>
 
+ <portlet:actionURL name="updateChamCongCaNgay" var="updateChamCongCaNgayURL" />
+ <form id="chamCongForm11" method="POST" action="<%=updateChamCongCaNgayURL.toString()%>" name="<portlet:namespace />fm">
+           <input type=hidden class="form-control" name="<portlet:namespace />idxinchamcong" id="idxinchamcong" value="" required>  
+            <input type=hidden class="form-control" name="<portlet:namespace />xac_nhan_truongphong" id="xac_nhan_truongphong" value="" required>     
+ </form>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-     <div class="modal-body">
-                <p>Bạn có chắc chắn từ chối không ?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger">Từ chối</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-      </div>
-    </div>
-  </div>
-</div>
+<script>
+    function openModal(action, itemId) {
+        const modal = $('#modalColor');
+        const message = $('#modal-message');
+        const confirmButton = $('#modal-confirm-button');
+
+        if (action === 'confirm') {
+        	
+            message.text('Bạn có chắc chắn xác nhận lý do và thời gian này?');
+            confirmButton.text('Đồng Ý').addClass('btn-primary').removeClass('btn-danger');
+            confirmButton.off('click').on('click', function () {
+                // Xử lý xác nhận ở đây (sử dụng itemId nếu cần)
+                console.log("itemId la xác nhận  "+ itemId);
+                const idxinchamcongInput = $('#idxinchamcong');
+                idxinchamcongInput.val(itemId);
+                const xac_nhan_truongphong = $('#xac_nhan_truongphong');
+                xac_nhan_truongphong.val("xac_nhan");
+                // Gửi form
+                $('#chamCongForm11').submit();
+                
+                modal.modal('hide');
+            });
+        } else if (action === 'reject') {
+        	
+            message.text('Bạn có chắc chắn từ chối không?');
+            confirmButton.text('Từ chối').addClass('btn-danger').removeClass('btn-primary');
+            confirmButton.off('click').on('click', function () {
+                // Xử lý từ chối ở đây (sử dụng itemId nếu cần)
+                const idxinchamcongInput = $('#idxinchamcong');
+                idxinchamcongInput.val(itemId); 
+                const xac_nhan_truongphong = $('#xac_nhan_truongphong');
+                xac_nhan_truongphong.val("tu_choi");
+                // Gửi form
+                $('#chamCongForm11').submit();
+                
+                modal.modal('hide');
+            });
+        }
+
+        modal.modal('show');
+    }
+</script>
+
+<script>
+    $(document).ready(function() {
+    	 const modal = $('#exampleModalCenter1');
+        // Toggle modal display when clicking the buttons
+        $('.btn[data-toggle="modal"]').click(function() {
+            var targetModal = $(this).data('target');
+            $('.custom-modal').not(targetModal).hide(); // Hide other modals
+            $(targetModal).modal('toggle'); // Toggle the target modal
+        });
+
+        // Event listener for modal close buttons
+        $('.modal').on('hidden.bs.modal', function (event) {
+            // This event is triggered when the modal is fully closed
+            // You can add any post-modal-close logic here
+        });
+        
+        
+        $('#chamCongForm, #chamCongForm1').submit(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            var form = $(this);
+            $.ajax({
+                type: form.attr('method'),
+                url: form.attr('action'),
+                data: form.serialize(),
+                success: function(response) {
+                    location.reload(); // Reload the page on successful submission
+                }
+            });
+        });
+    });
+
+</script>
 
 
 
@@ -573,14 +596,7 @@ button.btn.btn-default.tuchoi {
 
 
 
-
-
-
-
-
-
-
-
+<%-- 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const nuaNgayButton = document.querySelector(".btn-primary[data-toggle='modal']");
@@ -614,25 +630,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
-
-
-
-
-<%--  
-  ko dùng nữa 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const nuaNgayButton = document.querySelector(".btn-primary[data-toggle='modal']");
-  const modal = document.getElementById("exampleModalCenter1");
-
-  nuaNgayButton.addEventListener("click", function() {
-    $(modal).modal("show"); // Sử dụng Bootstrap's modal('show') để hiển thị modal
-  });
- 
-});
-</script>
-
---%>
 
 
 <script>
@@ -670,6 +667,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+ --%>
 
 
 
@@ -677,16 +675,28 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+
+<%--  
+  ko dùng nữa 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  const xinChamCongButton = document.querySelector(".btn-info[data-toggle='modal']");
-  const modal = document.getElementById("exampleModalCenter");
+  const nuaNgayButton = document.querySelector(".btn-primary[data-toggle='modal']");
+  const modal = document.getElementById("exampleModalCenter1");
 
-  xinChamCongButton.addEventListener("click", function() {
+  nuaNgayButton.addEventListener("click", function() {
     $(modal).modal("show"); // Sử dụng Bootstrap's modal('show') để hiển thị modal
   });
+ 
 });
 </script>
+
+--%>
+
+
+
+
+
+
 
 
 

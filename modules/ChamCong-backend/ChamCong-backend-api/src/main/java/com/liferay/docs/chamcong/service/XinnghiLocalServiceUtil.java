@@ -300,6 +300,15 @@ public class XinnghiLocalServiceUtil {
 		return getService().updateXinnghi(xinnghi);
 	}
 
+	public static Xinnghi updateXinNghiCaNgay(
+			int idxinNghi, String trangthai, long userId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().updateXinNghiCaNgay(
+			idxinNghi, trangthai, userId, serviceContext);
+	}
+
 	public static XinnghiLocalService getService() {
 		return _service;
 	}

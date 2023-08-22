@@ -274,4 +274,9 @@ public interface XinnghiLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Xinnghi updateXinnghi(Xinnghi xinnghi);
 
+	public Xinnghi updateXinNghiCaNgay(
+			int idxinNghi, String trangthai, long userId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 }
