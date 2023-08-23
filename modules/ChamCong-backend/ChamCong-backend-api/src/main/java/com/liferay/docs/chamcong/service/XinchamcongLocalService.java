@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -251,6 +253,13 @@ public interface XinchamcongLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getXinchamcongsCount();
+
+	public Xinchamcong saveXinChamCongVaoRa(
+			long userId, String ly_do, String ca_lam, String check_in,
+			String check_out, Date ngay_lam, long nguoi_duyet, long nguoi_huy,
+			double diem, int trangthai, long phongban_id,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	/**
 	 * Updates the xinchamcong in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

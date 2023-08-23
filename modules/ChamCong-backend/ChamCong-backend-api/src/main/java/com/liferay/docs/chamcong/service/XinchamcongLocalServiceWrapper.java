@@ -310,6 +310,20 @@ public class XinchamcongLocalServiceWrapper
 		return _xinchamcongLocalService.getXinchamcongsCount();
 	}
 
+	@Override
+	public com.liferay.docs.chamcong.model.Xinchamcong saveXinChamCongVaoRa(
+			long userId, String ly_do, String ca_lam, String check_in,
+			String check_out, java.util.Date ngay_lam, long nguoi_duyet,
+			long nguoi_huy, double diem, int trangthai, long phongban_id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _xinchamcongLocalService.saveXinChamCongVaoRa(
+			userId, ly_do, ca_lam, check_in, check_out, ngay_lam, nguoi_duyet,
+			nguoi_huy, diem, trangthai, phongban_id, serviceContext);
+	}
+
 	/**
 	 * Updates the xinchamcong in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

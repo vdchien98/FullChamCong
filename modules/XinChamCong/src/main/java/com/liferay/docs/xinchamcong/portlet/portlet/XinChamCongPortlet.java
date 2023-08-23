@@ -1,16 +1,20 @@
 package com.liferay.docs.xinchamcong.portlet.portlet;
 
 import com.liferay.docs.chamcong.model.Ngaylamviec;
+import com.liferay.docs.chamcong.model.Phongban;
 import com.liferay.docs.chamcong.model.Users;
 import com.liferay.docs.chamcong.model.Xinchamcong;
 import com.liferay.docs.chamcong.model.Xinnghi;
 import com.liferay.docs.chamcong.service.NgaylamviecLocalServiceUtil;
+import com.liferay.docs.chamcong.service.PhongbanLocalServiceUtil;
 import com.liferay.docs.chamcong.service.UsersLocalServiceUtil;
+import com.liferay.docs.chamcong.service.XinchamcongLocalServiceUtil;
 import com.liferay.docs.chamcong.service.XinnghiLocalServiceUtil;
 import com.liferay.docs.xinchamcong.portlet.constants.XinChamCongPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.PhoneLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -21,8 +25,10 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.portlet.ActionRequest;
@@ -171,6 +177,125 @@ public class XinChamCongPortlet extends MVCPortlet {
 
 	
 	
+	
+	
+	
+	
+	
+	
+	// xử lý chấm công vào ra 
+	
+	
+	
+	
+	public void updateChamCongVaoRa(ActionRequest request, ActionResponse response)
+			throws IOException, PortletException {
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		long userId = themeDisplay.getUserId();
+		ServiceContext serviceContext = new ServiceContext();
+		System.out.println("---- @@@@@@@@@@@@@@@@@@@ da vao duoc xin cham cong vao ra va cho truong phong xac nhan @@@@@@@@@@@@-----------");
+		
+
+		
+		
+		
+		response.sendRedirect("/nhanvien/xin-cham-cong");
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public void saveXinChamCongVaoRa(ActionRequest request, ActionResponse response)
+			throws IOException, PortletException {
+		System.out.println("da vao duoc xin cham cong vao ra ---------------------------------------------");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		long userId = themeDisplay.getUserId();
+
+	//	System.out.println("userId ****** " + userId);
+		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
+		int IdUser = 0;
+		for (Users users : usersList) {
+			if (users.getUserId() == userId) {
+				IdUser = users.getId();
+				break;
+			}
+		}
+		Users user = null;
+		try {
+			user = UsersLocalServiceUtil.getUsers(IdUser);
+			//System.out.println("user lay dc trong xin cham cong ------------ " + user);
+		} catch (PortalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		
+		ServiceContext serviceContext = new ServiceContext();
+//		int id = ParamUtil.getInteger(request, "id");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date ngay_lam = ParamUtil.getDate(request, "ngay_lam", dateFormat);
+			System.out.println("tu_ngay ------------ " + ngay_lam);
+			String ca_lam = ParamUtil.getString(request, "ca_lam");
+			System.out.println("ca_lam ------------ " + ca_lam);
+			String loai_cham_cong = ParamUtil.getString(request, "loai_cham_cong");
+			System.out.println("loai_cham_cong ------------ " + loai_cham_cong);
+			String ly_do = ParamUtil.getString(request, "ly_do");
+			System.out.println("ly_do ------------ " + ly_do);
+			long phongban_id = user.getPhongban_id();
+		
+			String check_in = "07:30:00";
+			String check_out = "11:45:00";
+			String check_in_chieu = "13:15:00";
+			String check_out_chieu = "16:45:00";
+			
+			long nguoi_duyet = 0;
+			long nguoi_huy = 0;
+			double diem = 1 ;
+			int trangthai = 0;
+			  try {
+				  
+					if (ca_lam.equals("sang") && loai_cham_cong.equals("check_in")) {
+						XinchamcongLocalServiceUtil.saveXinChamCongVaoRa(userId, ly_do, ca_lam, 
+								check_in, "", ngay_lam, 
+								nguoi_duyet, nguoi_huy, diem, 
+								trangthai, phongban_id, serviceContext);
+						
+					} else if (ca_lam.equals("sang") && loai_cham_cong.equals("check_out")) {
+						XinchamcongLocalServiceUtil.saveXinChamCongVaoRa(userId, ly_do, ca_lam, 
+								"", check_out, ngay_lam, 
+								nguoi_duyet, nguoi_huy, diem, 
+								trangthai, phongban_id, serviceContext);
+					} else if (ca_lam.equals("chieu") && loai_cham_cong.equals("check_in")) {
+						XinchamcongLocalServiceUtil.saveXinChamCongVaoRa(userId, ly_do, ca_lam, 
+								check_in_chieu, "", ngay_lam, 
+								nguoi_duyet, nguoi_huy, diem, 
+								trangthai, phongban_id, serviceContext);
+					}else if (ca_lam.equals("chieu") && loai_cham_cong.equals("check_out")) {
+						XinchamcongLocalServiceUtil.saveXinChamCongVaoRa(userId, ly_do, ca_lam, 
+								"", check_out_chieu, ngay_lam, 
+								nguoi_duyet, nguoi_huy, diem, 
+								trangthai, phongban_id, serviceContext);
+					}
+					
+				  
+				  
+				
+				}  catch (PortalException e) {
+					e.printStackTrace();
+				}
+			
+	
+
+		response.sendRedirect("/nhanvien/xin-cham-cong");
+	}
+	
 	public void updateChamCongCaNgay(ActionRequest request, ActionResponse response)
 			throws IOException, PortletException {
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
@@ -192,15 +317,7 @@ public class XinChamCongPortlet extends MVCPortlet {
 			e.printStackTrace();
 		}
 		
-		
-		// xử lý lưu vào trong DB
-//		
-//		Xinnghi xinnghi = getXinnghi(idxValue);
-//		if (xac_nhan_truongphong.equals("xac_nhan")) {
-//			
-//		} 
-//		
-		
+
 		
 		
 		
@@ -210,16 +327,21 @@ public class XinChamCongPortlet extends MVCPortlet {
 	
 	
 	
+	
+	
+	
+	
+	
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		long userId = themeDisplay.getUserId();
-		System.out.println("userId render la " + userId);
+		//System.out.println("userId render la " + userId);
 		renderRequest.setAttribute("userId", userId);
 		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
-		System.out.println("usersList " + usersList);
+		//System.out.println("usersList " + usersList);
 		renderRequest.setAttribute("usersList", usersList);
 		int IdUser = 0;
 		for (Users users : usersList) {
@@ -229,38 +351,66 @@ public class XinChamCongPortlet extends MVCPortlet {
 			}
 		}
 		Users user = null;
+		// xin chấm công cả ngày và nửa ngày 
 		try {
 			user = UsersLocalServiceUtil.getUsers(IdUser);
+			//System.out.println("user *********************** "+ user);
 			renderRequest.setAttribute("userXinChamCong", user);
-//			/System.out.println("user lay dc trong xin cham cong ssss------------ " + user);	
-			
 			
 			if (user.getChucvu_id() == 3 || user.getChucvu_id() == 2 || user.getChucvu_id() == 1 || user.getPhu_trach_phong()==1) {
 				List<Xinnghi> xinChamCongList = getXinChamCongByPhongBan(user.getPhongban_id(), user.getUserId());
-				System.out.println("xinChamCongList**********----------- " + xinChamCongList);
 				renderRequest.setAttribute("xinChamCongList", xinChamCongList);
 			} else {
 				List<Xinnghi> xinChamCongList = getXinChamCongofCaNhan(user.getUserId());
-				System.out.println("xinChamCongList**********----------- " + xinChamCongList);
 				renderRequest.setAttribute("xinChamCongList", xinChamCongList);
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 		} catch (PortalException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		
+		
+		
+		// xin chấm công vào ra 
+		
+		try {
+			user = UsersLocalServiceUtil.getUsers(IdUser);
+			renderRequest.setAttribute("userXinChamCongVaoRa", user);
+			if ( user.getChucvu_id() == 2 || user.getChucvu_id() == 1  ) {
+				int idLanhdao = user.getId();
+				List<Phongban> phongbanList= PhongbanLocalServiceUtil.getPhongbans(-1, -1);
+				List<Xinchamcong> xinChamCongVaoRaList = new ArrayList<>(); 
+				int idPhongban = 0;
+				for (Phongban phongban : phongbanList) {
+					if (phongban.getNguoi_phu_trach() == idLanhdao) {
+						idPhongban = phongban.getId();
+						List<Xinchamcong> getXinChamCongVaotheoPhongBan = getXinChamCongVaotheoPhongBan(idPhongban);
+						xinChamCongVaoRaList.addAll(getXinChamCongVaotheoPhongBan); 
+						
+					} 							
+				}
+				
+			//	System.out.println("combinedXinchamcongList **************************************** "+ xinChamCongVaoRaList);
+				
+				renderRequest.setAttribute("xinChamCongVaoRaList", xinChamCongVaoRaList);
+				
+				
+			
+			}else if(user.getChucvu_id() == 3 || user.getPhu_trach_phong()==1) {
+				
+				List<Xinchamcong> xinChamCongVaoRaList = getXinChamCongVaoRaByPhongBan(user.getPhongban_id(), user.getUserId());
+				//System.out.println("xinChamCongVaoRaList ------------------ "+ xinChamCongVaoRaList);
+				renderRequest.setAttribute("xinChamCongVaoRaList", xinChamCongVaoRaList);
+				
+			} else {
+				List<Xinchamcong> xinChamCongVaoRaList = getXinChamCongVaoRaofCaNhan(user.getUserId());
+				renderRequest.setAttribute("xinChamCongVaoRaList", xinChamCongVaoRaList);
+				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
 		
 	
@@ -296,6 +446,90 @@ public class XinChamCongPortlet extends MVCPortlet {
 			 return xinChamCongList;
 		
 	}
+	
+	
+	
+	
+	// Các hàm về xin chấm công vào ra 
+	
+	public List<Xinchamcong> getXinChamCongVaoRaofCaNhan(long  userId) throws PortalException {
+		List<Xinchamcong> ListTableXinChamCong = XinchamcongLocalServiceUtil.getXinchamcongs(-1, -1) ;
+		//System.out.println("ListTableXinChamCong "+ ListTableXinChamCong);
+	     	    	 List<Xinchamcong> xinChamCongVaoRaList = ListTableXinChamCong.stream()
+				        .filter(xinchamcong -> xinchamcong.getUser_id() == userId)
+				        .collect(Collectors.toList());		
+			 return xinChamCongVaoRaList;
+		
+	}
+	
+	public List<Xinchamcong> getXinChamCongVaoRaByPhongBan(long  phongbanid, long userId) throws PortalException {
+		List<Xinchamcong> ListTableXinChamCong = XinchamcongLocalServiceUtil.getXinchamcongs(-1, -1);
+		//System.out.println("ListTableXinChamCong "+ ListTableXinChamCong);
+	     if (phongbanid == 14) {
+	    	 List<Xinchamcong> xinChamCongList = ListTableXinChamCong.stream()
+				        .filter(xinchamcong -> xinchamcong.getTrangthai() == 3 || xinchamcong.getTrangthai() == 4 || xinchamcong.getTrangthai() == 5)
+				        .collect(Collectors.toList());		
+			 return xinChamCongList;
+		} else {
+			 List<Xinchamcong> xinChamCongList = ListTableXinChamCong.stream()
+				        .filter(xinchamcong -> (xinchamcong.getPhongban_id() == phongbanid && (xinchamcong.getTrangthai() == 0 || xinchamcong.getTrangthai() == 1 || xinchamcong.getTrangthai() == 2))
+				         || ((xinchamcong.getUser_id() == userId) && (xinchamcong.getTrangthai() == 0 || xinchamcong.getTrangthai() == 1 || xinchamcong.getTrangthai() == 2) ) )
+				        .collect(Collectors.toList());		
+			 return xinChamCongList;
+		}
+		
+	}
+	
+	
+//	public List<Xinchamcong> getXinChamCongVaoRaofLanhDao(long  phongbanid, long userId) throws PortalException {
+//		
+//		Users user = UsersLocalServiceUtil.getUsers(userId);
+//		
+//		
+//		
+//		List<Xinchamcong> ListTableXinChamCong = XinchamcongLocalServiceUtil.getXinchamcongs(-1, -1);
+//		//System.out.println("ListTableXinChamCong "+ ListTableXinChamCong);
+//	     if (phongbanid == 14) {
+//	    	 List<Xinchamcong> xinChamCongList = ListTableXinChamCong.stream()
+//				        .filter(xinchamcong -> xinchamcong.getTrangthai() == 3 || xinchamcong.getTrangthai() == 4 || xinchamcong.getTrangthai() == 5)
+//				        .collect(Collectors.toList());		
+//			 return xinChamCongList;
+//		} else {
+//			 List<Xinchamcong> xinChamCongList = ListTableXinChamCong.stream()
+//				        .filter(xinchamcong -> (xinchamcong.getPhongban_id() == phongbanid && (xinchamcong.getTrangthai() == 0 || xinchamcong.getTrangthai() == 1 || xinchamcong.getTrangthai() == 2))
+//				         || ((xinchamcong.getUser_id() == userId) && (xinchamcong.getTrangthai() == 0 || xinchamcong.getTrangthai() == 1 || xinchamcong.getTrangthai() == 2) ) )
+//				        .collect(Collectors.toList());		
+//			 return xinChamCongList;
+//		}
+//		
+//	}
+	
+	public List<Xinchamcong> getXinChamCongVaotheoPhongBan(int  phongbanid) throws PortalException {
+
+			    List<Xinchamcong> ListTableXinChamCong = XinchamcongLocalServiceUtil.getXinchamcongs(-1, -1);
+			    List<Users> ListUsersAll = UsersLocalServiceUtil.getUserses(-1, -1).stream()
+			        .filter(ListUsers -> ListUsers.getPhongban_id() == phongbanid)
+			        .collect(Collectors.toList());	
+		//	System.out.println("ListUsersAll-----@@@@@@@ "+ListUsersAll);
+			List<Users> phutrachPhong = ListUsersAll.stream()
+				    .filter(user -> user.getPhu_trach_phong() == 1)
+				    .collect(Collectors.toList());
+			
+		
+			//System.out.println("phutrachPhong(((((((((((((((((((((((((((())))))))))))) "+ phutrachPhong);
+			
+				 List<Xinchamcong> getXinChamCongVaotheoPhongBan = ListTableXinChamCong.stream()
+					        .filter(xinchamcong -> xinchamcong.getPhongban_id() == phongbanid)
+					        .collect(Collectors.toList());	
+				 
+				 List<Xinchamcong> getXinChamCongTruongPhongvaPhuTrachPhong = getXinChamCongVaotheoPhongBan.stream()
+						 .filter(truongphong -> truongphong.getUser_id() == phutrachPhong.get(0).getUserId() ).collect(Collectors.toList());	
+				 
+				 return getXinChamCongTruongPhongvaPhuTrachPhong;
+			
+	
+}
+	
 	
 
 }

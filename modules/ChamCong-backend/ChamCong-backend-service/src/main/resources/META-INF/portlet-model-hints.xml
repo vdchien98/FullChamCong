@@ -99,7 +99,9 @@
 	<model name="com.liferay.docs.chamcong.model.Xinchamcong">
 		<field name="id" type="int" />
 		<field name="user_id" type="long" />
-		<field name="ly_do" type="String" />
+		<field name="ly_do" type="String">
+			<hint name="max-length">5000</hint>
+		</field>
 		<field name="ca_lam" type="String" />
 		<field name="check_in" type="String" />
 		<field name="check_out" type="String" />

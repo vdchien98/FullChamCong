@@ -103,7 +103,7 @@ create table _Users (
 create table _Xinchamcong (
 	id_ INTEGER not null primary key,
 	user_id LONG,
-	ly_do VARCHAR(75) null,
+	ly_do TEXT null,
 	ca_lam VARCHAR(75) null,
 	check_in VARCHAR(75) null,
 	check_out VARCHAR(75) null,

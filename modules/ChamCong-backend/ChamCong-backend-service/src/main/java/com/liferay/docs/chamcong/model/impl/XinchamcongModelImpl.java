@@ -95,7 +95,7 @@ public class XinchamcongModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table _Xinchamcong (id_ INTEGER not null primary key,user_id LONG,ly_do VARCHAR(75) null,ca_lam VARCHAR(75) null,check_in VARCHAR(75) null,check_out VARCHAR(75) null,ngay_lam DATE null,nguoi_duyet LONG,nguoi_huy LONG,diem DOUBLE,trangthai INTEGER,created_at DATE null,updated_at DATE null,phongban_id LONG)";
+		"create table _Xinchamcong (id_ INTEGER not null primary key,user_id LONG,ly_do TEXT null,ca_lam VARCHAR(75) null,check_in VARCHAR(75) null,check_out VARCHAR(75) null,ngay_lam DATE null,nguoi_duyet LONG,nguoi_huy LONG,diem DOUBLE,trangthai INTEGER,created_at DATE null,updated_at DATE null,phongban_id LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table _Xinchamcong";
 

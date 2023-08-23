@@ -18,6 +18,7 @@ import com.liferay.docs.chamcong.model.Xinchamcong;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -271,6 +272,18 @@ public class XinchamcongLocalServiceUtil {
 	 */
 	public static int getXinchamcongsCount() {
 		return getService().getXinchamcongsCount();
+	}
+
+	public static Xinchamcong saveXinChamCongVaoRa(
+			long userId, String ly_do, String ca_lam, String check_in,
+			String check_out, java.util.Date ngay_lam, long nguoi_duyet,
+			long nguoi_huy, double diem, int trangthai, long phongban_id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().saveXinChamCongVaoRa(
+			userId, ly_do, ca_lam, check_in, check_out, ngay_lam, nguoi_duyet,
+			nguoi_huy, diem, trangthai, phongban_id, serviceContext);
 	}
 
 	/**
