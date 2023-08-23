@@ -1,3 +1,4 @@
+<%@page import="com.liferay.docs.chamcong.model.Users"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui"%>
@@ -24,7 +25,14 @@ div#btn-color-targets {
     display: contents;
 }
 button.btn.btn-default.tuchoi {
-    margin-left: 25px;
+    background: antiquewhite;
+}
+a.btn.btn-default.xacnhan {
+    background: aqua;
+}
+
+li.nav-item.xinchamcongnuangay {
+    cursor: pointer;
 }
 </style>
 
@@ -35,25 +43,14 @@ button.btn.btn-default.tuchoi {
 	</div>
 	<div class="card-body">
 		<ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
-			<li class="nav-item"><a class="nav-link text-dark active"
+			<li class="nav-item xinchamcongnuangay"><a class="nav-link text-dark active"
 				id="profile-tab">Xin chấm công nửa ngày/cả ngày</a></li>
-			<li class="nav-item">
-			   <a class="nav-link text-dark" id="home-tab">Xin chấm công vào/ra</a></li>
+			<li class="nav-item xinchamcongnuangay">
+			   <a class="nav-link text-dark " id="home-tab">Xin chấm công vào/ra</a></li>
 		</ul>
 
 		<div class="tab-content" id="myTabContent">
 			<div class="tab-pane fade show active" id="profile">
-               <%-- 
-				<div class="mt-2 mb-2">
-					<a class="btn btn-primary text-white" data-toggle="modal"> <i
-						class="fa fa-check-square-o" aria-hidden="true"></i> Nửa ngày
-					</a> 
-					<a class="btn btn-success text-white" data-toggle="modal"> <i
-						class="fa fa-check-square-o" aria-hidden="true"></i> Cả ngày
-					</a>
-				</div>
-
-                --%>
                 <div class="mt-2 mb-2">
 				    <a class="btn btn-primary text-white" data-toggle="modal" data-target="#exampleModalCenter1">
 				       <i class="fa fa-check-square-o" aria-hidden="true"></i> Nửa ngày
@@ -62,11 +59,6 @@ button.btn.btn-default.tuchoi {
 				       <i class="fa fa-check-square-o" aria-hidden="true"></i> Cả ngày
 				     </a>
 				</div>
-                
-                
-                
-                
-
 				<div id="dataTable1_wrapper"
 					class="dataTables_wrapper dt-bootstrap4 no-footer">
 					<div class="row">
@@ -124,6 +116,18 @@ button.btn.btn-default.tuchoi {
 								
 								
 								<tbody>
+								     <% 
+								     Users userXinChamCong = (Users) request.getAttribute("userXinChamCong");
+								    
+								     int userRoleId = (int)userXinChamCong.getChucvu_id();
+								     int phutrachphong = (int)userXinChamCong.getPhu_trach_phong();
+								   
+								     boolean quyenHanhDong = (userRoleId == 3 || userRoleId == 2 || userRoleId == 1 || phutrachphong == 1);
+								   
+								     %>
+								
+								
+								
 								    <c:forEach items="${xinChamCongList}" var="item" varStatus="loop">
 								        <tr role="row" class="${loop.index % 2 == 0 ? 'even' : 'odd'}">
 								            <td class="sorting_1">${loop.index + 1}</td>
@@ -143,7 +147,7 @@ button.btn.btn-default.tuchoi {
 									                </c:when>
 									                <c:when test="${item.trangthai == 3 || item.trangthai == 4 || item.trangthai == 5}">
 									                    <span class="text-warning font-weight-bold">Đến Ngày: </span>
-									                    <fmt:formatDate value="${item.tu_ngay}" pattern="dd-MM-yyyy"/>
+									                    <fmt:formatDate value="${item.den_ngay}" pattern="dd-MM-yyyy"/>
 									                </c:when>
 									            </c:choose>
 								            <td>
@@ -175,12 +179,13 @@ button.btn.btn-default.tuchoi {
 								                </c:choose>
 								            </td>
 								            <td> 
-								            <c:choose>
+								               <% if(quyenHanhDong){ %>
+								                 <c:choose>        
 								                    <%-- xac nhan cua trưởng phòng  --%>  
-								                    <c:when test="${item.trangthai == 0 || item.trangthai == 3}">
+								                    <c:when test="${(item.trangthai == 0 || item.trangthai == 3 ) }">
 													      <div class="container bootstrap snippets bootdey">
 														    <div class="btn-demo btn-success" id="btn-color-targets">
-														        <a href="#modalColor" data-target-color="blue" data-toggle="modal" class="btn btn-default" 
+														        <a href="#modalColor" data-target-color="blue" data-toggle="modal" class="btn btn-default xacnhan" 
 														           onclick="openModal('confirm', ${item.id});">
 														            <i class="fa fa-check" aria-hidden="true"></i>Xác nhận
 														        </a>
@@ -192,68 +197,12 @@ button.btn.btn-default.tuchoi {
 														</div>
 
 								                    </c:when>
-								                    
-								                  
-								                   
 								                </c:choose>
+								               <% } %>  
 								            </td>
 								        </tr>
 								    </c:forEach>
 							</tbody>
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								<%-- 
-								     
-								      	<tbody>
-									<tr role="row" class="odd">
-										<td class="sorting_1">1</td>
-										<td>Vũ Đăng Chiến</td>
-										<td><span class="text-info font-weight-bold">Ngày:
-										</span> 16-09-2023 <br> <span
-											class="text-warning font-weight-bold">Buổi: </span> Chiều</td>
-										<td><span class="font-weight-bold">Đi học tập: </span> em
-											đi thực tập<br></td>
-										<td><span class="btn btn-info">Chờ xác nhận của
-												lãnh đạo phòng</span></td>
-										<td>
-											<button type="button" class="btn btn-success"
-												onclick="confirmActive(695);">
-												<i class="fa fa-check" aria-hidden="true"></i>Xác nhận
-											</button> <a class="btn btn-light mt-1" type="button"
-											data-toggle="tooltip" title="Từ chối"
-											onclick="confirmTuChoiXinChamCong(695);"> <i class="fa fa-times-circle" aria-hidden="true"></i> Từ chối
-										</a>
-											<form id="tu-choi-xin-cham-cong-695"
-												action=""
-												method="POST">
-												<input type="hidden" name="_token"
-													value="">
-											</form>
-											<form id="active-695"
-												action=""
-												method="POST">
-												<input type="hidden" name="_token"
-													value="4bC32VySEur1scSQtkMMEzhKPAWL3jeOwkwWZaLc"> <input
-													type="hidden" name="trangthai" value="1"> <input
-													type="hidden" name="id" value="695">
-											</form>
-										</td>
-									</tr>
-								</tbody>
-						
-						
-								
-								 --%>
-							
 							</table>
 						</div>
 					</div>
@@ -288,30 +237,27 @@ button.btn.btn-default.tuchoi {
 						</div>
 					</div>
 				</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 			</div>
-
-			<div class="tab-pane fade" id="home" role="tabpanel"
-				aria-labelledby="home-tab">
-				<div class="mt-2 mb-2">
-					<a class="btn btn-info text-white" data-toggle="modal"> <i
-						class="fa fa-check-square-o" aria-hidden="true"></i> Xin chấm công
-						vào/ra
-					</a>
-				</div>
+			
+			
+	
+			
+			<%-- xin chấm công vào ra --%>
+			<div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+			   <div class="tab-pane fade show active" id="profile">
+				   <div class="mt-2 mb-2">
+					     <a class="btn btn-info text-white" data-toggle="modal" data-target="#exampleModalCenter3">
+					       <i class="fa fa-check-square-o" aria-hidden="true"></i> Xin chấm công vào/ra
+					    </a>
+					</div>
+			   </div>
+				
 			</div>
+			
+			
+			
+			
+			
 		</div>
 	</div>
 </div>
@@ -431,9 +377,9 @@ button.btn.btn-default.tuchoi {
 
 
 
-<%-- Modal chấm công ra/vào 
+<%-- Modal chấm công ra/vào --%>	
 
-<div class="modal fade custom-modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade custom-modal" id="#exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -484,7 +430,6 @@ button.btn.btn-default.tuchoi {
 </div>
 
 
---%>
 
 
 
@@ -589,114 +534,6 @@ button.btn.btn-default.tuchoi {
     });
 
 </script>
-
-
-
-
-
-
-
-<%-- 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const nuaNgayButton = document.querySelector(".btn-primary[data-toggle='modal']");
-    const modal = document.getElementById("exampleModalCenter1");
-    const chamCongForm = document.getElementById("chamCongForm");
-
-    nuaNgayButton.addEventListener("click", function() {
-        $(modal).modal("show");
-    });
-
-    chamCongForm.addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent the default form submission
-        const formData = new FormData(chamCongForm);
-
-        $.ajax({
-            type: "POST",
-            url: chamCongForm.getAttribute("action"),
-            data: formData,
-            success: function(response) {
-                // Handle the success response here
-                console.log("Form submitted successfully!", response);
-                chamCongForm.reset(); // Reset the form fields
-            },
-            error: function(error) {
-                // Handle the error response here
-                console.error("Form submission failed!", error);
-            },
-            processData: false, // Prevent jQuery from automatically processing data
-            contentType: false, // Prevent jQuery from automatically setting content type
-        });
-    });
-});
-</script>
-
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const caNgayButton = document.querySelector(".btn-success[data-toggle='modal']");
-  const modal = document.getElementById("exampleModalCenter2");
-  const chamCongForm1 = document.getElementById("chamCongForm1");
-  caNgayButton.addEventListener("click", function() {
-    $(modal).modal("show"); // Sử dụng Bootstrap's modal('show') để hiển thị modal
-  });
-  chamCongForm1.addEventListener("submit", function(event) {
-      event.preventDefault(); // Prevent the default form submission
-      const formData = new FormData(chamCongForm1);
-
-      $.ajax({
-          type: "POST",
-          url: chamCongForm1.getAttribute("action"),
-          data: formData,
-          success: function(response) {
-              // Handle the success response here
-              console.log("Form submitted successfully!", response);
-              chamCongForm1.reset(); // Reset the form fields
-          },
-          error: function(error) {
-              // Handle the error response here
-              console.error("Form submission failed!", error);
-          },
-          processData: false, // Prevent jQuery from automatically processing data
-          contentType: false, // Prevent jQuery from automatically setting content type
-      });
-  });
-  
-  
-  
-});
-</script>
-
- --%>
-
-
-
-
-
-
-
-
-<%--  
-  ko dùng nữa 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const nuaNgayButton = document.querySelector(".btn-primary[data-toggle='modal']");
-  const modal = document.getElementById("exampleModalCenter1");
-
-  nuaNgayButton.addEventListener("click", function() {
-    $(modal).modal("show"); // Sử dụng Bootstrap's modal('show') để hiển thị modal
-  });
- 
-});
-</script>
-
---%>
-
-
-
-
-
-
 
 
 

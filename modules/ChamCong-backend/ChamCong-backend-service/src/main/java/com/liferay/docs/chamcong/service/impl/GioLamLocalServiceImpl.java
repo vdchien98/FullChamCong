@@ -202,6 +202,39 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 //		return giolam;
 
 	}
+//
+	public void addGioLamXinChamCong(int idGioLam, long user_id,
+			Date ngaylam, String ip, String check_in_sang, String check_out_sang, int di_muon_sang, int ve_som_sang,String check_in_chieu, 
+			String check_out_chieu,int di_muon_chieu, int ve_som_chieu,
+			int gio_cham_cong_sang, float diem, int trangthai, ServiceContext serviceContext) throws PortalException, SystemException {
+
+		System.out.println("da vao dc addGioLamXinChamCong  trong service ");	
+		
+		int idGioLamnew = (int) CounterLocalServiceUtil.increment();
+		GioLam giolam = gioLamPersistence.create(idGioLamnew);
+		Date now = new Date();
+		giolam.setId(idGioLamnew);
+		giolam.setUser_id(user_id);
+		giolam.setNgay_lam(ngaylam);
+		giolam.setCheck_in_sang(check_in_sang);
+		giolam.setCheck_out_sang(check_out_sang);
+		giolam.setDi_muon_sang(di_muon_sang);
+		giolam.setVe_som_sang(ve_som_sang);
+		giolam.setCheck_in_chieu(check_in_chieu);
+		giolam.setCheck_out_chieu(check_out_chieu);
+		giolam.setDi_muon_chieu(di_muon_chieu);
+		giolam.setVe_som_chieu(ve_som_chieu);
+		giolam.setDiem(diem);
+		giolam.setCreated_at(now);
+		giolam.setUpdated_at(now);
+		giolam.setTrangthai(trangthai);
+		GioLamLocalServiceUtil.updateGioLam(giolam);
+		
+	
+//		return giolam;
+
+	}
+	
 
 	public GioLam getGioLamByUserId(long userId, Date NgayLam) throws PortalException {
 		List<GioLam> gioLamList = GioLamLocalServiceUtil.getGioLams(-1, -1);

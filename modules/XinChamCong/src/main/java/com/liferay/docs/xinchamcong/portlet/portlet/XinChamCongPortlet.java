@@ -74,6 +74,7 @@ public class XinChamCongPortlet extends MVCPortlet {
 		Date tu_ngay = ParamUtil.getDate(request, "tu_ngay", dateFormat);
 		System.out.println("tu_ngay ------------ " + tu_ngay);
 		String nua_ngay = ParamUtil.getString(request, "nua_ngay");
+		
 		System.out.println("nua_ngay ------------ " + nua_ngay);
 		String chon_ly_do = ParamUtil.getString(request, "chon_ly_do");
 		System.out.println("chon_ly_do ------------ " + chon_ly_do);
@@ -82,7 +83,11 @@ public class XinChamCongPortlet extends MVCPortlet {
 
 		int soNgay = 0;
 		int trangthai = 0;
-		int nuangay = 1;
+		//int nuangay = 1;
+		int nuangay = Integer.parseInt(nua_ngay) - 1 ;
+		System.out.println("nuangay ------------ " + nuangay);
+		
+		
 		String file_url = "file-xin-nghi/0b3cfa7b469f47271e70f85091d91d9b.pdf";
 		long nguoihuy = 9498;
 		long phongban_id = user.getPhongban_id();
@@ -187,6 +192,18 @@ public class XinChamCongPortlet extends MVCPortlet {
 			e.printStackTrace();
 		}
 		
+		
+		// xử lý lưu vào trong DB
+//		
+//		Xinnghi xinnghi = getXinnghi(idxValue);
+//		if (xac_nhan_truongphong.equals("xac_nhan")) {
+//			
+//		} 
+//		
+		
+		
+		
+		
 		response.sendRedirect("/nhanvien/xin-cham-cong");
 
 	}
@@ -214,10 +231,23 @@ public class XinChamCongPortlet extends MVCPortlet {
 		Users user = null;
 		try {
 			user = UsersLocalServiceUtil.getUsers(IdUser);
+			renderRequest.setAttribute("userXinChamCong", user);
 //			/System.out.println("user lay dc trong xin cham cong ssss------------ " + user);	
-			List<Xinnghi> xinChamCongList = getXinChamCongByPhongBan(user.getPhongban_id());
-			//System.out.println("xinChamCongList**********----------- " + xinChamCongList);
-			renderRequest.setAttribute("xinChamCongList", xinChamCongList);
+			
+			
+			if (user.getChucvu_id() == 3 || user.getChucvu_id() == 2 || user.getChucvu_id() == 1 || user.getPhu_trach_phong()==1) {
+				List<Xinnghi> xinChamCongList = getXinChamCongByPhongBan(user.getPhongban_id(), user.getUserId());
+				System.out.println("xinChamCongList**********----------- " + xinChamCongList);
+				renderRequest.setAttribute("xinChamCongList", xinChamCongList);
+			} else {
+				List<Xinnghi> xinChamCongList = getXinChamCongofCaNhan(user.getUserId());
+				System.out.println("xinChamCongList**********----------- " + xinChamCongList);
+				renderRequest.setAttribute("xinChamCongList", xinChamCongList);
+			}
+			
+			
+			
+			
 			
 			
 			
@@ -239,7 +269,7 @@ public class XinChamCongPortlet extends MVCPortlet {
 	}
 	
 	
-	public List<Xinnghi> getXinChamCongByPhongBan(long  phongbanid) throws PortalException {
+	public List<Xinnghi> getXinChamCongByPhongBan(long  phongbanid, long userId) throws PortalException {
 		List<Xinnghi> ListTableXinChamCong = XinnghiLocalServiceUtil.getXinnghis(-1, -1);
 		//System.out.println("ListTableXinChamCong "+ ListTableXinChamCong);
 	     if (phongbanid == 14) {
@@ -249,10 +279,21 @@ public class XinChamCongPortlet extends MVCPortlet {
 			 return xinChamCongList;
 		} else {
 			 List<Xinnghi> xinChamCongList = ListTableXinChamCong.stream()
-				        .filter(xinchamcong -> xinchamcong.getPhongban_id() == phongbanid && (xinchamcong.getTrangthai() == 0 || xinchamcong.getTrangthai() == 1 || xinchamcong.getTrangthai() == 2))
+				        .filter(xinchamcong -> (xinchamcong.getPhongban_id() == phongbanid && (xinchamcong.getTrangthai() == 0 || xinchamcong.getTrangthai() == 1 || xinchamcong.getTrangthai() == 2))
+				         || ((xinchamcong.getUser_id() == userId) && (xinchamcong.getTrangthai() == 0 || xinchamcong.getTrangthai() == 1 || xinchamcong.getTrangthai() == 2) ) )
 				        .collect(Collectors.toList());		
 			 return xinChamCongList;
 		}
+		
+	}
+	
+	public List<Xinnghi> getXinChamCongofCaNhan(long  userId) throws PortalException {
+		List<Xinnghi> ListTableXinChamCong = XinnghiLocalServiceUtil.getXinnghis(-1, -1);
+		//System.out.println("ListTableXinChamCong "+ ListTableXinChamCong);
+	     	    	 List<Xinnghi> xinChamCongList = ListTableXinChamCong.stream()
+				        .filter(xinchamcong -> xinchamcong.getUser_id() == userId)
+				        .collect(Collectors.toList());		
+			 return xinChamCongList;
 		
 	}
 	

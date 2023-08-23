@@ -88,6 +88,14 @@ public interface GioLamLocalService
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
+	public void addGioLamXinChamCong(
+			int idGioLam, long user_id, Date ngaylam, String ip,
+			String check_in_sang, String check_out_sang, int di_muon_sang,
+			int ve_som_sang, String check_in_chieu, String check_out_chieu,
+			int di_muon_chieu, int ve_som_chieu, int gio_cham_cong_sang,
+			float diem, int trangthai, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 	/**
 	 * Creates a new gio lam with the primary key. Does not add the gio lam to the database.
 	 *
