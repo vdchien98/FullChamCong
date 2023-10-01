@@ -40,6 +40,14 @@ li.nav-item.xinchamcongnuangay {
 }
 </style>
 
+
+
+<script>
+
+
+</script>
+
+
 <div class="card shadow mb-4">
 	<div class="card-header py-3">
 		<h4 class="m-0 font-weight-bold text-primary">Danh sách xin chấm
@@ -317,101 +325,132 @@ li.nav-item.xinchamcongnuangay {
 									<td>
 									   <span class="font-weight-bold text-info">Ngày:<fmt:formatDate value="${item.ngay_lam}" pattern="dd-MM-yyyy" /></span> <br> 
 									   <span class="font-weight-bold text-warning">Ca làm: ${item.ca_lam}</span> <br>
-									   <span class="font-weight-bold text-danger">Giờ chấm công: 16:30:00</span>
+									   <c:choose>
+													<c:when test="${not empty item.check_in}">
+														<span class="font-weight-bold text-danger">Giờ chấm công: ${item.check_in}</span>
+													</c:when>
+													<c:when test="${not empty item.check_out}">
+														<span class="font-weight-bold text-danger">Giờ chấm công: ${item.check_out}</span>
+													</c:when>
+												
+										</c:choose>
+									   
 									</td>
 									<td>${item.ly_do}</td>
 									<td class="font-weight-bold">
-									   <span>Người xác nhận: </span> <br> 
-									   <span></span></td>
+										  <c:forEach var="itemUser" items="${usersList}">
+													<c:if test="${itemUser.userId == item.nguoi_duyet || itemUser.userId == item.nguoi_huy}">
+														<span class="text-info font-weight-bold ">
+															Người xác nhận: ${itemUser.hovaten}</span>
+													</c:if>
+										  </c:forEach>
+									    <br> 
 									<td>
 									
-									      <c:forEach var="itemUser" items="${usersList}">
-													<c:if test="${itemUser.userId == item.user_id}">
-														      <c:choose>
-																   <c:when test="${itemUser.chucvu_id == 3 || itemUser.phu_trach_phong == 1 }">
-																         <span class="btn btn-info" style=" background-color:#0014fff2;">Chờ xác nhận của lãnh đạo đơn vị</span>
-																   </c:when>
-																   <c:when  test="${itemUser.chucvu_id == 4 || itemUser.chucvu_id == 6  }">
-																				<span class="btn btn-info">Chờ xác nhận của lãnh đạo phòng</span>
-						
-																   </c:when>
-																</c:choose>
-													</c:if>
-										 </c:forEach>
+									    <c:choose>
+													<c:when test="${item.trangthai == 0}">
+														<span class="btn btn-info">Chờ xác nhận của lãnh đạo cơ quan hoặc lãnh đạo phòng</span>
+													</c:when>
+													<c:when test="${item.trangthai == 1}">
+														<span class="btn btn-danger">Bị từ chối </span>
+													</c:when>
+													<c:when test="${item.trangthai == 2}">
+														<span class="btn btn-success">Đã xác nhận của
+															trưởng phòng</span>
+													</c:when>
+													<c:when test="${item.trangthai == 3}">
+														<span class="btn btn-info">Chờ xác nhận của lãnh
+															đạo đơn vị</span>
+													</c:when>
+													<c:when test="${item.trangthai == 4}">
+														<span class="btn btn-danger">Từ chối</span>
+													</c:when>
+													<c:when test="${item.trangthai == 5}">
+														<span class="btn btn-success">Đã xác nhận của lãnh
+															đạo đơn vị </span>
+													</c:when>
+												</c:choose>
 									</td>
 									<td>
-									
-									    <% 
-									    Users userXinChamCongVaoRa = (Users) request.getAttribute("userXinChamCongVaoRa");
-
-										int chucvuLanhdao = (int) userXinChamCongVaoRa.getChucvu_id();
-										int phutrachphongVaoRa = (int) userXinChamCongVaoRa.getPhu_trach_phong();
-									    if(chucvuLanhdao == 1 || chucvuLanhdao == 2 ){
-									    %>
-									    
-									     <c:forEach var="itemUser" items="${usersList}">
-													<c:if test="${itemUser.userId == item.user_id}">
-														      <c:choose>
-														       
-																   <c:when test="${itemUser.chucvu_id == 3 || itemUser.phu_trach_phong == 1 }">
-																	   <div class="container bootstrap snippets bootdey">
-																						<div class="btn-demo btn-success" id="btn-color-targets">
-																							<a href="#modalColor" data-target-color="blue"
-																								data-toggle="modal" class="btn btn-default xacnhan"
-																								onclick="openModal('xacnhanvaora', ${item.id});"> <i
-																								class="fa fa-check" aria-hidden="true"></i>Xác nhận
-																							</a>
-																							<button type="button" class="btn btn-default tuchoi"
-																								data-toggle="modal"
-																								onclick="openModal('tuchoivaora', ${item.id});">
-																								<i class="fa fa-times-circle" aria-hidden="true"></i>Từ
-																							chối
-																						</button>
+									   
+									   <c:if test="${item.trangthai ==0  }">
+									       <% 
+										    Users userXinChamCongVaoRa = (Users) request.getAttribute("userXinChamCongVaoRa");
+	
+											int chucvuLanhdao = (int) userXinChamCongVaoRa.getChucvu_id();
+											int phutrachphongVaoRa = (int) userXinChamCongVaoRa.getPhu_trach_phong();
+										    if((chucvuLanhdao == 1 || chucvuLanhdao == 2)){
+										    %>
+										    
+										     <c:forEach var="itemUser" items="${usersList}">
+														<c:if test="${itemUser.userId == item.user_id}">
+															      <c:choose>
+																	   <c:when test="${itemUser.chucvu_id == 3 || itemUser.phu_trach_phong == 1 }">
+																		   <div class="container bootstrap snippets bootdey">
+																							<div class="btn-demo btn-success" id="btn-color-targets">
+																								<a href="#modalColor" data-target-color="blue"
+																									data-toggle="modal" class="btn btn-default xacnhan"
+																									onclick="openModal('xacnhanvaora', ${item.id});"> <i
+																									class="fa fa-check" aria-hidden="true"></i>Xác nhận
+																								</a>
+																								<button type="button" class="btn btn-default tuchoi"
+																									data-toggle="modal"
+																									onclick="openModal('tuchoivaora', ${item.id});">
+																									<i class="fa fa-times-circle" aria-hidden="true"></i>Từ
+																								chối
+																							</button>
+																						</div>
 																					</div>
-																				</div>
-																   </c:when>
-																   <c:when  test="${itemUser.chucvu_id == 4 || itemUser.chucvu_id == 6  }">
-																				
-						
-																   </c:when>
-																  
-																</c:choose>
-													</c:if>
-										 </c:forEach>
-		
-								
-									    <% } else { %>
-									     <c:forEach var="itemUser" items="${usersList}">
-												<c:if test="${itemUser.userId == item.user_id}">
-													<c:choose>
-														<c:when test="${itemUser.chucvu_id == 3 || itemUser.phu_trach_phong == 1 }">
-													    </c:when>
-														<c:when  test="${itemUser.chucvu_id == 4 || itemUser.chucvu_id == 6  }">
-																<div class="container bootstrap snippets bootdey">
-																	<div class="btn-demo btn-success" id="btn-color-targets">
-																		<a href="#modalColor" data-target-color="blue"
-																					data-toggle="modal" class="btn btn-default xacnhan"
-																				onclick="openModal('xacnhanvaora', ${item.id});"> <i
-																				class="fa fa-check" aria-hidden="true"></i>Xác nhận
-																		</a>
-																	<button type="button" class="btn btn-default tuchoi"
-																			data-toggle="modal"
-																			onclick="openModal('tuchoivaora', ${item.id});">
-																			<i class="fa fa-times-circle" aria-hidden="true"></i>Từ
-																							chối
-																	</button>
-																   </div>
-																</div>
-						
-															</c:when>
-																  
-													</c:choose>
-											 </c:if>
-										 </c:forEach>
-		
+																	   </c:when>
+																	   <c:when  test="${itemUser.chucvu_id == 4 || itemUser.chucvu_id == 6  }">
+																					
+							
+																	   </c:when>
+																	  
+																	</c:choose>
+														</c:if>
+											 </c:forEach>
+			
 									
-									    <% } %>
-									    
+										    <% } else { %>
+										     <c:forEach var="itemUser" items="${usersList}">
+													<c:if test="${itemUser.userId == item.user_id}">
+														<c:choose>
+															<c:when test="${itemUser.chucvu_id == 3 || itemUser.phu_trach_phong == 1 }">
+														    </c:when>
+															<c:when  test="${itemUser.chucvu_id == 4 || itemUser.chucvu_id == 6  }">
+																	<div class="container bootstrap snippets bootdey">
+																		<div class="btn-demo btn-success" id="btn-color-targets">
+																			<a href="#modalColor" data-target-color="blue"
+																						data-toggle="modal" class="btn btn-default xacnhan"
+																					onclick="openModal('xacnhanvaora', ${item.id});"> <i
+																					class="fa fa-check" aria-hidden="true"></i>Xác nhận
+																			</a>
+																		<button type="button" class="btn btn-default tuchoi"
+																				data-toggle="modal"
+																				onclick="openModal('tuchoivaora', ${item.id});">
+																				<i class="fa fa-times-circle" aria-hidden="true"></i>Từ
+																								chối
+																		</button>
+																	   </div>
+																	</div>
+							
+																</c:when>
+																	  
+														</c:choose>
+												 </c:if>
+											 </c:forEach>
+			
+										
+										    <% } %>
+										   
+										   
+										   
+										   
+									   </c:if>
+									   
+									   
+																		    
 									</td>
 								</tr>	
 										
@@ -430,30 +469,31 @@ li.nav-item.xinchamcongnuangay {
 	</div>
 </div>
 <script>
-	document.addEventListener("DOMContentLoaded", function() {
-		const profileTab = document.getElementById("profile-tab");
-		const homeTab = document.getElementById("home-tab");
-		const profileContent = document.getElementById("profile");
-		const homeContent = document.getElementById("home");
+$(document).ready(function() {
+    console.log("Bạn đã click được vào đây -------------------------------");
+    
+    const profileTab = $("#profile-tab");
+    const homeTab = $("#home-tab");
+    const profileContent = $("#profile");
+    const homeContent = $("#home");
 
-		profileTab.addEventListener("click", function() {
-			profileContent.classList.add("show", "active");
-			homeContent.classList.remove("show", "active");
+    profileTab.on("click", function() {
+        profileContent.addClass("show active");
+        homeContent.removeClass("show active");
 
-			profileTab.classList.add("active");
-			homeTab.classList.remove("active");
-		});
+        profileTab.addClass("active");
+        homeTab.removeClass("active");
+    });
 
-		homeTab.addEventListener("click", function() {
-			homeContent.classList.add("show", "active");
-			profileContent.classList.remove("show", "active");
+    homeTab.on("click", function() {
+        homeContent.addClass("show active");
+        profileContent.removeClass("show active");
 
-			homeTab.classList.add("active");
-			profileTab.classList.remove("active");
-		});
-	});
+        homeTab.addClass("active");
+        profileTab.removeClass("active");
+    });
+});
 </script>
-
 
 
 
@@ -731,6 +771,9 @@ li.nav-item.xinchamcongnuangay {
 
 
 <%-- update ham xin chấm công vào ra  --%>
+
+
+
 <portlet:actionURL name="updateChamCongVaoRa"
 	var="updateChamCongVaoRaURL" />
 <form id="chamCongForm12" method="POST"
@@ -792,7 +835,6 @@ li.nav-item.xinchamcongnuangay {
                   const xac_nhan_truongphong = $('#xac_nhan_truongphongvaora');
                   xac_nhan_truongphong.val("xac_nhan");
                   // Gửi form
-                  // Gửi form
                   $('#chamCongForm12').submit();
                   
                   modal.modal('hide');
@@ -801,8 +843,19 @@ li.nav-item.xinchamcongnuangay {
               
               
         }else if(action === 'tuchoivaora'){
-        	
-        	
+        	  message.text('Bạn có chắc chắn từ chối không?');
+              confirmButton.text('Từ chối').addClass('btn-danger').removeClass('btn-primary');
+              confirmButton.off('click').on('click', function () {
+                  // Xử lý từ chối ở đây (sử dụng itemId nếu cần)
+                  const idxinchamcongInput = $('#idxinchamcongvaora');
+                  idxinchamcongInput.val(itemId); 
+                  const xac_nhan_truongphong = $('#xac_nhan_truongphongvaora');
+                  xac_nhan_truongphong.val("tu_choi");
+                  // Gửi form
+                  $('#chamCongForm12').submit();
+                  
+                  modal.modal('hide');
+              });
         }
 
         modal.modal('show');

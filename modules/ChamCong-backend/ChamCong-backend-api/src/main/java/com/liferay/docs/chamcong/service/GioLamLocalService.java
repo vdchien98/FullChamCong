@@ -277,6 +277,10 @@ public interface GioLamLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public double tinhdemChamCong(
+			int dimuonsang, int vesomsang, int dimuonchieu, int vemuonchieu)
+		throws PortalException;
+
 	/**
 	 * Updates the gio lam in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -289,5 +293,10 @@ public interface GioLamLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public GioLam updateGioLam(GioLam gioLam);
+
+	public void updateGioLamXinChamCongVaoRa(
+			long UserIdNhanVienDuocLanhdaoxacnhan, Date ngaylam,
+			int trangthaiupadateVaoRa)
+		throws PortalException, SystemException;
 
 }

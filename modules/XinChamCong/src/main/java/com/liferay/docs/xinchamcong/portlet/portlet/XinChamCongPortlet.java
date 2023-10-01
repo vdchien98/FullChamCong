@@ -194,9 +194,18 @@ public class XinChamCongPortlet extends MVCPortlet {
 		long userId = themeDisplay.getUserId();
 		ServiceContext serviceContext = new ServiceContext();
 		System.out.println("---- @@@@@@@@@@@@@@@@@@@ da vao duoc xin cham cong vao ra va cho truong phong xac nhan @@@@@@@@@@@@-----------");
-		
+		String idxinchamcongvaora = ParamUtil.getString(request, "idxinchamcongvaora");
+		int idxValuevaora = Integer.parseInt(idxinchamcongvaora);
+		System.out.println("idxValue ------------ " + idxValuevaora);
+		String trangthai = ParamUtil.getString(request, "xac_nhan_truongphongvaora");
 
 		
+		try {
+			XinchamcongLocalServiceUtil.updateChamCongVaoRa(idxValuevaora, trangthai, userId, serviceContext);
+		}catch (PortalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		response.sendRedirect("/nhanvien/xin-cham-cong");
@@ -400,7 +409,7 @@ public class XinChamCongPortlet extends MVCPortlet {
 			}else if(user.getChucvu_id() == 3 || user.getPhu_trach_phong()==1) {
 				
 				List<Xinchamcong> xinChamCongVaoRaList = getXinChamCongVaoRaByPhongBan(user.getPhongban_id(), user.getUserId());
-				//System.out.println("xinChamCongVaoRaList ------------------ "+ xinChamCongVaoRaList);
+				System.out.println("xinChamCongVaoRaList ------------------ "+ xinChamCongVaoRaList);
 				renderRequest.setAttribute("xinChamCongVaoRaList", xinChamCongVaoRaList);
 				
 			} else {
@@ -412,6 +421,24 @@ public class XinChamCongPortlet extends MVCPortlet {
 			// TODO: handle exception
 		}
 
+		
+		
+		
+		
+		
+		
+		
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	
 		
@@ -472,8 +499,9 @@ public class XinChamCongPortlet extends MVCPortlet {
 			 return xinChamCongList;
 		} else {
 			 List<Xinchamcong> xinChamCongList = ListTableXinChamCong.stream()
-				        .filter(xinchamcong -> (xinchamcong.getPhongban_id() == phongbanid && (xinchamcong.getTrangthai() == 0 || xinchamcong.getTrangthai() == 1 || xinchamcong.getTrangthai() == 2))
-				         || ((xinchamcong.getUser_id() == userId) && (xinchamcong.getTrangthai() == 0 || xinchamcong.getTrangthai() == 1 || xinchamcong.getTrangthai() == 2) ) )
+				        .filter(xinchamcong -> (xinchamcong.getPhongban_id() == phongbanid && 
+				                (xinchamcong.getTrangthai() == 0 || xinchamcong.getTrangthai() == 1 || xinchamcong.getTrangthai() == 2))
+				         || ((xinchamcong.getUser_id() == userId) && (xinchamcong.getTrangthai() == 0 || xinchamcong.getTrangthai() == 1 || xinchamcong.getTrangthai() == 2 || xinchamcong.getTrangthai() == 4 || xinchamcong.getTrangthai() == 5) ) )
 				        .collect(Collectors.toList());		
 			 return xinChamCongList;
 		}
@@ -530,6 +558,40 @@ public class XinChamCongPortlet extends MVCPortlet {
 	
 }
 	
+
+	public double tinhdemChamCong(int dimuonsang, int vesomsang , int dimuonchieu, int vemuonchieu) throws PortalException {
+		
+		double diemchamcong = 0 ;
+	
+		
+		int[] variables = { dimuonsang, vesomsang, dimuonchieu, vemuonchieu };
+
+	    for (int variable : variables) {
+	        if (variable > 0 && variable <= 10) {
+	        	diemchamcong = diemchamcong + 0.8 ;
+	        	
+	        } else if (variable > 10 && variable <= 15) {
+	        	diemchamcong = diemchamcong +0.6 ;
+	        } else if (variable > 15 && variable <= 20) {
+	        	diemchamcong = diemchamcong +0.4 ;
+	        } else if (variable > 20 && variable <= 30) {
+	        	diemchamcong = diemchamcong +0.2 ;
+	        }else if (variable > 30 ) {
+	        	diemchamcong = diemchamcong +0 ;
+	        }else {
+	        	diemchamcong = diemchamcong +1 ;
+	        }
+
+	    }
+
+	    // Tiếp tục các xử lý khác
+		
+	   
+		
+		
+		return diemchamcong;
+
+	}
 	
 
 }

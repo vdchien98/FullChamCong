@@ -316,6 +316,14 @@ public class GioLamLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static double tinhdemChamCong(
+			int dimuonsang, int vesomsang, int dimuonchieu, int vemuonchieu)
+		throws PortalException {
+
+		return getService().tinhdemChamCong(
+			dimuonsang, vesomsang, dimuonchieu, vemuonchieu);
+	}
+
 	/**
 	 * Updates the gio lam in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -328,6 +336,15 @@ public class GioLamLocalServiceUtil {
 	 */
 	public static GioLam updateGioLam(GioLam gioLam) {
 		return getService().updateGioLam(gioLam);
+	}
+
+	public static void updateGioLamXinChamCongVaoRa(
+			long UserIdNhanVienDuocLanhdaoxacnhan, java.util.Date ngaylam,
+			int trangthaiupadateVaoRa)
+		throws PortalException, SystemException {
+
+		getService().updateGioLamXinChamCongVaoRa(
+			UserIdNhanVienDuocLanhdaoxacnhan, ngaylam, trangthaiupadateVaoRa);
 	}
 
 	public static GioLamLocalService getService() {

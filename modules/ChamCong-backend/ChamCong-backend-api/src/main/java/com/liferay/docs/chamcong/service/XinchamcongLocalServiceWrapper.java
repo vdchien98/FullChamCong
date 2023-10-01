@@ -311,6 +311,50 @@ public class XinchamcongLocalServiceWrapper
 	}
 
 	@Override
+	public String LayChucVutheoChucVuId(int chucvuId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _xinchamcongLocalService.LayChucVutheoChucVuId(chucvuId);
+	}
+
+	@Override
+	public String LayTenPhongtheoPhongBanId(long phongbanId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _xinchamcongLocalService.LayTenPhongtheoPhongBanId(phongbanId);
+	}
+
+	@Override
+	public com.liferay.docs.chamcong.model.Users
+			LayUserLanhDaoPhongtheoPhongBanId(long phongbanId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _xinchamcongLocalService.LayUserLanhDaoPhongtheoPhongBanId(
+			phongbanId);
+	}
+
+	@Override
+	public com.liferay.docs.chamcong.model.Users
+			LayUserLanhDaoTrungTamtheoPhongBanId(long phongbanId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _xinchamcongLocalService.LayUserLanhDaoTrungTamtheoPhongBanId(
+			phongbanId);
+	}
+
+	@Override
+	public com.liferay.docs.chamcong.model.Users LayUsertheoId(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _xinchamcongLocalService.LayUsertheoId(userId);
+	}
+
+	@Override
 	public com.liferay.docs.chamcong.model.Xinchamcong saveXinChamCongVaoRa(
 			long userId, String ly_do, String ca_lam, String check_in,
 			String check_out, java.util.Date ngay_lam, long nguoi_duyet,
@@ -322,6 +366,17 @@ public class XinchamcongLocalServiceWrapper
 		return _xinchamcongLocalService.saveXinChamCongVaoRa(
 			userId, ly_do, ca_lam, check_in, check_out, ngay_lam, nguoi_duyet,
 			nguoi_huy, diem, trangthai, phongban_id, serviceContext);
+	}
+
+	@Override
+	public com.liferay.docs.chamcong.model.Xinchamcong updateChamCongVaoRa(
+			int idXinChamCong, String trangthai, long userId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _xinchamcongLocalService.updateChamCongVaoRa(
+			idXinChamCong, trangthai, userId, serviceContext);
 	}
 
 	/**

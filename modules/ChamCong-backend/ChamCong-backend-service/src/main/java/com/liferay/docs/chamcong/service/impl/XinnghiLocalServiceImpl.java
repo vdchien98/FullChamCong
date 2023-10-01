@@ -59,12 +59,34 @@ public class XinnghiLocalServiceImpl extends XinnghiLocalServiceBaseImpl {
     		xinnghi.setTrangthai(trangthai);
     		xinnghi.setNua_ngay(nuangay);
     		xinnghi.setSo_ngay(soNgay);
-    		xinnghi.setFile_url(file_url);
+    		
     		xinnghi.setNguoi_huy(nguoihuy);
     		xinnghi.setCreated_at(now);
     		xinnghi.setUpdated_at(now);
     		xinnghi.setPhongban_id(phongban_id);
     		
+    		
+    		// xử lý tạo file PDF 
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		xinnghi.setFile_url(file_url);
     		
        		xinnghiLocalService.updateXinnghi(xinnghi);
     		return xinnghi;

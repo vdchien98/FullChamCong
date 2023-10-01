@@ -14,6 +14,7 @@
 
 package com.liferay.docs.chamcong.service;
 
+import com.liferay.docs.chamcong.model.Users;
 import com.liferay.docs.chamcong.model.Xinchamcong;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -254,10 +255,30 @@ public interface XinchamcongLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getXinchamcongsCount();
 
+	public String LayChucVutheoChucVuId(int chucvuId)
+		throws PortalException, SystemException;
+
+	public String LayTenPhongtheoPhongBanId(long phongbanId)
+		throws PortalException, SystemException;
+
+	public Users LayUserLanhDaoPhongtheoPhongBanId(long phongbanId)
+		throws PortalException, SystemException;
+
+	public Users LayUserLanhDaoTrungTamtheoPhongBanId(long phongbanId)
+		throws PortalException, SystemException;
+
+	public Users LayUsertheoId(long userId)
+		throws PortalException, SystemException;
+
 	public Xinchamcong saveXinChamCongVaoRa(
 			long userId, String ly_do, String ca_lam, String check_in,
 			String check_out, Date ngay_lam, long nguoi_duyet, long nguoi_huy,
 			double diem, int trangthai, long phongban_id,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public Xinchamcong updateChamCongVaoRa(
+			int idXinChamCong, String trangthai, long userId,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 

@@ -274,6 +274,39 @@ public class XinchamcongLocalServiceUtil {
 		return getService().getXinchamcongsCount();
 	}
 
+	public static String LayChucVutheoChucVuId(int chucvuId)
+		throws PortalException, SystemException {
+
+		return getService().LayChucVutheoChucVuId(chucvuId);
+	}
+
+	public static String LayTenPhongtheoPhongBanId(long phongbanId)
+		throws PortalException, SystemException {
+
+		return getService().LayTenPhongtheoPhongBanId(phongbanId);
+	}
+
+	public static com.liferay.docs.chamcong.model.Users
+			LayUserLanhDaoPhongtheoPhongBanId(long phongbanId)
+		throws PortalException, SystemException {
+
+		return getService().LayUserLanhDaoPhongtheoPhongBanId(phongbanId);
+	}
+
+	public static com.liferay.docs.chamcong.model.Users
+			LayUserLanhDaoTrungTamtheoPhongBanId(long phongbanId)
+		throws PortalException, SystemException {
+
+		return getService().LayUserLanhDaoTrungTamtheoPhongBanId(phongbanId);
+	}
+
+	public static com.liferay.docs.chamcong.model.Users LayUsertheoId(
+			long userId)
+		throws PortalException, SystemException {
+
+		return getService().LayUsertheoId(userId);
+	}
+
 	public static Xinchamcong saveXinChamCongVaoRa(
 			long userId, String ly_do, String ca_lam, String check_in,
 			String check_out, java.util.Date ngay_lam, long nguoi_duyet,
@@ -284,6 +317,15 @@ public class XinchamcongLocalServiceUtil {
 		return getService().saveXinChamCongVaoRa(
 			userId, ly_do, ca_lam, check_in, check_out, ngay_lam, nguoi_duyet,
 			nguoi_huy, diem, trangthai, phongban_id, serviceContext);
+	}
+
+	public static Xinchamcong updateChamCongVaoRa(
+			int idXinChamCong, String trangthai, long userId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().updateChamCongVaoRa(
+			idXinChamCong, trangthai, userId, serviceContext);
 	}
 
 	/**

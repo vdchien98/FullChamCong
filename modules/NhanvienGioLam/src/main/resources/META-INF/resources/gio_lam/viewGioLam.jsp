@@ -307,6 +307,7 @@ input#year {
 						<th style="padding: 0;" class="bg-info">T4</th>
 						<th style="padding: 0;" class="bg-info">T5</th>
 						<th style="padding: 0;" class="bg-info">T6</th>
+						
 						<th style="padding: 0;" class="bg-warning">T7</th>
 						<th style="padding: 0;" class="bg-warning">CN</th>
 					</tr>
@@ -325,9 +326,7 @@ input#year {
 
 							// Lấy ngày cuối cùng của tháng
 							java.util.Calendar cal = java.util.Calendar.getInstance();
-							
 							cal.set(selectedYear, selectedMonth - 1, 1);
-							
 							int numDays = cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
 							
 

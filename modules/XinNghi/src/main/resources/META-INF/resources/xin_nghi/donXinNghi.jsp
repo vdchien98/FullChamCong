@@ -1,75 +1,71 @@
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui"%>
-<%@ include file="../init.jsp"%>
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui"%>
-<!DOCTYPE html>
-
 <html>
-  <head>
-    <title>Đơn xin nghỉ phép</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
-  </head>
-  <style>
-    body {
-      font-family: 'Tinos', serif ;
-      color: black;
-    }
-  </style>
-  <body>
-  <button onclick="generatePDF()">Tạo File PDF</button>
-    <div id="pdf-content">
-      <div style="display: flex ; margin-top: 0px">
-        <div style="border: none; width: 50%">
-          <div class="oep-p-18" style="height: 100%; display: flex; justify-content: center; align-items: flex-start" align="center">
-            <strong class="text-uppercase">
-              TRUNG TÂM CÔNG NGHỆ THÔNG TIN & TRUYỀN THÔNG
-              <br />
-              Phòng Phần Mềm
-              <br />
-              --------------------------
-            </strong>
-          </div>
-        </div>
-    
-      
+<head>
+</head>
+<body>
+	<div class="header">
+		<div class="tencoquan">
+			<div class="tentrungtam">TRUNG TÂM CÔNG NGHỆ THÔNG TIN &
+				TRUYỀNTHÔNG</div>
+			<div class="tenphong">${phonglamviec}</div>
+			<div class="tencoquangach">----------------------------------------</div>
+		</div>
+		<div class="conghoaxahoiCNVNdoclaptudohanhphuc">
+			<div class="conghoaxahoiCNVN">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT
+				NAM</div>
+			<div class="doclaptudohanhphuc">Độc lập - Tự do - Hạnh phúc</div>
+			<div class="conghoaxahoiCNVNdoclaptudohanhphucquangach">----------------------------------------</div>
+		</div>
+		<div class="ngaythangnam">
+			<div class="conghoaxahoiCNVN">Bắc Ninh, Ngày ${ngaylamdon} Tháng ${thanglamdon} Năm ${namlamdon}</div>
+		</div>
+	</div>
+	<div class="donxinnghiphep">
+		<div>ĐƠN XIN NGHỈ PHÉP</div>
+	</div>
+	<div class="kinhguilanhdao">
+		<div>Kính gửi: Lãnh đạo Trung tâm Công nghệ thông tin và Truyền
+			thông</div>
+	</div>
+	<div class="tentoila">
+		<div>Tên tôi là: ${hovatennguoilamdon}</div>
+	</div>
+	<div class="chucvu">
+		<div>Chức vụ: ${chucvunguoilamdon}</div>
+	</div>
+	<div class="donvicongtac">
+		<div>Đơn vị công tác: ${donvicongtacnguoilamdon}</div>
+	</div>
+	<div class="lydonghiphep">
+		<div> ${lydo} nên tôi xin phép Lãnh đạo Trung tâm Công nghệ thông
+			tin và Truyền thông cho phép tôi được nghỉ phép ${songay} ngày từ ${tungay}
+			đến ${dengay}.</div>
+	</div>
+	<div class="camonlanhdao">
+        <div>Rất mong được sự quan tâm và phê duyệt của Lãnh đạo Trung tâm.</div>
     </div>
-    <script>
-      async function generatePDF() {
-        const pdfOptions = {
-          margin: 5,
-          filename: 'donXinNghi.pdf',
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2 },
-          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        };
+    <div class="loicamontunhanvien">
+        <div >Tôi xin chân thành cảm ơn./.</div>
+    </div>
+    
+    <div class="chukylanhdaocanhan">
+	      <div class="lanhdaotrungtamky">
+	         <div class="chucvulanhdaotrungtam">Lãnh Đạo Trung Tâm</div>
+	         <div class="khoangtronglanhdaotrungtam"></div>
+	         <div class="tenlanhdaotrungtam">${hovatenlanhdaotrungtam} </div>
+	      </div>
+	      <div class="lanhdaophongky">
+	         <div class="chucvulanhdaophong">Lãnh Đạo Phòng</div>
+	         <div class="khoangtronglanhdaophong"></div>
+	         <div class="tenlanhdaophong">${hovatenlanhdaophong}</div>
+	      </div>
 
-        const content = document.getElementById('pdf-content').innerHTML;
-         console.log("content "+ content)
-      html2pdf()
-         .set(pdfOptions)
-         .from(content)
-          .outputPdf('blob')
-          .then((pdfData) => {
-        	  console.log("pdfData "+ pdfData)
-          const pdfBlob = new Blob([pdfData], { type: 'application/pdf' });
-           console.log("pdfBlob "+ pdfBlob)
-           const pdfUrl = URL.createObjectURL(pdfBlob);
-           console.log("pdfUrl "+ pdfUrl)
-            window.open(pdfUrl, '_blank');
-          });
+	      <div class="canhanky">
+	         <div class="chucvucanhan">Người Làm Đơn</div>
+	         <div class="khoangtrongcanhan">Đã ký</div>
+	         <div class="tencanhan">${hovatennguoilamdon} </div>
+	      </div>
+    
+    </div>
+</body>
 
-         
-      }
-      
-
-    </script>
-  </body>
 </html>
-
-
-

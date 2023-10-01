@@ -38,29 +38,29 @@
 <@liferay.control_menu />
 
 <div class="container-fluid position-relative" id="wrapper">
-<#assign
-	time_zone = user.getTimeZoneId()
-	is_login_redirect_required = portalUtil.isLoginRedirectRequired(request)
-	is_signed_in = theme_display.isSignedIn()
-	group_id = theme_display.getScopeGroupId()
-/>
-
-
-  	<#if is_signed_in>
-				<style>
-						@media screen and (max-width: 500px) {
-							#sidebar {
-								display: none;
-							}
-				}
-			</style>
-			<section id="sidebar">
-				<@liferay_portlet["runtime"]
-					defaultPreferences="<portlet-preferences></portlet-preferences>"
-					portletProviderAction=portletProviderAction.VIEW
-					portletName="com_liferay_docs_sidebar_portlet_SidebarPortlet"/>
-			</section>
-	</#if>
+	<#assign
+		time_zone = user.getTimeZoneId()
+		is_login_redirect_required = portalUtil.isLoginRedirectRequired(request)
+		is_signed_in = theme_display.isSignedIn()
+		group_id = theme_display.getScopeGroupId()
+	/>
+	
+	
+	  	<#if is_signed_in>
+					<style>
+							@media screen and (max-width: 500px) {
+								#sidebar {
+									display: none;
+								}
+					}
+				</style>
+				<section id="sidebar">
+					<@liferay_portlet["runtime"]
+						defaultPreferences="<portlet-preferences></portlet-preferences>"
+						portletProviderAction=portletProviderAction.VIEW
+						portletName="com_liferay_docs_sidebar_portlet_SidebarPortlet"/>
+				</section>
+		</#if>
  
     
 

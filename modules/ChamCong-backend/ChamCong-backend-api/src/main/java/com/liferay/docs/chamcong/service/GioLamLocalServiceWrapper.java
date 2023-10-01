@@ -350,6 +350,15 @@ public class GioLamLocalServiceWrapper
 		return _gioLamLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public double tinhdemChamCong(
+			int dimuonsang, int vesomsang, int dimuonchieu, int vemuonchieu)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _gioLamLocalService.tinhdemChamCong(
+			dimuonsang, vesomsang, dimuonchieu, vemuonchieu);
+	}
+
 	/**
 	 * Updates the gio lam in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -365,6 +374,17 @@ public class GioLamLocalServiceWrapper
 		com.liferay.docs.chamcong.model.GioLam gioLam) {
 
 		return _gioLamLocalService.updateGioLam(gioLam);
+	}
+
+	@Override
+	public void updateGioLamXinChamCongVaoRa(
+			long UserIdNhanVienDuocLanhdaoxacnhan, java.util.Date ngaylam,
+			int trangthaiupadateVaoRa)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		_gioLamLocalService.updateGioLamXinChamCongVaoRa(
+			UserIdNhanVienDuocLanhdaoxacnhan, ngaylam, trangthaiupadateVaoRa);
 	}
 
 	@Override

@@ -125,69 +125,76 @@ i.fa.fa-sign-out.iconchiendangxuat  {
 </style>
 
 
+
 <div>
-    <p class="thongtinnhanvien chucnangsiderbar">Chức Năng</p>
-    <div class="chucnanghethongsiderbar">
-    
-       <% 
-       
-       
-       long roleadmin = (long) request.getAttribute("roleadmin");
-       
-       
-       %>
-       <% if(roleadmin == 20103) { %>
-		    <li class="nav-item"><a class="nav-link collapsed" href="#"
-				data-toggle="collapse" data-target="#collapseUtilities"
-				aria-expanded="true" aria-controls="collapseUtilities"
-				onclick="toggleCollapse()"> <i class="fa fa-cogs"
-					aria-hidden="true"></i> <span class="cauhinhhethong">Cấu hình hệ thống</span>
-			</a>
-				<div id="collapseUtilities" class="collapse collapsed-content"
-					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item item-small" href="/home">Nhân viên</a> <a
-							class="collapse-item item-small" href="/phong-ban">Phòng ban</a> <a
-							class="collapse-item item-small" href="/chuc-vu">Chức vụ</a> <a
-							class="collapse-item item-small" href="/ca-lam-viec">Ca làm việc</a>
-						<a class="collapse-item item-small" href="/ngay-nghi-le">Ngày nghỉ lễ</a> 
-						<a class="collapse-item item-small" href="/ngay-lam-viec">Ngày làm việc</a>
-					</div>
-				</div>
-			</li>
-		<% } %>
+		<div>
+		    <p class="thongtinnhanvien chucnangsiderbar">Chức Năng</p>
+		    <div class="chucnanghethongsiderbar">
+		    
+		       <% 
+		       
+		       
+		       long roleadmin = (long) request.getAttribute("roleadmin");
+		       
+		       
+		       %>
+		       <% if(roleadmin == 20103) { %>
+				    <li class="nav-item"><a class="nav-link collapsed" href="#"
+						data-toggle="collapse" data-target="#collapseUtilities"
+						aria-expanded="true" aria-controls="collapseUtilities"
+						onclick="toggleCollapse()"> <i class="fa fa-cogs"
+							aria-hidden="true"></i> <span class="cauhinhhethong">Cấu hình hệ thống</span>
+					</a>
+						<div id="collapseUtilities" class="collapse collapsed-content"
+							aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+							<div class="bg-white py-2 collapse-inner rounded">
+								<a class="collapse-item item-small" href="/home">Nhân viên</a> <a
+									class="collapse-item item-small" href="/phong-ban">Phòng ban</a> <a
+									class="collapse-item item-small" href="/chuc-vu">Chức vụ</a> <a
+									class="collapse-item item-small" href="/ca-lam-viec">Ca làm việc</a>
+								<a class="collapse-item item-small" href="/ngay-nghi-le">Ngày nghỉ lễ</a> 
+								<a class="collapse-item item-small" href="/ngay-lam-viec">Ngày làm việc</a>
+							</div>
+						</div>
+					</li>
+				<% } %>
+				
+				
+				
+				<li class="nav-item "><a class="nav-link" href="/nhanvien/gio-lam"> <i class="fa fa-clock-o" aria-hidden="true"></i> <span>Bảng giờlàm</span></a></li>
+				
+				<li class="nav-item"><a class="nav-link" href="/nhanvien/xin-nghi"> <i class="fa fa-calendar-times-o" aria-hidden="true"></i> <span>Xin nghỉ</span></a></li>
+				
+				<li class="nav-item"><a class="nav-link" href="/nhanvien/xin-cham-cong"> <i class="fa fa-calendar-check-o" aria-hidden="true"></i> <span>Xin chấm công</span></a></li>
 		
+		    
+		    
+		    </div>
+			
+		</div>
 		
-		
-		<li class="nav-item "><a class="nav-link" href="/nhanvien/gio-lam"> <i class="fa fa-clock-o" aria-hidden="true"></i> <span>Bảng giờlàm</span></a></li>
-		
-		<li class="nav-item"><a class="nav-link" href="/nhanvien/xin-nghi"> <i class="fa fa-calendar-times-o" aria-hidden="true"></i> <span>Xin nghỉ</span></a></li>
-		
-		<li class="nav-item"><a class="nav-link" href="/nhanvien/xin-cham-cong"> <i class="fa fa-calendar-check-o" aria-hidden="true"></i> <span>Xin chấm công</span></a></li>
+		<div class="infonhanvien">
+			<p class="thongtinnhanvien">Thông Tin</p>
+			<c:forEach var="itemChucVu" items="${selectChucVuSiderBar}">
+				<c:if test="${itemChucVu.id == userInforSiderBar.chucvu_id}">
+					<span class="styleChucVu"><i class="fa fa-star-o iconsiderbar" aria-hidden="true"></i>${itemChucVu.name}</span>
+				</c:if>
+			</c:forEach>
+			<c:forEach var="itemPhongBan" items="${selectPhongBanSiderBar}">
+				<c:if test="${itemPhongBan.id == userInforSiderBar.phongban_id}">
+					<span class="styletenPhong"><i class="fa fa-building-o iconsiderbar" aria-hidden="true"></i>${itemPhongBan.tenphong}</span>
+				</c:if>
+			</c:forEach>
+			<span class="styleHoVaTen"><i class="fa fa-user-o iconsiderbar" aria-hidden="true"></i>${userInforSiderBar.hovaten}</span>
+		</div>
+		<li class="chien_logout"><a href="/c/portal/logout" class="logout">
+				<i class="fa fa-sign-out iconchiendangxuat" aria-hidden="true"></i> <span class="textchienlogoy">ĐăngXuất</span>
+		</a></li>
 
-    
-    
-    </div>
-	
 </div>
 
-<div class="infonhanvien">
-	<p class="thongtinnhanvien">Thông Tin</p>
-	<c:forEach var="itemChucVu" items="${selectChucVuSiderBar}">
-		<c:if test="${itemChucVu.id == userInforSiderBar.chucvu_id}">
-			<span class="styleChucVu"><i class="fa fa-star-o iconsiderbar" aria-hidden="true"></i>${itemChucVu.name}</span>
-		</c:if>
-	</c:forEach>
-	<c:forEach var="itemPhongBan" items="${selectPhongBanSiderBar}">
-		<c:if test="${itemPhongBan.id == userInforSiderBar.phongban_id}">
-			<span class="styletenPhong"><i class="fa fa-building-o iconsiderbar" aria-hidden="true"></i>${itemPhongBan.tenphong}</span>
-		</c:if>
-	</c:forEach>
-	<span class="styleHoVaTen"><i class="fa fa-user-o iconsiderbar" aria-hidden="true"></i>${userInforSiderBar.hovaten}</span>
-</div>
-<li class="chien_logout"><a href="/c/portal/logout" class="logout">
-		<i class="fa fa-sign-out iconchiendangxuat" aria-hidden="true"></i> <span class="textchienlogoy">ĐăngXuất</span>
-</a></li>
+
+
 
 
 

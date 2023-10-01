@@ -235,6 +235,178 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 
 	}
 	
+	
+	
+	public void updateGioLamXinChamCongVaoRa(long UserIdNhanVienDuocLanhdaoxacnhan, Date ngaylam , int trangthaiupadateVaoRa) throws PortalException, SystemException {
+
+		System.out.println("da vao dc updateGioLamXinChamCongVaoRa ---------------- ");	
+		
+		GioLam GioLamDaTonTaiTrongBd = getGioLamByUserId(UserIdNhanVienDuocLanhdaoxacnhan, ngaylam);
+		
+		String check_in_sang = "07:30:00";
+		String check_out_sang = "11:45:00";
+		String check_in_chieu = "13:15:00";
+		String check_out_chieu = "16:45:00";
+		
+		if (GioLamDaTonTaiTrongBd ==null) {
+			// Gio Làm chưa có trong  
+			if (trangthaiupadateVaoRa == 1) {
+				int idGioLamnew = (int) CounterLocalServiceUtil.increment();
+				double diem = 1;
+				GioLam giolam = gioLamPersistence.create(idGioLamnew);
+				Date now = new Date();
+				giolam.setId(idGioLamnew);
+				giolam.setUser_id(UserIdNhanVienDuocLanhdaoxacnhan);
+				giolam.setNgay_lam(ngaylam);
+				giolam.setCheck_in_sang(check_in_sang);
+				giolam.setCheck_out_sang("");
+				giolam.setDi_muon_sang(0);
+				giolam.setVe_som_sang(0);
+				giolam.setCheck_in_chieu("");
+				giolam.setCheck_out_chieu("");
+				giolam.setDi_muon_chieu(0);
+				giolam.setVe_som_chieu(0);
+				giolam.setDiem(diem);
+				giolam.setCreated_at(now);
+				giolam.setUpdated_at(now);
+				giolam.setTrangthai(1);
+				GioLamLocalServiceUtil.updateGioLam(giolam);
+				
+				
+				
+			} else if(trangthaiupadateVaoRa == 2) {
+				int idGioLamnew = (int) CounterLocalServiceUtil.increment();
+				double diem = 1;
+				GioLam giolam = gioLamPersistence.create(idGioLamnew);
+				Date now = new Date();
+				giolam.setId(idGioLamnew);
+				giolam.setUser_id(UserIdNhanVienDuocLanhdaoxacnhan);
+				giolam.setNgay_lam(ngaylam);
+				giolam.setCheck_in_sang("");
+				giolam.setCheck_out_sang(check_out_sang);
+				giolam.setDi_muon_sang(0);
+				giolam.setVe_som_sang(0);
+				giolam.setCheck_in_chieu("");
+				giolam.setCheck_out_chieu("");
+				giolam.setDi_muon_chieu(0);
+				giolam.setVe_som_chieu(0);
+				giolam.setDiem(diem);
+				giolam.setCreated_at(now);
+				giolam.setUpdated_at(now);
+				giolam.setTrangthai(1);
+				GioLamLocalServiceUtil.updateGioLam(giolam);
+
+			}else if(trangthaiupadateVaoRa == 3) {
+				int idGioLamnew = (int) CounterLocalServiceUtil.increment();
+				double diem = 1;
+				GioLam giolam = gioLamPersistence.create(idGioLamnew);
+				Date now = new Date();
+				giolam.setId(idGioLamnew);
+				giolam.setUser_id(UserIdNhanVienDuocLanhdaoxacnhan);
+				giolam.setNgay_lam(ngaylam);
+				giolam.setCheck_in_sang("");
+				giolam.setCheck_out_sang("");
+				giolam.setDi_muon_sang(0);
+				giolam.setVe_som_sang(0);
+				giolam.setCheck_in_chieu(check_in_chieu);
+				giolam.setCheck_out_chieu("");
+				giolam.setDi_muon_chieu(0);
+				giolam.setVe_som_chieu(0);
+				giolam.setDiem(diem);
+				giolam.setCreated_at(now);
+				giolam.setUpdated_at(now);
+				giolam.setTrangthai(1);
+				GioLamLocalServiceUtil.updateGioLam(giolam);
+			}else if(trangthaiupadateVaoRa == 4) {
+				
+				
+				int idGioLamnew = (int) CounterLocalServiceUtil.increment();
+				double diem = 1;
+				GioLam giolam = gioLamPersistence.create(idGioLamnew);
+				Date now = new Date();
+				giolam.setId(idGioLamnew);
+				giolam.setUser_id(UserIdNhanVienDuocLanhdaoxacnhan);
+				giolam.setNgay_lam(ngaylam);
+				giolam.setCheck_in_sang("");
+				giolam.setCheck_out_sang("");
+				giolam.setDi_muon_sang(0);
+				giolam.setVe_som_sang(0);
+				giolam.setCheck_in_chieu("");
+				giolam.setCheck_out_chieu(check_out_chieu);
+				giolam.setDi_muon_chieu(0);
+				giolam.setVe_som_chieu(0);
+				giolam.setDiem(diem);
+				giolam.setCreated_at(now);
+				giolam.setUpdated_at(now);
+				giolam.setTrangthai(1);
+				GioLamLocalServiceUtil.updateGioLam(giolam);
+
+			}
+
+		} else if (GioLamDaTonTaiTrongBd !=null) {
+			int idGioLamDaTonTaiTrongBd = GioLamDaTonTaiTrongBd.getId();
+//			double diemGioLamDaTonTaiTrongBd = GioLamDaTonTaiTrongBd.getDiem();
+			int trangthiGioLamDaTonTaiTrongBd = GioLamDaTonTaiTrongBd.getTrangthai();
+			
+			if (trangthaiupadateVaoRa == 1) {
+				GioLamDaTonTaiTrongBd.setCheck_in_sang(check_in_sang);
+				GioLamDaTonTaiTrongBd.setDi_muon_sang(0);
+				
+				
+				double diem = tinhdemChamCong(GioLamDaTonTaiTrongBd.getDi_muon_sang(),GioLamDaTonTaiTrongBd.getVe_som_sang(),
+						GioLamDaTonTaiTrongBd.getDi_muon_chieu(),GioLamDaTonTaiTrongBd.getVe_som_chieu());
+				GioLamDaTonTaiTrongBd.setDiem(diem);
+				
+				
+//				if (trangthiGioLamDaTonTaiTrongBd ==1) {
+//					GioLamDaTonTaiTrongBd.setTrangthai(1);
+//				} else if (trangthiGioLamDaTonTaiTrongBd ==2) {
+//					GioLamDaTonTaiTrongBd.setTrangthai(2);
+//				}else if (trangthiGioLamDaTonTaiTrongBd ==3) {
+//					GioLamDaTonTaiTrongBd.setTrangthai(3);
+//				}else if (trangthiGioLamDaTonTaiTrongBd ==4) {
+//					GioLamDaTonTaiTrongBd.setTrangthai(4);
+//				}
+
+			} else if (trangthaiupadateVaoRa == 2) {
+				GioLamDaTonTaiTrongBd.setCheck_out_sang(check_out_sang);
+				GioLamDaTonTaiTrongBd.setVe_som_sang(0);
+				   
+				
+				double diem = tinhdemChamCong(GioLamDaTonTaiTrongBd.getDi_muon_sang(),GioLamDaTonTaiTrongBd.getVe_som_sang(),
+						GioLamDaTonTaiTrongBd.getDi_muon_chieu(),GioLamDaTonTaiTrongBd.getVe_som_chieu());
+				GioLamDaTonTaiTrongBd.setDiem(diem);
+
+			}else if (trangthaiupadateVaoRa == 3) {
+				GioLamDaTonTaiTrongBd.setCheck_in_chieu(check_in_chieu);
+				GioLamDaTonTaiTrongBd.setDi_muon_chieu(0);
+				
+				
+				double diem = tinhdemChamCong(GioLamDaTonTaiTrongBd.getDi_muon_sang(),GioLamDaTonTaiTrongBd.getVe_som_sang(),
+						GioLamDaTonTaiTrongBd.getDi_muon_chieu(),GioLamDaTonTaiTrongBd.getVe_som_chieu());
+				GioLamDaTonTaiTrongBd.setDiem(diem);
+
+			}else if (trangthaiupadateVaoRa == 4) {
+				GioLamDaTonTaiTrongBd.setCheck_out_chieu(check_out_chieu);
+				GioLamDaTonTaiTrongBd.setVe_som_chieu(0);
+				
+				
+				double diem = tinhdemChamCong(GioLamDaTonTaiTrongBd.getDi_muon_sang(),GioLamDaTonTaiTrongBd.getVe_som_sang(),
+						GioLamDaTonTaiTrongBd.getDi_muon_chieu(),GioLamDaTonTaiTrongBd.getVe_som_chieu());
+				GioLamDaTonTaiTrongBd.setDiem(diem);
+
+			}
+			
+			
+
+		}
+	
+		
+	
+
+
+	}
+	
 
 	public GioLam getGioLamByUserId(long userId, Date NgayLam) throws PortalException {
 		List<GioLam> gioLamList = GioLamLocalServiceUtil.getGioLams(-1, -1);
@@ -251,6 +423,39 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 			// System.out.println("employeeGioLam: " + gioLam);
 		}
 		return gioLam;
+
+	}
+	
+	public double tinhdemChamCong(int dimuonsang, int vesomsang , int dimuonchieu, int vemuonchieu) throws PortalException {
+		
+		double diemchamcong = 0 ;
+	
+		
+		int[] variables = { dimuonsang, vesomsang, dimuonchieu, vemuonchieu };
+
+	    for (int variable : variables) {
+	        if (variable > 0 && variable <= 10) {
+	        	diemchamcong = diemchamcong + 0.8 ;
+	        } else if (variable > 10 && variable <= 15) {
+	        	diemchamcong = diemchamcong +0.6 ;
+	        } else if (variable > 15 && variable <= 20) {
+	        	diemchamcong = diemchamcong +0.4 ;
+	        } else if (variable > 20 && variable <= 30) {
+	        	diemchamcong = diemchamcong +0.2 ;
+	        }else if (variable > 30 ) {
+	        	diemchamcong = diemchamcong +0 ;
+	        }else {
+	        	diemchamcong = diemchamcong +1 ;
+	        }
+
+	    }
+
+	    // Tiếp tục các xử lý khác
+		
+	   
+		
+		
+		return diemchamcong;
 
 	}
 	
