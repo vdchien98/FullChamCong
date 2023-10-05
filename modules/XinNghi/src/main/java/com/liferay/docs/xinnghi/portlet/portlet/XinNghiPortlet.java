@@ -14,6 +14,7 @@ import com.liferay.docs.chamcong.model.Users;
 import com.liferay.docs.chamcong.model.Xinnghi;
 import com.liferay.docs.chamcong.service.ChucvuLocalServiceUtil;
 import com.liferay.docs.chamcong.service.PhongbanLocalServiceUtil;
+import com.liferay.docs.chamcong.service.UsersLocalServiceUtil;
 import com.liferay.docs.chamcong.service.XinchamcongLocalServiceUtil;
 import com.liferay.docs.chamcong.service.XinnghiLocalServiceUtil;
 import com.liferay.docs.xinnghi.portlet.constants.XinNghiPortletKeys;
@@ -23,10 +24,15 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -41,8 +47,10 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.ProcessAction;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.servlet.http.HttpServletResponse;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -70,6 +78,52 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class XinNghiPortlet extends MVCPortlet {
+	// Hàm mở file PDF trên server
+public  void OpenFilePDF(ActionRequest request, ActionResponse response) throws IOException, PortletException {
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		long userId = themeDisplay.getUserId();
+	    System.out.println("da vao duoc day ^^^^^^^^^^^^^^^^^^^^^ ");
+		
+	    String duoiPDFURL = ParamUtil.getString(request, "popupCapchaValue");
+		System.out.println("duoiPDFURL ==== "+ duoiPDFURL);
+	    String pdfFilePath = "D:\\FullChamCong\\ChamCong\\liferay-ce-portal-7.4.3.42-ga42\\filePdf\\"+duoiPDFURL;
+
+		 try (InputStream inputStream = new FileInputStream(pdfFilePath)) {
+		        HttpServletResponse httpServletResponse = PortalUtil.getHttpServletResponse(response);
+		        
+		        // Thiết lập loại nội dung của phản hồi là PDF
+		        httpServletResponse.setContentType("application/pdf");
+		        
+		        // Thiết lập đường dẫn đến tệp PDF
+		        httpServletResponse.setHeader("Content-Disposition", "inline; filename=myfile.pdf");
+		        
+		        // Sao chép dữ liệu từ InputStream vào OutputStream của phản hồi
+		        OutputStream outputStream = httpServletResponse.getOutputStream();
+		        byte[] buffer = new byte[4096];
+		        int bytesRead = -1;
+		        while ((bytesRead = inputStream.read(buffer)) != -1) {
+		            outputStream.write(buffer, 0, bytesRead);
+		        }
+		        outputStream.flush();
+		        
+		        // Đóng InputStream và OutputStream
+		        inputStream.close();
+		        outputStream.close();
+		        
+		        // Gửi phản hồi
+		        response.sendRedirect("/xin-nghi");
+		    } catch (IOException e) {
+		        // Xử lý ngoại lệ nếu có lỗi
+		        e.printStackTrace();
+		    }
+		
+		
+		//response.sendRedirect("/nhanvien/xin-nghi");
+	}
+	
+	
+	
 	public  void saveXinNghiCaNgay(ActionRequest request, ActionResponse response) throws IOException, PortletException {
 		
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
@@ -106,7 +160,7 @@ public class XinNghiPortlet extends MVCPortlet {
 		
 	   
 		try {
-			XinnghiLocalServiceUtil.saveXinNghiCaNgay(userId, tu_ngay, den_ngay, chon_ly_do, ly_do,trangthai,nuangay,
+			XinnghiLocalServiceUtil.saveXinNghiCaNgay(userId, tu_ngay, den_ngay, "nghiphep", ly_do,trangthai,nuangay,
 					soNgay,pdfUrl,nguoihuy,phongbanid, serviceContext);
 		} catch (SystemException e) {
 			// TODO Auto-generated catch block
@@ -118,6 +172,10 @@ public class XinNghiPortlet extends MVCPortlet {
 
 		response.sendRedirect("/nhanvien/xin-nghi");
 	}
+	
+
+	
+	
 	
 	
 	public String UrlFilePDF (long userId , String lydo , int songay , Date tungay , Date denngay) {
@@ -476,85 +534,15 @@ public class XinNghiPortlet extends MVCPortlet {
 			List<Xinnghi> danhsachXinNghi =listNgayNghiCanLay(userId);
 			System.out.println("danhsachXinNghi ------------- "+ danhsachXinNghi);
 			renderRequest.setAttribute("danhsachXinNghi", danhsachXinNghi);
+			System.out.println(UsersLocalServiceUtil.getUserses(-1, -1));
+			renderRequest.setAttribute("hovatennhanviens",UsersLocalServiceUtil.getUserses(-1, -1));
+			
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 				
 		
-   
-
-//		String filePath = PropsUtil.get("liferay.home")+"/filePdf";
-//		
-//		   File htmlFile = new File("D:\\FullChamCong\\ChamCong\\ChamCong\\modules\\XinNghi\\src\\main\\resources\\META-INF\\resources\\xin_nghi\donXinNghi.jsp");
-//	        Document doc = Jsoup.parse(htmlFile,"UTF-8");
-//	        doc.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
-//	        try (OutputStream os = new FileOutputStream("/home/demo/Documents/html2pdf/output.pdf")){
-//	        	ITextRenderer renderer = new ITextRenderer();
-//	        	SharedContext cntxt = renderer.getSharedContext();
-//	        	cntxt.setPrint(true);
-//	        	cntxt.setInteractive(false);
-//	        	String baseUrl = FileSystems.getDefault().getPath("/home/demo/Documents/html2pdf")
-//	        			         .toUri().toURL().toString();
-//	        	renderer.setDocumentFromString(doc.html(), baseUrl);
-//	        	renderer.layout();
-//	        	renderer.createPDF(os);
-//	        	System.out.println("done");
 		
-		
-		
-//		String contextPath = renderRequest.getContextPath()+"/css/text.html";
-////		String jspPath = "/portlet/XinNghiPortlet.jsp";
-////		String fullPath = contextPath + jspPath;
-////		System.out.println("duongdan ------------- "+ fullPath);
-//		  File file = new File(contextPath);
-//		  
-//		  
-//	        if (file.exists()) {
-//	            // Use a try-with-resources block to automatically close the FileInputStream
-//	            try (FileInputStream inputStream = new FileInputStream(file)) {
-//	                int data;
-//	                // Read and print the content of the file byte by byte
-//	                while ((data = inputStream.read()) != -1) {
-//	                    System.out.print((char) data);
-//	                }
-//	            } catch (IOException e) {
-//	                e.printStackTrace();
-//	            }
-//	        } else {
-//	            System.out.println("File does not exist.");
-//	        }
-
-		  
-		
-		
-//		try {
-//            // Đường dẫn tới thư mục chứa file view.jsp trong resources của Portlet
-//            String jspPath = "/META-INF/resources/view.jsp";
-//            
-//            // Đọc nội dung của file JSP
-//            InputStream jspInputStream = getClass().getResourceAsStream(jspPath);
-//            String jspContent = StringUtil.read(jspInputStream);
-//
-//            // Tạo một file PDF tạm thời để lưu kết quả
-//            File tempPdfFile = File.createTempFile("temp", ".pdf");
-//            OutputStream pdfOutputStream = new FileOutputStream(tempPdfFile);
-//
-//            // Chuyển đổi nội dung JSP thành PDF
-//            ITextRenderer renderer = new ITextRenderer();
-//            renderer.setDocumentFromString(jspContent);
-//            renderer.layout();
-//            renderer.createPDF(pdfOutputStream);
-//
-//            // Đóng stream và lưu file PDF vào thư mục Liferay home
-//            pdfOutputStream.close();
-//            String liferayHome = PropsUtil.get("liferay.home");
-//            File pdfFile = new File(liferayHome, "output.pdf");
-//            tempPdfFile.renameTo(pdfFile);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//		  
+	
 		
 		
 		
@@ -573,13 +561,7 @@ public class XinNghiPortlet extends MVCPortlet {
 
 		// Lấy toàn bộ xin nghỉ 
 		List<Xinnghi> danhsachngaynghi = null ;
-		if (usercanlay.getChucvu_id() == 6) {
-			// Đây là nhân viên Chỉ lấy danh sách của bản thân nhân viên 
-			danhsachngaynghi = listNgayNghiCaNhan(userId);
-		   
-			
-			
-		} else if(usercanlay.getChucvu_id() == 3 || usercanlay.getPhu_trach_phong() ==1) {
+		if(usercanlay.getChucvu_id() == 3 || usercanlay.getPhu_trach_phong() ==1) {
 			// đây là trưởng phòng hoặc phụ trách phòng chỉ lấy những nhân viên trong phòng 
 			danhsachngaynghi = listNgayNghiofPhong(userId , usercanlay.getPhongban_id());
 
@@ -590,7 +572,13 @@ public class XinNghiPortlet extends MVCPortlet {
 		}else if (usercanlay.getChucvu_id() == 1 ) {
 			// Đây là giám đốc lấy phòng phụ trách và  nhhững phó giám đốc
 			danhsachngaynghi = listNgayNghiofPhoLanhDaoquanly(userId , usercanlay.getId() );
-		}	
+		}	else if (usercanlay.getChucvu_id() == 6) {
+			// Đây là nhân viên Chỉ lấy danh sách của bản thân nhân viên 
+			danhsachngaynghi = listNgayNghiCaNhan(userId);
+		   
+			
+			
+		} 
 		
 	
 		return danhsachngaynghi ;
@@ -603,7 +591,7 @@ public class XinNghiPortlet extends MVCPortlet {
 		List<Xinnghi> AllXinNghi = XinnghiLocalServiceUtil.getXinnghis(-1, -1);
 	
 		 List<Xinnghi> listNgayNghiCaNhan = AllXinNghi.stream()
-				 .filter(xinnghi -> xinnghi.getUser_id() == userId)
+				 .filter(xinnghi -> (xinnghi.getUser_id() == userId &&  xinnghi.getChon_ly_do().equals("nghiphep") ))
 	                .collect(Collectors.toList());
 			return listNgayNghiCaNhan;
 	}
@@ -614,7 +602,7 @@ public class XinNghiPortlet extends MVCPortlet {
 		List<Xinnghi> AllXinNghi = XinnghiLocalServiceUtil.getXinnghis(-1, -1);
 	
 		 List<Xinnghi> listNgayNghiofPhong = AllXinNghi.stream()
-				 .filter(xinnghi -> xinnghi.getPhongban_id() == phongbanId)
+				 .filter(xinnghi -> xinnghi.getPhongban_id() == phongbanId && xinnghi.getChon_ly_do().equals("nghiphep") )
 	                .collect(Collectors.toList());
 			return listNgayNghiofPhong;
 	}
@@ -633,7 +621,7 @@ public class XinNghiPortlet extends MVCPortlet {
 	   
 		for (Phongban BienPhongBan : listPhongbanCanLay) {
 			List<Xinnghi> listNgayNghiofLanhDaoquanly = AllXinNghi.stream()
-					 .filter(xinnghi -> xinnghi.getPhongban_id() == BienPhongBan.getId())
+					 .filter(xinnghi -> xinnghi.getPhongban_id() == BienPhongBan.getId() & xinnghi.getChon_ly_do().equals("nghiphep"))
 		                .collect(Collectors.toList());
 			listNgayNghiofLanhDaoquanlyCanLay.addAll(listNgayNghiofLanhDaoquanly);
 		}
@@ -643,20 +631,49 @@ public class XinNghiPortlet extends MVCPortlet {
 			return listNgayNghiofLanhDaoquanlyCanLay;
 	}
 	
-//	// Hàm lấy List của những thành viên  lãnh đạo quản lý theo phòng 
-//
-//	public List<Xinnghi> listNgayNghiofLanhDaoquanly(long userId )throws PortalException, SystemException {
-//	
-//		
-//		
-//		List<Xinnghi> AllXinNghi = XinnghiLocalServiceUtil.getXinnghis(-1, -1);
-//	   
-//		 List<Xinnghi> listNgayNghiofLanhDaoquanly = AllXinNghi.stream()
-//				 .filter(xinnghi -> xinnghi.getPhongban_id() == userId)
-//	                .collect(Collectors.toList());
-//			return listNgayNghiofLanhDaoquanly;
-//	}
-//	
 	
-}
+	
+	@ProcessAction(name = "MofilePDF")
+    public void MofilePDF(ActionRequest actionRequest, ActionResponse actionResponse) {
+        System.out.println("------ da vao duoc ham mo file PDF -----------");
 
+        // Đường dẫn đến tệp PDF
+        String pdfFilePath = "D:/FullChamCong/ChamCong/liferay-ce-portal-7.4.3.42-ga42/filePdf/chien98_02_10_2023_1696228954442.pdf";
+        try {
+
+             // Đọc nội dung của tệp PDF vào một InputStream
+             FileInputStream fis = new FileInputStream(pdfFilePath);
+             ByteArrayOutputStream baos = new ByteArrayOutputStream();
+             byte[] buffer = new byte[4096];
+             int bytesRead;
+             while ((bytesRead = fis.read(buffer)) != -1) {
+                 baos.write(buffer, 0, bytesRead);
+             }
+             byte[] pdfContent = baos.toByteArray();
+
+             // Thiết lập các thông số cần thiết cho phản hồi HTTP
+             HttpServletResponse response = PortalUtil.getHttpServletResponse(actionResponse);
+             response.setContentType("application/pdf");
+             response.setContentLength(pdfContent.length);
+
+             // Đặt tên file để trình duyệt hiển thị tên file khi tải về
+             response.setHeader("Content-Disposition", "inline; filename=\"chien98_02_10_2023_1696228954442.pdf\"");
+
+             // Ghi nội dung của tệp PDF vào OutputStream để gửi đến trình duyệt
+             OutputStream out = response.getOutputStream();
+             out.write(pdfContent);
+
+             // Đóng FileInputStream và OutputStream
+             fis.close();
+             out.flush();
+             out.close();
+        } catch (IOException e) {
+            // Xử lý lỗi nếu có
+            e.printStackTrace();
+        }
+        
+        
+ 
+    }
+
+}
