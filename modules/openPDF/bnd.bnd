@@ -1,0 +1,4 @@
+Bundle-Name: openPDF
+Bundle-SymbolicName: openPDF
+Bundle-Version: 1.0.0
+Export-Package: openPDF.constants

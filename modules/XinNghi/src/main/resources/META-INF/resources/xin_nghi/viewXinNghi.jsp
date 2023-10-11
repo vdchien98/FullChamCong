@@ -1,3 +1,6 @@
+<%@page import="javax.portlet.PortletSession"%>
+<%@page import="javax.portlet.PortletRequest"%>
+<%@page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil"%>
 <%@ include file="../init.jsp"%>
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -14,13 +17,12 @@
 
 </head>
 <style type="text/css">
-
 a.btn.btn-link.mr-2.fileUrl {
-   
-    margin-top: -30px;
+	margin-top: -30px;
 }
+
 button.nutkyso {
-    margin-top: -30px;
+	margin-top: -30px;
 }
 </style>
 <portlet:renderURL var="xinnghiURL">
@@ -81,7 +83,7 @@ button.nutkyso {
 									<c:when
 										test="${user.trangthai == 0 || user.trangthai == 1 || user.trangthai == 2 || user.trangthai == 3 || user.trangthai == 4 || user.trangthai == 5}">
 										<tr>
-											<th>${loop.index + 1} ${user.id} ${user.user_id}</th>
+											<th>${loop.index + 1}${user.id}${user.user_id}</th>
 											<th>
 												<div class="row">
 													<c:forEach var="hovatennhanvien"
@@ -104,19 +106,34 @@ button.nutkyso {
 											</th>
 											<th>
 												<div class="row">
-													<span>Lý do :  ${user.ly_do}</span> 
-													<br><br/>
-													<portlet:actionURL var="OpenFilePDFURL" name="OpenFilePDF" />
-														<form id="check_pdf" class="float-right" action="<%=OpenFilePDFURL%>" method="POST">
-															<input type="hidden" 
-															       name="<portlet:namespace />popupCapchaValue" 
-															       id="popupCapchaValueURL" 
-															       value=""> 
-														</form>
-													<a href="" onclick="submitForm('${user.file_url}')" class="btn btn-link mr-2 fileUrl" target="_blank"> 
-													  <span>Xem file xin nghỉ :  ${user.file_url}</span>
+													<span>Lý do : ${user.ly_do}</span> <br> <br />
+													<%-- <portlet:actionURL var="OpenFilePDFURL" name="OpenFilePDF" /> action="<%=OpenFilePDFURL%>"--%>
+
+													<form id="check_pdf" class="float-right" method="get">
+														<input type="hidden" name="p_p_id"
+															value="<%=themeDisplay.getPortletDisplay().getId()%>" />
+														<input type="hidden" name="p_p_auth"
+															value="<%=AuthTokenUtil.getToken(request, themeDisplay.getPlid(), themeDisplay.getPpid())%>" />
+														<input type="hidden"
+															name="<portlet:namespace />popupCapchaValue"
+															id="popupCapchaValueURL" value="">
+													</form>
+													<%-- 	<a
+														href="<portlet:renderURL><portlet:param name='file_url' value='${user.file_url}' /></portlet:renderURL>"
+														class="btn btn-link mr-2 fileUrl" target="_blank"> <span>Xem
+															file xin nghỉ : ${user.file_url}</span>
 													</a>
-													<button class="nutkyso">Ký Số </button>
+													
+													<a href="#" class="btn btn-link mr-2 fileUrl"
+														target="_blank" onclick="loadPdf('${user.file_url}')">
+														<span>Xem file xin nghỉ : ${user.file_url}</span>
+													</a> --%>
+													<a href="javascript:void(0);"
+														class="btn btn-link mr-2 fileUrl"
+														onclick="loadPdf('${user.file_url}')"> <span>Xem
+															file xin nghỉ : ${user.file_url}</span>
+													</a>
+													<button class="nutkyso">Ký Số</button>
 												</div>
 											</th>
 										</tr>
@@ -136,14 +153,42 @@ button.nutkyso {
 	</div>
 </div>
 
+
 <script>
-	function submitForm(fileUrl) {
-		console.log(fileUrl)
-	  // Lấy ra đối tượng form
-	    // Thiết lập giá trị của input
-        document.getElementById('popupCapchaValueURL').value = fileUrl;
-	    var form = document.getElementById("check_pdf");
-	  // Submit form
-	  form.submit();
-	}
-	</script>
+    function loadPdf(fileUrl) {
+        var pdfUrl = '/nhanvien/xin-nghi?p_p_id=com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_sbwb&p_p_lifecycle=2&p_p_resource_id=serveResource&p_p_cacheability=cacheLevelPage&_com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_sbwb_file_url=' + fileUrl;
+        window.open(pdfUrl);
+    }
+</script>
+
+<%-- 
+<script>
+    function loadPdf(fileUrl) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/nhanvien/xin-nghi?p_p_id=com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_sbwb&p_p_lifecycle=2&p_p_resource_id=serveResource&p_p_cacheability=cacheLevelPage&_com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_sbwb_file_url=' + fileUrl, true);
+        xhr.responseType = 'blob';
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var blob = xhr.response;
+                var url = window.URL.createObjectURL(blob);
+
+                var a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = fileUrl;
+
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            } else {
+                // Xử lý lỗi khi tệp PDF không tồn tại
+                alert("Tệp PDF không tồn tại");
+            }
+        };
+
+        xhr.send();
+    }
+</script>
+
+ --%>
