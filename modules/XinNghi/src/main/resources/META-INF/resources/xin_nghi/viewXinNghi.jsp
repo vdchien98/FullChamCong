@@ -5,24 +5,29 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui"%>
 <head>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<c:set var="contextPath" value="${pageContext.request.contextPath}" ></c:set>
+		<script src="${contextPath}/xin_nghi/vgcaplugin.js"></script>
+		
 
 </head>
+
+
+
 <style type="text/css">
 a.btn.btn-link.mr-2.fileUrl {
 	margin-top: -30px;
+	margin-left: -15px;
 }
 
 button.nutkyso {
-	margin-top: -30px;
+	margin-top: 0px;
 }
 </style>
 <portlet:renderURL var="xinnghiURL">
@@ -118,22 +123,15 @@ button.nutkyso {
 															name="<portlet:namespace />popupCapchaValue"
 															id="popupCapchaValueURL" value="">
 													</form>
-													<%-- 	<a
-														href="<portlet:renderURL><portlet:param name='file_url' value='${user.file_url}' /></portlet:renderURL>"
-														class="btn btn-link mr-2 fileUrl" target="_blank"> <span>Xem
-															file xin nghỉ : ${user.file_url}</span>
+													<a
+														href="http://localhost:8080/nhanvien/xin-nghi?p_p_id=com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_sbwb&p_p_lifecycle=2&p_p_resource_id=serveResource&p_p_cacheability=cacheLevelPage&_com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_sbwb_file_url=${user.file_url}"
+														class="btn btn-link mr-2 fileUrl"
+														onclick="loadPdf('${user.file_url}')" target="_blank">
+														<span>Xem file xin nghỉ: ${user.file_url}</span>
 													</a>
 													
-													<a href="#" class="btn btn-link mr-2 fileUrl"
-														target="_blank" onclick="loadPdf('${user.file_url}')">
-														<span>Xem file xin nghỉ : ${user.file_url}</span>
-													</a> --%>
-													<a href="javascript:void(0);"
-														class="btn btn-link mr-2 fileUrl"
-														onclick="loadPdf('${user.file_url}')"> <span>Xem
-															file xin nghỉ : ${user.file_url}</span>
-													</a>
-													<button class="nutkyso">Ký Số</button>
+													
+													<button class="nutkyso" onclick="kysoPdf('${user.file_url}')">Ký Số</button>
 												</div>
 											</th>
 										</tr>
@@ -159,36 +157,41 @@ button.nutkyso {
         var pdfUrl = '/nhanvien/xin-nghi?p_p_id=com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_sbwb&p_p_lifecycle=2&p_p_resource_id=serveResource&p_p_cacheability=cacheLevelPage&_com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_sbwb_file_url=' + fileUrl;
         window.open(pdfUrl);
     }
-</script>
+    function kysoPdf(fileUrl) {
+        var pdfUrl = 'nhanvien/xin-nghi?p_p_id=com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_sbwb&p_p_lifecycle=2&p_p_resource_id=serveResource&p_p_cacheability=cacheLevelPage&_com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_sbwb_file_url=' + fileUrl;
 
-<%-- 
-<script>
-    function loadPdf(fileUrl) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/nhanvien/xin-nghi?p_p_id=com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_sbwb&p_p_lifecycle=2&p_p_resource_id=serveResource&p_p_cacheability=cacheLevelPage&_com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_sbwb_file_url=' + fileUrl, true);
-        xhr.responseType = 'blob';
+      console.log("xin chao moi nguoi  --- " + pdfUrl)
+       var prms = {};
+        var scv = [
+            {"Key":"user_id","Value":1},
+            {"Key":"xinnghi_id","Value":1},
+        ];
+        prms["FileUploadHandler"] = "http://localhost:8080/api/jsonws/ks.filekyso/getchukyso";
+      //  prms["FileUploadHandler"] = "http://localhost:8080/" + pdfUrl;
+        
+        prms["SessionId"] = "";
+        // prms["FileName"] = 'http://localhost:8000/' + filename;
+        prms["FileName"] = "http://localhost:8080/" + pdfUrl;
+     
+   //     prms["MetaData"] = scv;
 
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                var blob = xhr.response;
-                var url = window.URL.createObjectURL(blob);
-
-                var a = document.createElement('a');
-                a.style.display = 'none';
-                a.href = url;
-                a.download = fileUrl;
-
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-            } else {
-                // Xử lý lỗi khi tệp PDF không tồn tại
-                alert("Tệp PDF không tồn tại");
-            }
-        };
-
-        xhr.send();
+        var json_prms = JSON.stringify(prms);
+    vgca_sign_approved(json_prms, SignFileCallBack);  //ky so tt01
+     //console.log("---------------- "+  vgca_sign_approved(json_prms, SignFileCallBack));
+      
     }
+    function SignFileCallBack(rv) {
+        alert("Đã ký số thành công.");
+        location.reload();
+        // console.log("msg: ",received_msg);
+        // if (received_msg.Status == 0) {                
+        //     loadAttachmentFiles();
+        // } else {
+
+        // }
+        // loadAttachmentFiles(); //reload file list
+        // $("#loading-spinner").hide(); //hide loading spinner
+    }
+    
 </script>
 
- --%>

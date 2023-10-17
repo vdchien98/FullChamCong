@@ -83,46 +83,58 @@ import org.osgi.service.component.annotations.Component;
 public class XinNghiPortlet extends MVCPortlet {
 
 	// Hàm mở file PDF trên server
-	public void OpenFilePDF(ActionRequest request, ActionResponse response) throws IOException, PortletException {
+//	public void OpenFilePDF(ActionRequest request, ActionResponse response) throws IOException, PortletException {
+//
+//		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+//		long userId = themeDisplay.getUserId();
+//		System.out.println("da vao duoc day ^^^^^^^^^^^^^^^^^^^^^ ");
+//
+//		String duoiPDFURL = ParamUtil.getString(request, "popupCapchaValue");
+//		System.out.println("duoiPDFURL ==== " + duoiPDFURL);
+//		String pdfFilePath = "D:\\FullChamCong\\ChamCong\\liferay-ce-portal-7.4.3.42-ga42\\filePdf\\" + duoiPDFURL;
+//
+//		try (InputStream inputStream = new FileInputStream(pdfFilePath)) {
+//			HttpServletResponse httpServletResponse = PortalUtil.getHttpServletResponse(response);
+//
+//			// Thiết lập loại nội dung của phản hồi là PDF
+//			httpServletResponse.setContentType("application/pdf");
+//
+//			// Thiết lập đường dẫn đến tệp PDF
+//			httpServletResponse.setHeader("Content-Disposition", "inline; filename=myfile.pdf");
+//
+//			// Sao chép dữ liệu từ InputStream vào OutputStream của phản hồi
+//			OutputStream outputStream = httpServletResponse.getOutputStream();
+//			byte[] buffer = new byte[4096];
+//			int bytesRead = -1;
+//			while ((bytesRead = inputStream.read(buffer)) != -1) {
+//				outputStream.write(buffer, 0, bytesRead);
+//			}
+//			outputStream.flush();
+//
+//			// Đóng InputStream và OutputStream
+//			inputStream.close();
+//			outputStream.close();
+//
+//			// Gửi phản hồi
+//			response.sendRedirect("/xin-nghi");
+//		} catch (IOException e) {
+//			// Xử lý ngoại lệ nếu có lỗi
+//			e.printStackTrace();
+//		}
+//
+//		// response.sendRedirect("/nhanvien/xin-nghi");
+//	}
+//	
+	
+	// Hàm upload file sau khi API ký số ký xong và trả về để lưu vào hệ thống 
+	public void uploadfile(ActionRequest request, ActionResponse response) throws IOException, PortletException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		long userId = themeDisplay.getUserId();
 		System.out.println("da vao duoc day ^^^^^^^^^^^^^^^^^^^^^ ");
 
-		String duoiPDFURL = ParamUtil.getString(request, "popupCapchaValue");
-		System.out.println("duoiPDFURL ==== " + duoiPDFURL);
-		String pdfFilePath = "D:\\FullChamCong\\ChamCong\\liferay-ce-portal-7.4.3.42-ga42\\filePdf\\" + duoiPDFURL;
+		System.out.println("da vao duoc day upload file sau khi API ký so");
 
-		try (InputStream inputStream = new FileInputStream(pdfFilePath)) {
-			HttpServletResponse httpServletResponse = PortalUtil.getHttpServletResponse(response);
-
-			// Thiết lập loại nội dung của phản hồi là PDF
-			httpServletResponse.setContentType("application/pdf");
-
-			// Thiết lập đường dẫn đến tệp PDF
-			httpServletResponse.setHeader("Content-Disposition", "inline; filename=myfile.pdf");
-
-			// Sao chép dữ liệu từ InputStream vào OutputStream của phản hồi
-			OutputStream outputStream = httpServletResponse.getOutputStream();
-			byte[] buffer = new byte[4096];
-			int bytesRead = -1;
-			while ((bytesRead = inputStream.read(buffer)) != -1) {
-				outputStream.write(buffer, 0, bytesRead);
-			}
-			outputStream.flush();
-
-			// Đóng InputStream và OutputStream
-			inputStream.close();
-			outputStream.close();
-
-			// Gửi phản hồi
-			response.sendRedirect("/xin-nghi");
-		} catch (IOException e) {
-			// Xử lý ngoại lệ nếu có lỗi
-			e.printStackTrace();
-		}
-
-		// response.sendRedirect("/nhanvien/xin-nghi");
 	}
 
 	public void saveXinNghiCaNgay(ActionRequest request, ActionResponse response) throws IOException, PortletException {
@@ -496,6 +508,8 @@ public class XinNghiPortlet extends MVCPortlet {
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
 		String duoiPDFURL = renderRequest.getParameter("file_url");
+		String layve = renderResponse.toString();
+		System.out.println("da ve dc day 00000000000000000000 " + layve);
 		if (duoiPDFURL != null) {
 			// Xử lý file_url ở đây
 			System.out.println("fileUrl ------------ " + duoiPDFURL);

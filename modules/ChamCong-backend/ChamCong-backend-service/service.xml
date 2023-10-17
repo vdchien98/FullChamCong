@@ -164,6 +164,41 @@
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<entity local-service="true" name="Filekyso" remote-service="true" uuid="false">
+		<column type="int" name="id" primary="true"></column>
+		<column type="String" name="tenfile"></column>
+
+
+		<finder name="id" return-type="Collection">
+			<finder-column name="id" />
+		</finder>
+		<reference entity="AssetEntry"
+			package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetTag"
+			package-path="com.liferay.portlet.asset" />
+	</entity>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	<entity local-service="true" name="GioLam" remote-service="true"
 		uuid="false">

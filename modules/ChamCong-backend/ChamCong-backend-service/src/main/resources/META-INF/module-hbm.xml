@@ -4,6 +4,7 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.docs.chamcong.model.Calamviec" />
 	<import class="com.liferay.docs.chamcong.model.Chucvu" />
+	<import class="com.liferay.docs.chamcong.model.Filekyso" />
 	<import class="com.liferay.docs.chamcong.model.GioLam" />
 	<import class="com.liferay.docs.chamcong.model.Ngaylamviec" />
 	<import class="com.liferay.docs.chamcong.model.Ngaynghile" />
@@ -40,6 +41,12 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="updated_at" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="role_" name="role" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.liferay.docs.chamcong.model.impl.FilekysoImpl" table="_Filekyso">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="id_" name="id" type="int">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="tenfile" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.docs.chamcong.model.impl.GioLamImpl" table="_GioLam">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="id_" name="id" type="int">

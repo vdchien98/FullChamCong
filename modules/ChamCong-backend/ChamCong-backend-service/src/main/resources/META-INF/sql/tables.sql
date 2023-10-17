@@ -26,6 +26,11 @@ create table _Chucvu (
 	groupId LONG
 );
 
+create table _Filekyso (
+	id_ INTEGER not null primary key,
+	tenfile VARCHAR(75) null
+);
+
 create table _GioLam (
 	id_ INTEGER not null primary key,
 	user_id LONG,
